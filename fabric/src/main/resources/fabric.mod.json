@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "better_client",
+  "version": "${version}",
+  "name": "Better Client",
+  "description": "Make a better server experience",
+  "authors": [
+    "ENC_Euphony"
+  ],
+  "contact": {
+    "homepage": ""
+  },
+  "license": "MIT",
+  "icon": "assets/better_client/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.euphony.better_client.fabric.BetterClientFabric"
+    ],
+    "client": [
+      "com.euphony.better_client.fabric.client.BetterClientFabricClient"
+    ]
+  },
+  "mixins": [
+    "better_client.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.16.14",
+    "minecraft": "~1.21.1",
+    "java": ">=21",
+    "architectury": ">=13.0.8",
+    "fabric-api": "*",
+    "yet_another_config_lib_v3": ">=3.6"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}
