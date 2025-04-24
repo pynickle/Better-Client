@@ -19,6 +19,9 @@
     ],
     "client": [
       "com.euphony.better_client.fabric.client.BetterClientFabricClient"
+    ],
+    "modmenu": [
+      "com.euphony.better_client.fabric.integration.ModMenuIntegration"
     ]
   },
   "mixins": [
