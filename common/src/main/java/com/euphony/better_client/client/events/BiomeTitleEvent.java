@@ -3,13 +3,11 @@ package com.euphony.better_client.client.events;
 import com.euphony.better_client.config.BetterClientConfig;
 import com.euphony.better_client.utils.Utils;
 import com.mojang.blaze3d.vertex.PoseStack;
-import dev.architectury.event.EventResult;
 import net.minecraft.Util;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -38,7 +36,7 @@ public class BiomeTitleEvent {
 
     private BiomeTitleEvent() {}
 
-    public static void clientPre(ClientLevel clientLevel) {
+    public static void clientPre(Minecraft minecraft) {
         if (complete) {
             if (!fadingIn) {
                 if (displayTime > 0) {
@@ -127,8 +125,8 @@ public class BiomeTitleEvent {
     }
 
     private static Component getBiomeName(ResourceKey<Biome> key) {
-        return NAME_CACHE.computeIfAbsent(key, k -> {
-            ResourceLocation location = key.location();
+        ResourceLocation location = key.location();
+        Component name = NAME_CACHE.computeIfAbsent(key, k -> {
             String translationKey = Util.makeDescriptionId("biome", location);
             MutableComponent biomeName = Component.translatable(translationKey);
             MutableComponent displayName = biomeName;
@@ -142,15 +140,17 @@ public class BiomeTitleEvent {
                 displayName = Component.literal(formattedBiomeName);
             }
 
-            if (BetterClientConfig.HANDLER.instance().enableModName) {
-                String modName = getModName(location);
-
-                if (modName != null)
-                    displayName = displayName.append(Component.literal(String.format(" (%s)", modName)));
-            }
-
             return displayName;
         });
+
+        MutableComponent displayName = name.copy();
+        if (BetterClientConfig.HANDLER.instance().enableModName) {
+            String modName = getModName(location);
+
+            if (modName != null)
+                displayName = displayName.append(Component.literal(String.format(" (%s)", modName)));
+        }
+        return displayName;
     }
 
     private static boolean hideInF1(Minecraft mc) {
@@ -178,11 +178,6 @@ public class BiomeTitleEvent {
         String displayName = Utils.getModDisplayName(modId);
 
         return displayName == null ? snakeCaseToEnglish(modId) : displayName;
-    }
-
-    public static EventResult renderPre(Screen screen, GuiGraphics guiGraphics, int i, int i1, DeltaTracker deltaTracker) {
-        renderBiomeInfo(guiGraphics, deltaTracker);
-        return EventResult.pass();
     }
 
     public static void clientLevelLoad(ClientLevel clientLevel) {
