@@ -53,6 +53,7 @@ public class BetterClientConfig {
     @SerialEntry public boolean enableLongerChatHistory = true;
     @SerialEntry public int chatMaxMessages = 4096;
     @SerialEntry public boolean enableTimeStamp = true;
+    @SerialEntry public Color timeStampColor = new Color(0xAA00AA, false);
 
     @SerialEntry public boolean enableFasterClimbing = false;
     @SerialEntry public boolean enableFasterUpward = true;
@@ -129,6 +130,13 @@ public class BetterClientConfig {
                             () -> config.enableTimeStamp,
                             newVal -> config.enableTimeStamp = newVal)
                     .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
+                    .build();
+
+            Option<Color> timeStampColorOpt = ConfigUtils.<Color>getGenericOption("timeStampColor")
+                    .binding(defaults.timeStampColor,
+                            () -> config.timeStampColor,
+                            newVal -> config.timeStampColor = newVal)
+                    .controller(opt -> ColorControllerBuilder.create(opt).allowAlpha(false))
                     .build();
 
             // Biome Title
@@ -290,7 +298,8 @@ public class BetterClientConfig {
                                     .options(List.of(
                                             enableLongerChatHistoryOpt,
                                             chatMaxMessagesOpt,
-                                            enableTimeStampOpt
+                                            enableTimeStampOpt,
+                                            timeStampColorOpt
                                     ))
                                     .build())
                             .group(OptionGroup.createBuilder()

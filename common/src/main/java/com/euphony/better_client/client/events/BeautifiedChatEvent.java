@@ -28,7 +28,7 @@ public class BeautifiedChatEvent {
                 Date now = new Date();
                 String timestamp = new SimpleDateFormat("[dd:HH:mm] ").format(now);
 
-                output.append(Component.literal(timestamp).withColor(0xAA00AA));
+                output.append(Component.literal(timestamp).withColor(BetterClientConfig.HANDLER.instance().timeStampColor.getRGB()));
             }
             output.append(message);
             return output;

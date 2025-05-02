@@ -26,6 +26,9 @@
   "yacl3.config.better_client:config.chatMaxMessages.desc": "聊天历史中保留的信息数量上限",
   "yacl3.config.better_client:config.enableTimeStamp": "启用时间戳",
   "yacl3.config.better_client:config.enableTimeStamp.desc": "现在时间会显示在聊天信息之前。",
+  "yacl3.config.better_client:config.timeStampColor": "时间戳颜色",
+  "yacl3.config.better_client:config.timeStampColor.desc": "显示的时间颜色",
+
   "yacl3.config.better_client:config.category.client.group.biome_title": "生物群系标题",
   "yacl3.config.better_client:config.enableBiomeTitle": "启用生物群系标题",
   "yacl3.config.better_client:config.enableBiomeTitle.desc": "进入新的生物群落现在会显示生物群落标题。",

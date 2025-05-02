@@ -26,6 +26,8 @@
   "yacl3.config.better_client:config.chatMaxMessages.desc": "Maximum number of messages retained in chat history",
   "yacl3.config.better_client:config.enableTimeStamp": "Enable Time Stamp",
   "yacl3.config.better_client:config.enableTimeStamp.desc": "The time is now displayed before the chat message.",
+  "yacl3.config.better_client:config.timeStampColor": "Time Stamp Color",
+  "yacl3.config.better_client:config.timeStampColor.desc": "The color of the time displayed",
 
   "yacl3.config.better_client:config.category.client.group.biome_title": "Biome Title",
   "yacl3.config.better_client:config.enableBiomeTitle": "Enable Biome Title",
