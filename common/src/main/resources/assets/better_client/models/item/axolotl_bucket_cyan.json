@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "better_client:item/axolotl_bucket_cyan"
+  }
+}

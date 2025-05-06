@@ -3,6 +3,8 @@ package com.euphony.better_client.client.events;
 import com.euphony.better_client.config.BetterClientConfig;
 import com.euphony.better_client.utils.Utils;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.fabricmc.fabric.api.client.rendering.v1.IdentifiedLayer;
+import net.fabricmc.fabric.api.client.rendering.v1.LayeredDrawerWrapper;
 import net.minecraft.Util;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
@@ -182,5 +184,9 @@ public class BiomeTitleEvent {
 
     public static void clientLevelLoad(ClientLevel clientLevel) {
         complete = true;
+    }
+
+    public static void renderBiomeInfo(LayeredDrawerWrapper layeredDrawerWrapper) {
+        layeredDrawerWrapper.addLayer(IdentifiedLayer.of(Utils.prefix("overlay"), BiomeTitleEvent::renderBiomeInfo));
     }
 }
