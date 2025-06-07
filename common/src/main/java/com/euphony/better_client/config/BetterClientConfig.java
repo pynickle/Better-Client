@@ -75,6 +75,7 @@ public class BetterClientConfig {
 
     @SerialEntry public boolean enableBeeInfo = true;
     @SerialEntry public boolean enableAxolotlBucketFix = true;
+    @SerialEntry public boolean enableChatHistoryRetention = true;
 
     public static YetAnotherConfigLib makeScreen() {
         return YetAnotherConfigLib.create(HANDLER, (defaults, config, builder) -> {
@@ -275,6 +276,13 @@ public class BetterClientConfig {
                     .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
                     .build();
 
+            Option<Boolean> enableChatHistoryRetentionOpt = ConfigUtils.<Boolean>getGenericOption("enableChatHistoryRetention")
+                    .binding(defaults.enableChatHistoryRetention,
+                            () -> config.enableChatHistoryRetention,
+                            newVal -> config.enableChatHistoryRetention = newVal)
+                    .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
+                    .build();
+
             return builder
                     .title(Component.translatable("yacl3.config.better_client:config"))
                     .category(ConfigCategory.createBuilder()
@@ -332,7 +340,8 @@ public class BetterClientConfig {
                                     .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, OTHER_GROUP))
                                     .options(List.of(
                                             enableBeeInfoOpt,
-                                            enableAxolotlBucketFixOpt
+                                            enableAxolotlBucketFixOpt,
+                                            enableChatHistoryRetentionOpt
                                     ))
                                     .build())
                             .build())
