@@ -51,7 +51,7 @@ public class ChatComponentMixin {
 
     @ModifyArg(method = "render", index = 1, at = @At(
             value = "INVOKE",
-            target = "Lcom/mojang/blaze3d/vertex/PoseStack;translate(FFF)V",
+            target = "Lorg/joml/Matrix3x2fStack;translate(FF)Lorg/joml/Matrix3x2f;",
             ordinal = 0
     ))
     private float offsetY(float y) {
