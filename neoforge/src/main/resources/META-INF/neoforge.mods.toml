@@ -16,21 +16,21 @@ logoFile = "icon.png"
 [[dependencies.better_client]]
 modId = "neoforge"
 type = "required"
-versionRange = "[21,)"
+versionRange = "[21.6,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.better_client]]
 modId = "minecraft"
 type = "required"
-versionRange = "[1.21.1,)"
+versionRange = "[1.21.6,1.22)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.better_client]]
 modId = "architectury"
 type = "required"
-versionRange = "[13.0.8,)"
+versionRange = "[17.0,)"
 ordering = "AFTER"
 side = "BOTH"
 
@@ -38,7 +38,7 @@ side = "BOTH"
 modId = "yet_another_config_lib_v3"
 mandatory = true
 type = "required"
-versionRange = "[3.6,)"
+versionRange = "[3.7,)"
 ordering = "NONE"
 side = "CLIENT"
 

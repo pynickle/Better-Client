@@ -73,5 +73,7 @@
   "message.better_client.book_save.title": "保存书籍",
   "message.better_client.book_save.question": "你确定要关闭书籍而不保存吗？",
   "yacl3.config.better_client:config.enableBookSaveConfirmation": "启用书籍保存确认",
-  "yacl3.config.better_client:config.enableBookSaveConfirmation.desc": "当你对书籍内容进行修改后未保存即关闭时，系统会弹出提示框提醒您保存。"
+  "yacl3.config.better_client:config.enableBookSaveConfirmation.desc": "当你对书籍内容进行修改后未保存即关闭时，系统会弹出提示框提醒您保存。",
+  "yacl3.config.better_client:config.enableChatHistoryRetention": "启用聊天记录保留",
+  "yacl3.config.better_client:config.enableChatHistoryRetention.desc": "现在离开世界并不会清除聊天记录。"
 }

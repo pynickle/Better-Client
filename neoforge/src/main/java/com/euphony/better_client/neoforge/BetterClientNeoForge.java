@@ -6,7 +6,6 @@ import net.neoforged.fml.common.Mod;
 @Mod(BetterClient.MOD_ID)
 public final class BetterClientNeoForge {
     public BetterClientNeoForge() {
-        // Run our common setup.
         BetterClient.init();
     }
 }

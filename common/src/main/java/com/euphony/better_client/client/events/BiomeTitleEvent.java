@@ -18,6 +18,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.biome.Biome;
 import org.apache.commons.lang3.StringUtils;
+import org.joml.Matrix3x2fStack;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -107,10 +108,10 @@ public class BiomeTitleEvent {
                     Font font = mc.font;
                     float scale = (float) BetterClientConfig.HANDLER.instance().scale;
 
-                    PoseStack pose = guiGraphics.pose();
-                    pose.pushPose();
-                    pose.translate(guiGraphics.guiWidth() / 2D, guiGraphics.guiHeight() / 2D, 0);
-                    pose.scale(scale, scale, scale);
+                    Matrix3x2fStack pose = guiGraphics.pose();
+                    pose.pushMatrix();
+                    pose.translate((float) (guiGraphics.guiWidth() / 2D), (float) (guiGraphics.guiHeight() / 2D));
+                    pose.scale(scale, scale);
 
                     Component biomeName = getBiomeName(displayBiome);
                     int textWidth = font.width(biomeName);
@@ -118,7 +119,7 @@ public class BiomeTitleEvent {
                     int y = - font.wordWrapHeight(biomeName.getString(), 999) / 2 + BetterClientConfig.HANDLER.instance().yOffset;
 
                     guiGraphics.drawString(font, biomeName, (-textWidth / 2), y, 0xffffff | (alpha << 24), true);
-                    pose.popPose();
+                    pose.popMatrix();
                 }
             }
         }
