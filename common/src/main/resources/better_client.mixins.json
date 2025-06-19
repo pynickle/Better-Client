@@ -5,7 +5,8 @@
   "minVersion": "0.8",
   "client": [
     "BookEditScreenMixin",
-    "ChatComponentMixin"
+    "ChatComponentMixin",
+    "MultiLineEditBoxMixin"
   ],
   "mixins": [
   ],
