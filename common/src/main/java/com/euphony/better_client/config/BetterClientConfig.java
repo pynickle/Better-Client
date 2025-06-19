@@ -75,6 +75,7 @@ public class BetterClientConfig {
 
     @SerialEntry public boolean enableBeeInfo = true;
     @SerialEntry public boolean enableAxolotlBucketFix = true;
+    @SerialEntry public boolean enableBookSaveConfirmation = true;
 
     public static YetAnotherConfigLib makeScreen() {
         return YetAnotherConfigLib.create(HANDLER, (defaults, config, builder) -> {
@@ -274,6 +275,12 @@ public class BetterClientConfig {
                             newVal -> config.enableAxolotlBucketFix = newVal)
                     .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
                     .build();
+            Option<Boolean> enableBookSaveConfirmationOpt = ConfigUtils.<Boolean>getGenericOption("enableBookSaveConfirmation")
+                    .binding(defaults.enableBookSaveConfirmation,
+                            () -> config.enableBookSaveConfirmation,
+                            newVal -> config.enableBookSaveConfirmation = newVal)
+                    .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
+                    .build();
 
             return builder
                     .title(Component.translatable("yacl3.config.better_client:config"))
@@ -332,7 +339,8 @@ public class BetterClientConfig {
                                     .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, OTHER_GROUP))
                                     .options(List.of(
                                             enableBeeInfoOpt,
-                                            enableAxolotlBucketFixOpt
+                                            enableAxolotlBucketFixOpt,
+                                            enableBookSaveConfirmationOpt
                                     ))
                                     .build())
                             .build())
