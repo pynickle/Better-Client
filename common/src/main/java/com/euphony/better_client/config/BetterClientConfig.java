@@ -76,6 +76,7 @@ public class BetterClientConfig {
     @SerialEntry public boolean enableBeeInfo = true;
     @SerialEntry public boolean enableAxolotlBucketFix = true;
     @SerialEntry public boolean enableChatHistoryRetention = true;
+    @SerialEntry public boolean enableBookSaveConfirmation = true;
 
     public static YetAnotherConfigLib makeScreen() {
         return YetAnotherConfigLib.create(HANDLER, (defaults, config, builder) -> {
@@ -275,6 +276,12 @@ public class BetterClientConfig {
                             newVal -> config.enableAxolotlBucketFix = newVal)
                     .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
                     .build();
+            Option<Boolean> enableBookSaveConfirmationOpt = ConfigUtils.<Boolean>getGenericOption("enableBookSaveConfirmation")
+                    .binding(defaults.enableBookSaveConfirmation,
+                            () -> config.enableBookSaveConfirmation,
+                            newVal -> config.enableBookSaveConfirmation = newVal)
+                    .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
+                    .build();
 
             Option<Boolean> enableChatHistoryRetentionOpt = ConfigUtils.<Boolean>getGenericOption("enableChatHistoryRetention")
                     .binding(defaults.enableChatHistoryRetention,
@@ -341,7 +348,8 @@ public class BetterClientConfig {
                                     .options(List.of(
                                             enableBeeInfoOpt,
                                             enableAxolotlBucketFixOpt,
-                                            enableChatHistoryRetentionOpt
+                                            enableChatHistoryRetentionOpt,
+                                            enableBookSaveConfirmationOpt
                                     ))
                                     .build())
                             .build())

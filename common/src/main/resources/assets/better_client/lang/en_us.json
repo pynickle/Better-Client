@@ -2,6 +2,9 @@
   "container.beehive.bees": "Bees: %s / %s",
   "container.beehive.honey": "Honey: %s / %s",
 
+  "message.better_client.book_save.title": "Save Book",
+  "message.better_client.book_save.question": "Are you sure you want to close the book without saving?",
+
   "yacl3.config.better_client:config": "Enchanting Vanilla",
   "yacl3.config.better_client:config.category.client": "Client",
 
@@ -71,5 +74,7 @@
   "yacl3.config.better_client:config.enableAxolotlBucketFix": "Enable Axolotl Bucket Fix",
   "yacl3.config.better_client:config.enableAxolotlBucketFix.desc": "Now buckets containing different variants of axolotl display different textures.",
   "yacl3.config.better_client:config.enableChatHistoryRetention": "Enable Chat History Retention",
-  "yacl3.config.better_client:config.enableChatHistoryRetention.desc": "Leaving the world now will not clear your chat history."
+  "yacl3.config.better_client:config.enableChatHistoryRetention.desc": "Leaving the world now will not clear your chat history.",
+  "yacl3.config.better_client:config.enableBookSaveConfirmation": "Enable Book Save Confirmation",
+  "yacl3.config.better_client:config.enableBookSaveConfirmation.desc": "When you make changes to the content of a book and close it without saving, a prompt will pop up reminding you to save."
 }
