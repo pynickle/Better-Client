@@ -19,7 +19,7 @@ import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
-@EventBusSubscriber(modid = BetterClient.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@EventBusSubscriber(modid = BetterClient.MOD_ID, value = Dist.CLIENT)
 public class BCClientNeoforge {
     @SubscribeEvent
     public static void onResourceManagerReload(AddClientReloadListenersEvent event) {

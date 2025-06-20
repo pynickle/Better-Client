@@ -30,7 +30,7 @@ side = "BOTH"
 [[dependencies.better_client]]
 modId = "architectury"
 type = "required"
-versionRange = "[17.0,)"
+versionRange = "[17.0.6,)"
 ordering = "AFTER"
 side = "BOTH"
 
@@ -38,7 +38,7 @@ side = "BOTH"
 modId = "yet_another_config_lib_v3"
 mandatory = true
 type = "required"
-versionRange = "[3.7,)"
+versionRange = "[3.7.1,)"
 ordering = "NONE"
 side = "CLIENT"
 
