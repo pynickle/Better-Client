@@ -65,6 +65,14 @@
   "yacl3.config.better_client:config.speedMultiplier": "速度乘量",
   "yacl3.config.better_client:config.speedMultiplier.desc": "速度乘量，乘以角度 sin 值，2.0 相当于 30 度为原始速度。",
 
+  "yacl3.config.better_client:config.category.client.group.book_scroll": "书籍滚动",
+  "yacl3.config.better_client:config.enableBookScroll": "启用书籍滚动",
+  "yacl3.config.better_client:config.enableBookScroll.desc": "现在你可以使用鼠标滚轮来翻页书籍。",
+  "yacl3.config.better_client:config.ctrlSpeedMultiplier": "Ctrl 加速倍率",
+  "yacl3.config.better_client:config.ctrlSpeedMultiplier.desc": "使用 Ctrl 键时的翻页加速倍率。",
+  "yacl3.config.better_client:config.enablePageTurnSound": "启用翻页音效",
+  "yacl3.config.better_client:config.enablePageTurnSound.desc": "使用滚轮翻页时是否播放翻页声音。",
+  
   "yacl3.config.better_client:config.category.client.group.other": "其他",
   "yacl3.config.better_client:config.enableBeeInfo": "启用蜂巢信息",
   "yacl3.config.better_client:config.enableBeeInfo.desc": "您现在可以看到蜂箱和蜂巢中蜜蜂的数量和蜂蜜的含量，就像 1.21.2 中原版添加的功能一样。",

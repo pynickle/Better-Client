@@ -42,6 +42,7 @@ public class BetterClientConfig {
     private static final String BETTER_CHAT_GROUP = "better_chat";
     private static final String BIOME_TITLE_GROUP = "biome_title";
     private static final String FASTER_CLIMBING_GROUP = "faster_climbing";
+    private static final String BOOK_SCROLL_GROUP = "book_scroll";
     private static final String OTHER_GROUP = "other";
 
     @SerialEntry public boolean enableFadingNightVision = true;
@@ -72,6 +73,10 @@ public class BetterClientConfig {
     @SerialEntry public double cooldownTime = 1.5D;
     @SerialEntry public boolean enableModName = false;
     @SerialEntry public boolean enableUndergroundUpdate = false;
+
+    @SerialEntry public boolean enableBookScroll = true;
+    @SerialEntry public int ctrlSpeedMultiplier = 5;
+    @SerialEntry public boolean enablePageTurnSound = true;
 
     @SerialEntry public boolean enableBeeInfo = true;
     @SerialEntry public boolean enableAxolotlBucketFix = true;
@@ -262,6 +267,28 @@ public class BetterClientConfig {
                             .range(1.0, 10.0).step(0.5))
                     .build();
 
+            // Book Scroll
+            Option<Boolean> enableBookScrollOpt = ConfigUtils.<Boolean>getGenericOption("enableBookScroll")
+                    .binding(defaults.enableBookScroll,
+                            () -> config.enableBookScroll,
+                            newVal -> config.enableBookScroll = newVal)
+                    .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
+                    .build();
+
+            Option<Integer> ctrlSpeedMultiplierOpt = ConfigUtils.<Integer>getGenericOption("ctrlSpeedMultiplier")
+                    .binding(defaults.ctrlSpeedMultiplier,
+                            () -> config.ctrlSpeedMultiplier,
+                            newVal -> config.ctrlSpeedMultiplier = newVal)
+                    .controller(opt -> IntegerSliderControllerBuilder.create(opt)
+                            .range(1, 10).step(1))
+                    .build();
+            Option<Boolean> enablePageTurnSoundOpt = ConfigUtils.<Boolean>getGenericOption("enablePageTurnSound")
+                    .binding(defaults.enablePageTurnSound,
+                            () -> config.enablePageTurnSound,
+                            newVal -> config.enablePageTurnSound = newVal)
+                    .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
+                    .build();
+
             // Other
             Option<Boolean> enableBeeInfoOpt = ConfigUtils.<Boolean>getGenericOption("enableBeeInfo", "bee_info")
                     .binding(defaults.enableBeeInfo,
@@ -341,6 +368,14 @@ public class BetterClientConfig {
                                             enableFasterUpwardOpt,
                                             enableFasterDownwardOpt,
                                             speedMultiplierOpt
+                                    ))
+                                    .build())
+                            .group(OptionGroup.createBuilder()
+                                    .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, BOOK_SCROLL_GROUP))
+                                    .options(java.util.List.of(
+                                            enableBookScrollOpt,
+                                            ctrlSpeedMultiplierOpt,
+                                            enablePageTurnSoundOpt
                                     ))
                                     .build())
                             .group(OptionGroup.createBuilder()
