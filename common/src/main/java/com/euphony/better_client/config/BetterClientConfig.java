@@ -43,6 +43,7 @@ public class BetterClientConfig {
     private static final String BIOME_TITLE_GROUP = "biome_title";
     private static final String FASTER_CLIMBING_GROUP = "faster_climbing";
     private static final String BOOK_SCROLL_GROUP = "book_scroll";
+    public static final String MUSIC_PAUSE_GROUP = "music_pause";
     private static final String OTHER_GROUP = "other";
 
     @SerialEntry public boolean enableFadingNightVision = true;
@@ -77,6 +78,9 @@ public class BetterClientConfig {
     @SerialEntry public boolean enableBookScroll = true;
     @SerialEntry public int ctrlSpeedMultiplier = 5;
     @SerialEntry public boolean enablePageTurnSound = true;
+
+    @SerialEntry public boolean enableMusicPause = true;
+    @SerialEntry public boolean pauseUiSound = false;
 
     @SerialEntry public boolean enableBeeInfo = true;
     @SerialEntry public boolean enableAxolotlBucketFix = true;
@@ -289,6 +293,21 @@ public class BetterClientConfig {
                     .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
                     .build();
 
+            // Music Pause
+            Option<Boolean> enableMusicPauseOpt = ConfigUtils.<Boolean>getGenericOption("enableMusicPause")
+                    .binding(defaults.enableMusicPause,
+                            () -> config.enableMusicPause,
+                            newVal -> config.enableMusicPause = newVal)
+                    .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
+                    .build();
+
+            Option<Boolean> pauseUiSoundOpt = ConfigUtils.<Boolean>getGenericOption("pauseUiSound")
+                    .binding(defaults.pauseUiSound,
+                            () -> config.pauseUiSound,
+                            newVal -> config.pauseUiSound = newVal)
+                    .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
+                    .build();
+
             // Other
             Option<Boolean> enableBeeInfoOpt = ConfigUtils.<Boolean>getGenericOption("enableBeeInfo", "bee_info")
                     .binding(defaults.enableBeeInfo,
@@ -376,6 +395,13 @@ public class BetterClientConfig {
                                             enableBookScrollOpt,
                                             ctrlSpeedMultiplierOpt,
                                             enablePageTurnSoundOpt
+                                    ))
+                                    .build())
+                            .group(OptionGroup.createBuilder()
+                                    .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, MUSIC_PAUSE_GROUP))
+                                    .options(java.util.List.of(
+                                            enableMusicPauseOpt,
+                                            pauseUiSoundOpt
                                     ))
                                     .build())
                             .group(OptionGroup.createBuilder()

@@ -76,6 +76,12 @@
   "yacl3.config.better_client:config.enablePageTurnSound": "Enable Page Turn Sound",
   "yacl3.config.better_client:config.enablePageTurnSound.desc": "Whether to play a page-turning sound when using the scroll wheel to turn pages.",
 
+  "yacl3.config.better_client:config.category.client.group.music_pause": "Music Pause",
+  "yacl3.config.better_client:config.enableMusicPause": "Enable Music Pause",
+  "yacl3.config.better_client:config.enableMusicPause.desc": "Now, when the game is paused, the music will also pause, just like in versions 1.21.5 and below.",
+  "yacl3.config.better_client:config.pauseUiSound": "Pause UI Sound",
+  "yacl3.config.better_client:config.pauseUiSound.desc": "Whether to pause sounds for source UI.",
+  
   "yacl3.config.better_client:config.category.client.group.other": "Other",
   "yacl3.config.better_client:config.enableBeeInfo": "Enable Bee Info",
   "yacl3.config.better_client:config.enableBeeInfo.desc": "You can now see the number of bees and the amount of honey in beehives and bee nests, just like the feature added natively in 1.21.2.",

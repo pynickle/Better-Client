@@ -72,6 +72,12 @@
   "yacl3.config.better_client:config.ctrlSpeedMultiplier.desc": "使用 Ctrl 键时的翻页加速倍率。",
   "yacl3.config.better_client:config.enablePageTurnSound": "启用翻页音效",
   "yacl3.config.better_client:config.enablePageTurnSound.desc": "使用滚轮翻页时是否播放翻页声音。",
+
+  "yacl3.config.better_client:config.category.client.group.music_pause": "音乐暂停",
+  "yacl3.config.better_client:config.enableMusicPause": "启用音乐暂停",
+  "yacl3.config.better_client:config.enableMusicPause.desc": "现在，当游戏暂停时，音乐也会暂停，就像在1.21.5及以下版本中一样。",
+  "yacl3.config.better_client:config.pauseUiSound": "暂停 UI 声音",
+  "yacl3.config.better_client:config.pauseUiSound.desc": "是否暂停声音源为 UI 的声音。",
   
   "yacl3.config.better_client:config.category.client.group.other": "其他",
   "yacl3.config.better_client:config.enableBeeInfo": "启用蜂巢信息",
