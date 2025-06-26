@@ -2,7 +2,6 @@ package com.euphony.better_client.client.events;
 
 import com.euphony.better_client.config.BetterClientConfig;
 import com.euphony.better_client.utils.Utils;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.Util;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;

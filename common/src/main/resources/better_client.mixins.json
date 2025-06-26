@@ -6,6 +6,7 @@
   "client": [
     "BookEditScreenMixin",
     "ChatComponentMixin",
+    "MerchantScreenMixin",
     "MinecraftMixin",
     "MultiLineEditBoxMixin",
     "OptionsMixin"

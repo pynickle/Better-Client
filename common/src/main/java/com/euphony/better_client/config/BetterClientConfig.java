@@ -86,6 +86,7 @@ public class BetterClientConfig {
     @SerialEntry public boolean enableAxolotlBucketFix = true;
     @SerialEntry public boolean enableChatHistoryRetention = true;
     @SerialEntry public boolean enableBookSaveConfirmation = true;
+    @SerialEntry public boolean enableDisplayRemainingSales = true;
 
     public static YetAnotherConfigLib makeScreen() {
         return YetAnotherConfigLib.create(HANDLER, (defaults, config, builder) -> {
@@ -335,6 +336,12 @@ public class BetterClientConfig {
                             newVal -> config.enableChatHistoryRetention = newVal)
                     .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
                     .build();
+            Option<Boolean> enableDisplayRemainingSalesOpt = ConfigUtils.<Boolean>getGenericOption("enableDisplayRemainingSales")
+                    .binding(defaults.enableDisplayRemainingSales,
+                            () -> config.enableDisplayRemainingSales,
+                            newVal -> config.enableDisplayRemainingSales = newVal)
+                    .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
+                    .build();
 
             return builder
                     .title(Component.translatable("yacl3.config.better_client:config"))
@@ -410,7 +417,8 @@ public class BetterClientConfig {
                                             enableBeeInfoOpt,
                                             enableAxolotlBucketFixOpt,
                                             enableChatHistoryRetentionOpt,
-                                            enableBookSaveConfirmationOpt
+                                            enableBookSaveConfirmationOpt,
+                                            enableDisplayRemainingSalesOpt
                                     ))
                                     .build())
                             .build())

@@ -2,6 +2,9 @@
   "container.beehive.bees": "蜜蜂：%s/%s",
   "container.beehive.honey": "蜂蜜：%s/%s",
 
+  "message.better_client.book_save.title": "保存书籍",
+  "message.better_client.book_save.question": "你确定要关闭书籍而不保存吗？",
+
   "yacl3.config.better_client:config": "Enchanting Vanilla",
   "yacl3.config.better_client:config.category.client": "客户端",
 
@@ -78,16 +81,16 @@
   "yacl3.config.better_client:config.enableMusicPause.desc": "现在，当游戏暂停时，音乐也会暂停，就像在1.21.5及以下版本中一样。",
   "yacl3.config.better_client:config.pauseUiSound": "暂停 UI 声音",
   "yacl3.config.better_client:config.pauseUiSound.desc": "是否暂停声音源为 UI 的声音。",
-  
+
   "yacl3.config.better_client:config.category.client.group.other": "其他",
   "yacl3.config.better_client:config.enableBeeInfo": "启用蜂巢信息",
   "yacl3.config.better_client:config.enableBeeInfo.desc": "您现在可以看到蜂箱和蜂巢中蜜蜂的数量和蜂蜜的含量，就像 1.21.2 中原版添加的功能一样。",
   "yacl3.config.better_client:config.enableAxolotlBucketFix": "启用美西螈桶修复",
   "yacl3.config.better_client:config.enableAxolotlBucketFix.desc": "现在装有不同种类美西螈的美西螈桶会显示不同的纹理。",
-  "message.better_client.book_save.title": "保存书籍",
-  "message.better_client.book_save.question": "你确定要关闭书籍而不保存吗？",
+  "yacl3.config.better_client:config.enableChatHistoryRetention": "启用聊天记录保留",
+  "yacl3.config.better_client:config.enableChatHistoryRetention.desc": "现在离开世界并不会清除聊天记录。",
   "yacl3.config.better_client:config.enableBookSaveConfirmation": "启用书籍保存确认",
   "yacl3.config.better_client:config.enableBookSaveConfirmation.desc": "当你对书籍内容进行修改后未保存即关闭时，系统会弹出提示框提醒您保存。",
-  "yacl3.config.better_client:config.enableChatHistoryRetention": "启用聊天记录保留",
-  "yacl3.config.better_client:config.enableChatHistoryRetention.desc": "现在离开世界并不会清除聊天记录。"
+  "yacl3.config.better_client:config.enableDisplayRemainingSales": "启用显示剩余销售额",
+  "yacl3.config.better_client:config.enableDisplayRemainingSales.desc": "在交易界面上，每个箭头下方显示剩余的可用销售数量。"
 }
