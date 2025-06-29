@@ -88,6 +88,12 @@
   "yacl3.config.better_client:config.enableAltKey": "Enable Alt Key",
   "yacl3.config.better_client:config.enableAltKey.desc": "When items are damageable or non-stackable, hold down the Alt key to trade.",
 
+  "yacl3.config.better_client:config.category.client.group.no_experimental_warning": "No Experimental Warning",
+  "yacl3.config.better_client:config.enableNoExperimentalWarning": "Enable No Experimental Warning",
+  "yacl3.config.better_client:config.enableNoExperimentalWarning.desc": "The warning about creating experimental worlds and entering experimental worlds will no longer appear.",
+  "yacl3.config.better_client:config.enableExperimentalDisplay": "Enable Experimental Display",
+  "yacl3.config.better_client:config.enableExperimentalDisplay.desc": "The experimental label in the world selection list will not be hidden.",
+
   "yacl3.config.better_client:config.category.client.group.other": "Other",
   "yacl3.config.better_client:config.enableBeeInfo": "Enable Bee Info",
   "yacl3.config.better_client:config.enableBeeInfo.desc": "You can now see the number of bees and the amount of honey in beehives and bee nests, just like the feature added natively in 1.21.2.",

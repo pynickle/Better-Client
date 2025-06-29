@@ -45,6 +45,7 @@ public class BetterClientConfig {
     private static final String BOOK_SCROLL_GROUP = "book_scroll";
     public static final String MUSIC_PAUSE_GROUP = "music_pause";
     public static final String FAST_TRADING_GROUP = "fast_trading";
+    public static final String NO_EXPERIMENTAL_WARNING_GROUP = "no_experimental_warning";
     private static final String OTHER_GROUP = "other";
 
     @SerialEntry public boolean enableFadingNightVision = true;
@@ -85,6 +86,9 @@ public class BetterClientConfig {
 
     @SerialEntry public boolean enableFastTrading = true;
     @SerialEntry public boolean enableAltKey = true;
+
+    @SerialEntry public boolean enableNoExperimentalWarning = true;
+    @SerialEntry public boolean enableExperimentalDisplay = true;
 
     @SerialEntry public boolean enableBeeInfo = true;
     @SerialEntry public boolean enableAxolotlBucketFix = true;
@@ -327,6 +331,20 @@ public class BetterClientConfig {
                     .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
                     .build();
 
+            // No Experimental Warning
+            Option<Boolean> enableNoExperimentalWarningOpt = ConfigUtils.<Boolean>getGenericOption("enableNoExperimentalWarning")
+                    .binding(defaults.enableNoExperimentalWarning,
+                            () -> config.enableNoExperimentalWarning,
+                            newVal -> config.enableNoExperimentalWarning = newVal)
+                    .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
+                    .build();
+            Option<Boolean> enableExperimentalDisplayOpt = ConfigUtils.<Boolean>getGenericOption("enableExperimentalDisplay")
+                    .binding(defaults.enableExperimentalDisplay,
+                            () -> config.enableExperimentalDisplay,
+                            newVal -> config.enableExperimentalDisplay = newVal)
+                    .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
+                    .build();
+
             // Other
             Option<Boolean> enableBeeInfoOpt = ConfigUtils.<Boolean>getGenericOption("enableBeeInfo", "bee_info")
                     .binding(defaults.enableBeeInfo,
@@ -434,6 +452,13 @@ public class BetterClientConfig {
                                     .options(List.of(
                                             enableFastTradingOpt,
                                             enableAltKeyOpt
+                                    ))
+                                    .build())
+                            .group(OptionGroup.createBuilder()
+                                    .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, NO_EXPERIMENTAL_WARNING_GROUP))
+                                    .options(List.of(
+                                            enableNoExperimentalWarningOpt,
+                                            enableExperimentalDisplayOpt
                                     ))
                                     .build())
                             .group(OptionGroup.createBuilder()

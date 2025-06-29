@@ -9,7 +9,9 @@
     "MerchantScreenMixin",
     "MinecraftMixin",
     "MultiLineEditBoxMixin",
-    "OptionsMixin"
+    "OptionsMixin",
+    "WorldListEntryMixin",
+    "WorldOpenFlowsMixin"
   ],
   "mixins": [
     "MerchantMenuMixin"

@@ -1,2 +1,3 @@
 accessWidener v2 named
 accessible class net/minecraft/client/Options$FieldAccess
+accessible field net/minecraft/world/level/storage/LevelSummary info Lnet/minecraft/network/chat/Component;

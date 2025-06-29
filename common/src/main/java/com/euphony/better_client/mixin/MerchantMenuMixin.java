@@ -1,7 +1,6 @@
 package com.euphony.better_client.mixin;
 
 import com.euphony.better_client.api.IMerchantMenu;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;

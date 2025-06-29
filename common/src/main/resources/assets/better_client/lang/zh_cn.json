@@ -88,6 +88,12 @@
   "yacl3.config.better_client:config.enableAltKey": "启用 Alt 键",
   "yacl3.config.better_client:config.enableAltKey.desc": "当物品可损坏或不可堆叠时，按住 Alt 键进行交易。",
 
+  "yacl3.config.better_client:config.category.client.group.no_experimental_warning": "不显示实验性警告",
+  "yacl3.config.better_client:config.enableNoExperimentalWarning": "启用不显示实验性警告",
+  "yacl3.config.better_client:config.enableNoExperimentalWarning.desc": "创建实验性世界和进入实验性世界的警告将不再会出现。",
+  "yacl3.config.better_client:config.enableExperimentalDisplay": "启用实验性文字显示",
+  "yacl3.config.better_client:config.enableExperimentalDisplay.desc": "世界选择列表中的实验性字样不会隐藏。",
+
   "yacl3.config.better_client:config.category.client.group.other": "其他",
   "yacl3.config.better_client:config.enableBeeInfo": "启用蜂巢信息",
   "yacl3.config.better_client:config.enableBeeInfo.desc": "您现在可以看到蜂箱和蜂巢中蜜蜂的数量和蜂蜜的含量，就像 1.21.2 中原版添加的功能一样。",
