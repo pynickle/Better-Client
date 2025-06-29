@@ -1,6 +1,5 @@
 package com.euphony.better_client.mixin;
 
-import com.euphony.better_client.api.IMerchantMenu;
 import com.euphony.better_client.config.BetterClientConfig;
 import com.euphony.better_client.screen.widget.FastTradingButton;
 import com.euphony.better_client.utils.ItemUtils;
@@ -12,8 +11,10 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.MerchantScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.protocol.game.ServerboundSelectTradePacket;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.MerchantMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.trading.MerchantOffer;
@@ -34,7 +35,10 @@ public abstract class MerchantScreenMixin extends AbstractContainerScreen<Mercha
     @Shadow private int shopItem;
 
     @Unique
-    private FastTradingButton fastTradingButton;
+    private int better_client$tradeState = 0;
+
+    @Unique
+    private FastTradingButton better_client$fastTradingButton;
 
     @Unique
     private final Map<Integer, Component> enc_vanilla$tradeDescriptionCache = new HashMap<>();
@@ -46,14 +50,13 @@ public abstract class MerchantScreenMixin extends AbstractContainerScreen<Mercha
     public void addSpeedTradeButton(MerchantMenu merchantMenu, Inventory inventory, Component component, CallbackInfo ci) {
         if(!BetterClientConfig.HANDLER.instance().enableFastTrading) return;
 
-        this.fastTradingButton = new FastTradingButton( this.leftPos + 350,this.topPos + 77, 18, 18, (button) -> {
-            this.minecraft.gameMode.handleInventoryButtonClick(
-                    this.menu.containerId, this.shopItem
-            );
-            ((IMerchantMenu) menu).enc_vanilla$buttonClick(inventory.player, this.shopItem);
+        this.better_client$fastTradingButton = new FastTradingButton( this.leftPos + 350,this.topPos + 77, 18, 18, (button) -> {
+            this.menu.setSelectionHint(this.shopItem);
+            this.minecraft.getConnection().send(new ServerboundSelectTradePacket(this.shopItem));
+            better_client$tradeState = 1;
         });
         this.addRenderableWidget(
-                fastTradingButton
+                better_client$fastTradingButton
         );
     }
 
@@ -61,7 +64,7 @@ public abstract class MerchantScreenMixin extends AbstractContainerScreen<Mercha
     protected void containerTick() {
         super.containerTick();
 
-        this.fastTradingButton.active = false;
+        this.better_client$fastTradingButton.active = false;
 
         if(!BetterClientConfig.HANDLER.instance().enableFastTrading) return;
 
@@ -69,7 +72,7 @@ public abstract class MerchantScreenMixin extends AbstractContainerScreen<Mercha
         MerchantOffer merchantOffer = menu.getOffers().get(this.shopItem);
 
         if(merchantOffer.getUses() == merchantOffer.getMaxUses()) {
-            this.fastTradingButton.active = false;
+            this.better_client$fastTradingButton.active = false;
         } else {
             ItemStack costA = merchantOffer.getCostA();
             ItemStack costB = merchantOffer.getCostB();
@@ -87,9 +90,9 @@ public abstract class MerchantScreenMixin extends AbstractContainerScreen<Mercha
                     int costBCount = enc_vanilla$getItemTotalCountWithSlots(inventory, costB, slotA, slotB);
                     boolean hasEnoughCostB = costBCount >= costB.getCount() && costB.getCount() > 0;
 
-                    this.fastTradingButton.active = hasEnoughCostA && hasEnoughCostB;
+                    this.better_client$fastTradingButton.active = hasEnoughCostA && hasEnoughCostB;
                 } else {
-                    this.fastTradingButton.active = hasEnoughCostA;
+                    this.better_client$fastTradingButton.active = hasEnoughCostA;
                 }
             }
         }
@@ -103,7 +106,69 @@ public abstract class MerchantScreenMixin extends AbstractContainerScreen<Mercha
             this.enc_vanilla$lastCachedShopItem = this.shopItem;
         }
 
-        this.fastTradingButton.setTooltip(Tooltip.create(tradeDescription));
+        this.better_client$fastTradingButton.setTooltip(Tooltip.create(tradeDescription));
+
+        if (better_client$tradeState > 0) {
+            MerchantOffer offer = menu.getOffers().get(this.shopItem);
+
+            switch (better_client$tradeState) {
+                case 1:
+                    ItemStack item = offer.getItemCostA().itemStack();
+                    if (!item.isEmpty()){
+                        better_client$fillSlots(item);
+                    }
+                    offer.getItemCostB().ifPresent(cost -> {
+                        better_client$fillSlots(cost.itemStack());
+                    });
+                    better_client$tradeState = 2;
+                    break;
+
+                case 2:
+                    if (!this.menu.getSlot(2).getItem().isEmpty()) {
+
+                        slotClicked(this.menu.getSlot(2), 2, 0, ClickType.QUICK_MOVE);
+                        better_client$tradeState = 3;
+                    } else {
+                        better_client$tradeState = 0;
+                    }
+                    break;
+
+                case 3:
+                    if (offer.getUses() < offer.getMaxUses() && inventory.getFreeSlot() != -1) {
+                        better_client$tradeState = 1;
+                    } else {
+                        better_client$tradeState = 4;
+                    }
+                    break;
+                case 4:
+                    slotClicked(this.menu.getSlot(0), 0, 0, ClickType.QUICK_MOVE);
+                    slotClicked(this.menu.getSlot(1), 1, 0, ClickType.QUICK_MOVE);
+                    better_client$tradeState = 0;
+            }
+        }
+    }
+
+    @Unique
+    private void better_client$fillSlots(ItemStack item) {
+        int count = 0;
+        for (int i = 3; i < 39; i++) {
+            ItemStack invstack = this.menu.getSlot(i).getItem();
+            if (!ItemStack.isSameItemSameComponents(item, invstack)) {
+                continue;
+            }
+
+            count += invstack.getCount();
+
+            slotClicked(this.menu.getSlot(i), i, i, ClickType.PICKUP);
+            slotClicked(this.menu.getSlot(0), 0, 0, ClickType.PICKUP);
+
+            if (count > this.menu.getSlot(i).getItem().getMaxStackSize()) { // items still on the cursor
+                slotClicked(this.menu.getSlot(i), i, i, ClickType.PICKUP);
+                break;
+            } else if (count == this.menu.getSlot(i).getItem().getMaxStackSize()) {
+                break;
+            }
+        }
     }
 
     @Unique
@@ -115,7 +180,7 @@ public abstract class MerchantScreenMixin extends AbstractContainerScreen<Mercha
         MutableComponent component = Component.empty();
 
         if(enc_vanilla$isInactiveAlt(sellItem)) {
-            component.append(Component.translatable("message.enc_vanilla.fast_trading.alt").withStyle(ChatFormatting.RED));
+            component.append(Component.translatable("message.better_client.fast_trading.alt").withStyle(ChatFormatting.RED));
         }
 
         component.append(ItemUtils.getWrappedItemName(costA));
@@ -149,6 +214,8 @@ public abstract class MerchantScreenMixin extends AbstractContainerScreen<Mercha
     }
 
     @Shadow protected abstract void renderButtonArrows(GuiGraphics guiGraphics, MerchantOffer merchantOffer, int i, int j);
+
+    @Shadow public abstract boolean mouseClicked(double d, double e, int i);
 
     public MerchantScreenMixin(MerchantMenu abstractContainerMenu, Inventory inventory, Component component) {
         super(abstractContainerMenu, inventory, component);

@@ -5,6 +5,8 @@
   "message.better_client.book_save.title": "保存书籍",
   "message.better_client.book_save.question": "你确定要关闭书籍而不保存吗？",
 
+  "message.better_client.fast_trading.alt": "售卖的商品可损坏或不可堆叠，按住Alt键执行交易。\n",
+
   "yacl3.config.better_client:config": "Enchanting Vanilla",
   "yacl3.config.better_client:config.category.client": "客户端",
 

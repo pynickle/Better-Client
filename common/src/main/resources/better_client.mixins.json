@@ -6,15 +6,18 @@
   "client": [
     "BookEditScreenMixin",
     "ChatComponentMixin",
+    "CreateWorldScreenMixin",
+    "GameRendererMixin",
     "MerchantScreenMixin",
     "MinecraftMixin",
     "MultiLineEditBoxMixin",
     "OptionsMixin",
+    "PlayerTabOverlayMixin",
+    "SoundsOptionScreenMixin",
     "WorldListEntryMixin",
     "WorldOpenFlowsMixin"
   ],
   "mixins": [
-    "MerchantMenuMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -5,6 +5,8 @@
   "message.better_client.book_save.title": "Save Book",
   "message.better_client.book_save.question": "Are you sure you want to close the book without saving?",
 
+  "message.better_client.fast_trading.alt": "The items being sold may be damaged or non-stackable. Hold down the Alt key to execute the trade.\n",
+
   "yacl3.config.better_client:config": "Enchanting Vanilla",
   "yacl3.config.better_client:config.category.client": "Client",
 

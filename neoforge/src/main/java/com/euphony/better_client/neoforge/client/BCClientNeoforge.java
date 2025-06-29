@@ -4,8 +4,6 @@ import com.euphony.better_client.BetterClient;
 import com.euphony.better_client.client.events.BiomeTitleEvent;
 import com.euphony.better_client.client.property.AxolotlBucketVariant;
 import com.euphony.better_client.utils.Utils;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ChunkMap;
 import net.minecraft.server.packs.resources.PreparableReloadListener.PreparationBarrier;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.neoforged.api.distmarker.Dist;

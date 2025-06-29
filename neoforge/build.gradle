@@ -12,7 +12,7 @@ loom {
 
     runs {
         data {
-            data()
+            clientData()
             programArgs "--all", "--mod", "better_client"
             programArgs "--output", project(':common').file('src/generated/resources').getAbsolutePath()
             programArgs "--existing", project(':common').file('src/main/resources').getAbsolutePath()

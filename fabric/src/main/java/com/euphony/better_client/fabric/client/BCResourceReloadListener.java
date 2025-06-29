@@ -2,7 +2,6 @@ package com.euphony.better_client.fabric.client;
 
 import com.euphony.better_client.utils.Utils;
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
-import net.minecraft.client.gui.components.ChatComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 
