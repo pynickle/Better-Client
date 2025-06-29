@@ -81,7 +81,13 @@
   "yacl3.config.better_client:config.enableMusicPause.desc": "Now, when the game is paused, the music will also pause, just like in versions 1.21.5 and below.",
   "yacl3.config.better_client:config.pauseUiSound": "Pause UI Sound",
   "yacl3.config.better_client:config.pauseUiSound.desc": "Whether to pause sounds for source UI.",
-  
+
+  "yacl3.config.better_client:config.category.client.group.fast_trading": "Fast Trading",
+  "yacl3.config.better_client:config.enableFastTrading": "Enable Fast Trading",
+  "yacl3.config.better_client:config.enableFastTrading.desc": "Now you can trade all the items in your backpack with villagers with a single click.",
+  "yacl3.config.better_client:config.enableAltKey": "Enable Alt Key",
+  "yacl3.config.better_client:config.enableAltKey.desc": "When items are damageable or non-stackable, hold down the Alt key to trade.",
+
   "yacl3.config.better_client:config.category.client.group.other": "Other",
   "yacl3.config.better_client:config.enableBeeInfo": "Enable Bee Info",
   "yacl3.config.better_client:config.enableBeeInfo.desc": "You can now see the number of bees and the amount of honey in beehives and bee nests, just like the feature added natively in 1.21.2.",

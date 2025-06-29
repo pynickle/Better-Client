@@ -12,6 +12,7 @@
     "OptionsMixin"
   ],
   "mixins": [
+    "MerchantMenuMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -44,6 +44,7 @@ public class BetterClientConfig {
     private static final String FASTER_CLIMBING_GROUP = "faster_climbing";
     private static final String BOOK_SCROLL_GROUP = "book_scroll";
     public static final String MUSIC_PAUSE_GROUP = "music_pause";
+    public static final String FAST_TRADING_GROUP = "fast_trading";
     private static final String OTHER_GROUP = "other";
 
     @SerialEntry public boolean enableFadingNightVision = true;
@@ -81,6 +82,9 @@ public class BetterClientConfig {
 
     @SerialEntry public boolean enableMusicPause = true;
     @SerialEntry public boolean pauseUiSound = false;
+
+    @SerialEntry public boolean enableFastTrading = true;
+    @SerialEntry public boolean enableAltKey = true;
 
     @SerialEntry public boolean enableBeeInfo = true;
     @SerialEntry public boolean enableAxolotlBucketFix = true;
@@ -309,6 +313,20 @@ public class BetterClientConfig {
                     .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
                     .build();
 
+            // Fast Trading
+            Option<Boolean> enableFastTradingOpt = ConfigUtils.<Boolean>getGenericOption("enableFastTrading")
+                    .binding(defaults.enableFastTrading,
+                            () -> config.enableFastTrading,
+                            newVal -> config.enableFastTrading = newVal)
+                    .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
+                    .build();
+            Option<Boolean> enableAltKeyOpt = ConfigUtils.<Boolean>getGenericOption("enableAltKey")
+                    .binding(defaults.enableAltKey,
+                            () -> config.enableAltKey,
+                            newVal -> config.enableAltKey = newVal)
+                    .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
+                    .build();
+
             // Other
             Option<Boolean> enableBeeInfoOpt = ConfigUtils.<Boolean>getGenericOption("enableBeeInfo", "bee_info")
                     .binding(defaults.enableBeeInfo,
@@ -409,6 +427,13 @@ public class BetterClientConfig {
                                     .options(java.util.List.of(
                                             enableMusicPauseOpt,
                                             pauseUiSoundOpt
+                                    ))
+                                    .build())
+                            .group(OptionGroup.createBuilder()
+                                    .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, FAST_TRADING_GROUP))
+                                    .options(List.of(
+                                            enableFastTradingOpt,
+                                            enableAltKeyOpt
                                     ))
                                     .build())
                             .group(OptionGroup.createBuilder()

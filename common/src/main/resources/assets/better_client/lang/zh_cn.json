@@ -82,6 +82,12 @@
   "yacl3.config.better_client:config.pauseUiSound": "暂停 UI 声音",
   "yacl3.config.better_client:config.pauseUiSound.desc": "是否暂停声音源为 UI 的声音。",
 
+  "yacl3.config.better_client:config.category.client.group.fast_trading": "快速交易",
+  "yacl3.config.better_client:config.enableFastTrading": "启用快速交易",
+  "yacl3.config.better_client:config.enableFastTrading.desc": "现在，你可以通过单击即可与村民交易背包中的所有物品。",
+  "yacl3.config.better_client:config.enableAltKey": "启用 Alt 键",
+  "yacl3.config.better_client:config.enableAltKey.desc": "当物品可损坏或不可堆叠时，按住 Alt 键进行交易。",
+
   "yacl3.config.better_client:config.category.client.group.other": "其他",
   "yacl3.config.better_client:config.enableBeeInfo": "启用蜂巢信息",
   "yacl3.config.better_client:config.enableBeeInfo.desc": "您现在可以看到蜂箱和蜂巢中蜜蜂的数量和蜂蜜的含量，就像 1.21.2 中原版添加的功能一样。",
