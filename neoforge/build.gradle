@@ -2,6 +2,29 @@ plugins {
     id 'com.github.johnrengelman.shadow'
 }
 
+tasks.withType(net.fabricmc.loom.task.AbstractRunTask).configureEach {
+    doFirst {
+        // Step 1: Generate a filtered classpath file
+        def originalClasspath = file(".gradle/loom-cache/forge_minecraft_classpath.txt")
+        // We don't need this since we are using Mojmap
+        def filtered = originalClasspath.readLines().findAll { !it.contains("unprotect") }
+
+        def customClasspathFile = file("$buildDir/forge_minecraft_classpath.txt")
+        customClasspathFile.text = filtered.join(System.lineSeparator())
+
+        // Step 2: Patch launch.cfg
+        def launchCfgFile = file(".gradle/loom-cache/launch.cfg")
+        def lines = launchCfgFile.readLines().collect { line ->
+            if (line.contains("legacyClassPath.file=")) {
+                return line.replaceFirst(/(?<=legacyClassPath\.file=).*/, customClasspathFile.absolutePath.replace('\\', '/'))
+            }
+            return line
+        }
+        launchCfgFile.text = lines.join(System.lineSeparator())
+        println "Patched launch.cfg to use custom classpath file"
+    }
+}
+
 architectury {
     platformSetupLoomIde()
     neoForge()
@@ -37,8 +60,6 @@ configurations {
     runtimeClasspath.extendsFrom common
     developmentNeoForge.extendsFrom common
 
-    // Files in this configuration will be bundled into your mod using the Shadow plugin.
-    // Don't use the `shadow` configuration from the plugin itself as it's meant for excluding files.
     shadowBundle {
         canBeResolved = true
         canBeConsumed = false
@@ -57,7 +78,7 @@ dependencies {
 
     modImplementation "dev.architectury:architectury-neoforge:$rootProject.architectury_api_version"
 
-    implementation("dev.isxander:yet-another-config-lib:${yacl_version}+${minecraft_version}-neoforge"){
+    implementation("dev.isxander:yet-another-config-lib:${yacl_version}+1.21.6-neoforge"){
         exclude group: "net.neoforged.fancymodloader", module: "loader"
     }
 
