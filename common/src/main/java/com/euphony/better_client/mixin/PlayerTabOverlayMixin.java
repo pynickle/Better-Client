@@ -36,7 +36,7 @@ public abstract class PlayerTabOverlayMixin {
     private void redirectRenderPingIcon(
             PlayerTabOverlay overlay, GuiGraphics graphics, int width, int x, int y, PlayerInfo player) {
         if (BetterClientConfig.HANDLER.instance().enableBetterPingDisplay) {
-            enc_vanilla$render(minecraft, overlay, graphics, width, x, y, player);
+            better_client$render(minecraft, overlay, graphics, width, x, y, player);
         } else {
             overlay.renderPingIcon(graphics, width, x, y, player);
         }
@@ -47,7 +47,7 @@ public abstract class PlayerTabOverlayMixin {
     private static final int PING_TEXT_RENDER_OFFSET = -13;
 
     @Unique
-    private static void enc_vanilla$render(
+    private static void better_client$render(
             Minecraft mc,
             PlayerTabOverlay overlay,
             GuiGraphics graphics,

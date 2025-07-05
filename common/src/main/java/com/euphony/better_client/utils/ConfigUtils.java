@@ -2,6 +2,7 @@ package com.euphony.better_client.utils;
 
 import com.euphony.better_client.BetterClient;
 import dev.isxander.yacl3.api.*;
+import dev.isxander.yacl3.api.controller.BooleanControllerBuilder;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -18,6 +19,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public class ConfigUtils {
     public static final int IMG_WIDTH = 1920;
@@ -48,6 +51,22 @@ public class ConfigUtils {
     public static ButtonOption.Builder getButtonOption(String name) {
         return ButtonOption.createBuilder()
                 .name(getButtonOptionName(name))
+                .description(OptionDescription.createBuilder()
+                        .text(getDesc(name, null))
+                        .build()
+                );
+    }
+
+    public static Option<Boolean> buildBooleanOption(String name, boolean defaultValue, Supplier<Boolean> getter, Consumer<Boolean> setter) {
+        return getBooleanOption(name)
+                .binding(defaultValue, getter, setter)
+                .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
+                .build();
+    }
+
+    public static Option.Builder<Boolean> getBooleanOption(String name) {
+        return Option.<Boolean>createBuilder()
+                .name(getOptionName(name))
                 .description(OptionDescription.createBuilder()
                         .text(getDesc(name, null))
                         .build()

@@ -15,20 +15,20 @@ import java.io.File;
 @Mixin(Options.class)
 public class OptionsMixin implements IOptions {
     @Unique
-    private OptionInstance<Boolean> enc_vanilla$pauseMusic;
+    private OptionInstance<Boolean> better_client$pauseMusic;
 
     @Inject(method = "<init>", at = @At("TAIL"))
     public void init(Minecraft minecraft, File file, CallbackInfo ci) {
-        this.enc_vanilla$pauseMusic = OptionInstance.createBoolean("options.pauseMusic", true);
+        this.better_client$pauseMusic = OptionInstance.createBoolean("options.pauseMusic", true);
     }
 
     @Inject(method = "processOptions", at = @At("TAIL"))
     private void addModOptions(Options.FieldAccess fieldAccess, CallbackInfo ci) {
-        fieldAccess.process("pauseMusic", this.enc_vanilla$pauseMusic);
+        fieldAccess.process("pauseMusic", this.better_client$pauseMusic);
     }
 
     @Override
-    public OptionInstance<Boolean> enc_vanilla$pauseMusic() {
-        return this.enc_vanilla$pauseMusic;
+    public OptionInstance<Boolean> better_client$pauseMusic() {
+        return this.better_client$pauseMusic;
     }
 }

@@ -18,6 +18,10 @@
     "WorldOpenFlowsMixin"
   ],
   "mixins": [
+    "ClientSideClientSideMerchantMixin",
+    "MerchantMenuMixin",
+    "MerchantMixin",
+    "VillagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

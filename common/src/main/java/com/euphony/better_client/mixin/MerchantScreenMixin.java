@@ -1,8 +1,10 @@
 package com.euphony.better_client.mixin;
 
+import com.euphony.better_client.api.IMerchantMenu;
 import com.euphony.better_client.config.BetterClientConfig;
 import com.euphony.better_client.screen.widget.FastTradingButton;
 import com.euphony.better_client.utils.ItemUtils;
+import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Tooltip;
@@ -13,7 +15,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.protocol.game.ServerboundSelectTradePacket;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.MerchantMenu;
 import net.minecraft.world.item.ItemStack;
@@ -41,10 +42,10 @@ public abstract class MerchantScreenMixin extends AbstractContainerScreen<Mercha
     private FastTradingButton better_client$fastTradingButton;
 
     @Unique
-    private final Map<Integer, Component> enc_vanilla$tradeDescriptionCache = new HashMap<>();
+    private final Map<Integer, Component> better_client$tradeDescriptionCache = new HashMap<>();
 
     @Unique
-    private int enc_vanilla$lastCachedShopItem = -1;
+    private int better_client$lastCachedShopItem = -1;
 
     @Inject(method = "<init>", at = @At("TAIL"))
     public void addSpeedTradeButton(MerchantMenu merchantMenu, Inventory inventory, Component component, CallbackInfo ci) {
@@ -82,12 +83,12 @@ public abstract class MerchantScreenMixin extends AbstractContainerScreen<Mercha
             ItemStack slotA = menu.slots.get(0).getItem();
             ItemStack slotB = menu.slots.get(1).getItem();
 
-            int costACount = enc_vanilla$getItemTotalCountWithSlots(inventory, costA, slotA, slotB);
+            int costACount = better_client$getItemTotalCountWithSlots(inventory, costA, slotA, slotB);
             boolean hasEnoughCostA = costACount >= costA.getCount() && costA.getCount() > 0;
 
-            if (!enc_vanilla$isInactiveAlt(sellItem)) {
+            if (!better_client$isInactiveAlt(sellItem)) {
                 if (!merchantOffer.getCostB().isEmpty()) {
-                    int costBCount = enc_vanilla$getItemTotalCountWithSlots(inventory, costB, slotA, slotB);
+                    int costBCount = better_client$getItemTotalCountWithSlots(inventory, costB, slotA, slotB);
                     boolean hasEnoughCostB = costBCount >= costB.getCount() && costB.getCount() > 0;
 
                     this.better_client$fastTradingButton.active = hasEnoughCostA && hasEnoughCostB;
@@ -98,12 +99,12 @@ public abstract class MerchantScreenMixin extends AbstractContainerScreen<Mercha
         }
 
         Component tradeDescription;
-        if (this.enc_vanilla$lastCachedShopItem == this.shopItem && this.enc_vanilla$tradeDescriptionCache.containsKey(this.shopItem)) {
-            tradeDescription = this.enc_vanilla$tradeDescriptionCache.get(this.shopItem);
+        if (this.better_client$lastCachedShopItem == this.shopItem && this.better_client$tradeDescriptionCache.containsKey(this.shopItem)) {
+            tradeDescription = this.better_client$tradeDescriptionCache.get(this.shopItem);
         } else {
-            tradeDescription = enc_vanilla$generateTradeDescription(inventory.player, merchantOffer);
-            this.enc_vanilla$tradeDescriptionCache.put(this.shopItem, tradeDescription);
-            this.enc_vanilla$lastCachedShopItem = this.shopItem;
+            tradeDescription = better_client$generateTradeDescription(merchantOffer);
+            this.better_client$tradeDescriptionCache.put(this.shopItem, tradeDescription);
+            this.better_client$lastCachedShopItem = this.shopItem;
         }
 
         this.better_client$fastTradingButton.setTooltip(Tooltip.create(tradeDescription));
@@ -172,14 +173,14 @@ public abstract class MerchantScreenMixin extends AbstractContainerScreen<Mercha
     }
 
     @Unique
-    private Component enc_vanilla$generateTradeDescription(Player player, MerchantOffer offer) {
+    private Component better_client$generateTradeDescription(MerchantOffer offer) {
         ItemStack costA = offer.getCostA();
         ItemStack costB = offer.getCostB();
         ItemStack sellItem = offer.getResult();
 
         MutableComponent component = Component.empty();
 
-        if(enc_vanilla$isInactiveAlt(sellItem)) {
+        if(better_client$isInactiveAlt(sellItem)) {
             component.append(Component.translatable("message.better_client.fast_trading.alt").withStyle(ChatFormatting.RED));
         }
 
@@ -196,7 +197,7 @@ public abstract class MerchantScreenMixin extends AbstractContainerScreen<Mercha
     }
 
     @Unique
-    private int enc_vanilla$getItemTotalCountWithSlots(Inventory inventory, ItemStack itemStack, ItemStack... slots) {
+    private int better_client$getItemTotalCountWithSlots(Inventory inventory, ItemStack itemStack, ItemStack... slots) {
         int count = ItemUtils.getItemTotalCount(inventory, itemStack);
         for (ItemStack slot : slots) {
             if (slot != null && !slot.isEmpty() && ItemStack.isSameItemSameComponents(itemStack, slot)) {
@@ -207,7 +208,7 @@ public abstract class MerchantScreenMixin extends AbstractContainerScreen<Mercha
     }
 
     @Unique
-    private boolean enc_vanilla$isInactiveAlt(ItemStack sellItem) {
+    private boolean better_client$isInactiveAlt(ItemStack sellItem) {
         return BetterClientConfig.HANDLER.instance().enableAltKey
                 && !Screen.hasAltDown()
                 && (sellItem.isDamageableItem() || !sellItem.isStackable());
@@ -216,6 +217,8 @@ public abstract class MerchantScreenMixin extends AbstractContainerScreen<Mercha
     @Shadow protected abstract void renderButtonArrows(GuiGraphics guiGraphics, MerchantOffer merchantOffer, int i, int j);
 
     @Shadow public abstract boolean mouseClicked(double d, double e, int i);
+
+    @Shadow private int scrollOff;
 
     public MerchantScreenMixin(MerchantMenu abstractContainerMenu, Inventory inventory, Component component) {
         super(abstractContainerMenu, inventory, component);
@@ -236,5 +239,10 @@ public abstract class MerchantScreenMixin extends AbstractContainerScreen<Mercha
             guiGraphics.drawString(this.font, String.valueOf(merchantOffer.getMaxUses() - merchantOffer.getUses()), 0, 0, 0xFFFFFFFF, false);
             matrix3d.popMatrix();
         }
+    }
+
+    @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/trading/MerchantOffers;size()I", ordinal = 1))
+    private void disableOptionIfOutOfLevelRange(GuiGraphics guiGraphics, int i, int j, float f, CallbackInfo ci, @Local MerchantScreen.TradeOfferButton tradeOfferButton) {
+        tradeOfferButton.active = ((IMerchantMenu) this.menu).better_client$shouldAllowTrade(tradeOfferButton.getIndex() + scrollOff);
     }
 }

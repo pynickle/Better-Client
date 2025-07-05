@@ -114,5 +114,7 @@
   "yacl3.config.better_client:config.enableBookSaveConfirmation": "Enable Book Save Confirmation",
   "yacl3.config.better_client:config.enableBookSaveConfirmation.desc": "When you make changes to the content of a book and close it without saving, a prompt will pop up reminding you to save.",
   "yacl3.config.better_client:config.enableDisplayRemainingSales": "Enable Display Remaining Sales",
-  "yacl3.config.better_client:config.enableDisplayRemainingSales.desc": "Display the remaining number of sales available under each button arrow on the trading screen."
+  "yacl3.config.better_client:config.enableDisplayRemainingSales.desc": "Display the remaining number of sales available under each button arrow on the trading screen.",
+  "yacl3.config.better_client:config.enableVisibleTrade": "Enable Visible Trade",
+  "yacl3.config.better_client:config.enableVisibleTrade.desc": "Now all trades are displayed at the beginning, without having to wait until after the upgrade."
 }

@@ -33,10 +33,10 @@ public abstract class BookViewScreenMixin extends Screen {
 
         double scrollDelta = verticalAmount + horizontalAmount;
 
-        double enc_vanilla$speedFactor = 1.0;
-        if (hasControlDown()) enc_vanilla$speedFactor *= BetterClientConfig.HANDLER.instance().ctrlSpeedMultiplier;
+        double better_client$speedFactor = 1.0;
+        if (hasControlDown()) better_client$speedFactor *= BetterClientConfig.HANDLER.instance().ctrlSpeedMultiplier;
 
-        better_client$progress += scrollDelta * enc_vanilla$speedFactor;
+        better_client$progress += scrollDelta * better_client$speedFactor;
 
         boolean pageTurned = false;
         if (better_client$progress >= 1.0) {

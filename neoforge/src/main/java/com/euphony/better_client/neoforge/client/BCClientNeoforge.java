@@ -29,7 +29,7 @@ public class BCClientNeoforge {
 
     @SubscribeEvent
     public static void onRegisterGuiLayers(RegisterGuiLayersEvent event) {
-        event.registerAbove(VanillaGuiLayers.TITLE, Utils.prefix("overlay"), BiomeTitleEvent::renderBiomeInfo);
+        event.registerAbove(VanillaGuiLayers.TITLE, Utils.prefix("biome_title"), BiomeTitleEvent::renderBiomeInfo);
     }
 
     @SubscribeEvent

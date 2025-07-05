@@ -6,3 +6,5 @@ accessible field net/minecraft/world/inventory/MerchantMenu tradeContainer Lnet/
 accessible field net/minecraft/client/gui/screens/inventory/AbstractContainerScreen hoveredSlot Lnet/minecraft/world/inventory/Slot;
 accessible field net/minecraft/world/inventory/Slot slot I
 accessible method net/minecraft/client/gui/screens/inventory/AbstractContainerScreen slotClicked (Lnet/minecraft/world/inventory/Slot;IILnet/minecraft/world/inventory/ClickType;)V
+accessible class net/minecraft/client/gui/screens/inventory/MerchantScreen$TradeOfferButton
+accessible method net/minecraft/world/entity/npc/Villager updateTrades ()V

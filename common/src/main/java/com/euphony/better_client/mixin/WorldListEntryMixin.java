@@ -34,7 +34,7 @@ public class WorldListEntryMixin {
         if(BetterClientConfig.HANDLER.instance().enableNoExperimentalWarning
                 && !BetterClientConfig.HANDLER.instance().enableExperimentalDisplay) {
             if (levelSummary.info == null) {
-                levelSummary.info = this.enc_vanilla$createInfo(levelSummary);
+                levelSummary.info = this.better_client$createInfo(levelSummary);
             }
 
             return levelSummary.info;
@@ -43,7 +43,7 @@ public class WorldListEntryMixin {
     }
 
     @Unique
-    private Component enc_vanilla$createInfo(LevelSummary levelSummary) {
+    private Component better_client$createInfo(LevelSummary levelSummary) {
         if (levelSummary.isLocked()) {
             return Component.translatable("selectWorld.locked").withStyle(ChatFormatting.RED);
         } else if (levelSummary.requiresManualConversion()) {
