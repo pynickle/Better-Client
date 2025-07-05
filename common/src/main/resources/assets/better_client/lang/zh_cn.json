@@ -7,6 +7,10 @@
 
   "message.better_client.fast_trading.alt": "售卖的商品可损坏或不可堆叠，按住Alt键执行交易。\n",
 
+  "category.better_client.keymapping": "更好的客户端",
+
+  "key.better_client.bundle_up": "一键收纳",
+
   "yacl3.config.better_client:config": "Enchanting Vanilla",
   "yacl3.config.better_client:config.category.client": "客户端",
 
@@ -95,6 +99,10 @@
   "yacl3.config.better_client:config.enableNoExperimentalWarning.desc": "创建实验性世界和进入实验性世界的警告将不再会出现。",
   "yacl3.config.better_client:config.enableExperimentalDisplay": "启用实验性文字显示",
   "yacl3.config.better_client:config.enableExperimentalDisplay.desc": "世界选择列表中的实验性字样不会隐藏。",
+
+  "yacl3.config.better_client:config.category.client.group.bundle_up": "一键收纳",
+  "yacl3.config.better_client:config.enableBundleUp": "启用一键收纳",
+  "yacl3.config.better_client:config.enableBundleUp.desc": "现在你只需要将鼠标悬浮在收纳袋上并按下R键即可一键收纳物品，最大限度节省你的背包空间。",
 
   "yacl3.config.better_client:config.category.client.group.other": "其他",
   "yacl3.config.better_client:config.enableBeeInfo": "启用蜂巢信息",

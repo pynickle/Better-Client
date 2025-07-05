@@ -17,5 +17,7 @@ public class BCClientEvents {
         ClientLifecycleEvent.CLIENT_LEVEL_LOAD.register(BiomeTitleEvent::clientLevelLoad);
 
         TickEvent.PLAYER_PRE.register(FasterClimbingEvent::playerPre);
+
+        // ClientScreenInputEvent.KEY_RELEASED_POST.register(BundleUpEvent::bundleUp);
     }
 }

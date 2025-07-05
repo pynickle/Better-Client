@@ -1,6 +1,7 @@
 package com.euphony.better_client;
 
 import com.euphony.better_client.client.BCClientEvents;
+import com.euphony.better_client.client.init.KeyMapping;
 import com.euphony.better_client.config.BetterClientConfig;
 
 public final class BetterClient {
@@ -8,6 +9,7 @@ public final class BetterClient {
 
     public static void init() {
         BetterClientConfig.load();
+        KeyMapping.registerKeyMapping();
 
         BCClientEvents.init();
     }

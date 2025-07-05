@@ -46,6 +46,7 @@ public class BetterClientConfig {
     public static final String MUSIC_PAUSE_GROUP = "music_pause";
     public static final String FAST_TRADING_GROUP = "fast_trading";
     public static final String NO_EXPERIMENTAL_WARNING_GROUP = "no_experimental_warning";
+    public static final String BUNDLE_UP_GROUP = "bundle_up";
     private static final String OTHER_GROUP = "other";
 
     @SerialEntry public boolean enableFadingNightVision = true;
@@ -89,6 +90,8 @@ public class BetterClientConfig {
 
     @SerialEntry public boolean enableNoExperimentalWarning = true;
     @SerialEntry public boolean enableExperimentalDisplay = true;
+
+    @SerialEntry public boolean enableBundleUp = true;
 
     @SerialEntry public boolean enableBeeInfo = true;
     @SerialEntry public boolean enableAxolotlBucketFix = true;
@@ -345,6 +348,14 @@ public class BetterClientConfig {
                     .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
                     .build();
 
+            // Bundle Up
+            Option<Boolean> enableBundleUpOpt = ConfigUtils.<Boolean>getGenericOption("enableBundleUp")
+                    .binding(defaults.enableBundleUp,
+                            () -> config.enableBundleUp,
+                            newVal -> config.enableBundleUp = newVal)
+                    .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
+                    .build();
+
             // Other
             Option<Boolean> enableBeeInfoOpt = ConfigUtils.<Boolean>getGenericOption("enableBeeInfo", "bee_info")
                     .binding(defaults.enableBeeInfo,
@@ -459,6 +470,12 @@ public class BetterClientConfig {
                                     .options(List.of(
                                             enableNoExperimentalWarningOpt,
                                             enableExperimentalDisplayOpt
+                                    ))
+                                    .build())
+                            .group(OptionGroup.createBuilder()
+                                    .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, BUNDLE_UP_GROUP))
+                                    .options(List.of(
+                                            enableBundleUpOpt
                                     ))
                                     .build())
                             .group(OptionGroup.createBuilder()
