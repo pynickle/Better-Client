@@ -1,7 +1,6 @@
 package com.euphony.better_client.mixin;
 
 import com.euphony.better_client.api.IOptions;
-import com.euphony.better_client.config.BetterClientConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
 import net.minecraft.client.sounds.SoundManager;
@@ -12,6 +11,8 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import static com.euphony.better_client.BetterClient.config;
 
 @Mixin(Minecraft.class)
 public abstract class MinecraftMixin {
@@ -24,8 +25,8 @@ public abstract class MinecraftMixin {
                     target = "Lnet/minecraft/client/Minecraft;setScreen(Lnet/minecraft/client/gui/screens/Screen;)V",
                     ordinal = 0))
     private void onPauseGame(boolean bl, CallbackInfo ci) {
-        if(BetterClientConfig.HANDLER.instance().enableMusicPause && ((IOptions)this.options).better_client$pauseMusic().get()) {
-            if(BetterClientConfig.HANDLER.instance().pauseUiSound) {
+        if(config.enableMusicPause && ((IOptions)this.options).better_client$pauseMusic().get()) {
+            if(config.pauseUiSound) {
                 this.soundManager.pauseAllExcept();
             } else {
                 this.soundManager.pauseAllExcept(SoundSource.UI);

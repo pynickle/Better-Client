@@ -1,6 +1,5 @@
 package com.euphony.better_client.mixin;
 
-import com.euphony.better_client.config.BetterClientConfig;
 import com.euphony.better_client.utils.ColorUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -14,6 +13,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.Redirect;
+
+import static com.euphony.better_client.BetterClient.config;
 
 @Mixin(PlayerTabOverlay.class)
 public abstract class PlayerTabOverlayMixin {
@@ -35,7 +36,7 @@ public abstract class PlayerTabOverlayMixin {
                             "Lnet/minecraft/client/gui/components/PlayerTabOverlay;renderPingIcon(Lnet/minecraft/client/gui/GuiGraphics;IIILnet/minecraft/client/multiplayer/PlayerInfo;)V"))
     private void redirectRenderPingIcon(
             PlayerTabOverlay overlay, GuiGraphics graphics, int width, int x, int y, PlayerInfo player) {
-        if (BetterClientConfig.HANDLER.instance().enableBetterPingDisplay) {
+        if (config.enableBetterPingDisplay) {
             better_client$render(minecraft, overlay, graphics, width, x, y, player);
         } else {
             overlay.renderPingIcon(graphics, width, x, y, player);
@@ -61,13 +62,13 @@ public abstract class PlayerTabOverlayMixin {
         int pingTextColor = ColorUtils.getPingTextColor(player.getLatency());
 
         int textX = width + x - pingStringWidth - 1;
-        if (BetterClientConfig.HANDLER.instance().enableDefaultPingBars) {
+        if (config.enableDefaultPingBars) {
             textX += PING_TEXT_RENDER_OFFSET;
         }
 
         graphics.drawString(mc.font, pingString, textX, y, pingTextColor);
 
-        if (BetterClientConfig.HANDLER.instance().enableDefaultPingBars) {
+        if (config.enableDefaultPingBars) {
             overlay.renderPingIcon(graphics, width, x, y, player);
         }
     }

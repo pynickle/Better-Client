@@ -1,6 +1,5 @@
 package com.euphony.better_client.client.events;
 
-import com.euphony.better_client.config.BetterClientConfig;
 import com.euphony.better_client.utils.Utils;
 import net.minecraft.Util;
 import net.minecraft.client.DeltaTracker;
@@ -23,6 +22,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.StringJoiner;
 
+import static com.euphony.better_client.BetterClient.config;
+
 public class BiomeTitleEvent {
     public static Biome previousBiome;
     public static ResourceKey<Biome> displayBiome;
@@ -44,7 +45,7 @@ public class BiomeTitleEvent {
                 }
                 else if (fadeTimer > 0) {
                     fadeTimer--;
-                    alpha = (int) (255F / (float) BetterClientConfig.HANDLER.instance().fadeOutTime * fadeTimer);
+                    alpha = (int) (255F / (float) config.fadeOutTime * fadeTimer);
                 }
                 else {
                     if (cooldownTime > 0) {
@@ -53,13 +54,13 @@ public class BiomeTitleEvent {
                 }
             }
             else {
-                if(fadeTimer < BetterClientConfig.HANDLER.instance().fadeInTime) {
+                if(fadeTimer < config.fadeInTime) {
                     fadeTimer++;
-                    alpha = (int) (255F / (float) BetterClientConfig.HANDLER.instance().fadeInTime * fadeTimer);
+                    alpha = (int) (255F / (float) config.fadeInTime * fadeTimer);
                 } else {
-                    fadeTimer = BetterClientConfig.HANDLER.instance().fadeOutTime;
+                    fadeTimer = config.fadeOutTime;
                     fadingIn = false;
-                    displayTime = (int) (BetterClientConfig.HANDLER.instance().displayDuration * 20);
+                    displayTime = (int) (config.displayDuration * 20);
                     alpha = 255;
                 }
             }
@@ -67,7 +68,7 @@ public class BiomeTitleEvent {
     }
 
     public static void renderBiomeInfo(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
-        if (complete && BetterClientConfig.HANDLER.instance().enableBiomeTitle) {
+        if (complete && config.enableBiomeTitle) {
             Minecraft mc = Minecraft.getInstance();
 
             if (hideInF1(mc) || hideInF3(mc)) return;
@@ -87,13 +88,13 @@ public class BiomeTitleEvent {
                 Biome biome = biomeHolder.value();
 
                 boolean isPlayerUnderground = mc.level.dimensionType().hasSkyLight() && !mc.level.canSeeSky(pos);
-                boolean shouldUpdate = BetterClientConfig.HANDLER.instance().enableUndergroundUpdate || !isPlayerUnderground;
+                boolean shouldUpdate = config.enableUndergroundUpdate || !isPlayerUnderground;
 
                 if (previousBiome != biome) {
                     previousBiome = biome;
                     if(cooldownTime == 0 && shouldUpdate) {
                         biomeHolder.unwrapKey().ifPresent(key -> {
-                            cooldownTime = (int) (BetterClientConfig.HANDLER.instance().cooldownTime * 20);
+                            cooldownTime = (int) (config.cooldownTime * 20);
                             displayBiome = key;
 
                             displayTime = 0;
@@ -105,7 +106,7 @@ public class BiomeTitleEvent {
 
                 if (alpha > 0) {
                     Font font = mc.font;
-                    float scale = (float) BetterClientConfig.HANDLER.instance().scale;
+                    float scale = (float) config.scale;
 
                     Matrix3x2fStack pose = guiGraphics.pose();
                     pose.pushMatrix();
@@ -115,7 +116,7 @@ public class BiomeTitleEvent {
                     Component biomeName = getBiomeName(displayBiome);
                     int textWidth = font.width(biomeName);
 
-                    int y = - font.wordWrapHeight(biomeName.getString(), 999) / 2 + BetterClientConfig.HANDLER.instance().yOffset;
+                    int y = - font.wordWrapHeight(biomeName.getString(), 999) / 2 + config.yOffset;
 
                     guiGraphics.drawString(font, biomeName, (-textWidth / 2), y, 0xffffff | (alpha << 24), true);
                     pose.popMatrix();
@@ -144,7 +145,7 @@ public class BiomeTitleEvent {
         });
 
         MutableComponent displayName = name.copy();
-        if (BetterClientConfig.HANDLER.instance().enableModName) {
+        if (config.enableModName) {
             String modName = getModName(location);
 
             if (modName != null)
@@ -154,11 +155,11 @@ public class BiomeTitleEvent {
     }
 
     private static boolean hideInF1(Minecraft mc) {
-        return mc.options.hideGui && BetterClientConfig.HANDLER.instance().hideInF1;
+        return mc.options.hideGui && config.hideInF1;
     }
 
     private static boolean hideInF3(Minecraft mc) {
-        return mc.getDebugOverlay().showDebugScreen() && BetterClientConfig.HANDLER.instance().hideInF3;
+        return mc.getDebugOverlay().showDebugScreen() && config.hideInF3;
     }
 
     private static String snakeCaseToEnglish(String biomePath) {

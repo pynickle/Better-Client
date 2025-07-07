@@ -1,6 +1,5 @@
 package com.euphony.better_client.mixin;
 
-import com.euphony.better_client.config.BetterClientConfig;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.worldselection.WorldSelectionList;
 import net.minecraft.network.chat.CommonComponents;
@@ -12,12 +11,14 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
+import static com.euphony.better_client.BetterClient.config;
+
 @Mixin(WorldSelectionList.WorldListEntry.class)
 public class WorldListEntryMixin {
     @Redirect(method = "getNarration", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/storage/LevelSummary;isExperimental()Z"))
     private boolean disableExperimentalWarning(LevelSummary instance) {
-        if(BetterClientConfig.HANDLER.instance().enableNoExperimentalWarning
-                && !BetterClientConfig.HANDLER.instance().enableExperimentalDisplay) {
+        if(config.enableNoExperimentalWarning
+                && !config.enableExperimentalDisplay) {
             return false;
         }
         return instance.isExperimental();
@@ -31,8 +32,8 @@ public class WorldListEntryMixin {
             )
     )
     private Component modifyInfo(LevelSummary levelSummary) {
-        if(BetterClientConfig.HANDLER.instance().enableNoExperimentalWarning
-                && !BetterClientConfig.HANDLER.instance().enableExperimentalDisplay) {
+        if(config.enableNoExperimentalWarning
+                && !config.enableExperimentalDisplay) {
             if (levelSummary.info == null) {
                 levelSummary.info = this.better_client$createInfo(levelSummary);
             }

@@ -1,6 +1,5 @@
 package com.euphony.better_client.mixin;
 
-import com.euphony.better_client.config.BetterClientConfig;
 import net.minecraft.client.OptionInstance;
 import net.minecraft.client.Options;
 import net.minecraft.client.gui.screens.Screen;
@@ -11,6 +10,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import static com.euphony.better_client.BetterClient.config;
 
 
 @Mixin(SoundOptionsScreen.class)
@@ -23,7 +24,7 @@ public abstract class SoundsOptionScreenMixin extends OptionsSubScreen {
 
     @Inject(method = "addOptions", at = @At("TAIL"))
     private void addOptions(CallbackInfo ci) {
-        if(BetterClientConfig.HANDLER.instance().enableMusicPause) {
+        if(config.enableMusicPause) {
             this.list.addSmall(pauseMusic);
         }
     }

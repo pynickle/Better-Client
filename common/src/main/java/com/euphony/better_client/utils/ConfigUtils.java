@@ -1,6 +1,7 @@
 package com.euphony.better_client.utils;
 
 import com.euphony.better_client.BetterClient;
+import com.euphony.better_client.utils.enums.DescComponent;
 import dev.isxander.yacl3.api.*;
 import dev.isxander.yacl3.api.controller.BooleanControllerBuilder;
 import net.minecraft.client.Minecraft;

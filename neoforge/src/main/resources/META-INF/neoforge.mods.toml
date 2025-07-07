@@ -37,7 +37,7 @@ side = "BOTH"
 [[dependencies.better_client]]
 modId = "yet_another_config_lib_v3"
 mandatory = true
-type = "required"
+type = "optional"
 versionRange = "[3.7.1,)"
 ordering = "NONE"
 side = "CLIENT"

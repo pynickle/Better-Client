@@ -11,6 +11,13 @@
 
   "key.better_client.bundle_up": "一键收纳",
 
+  "info.better_client.durability_tooltip.number.durability_hint": "耐久度：%s",
+  "info.better_client.durability_tooltip.number.full_durability": "%d",
+  "info.better_client.durability_tooltip.number.damaged": "%1$d / %2$d",
+
+  "text.better_client.help.missing": "§c无法打开配置界面",
+  "text.better_client.desc.help.missing": "§7安装 YACL 模组来访问游戏内配置界面。",
+
   "yacl3.config.better_client:config": "Enchanting Vanilla",
   "yacl3.config.better_client:config.category.client": "客户端",
 
@@ -103,6 +110,14 @@
   "yacl3.config.better_client:config.category.client.group.bundle_up": "一键收纳",
   "yacl3.config.better_client:config.enableBundleUp": "启用一键收纳",
   "yacl3.config.better_client:config.enableBundleUp.desc": "现在你只需要将鼠标悬浮在收纳袋上并按下R键即可一键收纳物品，最大限度节省你的背包空间。",
+
+  "yacl3.config.better_client:config.category.client.group.durability_tooltip": "耐久度提示",
+  "yacl3.config.better_client:config.enableDurabilityTooltip": "启用耐久度提示",
+  "yacl3.config.better_client:config.enableDurabilityTooltip.desc": "可损坏物品的提示现在会显示耐久度信息。",
+  "yacl3.config.better_client:config.showDurabilityWhenNotDamaged": "未损坏时显示耐久度",
+  "yacl3.config.better_client:config.showDurabilityWhenNotDamaged.desc": "未损坏的物品也会显示耐久度。",
+  "yacl3.config.better_client:config.showDurabilityHint": "显示耐久度前缀",
+  "yacl3.config.better_client:config.showDurabilityHint.desc": "耐久度前缀将显示。",
 
   "yacl3.config.better_client:config.category.client.group.other": "其他",
   "yacl3.config.better_client:config.enableBeeInfo": "启用蜂巢信息",

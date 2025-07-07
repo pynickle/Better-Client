@@ -1,7 +1,6 @@
 package com.euphony.better_client.mixin;
 
 import com.euphony.better_client.api.IMultiLineEditBox;
-import com.euphony.better_client.config.BetterClientConfig;
 import net.minecraft.client.gui.components.MultiLineEditBox;
 import net.minecraft.client.gui.screens.ConfirmScreen;
 import net.minecraft.client.gui.screens.Screen;
@@ -15,6 +14,8 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import static com.euphony.better_client.BetterClient.config;
 
 @Mixin(BookEditScreen.class)
 public abstract class BookEditScreenMixin extends Screen {
@@ -48,7 +49,7 @@ public abstract class BookEditScreenMixin extends Screen {
 
     @Override
     public void onClose() {
-        if(!BetterClientConfig.HANDLER.instance().enableBookSaveConfirmation) {
+        if(!config.enableBookSaveConfirmation) {
             super.onClose();
             return;
         }
@@ -70,12 +71,12 @@ public abstract class BookEditScreenMixin extends Screen {
 
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double horizontalAmount, double verticalAmount) {
-        if(!BetterClientConfig.HANDLER.instance().enableBookScroll) return super.mouseScrolled(mouseX, mouseY, horizontalAmount, verticalAmount);
+        if(!config.enableBookScroll) return super.mouseScrolled(mouseX, mouseY, horizontalAmount, verticalAmount);
 
         double scrollDelta = verticalAmount + horizontalAmount;
 
         double better_client$speedFactor = 1.0;
-        if (hasControlDown()) better_client$speedFactor *= BetterClientConfig.HANDLER.instance().ctrlSpeedMultiplier;
+        if (hasControlDown()) better_client$speedFactor *= config.ctrlSpeedMultiplier;
 
         better_client$progress += scrollDelta * better_client$speedFactor;
 
@@ -96,7 +97,7 @@ public abstract class BookEditScreenMixin extends Screen {
             }
         }
 
-        if (pageTurned && BetterClientConfig.HANDLER.instance().enablePageTurnSound) {
+        if (pageTurned && config.enablePageTurnSound) {
             this.minecraft.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.BOOK_PAGE_TURN, 1.0F));
         }
         return true;

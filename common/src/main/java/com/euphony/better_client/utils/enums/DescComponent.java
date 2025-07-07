@@ -1,4 +1,4 @@
-package com.euphony.better_client.utils;
+package com.euphony.better_client.utils.enums;
 
 import com.euphony.better_client.BetterClient;
 import net.minecraft.ChatFormatting;

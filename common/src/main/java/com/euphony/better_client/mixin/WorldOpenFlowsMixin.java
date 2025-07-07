@@ -1,6 +1,5 @@
 package com.euphony.better_client.mixin;
 
-import com.euphony.better_client.config.BetterClientConfig;
 import com.mojang.serialization.Lifecycle;
 import net.minecraft.client.gui.screens.worldselection.WorldOpenFlows;
 import net.minecraft.world.level.storage.WorldData;
@@ -9,11 +8,13 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
+import static com.euphony.better_client.BetterClient.config;
+
 @Mixin(WorldOpenFlows.class)
 public class WorldOpenFlowsMixin {
     @ModifyVariable(method = "confirmWorldCreation", at = @At("HEAD"), argsOnly = true)
     private static Lifecycle alwaysStable(Lifecycle lifecycle) {
-        if(BetterClientConfig.HANDLER.instance().enableNoExperimentalWarning) {
+        if(config.enableNoExperimentalWarning) {
             return Lifecycle.stable();
         }
         return lifecycle;
@@ -27,7 +28,7 @@ public class WorldOpenFlowsMixin {
             )
     )
     private Lifecycle alwaysReturnStableLifecycle(WorldData worldData) {
-        if(BetterClientConfig.HANDLER.instance().enableNoExperimentalWarning) {
+        if(config.enableNoExperimentalWarning) {
             return Lifecycle.stable();
         }
         return worldData.worldGenSettingsLifecycle();

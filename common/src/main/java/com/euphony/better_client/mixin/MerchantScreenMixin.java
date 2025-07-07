@@ -1,7 +1,6 @@
 package com.euphony.better_client.mixin;
 
 import com.euphony.better_client.api.IMerchantMenu;
-import com.euphony.better_client.config.BetterClientConfig;
 import com.euphony.better_client.screen.widget.FastTradingButton;
 import com.euphony.better_client.utils.ItemUtils;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -31,6 +30,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.euphony.better_client.BetterClient.config;
+
 @Mixin(MerchantScreen.class)
 public abstract class MerchantScreenMixin extends AbstractContainerScreen<MerchantMenu> {
     @Shadow private int shopItem;
@@ -49,7 +50,7 @@ public abstract class MerchantScreenMixin extends AbstractContainerScreen<Mercha
 
     @Inject(method = "<init>", at = @At("TAIL"))
     public void addSpeedTradeButton(MerchantMenu merchantMenu, Inventory inventory, Component component, CallbackInfo ci) {
-        if(!BetterClientConfig.HANDLER.instance().enableFastTrading) return;
+        if(!config.enableFastTrading) return;
 
         this.better_client$fastTradingButton = new FastTradingButton( this.leftPos + 350,this.topPos + 77, 18, 18, (button) -> {
             this.menu.setSelectionHint(this.shopItem);
@@ -67,7 +68,7 @@ public abstract class MerchantScreenMixin extends AbstractContainerScreen<Mercha
 
         this.better_client$fastTradingButton.active = false;
 
-        if(!BetterClientConfig.HANDLER.instance().enableFastTrading) return;
+        if(!config.enableFastTrading) return;
 
         Inventory inventory = this.minecraft.player.getInventory();
         MerchantOffer merchantOffer = menu.getOffers().get(this.shopItem);
@@ -209,7 +210,7 @@ public abstract class MerchantScreenMixin extends AbstractContainerScreen<Mercha
 
     @Unique
     private boolean better_client$isInactiveAlt(ItemStack sellItem) {
-        return BetterClientConfig.HANDLER.instance().enableAltKey
+        return config.enableAltKey
                 && !Screen.hasAltDown()
                 && (sellItem.isDamageableItem() || !sellItem.isStackable());
     }
@@ -227,7 +228,7 @@ public abstract class MerchantScreenMixin extends AbstractContainerScreen<Mercha
     @Redirect(method = "render", at = @At(value = "INVOKE",
             target = "Lnet/minecraft/client/gui/screens/inventory/MerchantScreen;renderButtonArrows(Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/world/item/trading/MerchantOffer;II)V"))
     private void render(MerchantScreen instance, GuiGraphics guiGraphics, MerchantOffer merchantOffer, int k, int p) {
-        if(!BetterClientConfig.HANDLER.instance().enableDisplayRemainingSales) {
+        if(!config.enableDisplayRemainingSales) {
             renderButtonArrows(guiGraphics, merchantOffer, k, p);
         } else {
             renderButtonArrows(guiGraphics, merchantOffer, k, p - 1);

@@ -1,6 +1,5 @@
 package com.euphony.better_client.mixin;
 
-import com.euphony.better_client.config.BetterClientConfig;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.ChatComponent;
@@ -12,6 +11,8 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import static com.euphony.better_client.BetterClient.config;
+
 @Mixin(ChatComponent.class)
 public class ChatComponentMixin {
     @ModifyExpressionValue(
@@ -21,8 +22,8 @@ public class ChatComponentMixin {
             at = @At(value = "CONSTANT", args = "intValue=100")
     )
     private int moreMessages(int chatMaxMessages) {
-        if(BetterClientConfig.HANDLER.instance().enableLongerChatHistory) {
-            return BetterClientConfig.HANDLER.instance().chatMaxMessages;
+        if(config.enableLongerChatHistory) {
+            return config.chatMaxMessages;
         }
         return chatMaxMessages;
     }
@@ -33,7 +34,7 @@ public class ChatComponentMixin {
             cancellable = true
     )
     public void clear(boolean clearHistory, CallbackInfo ci) {
-        if (clearHistory && BetterClientConfig.HANDLER.instance().enableChatHistoryRetention) {
+        if (clearHistory && config.enableChatHistoryRetention) {
             ci.cancel();
         }
     }

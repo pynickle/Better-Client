@@ -1,8 +1,7 @@
 package com.euphony.better_client.client.events;
 
-import com.euphony.better_client.config.BetterClientConfig;
 import com.euphony.better_client.keymapping.BCKeyMappings;
-import com.euphony.better_client.utils.BundleCandidate;
+import com.euphony.better_client.utils.records.BundleCandidate;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
@@ -22,10 +21,12 @@ import net.minecraft.world.item.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.euphony.better_client.BetterClient.config;
+
 @Environment(EnvType.CLIENT)
 public class BundleUpEvent {
     public static void bundleUp(Minecraft minecraft, Screen screen, int keyCode, int scanCode, int modifiers) {
-        if(!BCKeyMappings.BUNDLE_UP.matches(keyCode, scanCode) || !BetterClientConfig.HANDLER.instance().enableBundleUp) return;
+        if(!BCKeyMappings.BUNDLE_UP.matches(keyCode, scanCode) || !config.enableBundleUp) return;
 
         List<BundleCandidate> candidates = new ArrayList<>();
 

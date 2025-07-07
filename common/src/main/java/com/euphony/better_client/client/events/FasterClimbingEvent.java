@@ -1,22 +1,23 @@
 package com.euphony.better_client.client.events;
 
-import com.euphony.better_client.config.BetterClientConfig;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 
+import static com.euphony.better_client.BetterClient.config;
+
 public class FasterClimbingEvent {
 
     public static void playerPre(Player player) {
-        if(!player.level().isClientSide || !BetterClientConfig.HANDLER.instance().enableFasterClimbing) return;
+        if(!player.level().isClientSide || !config.enableFasterClimbing) return;
 
         if (player.onClimbable() && !player.isCrouching()) {
             Climber climber = new Climber(player);
 
-            if (BetterClientConfig.HANDLER.instance().enableFasterDownward && climber.isFacingDownward()
+            if (config.enableFasterDownward && climber.isFacingDownward()
                     && !climber.isMovingForward() && !climber.isMovingBackward()) {
                 climber.moveDownFaster();
-            } else if (BetterClientConfig.HANDLER.instance().enableFasterUpward && climber.isFacingUpward()
+            } else if (config.enableFasterUpward && climber.isFacingUpward()
                     && climber.isMovingForward()) {
                 climber.moveUpFaster();
             }
@@ -41,7 +42,7 @@ public class FasterClimbingEvent {
             }
 
             private float getSpeed() {
-                return (float) (Math.sin(Math.abs(player.getXRot() * Math.PI / 180F)) * BetterClientConfig.HANDLER.instance().speedMultiplier / 10);
+                return (float) (Math.sin(Math.abs(player.getXRot() * Math.PI / 180F)) * config.speedMultiplier / 10);
             }
 
             public void moveUpFaster() {

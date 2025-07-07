@@ -1,4 +1,4 @@
-package com.euphony.better_client.utils;
+package com.euphony.better_client.utils.records;
 
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;

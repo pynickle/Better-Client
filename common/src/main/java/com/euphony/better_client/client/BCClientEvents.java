@@ -2,10 +2,12 @@ package com.euphony.better_client.client;
 
 import com.euphony.better_client.client.events.BeautifiedChatEvent;
 import com.euphony.better_client.client.events.BiomeTitleEvent;
+import com.euphony.better_client.client.events.DurabilityTooltipEvent;
 import com.euphony.better_client.client.events.FasterClimbingEvent;
 import dev.architectury.event.events.client.ClientChatEvent;
 import dev.architectury.event.events.client.ClientLifecycleEvent;
 import dev.architectury.event.events.client.ClientTickEvent;
+import dev.architectury.event.events.client.ClientTooltipEvent;
 import dev.architectury.event.events.common.TickEvent;
 
 public class BCClientEvents {
@@ -17,5 +19,7 @@ public class BCClientEvents {
         ClientLifecycleEvent.CLIENT_LEVEL_LOAD.register(BiomeTitleEvent::clientLevelLoad);
 
         TickEvent.PLAYER_PRE.register(FasterClimbingEvent::playerPre);
+
+        ClientTooltipEvent.ITEM.register(DurabilityTooltipEvent::tooltip);
     }
 }

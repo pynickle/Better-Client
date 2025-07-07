@@ -32,10 +32,10 @@
     "minecraft": "~1.21.6",
     "java": ">=21",
     "architectury": ">=17.0.6",
-    "fabric-api": "*",
-    "yet_another_config_lib_v3": ">=3.7.1"
+    "fabric-api": "*"
   },
   "suggests": {
+    "yet_another_config_lib_v3": ">=3.7.1",
     "another-mod": "*"
   }
 }
