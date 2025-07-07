@@ -2,29 +2,6 @@ plugins {
     id 'com.github.johnrengelman.shadow'
 }
 
-tasks.withType(net.fabricmc.loom.task.AbstractRunTask).configureEach {
-    doFirst {
-        // Step 1: Generate a filtered classpath file
-        def originalClasspath = file(".gradle/loom-cache/forge_minecraft_classpath.txt")
-        // We don't need this since we are using Mojmap
-        def filtered = originalClasspath.readLines().findAll { !it.contains("unprotect") }
-
-        def customClasspathFile = file("$buildDir/forge_minecraft_classpath.txt")
-        customClasspathFile.text = filtered.join(System.lineSeparator())
-
-        // Step 2: Patch launch.cfg
-        def launchCfgFile = file(".gradle/loom-cache/launch.cfg")
-        def lines = launchCfgFile.readLines().collect { line ->
-            if (line.contains("legacyClassPath.file=")) {
-                return line.replaceFirst(/(?<=legacyClassPath\.file=).*/, customClasspathFile.absolutePath.replace('\\', '/'))
-            }
-            return line
-        }
-        launchCfgFile.text = lines.join(System.lineSeparator())
-        println "Patched launch.cfg to use custom classpath file"
-    }
-}
-
 architectury {
     platformSetupLoomIde()
     neoForge()
