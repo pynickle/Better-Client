@@ -53,7 +53,7 @@ public class BetterClientConfig {
     @SerialEntry public boolean enableLongerChatHistory = true;
     @SerialEntry public int chatMaxMessages = 4096;
     @SerialEntry public boolean enableTimeStamp = true;
-    @SerialEntry public Color timeStampColor = new Color(0xAA00AA, false);
+    @SerialEntry public Color timeStampColor = new Color(0xEE46FF, false);
 
     @SerialEntry public boolean enableFasterClimbing = false;
     @SerialEntry public boolean enableFasterUpward = true;

@@ -21,7 +21,10 @@ public class ChatComponentMixin {
             at = @At(value = "CONSTANT", args = "intValue=100")
     )
     private int moreMessages(int chatMaxMessages) {
-        return BetterClientConfig.HANDLER.instance().chatMaxMessages;
+        if(BetterClientConfig.HANDLER.instance().enableLongerChatHistory) {
+            return BetterClientConfig.HANDLER.instance().chatMaxMessages;
+        }
+        return chatMaxMessages;
     }
 
     @Inject(

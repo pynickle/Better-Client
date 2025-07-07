@@ -5,7 +5,9 @@
   "minVersion": "0.8",
   "client": [
     "BookEditScreenMixin",
-    "ChatComponentMixin"
+    "ChatComponentMixin",
+    "GameRendererMixin",
+    "PlayerTabOverlayMixin"
   ],
   "mixins": [
   ],
