@@ -54,8 +54,8 @@ public class TradingHudRenderer {
 
         Font font = minecraft.font;
 
-        MerchantInfo.getInfo().getLastId().ifPresent(lastId -> {
-            MerchantOffers merchantOffers = MerchantInfo.getInfo().getOffers();
+        MerchantInfo.getInstance().getLastEntityId().ifPresent(lastId -> {
+            MerchantOffers merchantOffers = MerchantInfo.getInstance().getOffers();
             if (!merchantOffers.isEmpty()) {
                 int i = (guiGraphics.guiWidth() - imageWidth) / 2;
                 int j = (guiGraphics.guiHeight() - imageHeight) / 2;
