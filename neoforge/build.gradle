@@ -55,9 +55,9 @@ dependencies {
 
     modImplementation "dev.architectury:architectury-neoforge:$rootProject.architectury_api_version"
 
-    // implementation("dev.isxander:yet-another-config-lib:${yacl_version}+1.21.6-neoforge"){
-    //     exclude group: "net.neoforged.fancymodloader", module: "loader"
-    // }
+    implementation("dev.isxander:yet-another-config-lib:${yacl_version}+1.21.6-neoforge"){
+        exclude group: "net.neoforged.fancymodloader", module: "loader"
+    }
 
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':common', configuration: 'transformProductionNeoForge')

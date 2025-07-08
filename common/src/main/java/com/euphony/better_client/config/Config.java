@@ -99,7 +99,7 @@ public class Config {
         if (Files.notExists(PATH)) {
             save();
         } else try {
-            config = GSON.fromJson(Files.readString(PATH), Config.class);
+            config = GSON.fromJson(Files.readString(PATH), config.getClass());
         } catch (Exception e) {
             BetterClient.LOGGER.error("Couldn't load config file: ", e);
         }
