@@ -22,27 +22,6 @@ public class TradingHudRenderer {
     private static final ResourceLocation TRADE_ARROW_SPRITE = ResourceLocation.withDefaultNamespace("container/villager/trade_arrow");
     private static final ResourceLocation DISCOUNT_STRIKETHRUOGH_SPRITE = ResourceLocation.withDefaultNamespace("container/villager/discount_strikethrough");
 
-    /*
-
-    private void renderArrow(DrawContext context, TradeOffer tradeOffer, int x, int y) {
-        if (tradeOffer.isDisabled()) {
-            context.drawTexture(
-                    RenderPipelines.GUI_TEXTURED, TEXTURE,
-                    x + 5 + 35 + 20, y + 3,
-                    25.0F, 171.0F,
-                    10, 9,
-                    512, 256);
-        } else {
-            context.drawTexture(
-                    RenderPipelines.GUI_TEXTURED, TEXTURE,
-                    x + 5 + 35 + 20, y + 3,
-                    15.0F, 171.0F,
-                    10, 9,
-                    512, 256);
-        }
-    }
-    */
-
     public static void renderHud(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
         if (!config.enableTradingHud)
             return;
@@ -57,9 +36,8 @@ public class TradingHudRenderer {
         MerchantInfo.getInstance().getLastEntityId().ifPresent(lastId -> {
             MerchantOffers merchantOffers = MerchantInfo.getInstance().getOffers();
             if (!merchantOffers.isEmpty()) {
-                int i = (guiGraphics.guiWidth() - imageWidth) / 2;
-                int j = (guiGraphics.guiHeight() - imageHeight) / 2;
-                int k = j + 16 + 1;
+                int i = 0;
+                int k = 5;
                 int l = i + 5 + 5;
                 int m = 0;
 
@@ -85,17 +63,6 @@ public class TradingHudRenderer {
                         ++m;
                     }
                 }
-
-                /*
-                for(MerchantScreen.TradeOfferButton tradeOfferButton : this.tradeOfferButtons) {
-                    if (tradeOfferButton.isHoveredOrFocused()) {
-                        tradeOfferButton.renderToolTip(guiGraphics, mouseX, mouseY);
-                    }
-
-                    tradeOfferButton.visible = tradeOfferButton.index < ((MerchantMenu)this.menu).getOffers().size();
-                }
-
-                 */
             }
         });
 

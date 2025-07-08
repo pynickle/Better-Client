@@ -48,11 +48,14 @@ public abstract class MerchantScreenMixin extends AbstractContainerScreen<Mercha
     @Unique
     private int better_client$lastCachedShopItem = -1;
 
-    @Inject(method = "<init>", at = @At("TAIL"))
-    public void addSpeedTradeButton(MerchantMenu merchantMenu, Inventory inventory, Component component, CallbackInfo ci) {
+    @Inject(method = "init", at = @At("TAIL"))
+    public void addSpeedTradeButton(CallbackInfo ci) {
         if(!config.enableFastTrading) return;
 
-        this.better_client$fastTradingButton = new FastTradingButton( this.leftPos + 350,this.topPos + 77, 18, 18, (button) -> {
+        int i = (this.width - this.imageWidth) / 2;
+        int j = (this.height - this.imageHeight) / 2;
+
+        this.better_client$fastTradingButton = new FastTradingButton( i + 247, j + 37, 18, 18, (button) -> {
             this.menu.setSelectionHint(this.shopItem);
             this.minecraft.getConnection().send(new ServerboundSelectTradePacket(this.shopItem));
             better_client$tradeState = 1;
