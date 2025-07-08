@@ -2,6 +2,7 @@ package com.euphony.better_client.config;
 
 
 import com.euphony.better_client.BetterClient;
+import com.euphony.better_client.utils.Utils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dev.architectury.platform.Platform;
@@ -97,6 +98,12 @@ public class Config {
 
     public static void load() {
         if (Files.notExists(PATH)) {
+            if(Utils.isAnyModLoaded("durabilitytooltip", "rmes-durability-tooltips")) {
+                config.enableDurabilityTooltip = false;
+            }
+            if(Utils.isAnyModLoaded("hideexperimentalwarning")) {
+                config.enableNoExperimentalWarning = false;
+            }
             save();
         } else try {
             config = GSON.fromJson(Files.readString(PATH), config.getClass());
