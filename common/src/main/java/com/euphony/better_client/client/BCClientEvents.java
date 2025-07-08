@@ -1,13 +1,8 @@
 package com.euphony.better_client.client;
 
-import com.euphony.better_client.client.events.BeautifiedChatEvent;
-import com.euphony.better_client.client.events.BiomeTitleEvent;
-import com.euphony.better_client.client.events.DurabilityTooltipEvent;
-import com.euphony.better_client.client.events.FasterClimbingEvent;
-import dev.architectury.event.events.client.ClientChatEvent;
-import dev.architectury.event.events.client.ClientLifecycleEvent;
-import dev.architectury.event.events.client.ClientTickEvent;
-import dev.architectury.event.events.client.ClientTooltipEvent;
+import com.euphony.better_client.client.events.*;
+import com.euphony.better_client.client.renderer.TradingHudRenderer;
+import dev.architectury.event.events.client.*;
 import dev.architectury.event.events.common.TickEvent;
 
 public class BCClientEvents {
@@ -21,5 +16,9 @@ public class BCClientEvents {
         TickEvent.PLAYER_PRE.register(FasterClimbingEvent::playerPre);
 
         ClientTooltipEvent.ITEM.register(DurabilityTooltipEvent::tooltip);
+
+        ClientTickEvent.CLIENT_LEVEL_POST.register(TradingHudEvent::clientLevelPost);
+
+        ClientGuiEvent.RENDER_HUD.register(TradingHudRenderer::renderHud);
     }
 }
