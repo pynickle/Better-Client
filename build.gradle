@@ -32,6 +32,12 @@ subprojects {
             name 'Xander Maven'
             url 'https://maven.isxander.dev/releases'
         }
+        repositories {
+            // Jade
+            maven {
+                url = "https://api.modrinth.com/maven"
+            }
+        }
     }
 
     dependencies {

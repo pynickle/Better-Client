@@ -15,8 +15,12 @@
   "info.better_client.durability_tooltip.number.full_durability": "%d",
   "info.better_client.durability_tooltip.number.damaged": "%1$d / %2$d",
 
+  "info.better_client.reputation": "声望：%s",
+
   "text.better_client.help.missing": "§c无法打开配置界面",
   "text.better_client.desc.help.missing": "§7安装 YACL 模组来访问游戏内配置界面。",
+
+  "config.jade.plugin_better_client.villager_reputation": "村民声望",
 
   "yacl3.config.better_client:config": "Enchanting Vanilla",
   "yacl3.config.better_client:config.category.client": "客户端",

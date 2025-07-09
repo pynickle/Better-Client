@@ -22,6 +22,9 @@
     ],
     "modmenu": [
       "com.euphony.better_client.fabric.integration.ModMenuIntegration"
+    ],
+    "jade": [
+      "com.euphony.better_client.integration.jade.JadePlugin"
     ]
   },
   "mixins": [

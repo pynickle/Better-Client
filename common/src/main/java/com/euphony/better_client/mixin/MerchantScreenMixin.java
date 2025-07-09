@@ -165,7 +165,7 @@ public abstract class MerchantScreenMixin extends AbstractContainerScreen<Mercha
             count += invstack.getCount();
 
             slotClicked(this.menu.getSlot(i), i, i, ClickType.PICKUP);
-            slotClicked(this.menu.getSlot(0), 0, 0, ClickType.PICKUP);
+            slotClicked(this.menu.getSlot(0), 0, 0, ClickType.PICKUP_ALL);
 
             if (count > this.menu.getSlot(i).getItem().getMaxStackSize()) { // items still on the cursor
                 slotClicked(this.menu.getSlot(i), i, i, ClickType.PICKUP);
