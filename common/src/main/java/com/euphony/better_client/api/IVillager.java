@@ -12,11 +12,7 @@ public interface IVillager {
         return (IVillager) villager;
     }
 
-    void better_client$setLockedTradeData(LockedTradeData data);
-
     Optional<LockedTradeData> better_client$getLockedTradeData();
-
-    void visibleTrades$regenerateTrades();
 
     MerchantOffers better_client$getCombinedOffers();
 

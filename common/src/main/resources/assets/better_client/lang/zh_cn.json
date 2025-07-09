@@ -122,6 +122,8 @@
   "yacl3.config.better_client:config.category.client.group.trading_hud": "交易界面",
   "yacl3.config.better_client:config.enableTradingHud": "启用交易界面",
   "yacl3.config.better_client:config.enableTradingHud.desc": "现在只需要把鼠标对准村民，左上角就会显示他们的交易项目。",
+  "yacl3.config.better_client:config.renderRealCostDirectly": "直接渲染实际价格",
+  "yacl3.config.better_client:config.renderRealCostDirectly.desc": "直接渲染实际价格而不是基础和实际价格。",
 
   "yacl3.config.better_client:config.category.client.group.other": "其他",
   "yacl3.config.better_client:config.enableBeeInfo": "启用蜂巢信息",

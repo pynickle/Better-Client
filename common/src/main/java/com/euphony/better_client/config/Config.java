@@ -73,6 +73,7 @@ public class Config {
     public boolean showDurabilityHint = true;
 
     public boolean enableTradingHud = true;
+    public boolean renderRealCostDirectly = true;
 
     public boolean enableAxolotlBucketFix = true;
     public boolean enableChatHistoryRetention = true;

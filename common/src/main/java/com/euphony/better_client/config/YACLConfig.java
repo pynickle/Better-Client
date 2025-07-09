@@ -319,6 +319,12 @@ public class YACLConfig extends Config {
                 () -> config.enableTradingHud,
                 newVal -> config.enableTradingHud = newVal
         );
+        Option<Boolean> renderRealCostDirectlyOpt = ConfigUtils.buildBooleanOption(
+                "renderRealCostDirectly",
+                DEFAULTS.renderRealCostDirectly,
+                () -> config.renderRealCostDirectly,
+                newVal -> config.renderRealCostDirectly = newVal
+        );
 
         // Other
         Option<Boolean> enableAxolotlBucketFixOpt = ConfigUtils.buildBooleanOption(
@@ -455,7 +461,8 @@ public class YACLConfig extends Config {
                         .group(OptionGroup.createBuilder()
                                 .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, TRADING_HUD_GROUP))
                                 .options(List.of(
-                                        enableTradingHudOpt
+                                        enableTradingHudOpt,
+                                        renderRealCostDirectlyOpt
                                 ))
                                 .build())
                         .group(OptionGroup.createBuilder()

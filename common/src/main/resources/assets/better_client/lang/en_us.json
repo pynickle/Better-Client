@@ -122,6 +122,8 @@
   "yacl3.config.better_client:config.category.client.group.trading_hud": "Trading Hud",
   "yacl3.config.better_client:config.enableTradingHud": "Enable Trading Hud",
   "yacl3.config.better_client:config.enableTradingHud.desc": "Now, simply hover your mouse over a villager, and their trade items will be displayed in the upper left corner.",
+  "yacl3.config.better_client:config.renderRealCostDirectly": "Render Real Cost Directly",
+  "yacl3.config.better_client:config.renderRealCostDirectly.desc": "Directly render real prices rather than base and real prices.",
 
   "yacl3.config.better_client:config.category.client.group.other": "Other",
   "yacl3.config.better_client:config.enableBeeInfo": "Enable Bee Info",

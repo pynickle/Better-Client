@@ -21,9 +21,6 @@ import java.util.List;
 import static com.euphony.better_client.BetterClient.config;
 
 public class TradingHudRenderer {
-    protected static final int imageWidth = 176;
-    protected static final int imageHeight = 166;
-
     private static final ResourceLocation TRADE_ARROW_OUT_OF_STOCK_SPRITE = ResourceLocation.withDefaultNamespace("container/villager/trade_arrow_out_of_stock");
     private static final ResourceLocation TRADE_ARROW_SPRITE = ResourceLocation.withDefaultNamespace("container/villager/trade_arrow");
     private static final ResourceLocation DISCOUNT_STRIKETHRUOGH_SPRITE = ResourceLocation.withDefaultNamespace("container/villager/discount_strikethrough");
@@ -47,6 +44,8 @@ public class TradingHudRenderer {
                 int l = i + 5 + 5;
                 int m = 0;
 
+                int extraSpace = config.renderRealCostDirectly ? 0 : 10;
+
                 for(MerchantOffer merchantOffer : merchantOffers) {
                     if (m < 7) {
                         ItemStack itemStack = merchantOffer.getBaseCostA();
@@ -56,13 +55,13 @@ public class TradingHudRenderer {
                         int n = k + 2;
                         renderAndDecorateCostA(guiGraphics, font, itemStack2, itemStack, l, n);
                         if (!itemStack3.isEmpty()) {
-                            guiGraphics.renderFakeItem(itemStack3, i + 5 + 25, n);
-                            guiGraphics.renderItemDecorations(font, itemStack3, i + 5 + 35, n);
+                            guiGraphics.renderFakeItem(itemStack3, i + 5 + 25 + extraSpace, n);
+                            guiGraphics.renderItemDecorations(font, itemStack3, i + 5 + 25 + extraSpace, n);
                         }
 
                         renderButtonArrows(guiGraphics, merchantOffer, i, n);
-                        guiGraphics.renderFakeItem(itemStack4, i + 5 + 58, n);
-                        guiGraphics.renderItemDecorations(font, itemStack4, i + 5 + 58, n);
+                        guiGraphics.renderFakeItem(itemStack4, i + 5 + 58 + extraSpace, n);
+                        guiGraphics.renderItemDecorations(font, itemStack4, i + 5 + 58 + extraSpace, n);
                         k += 20;
 
                         List<String> enchantments = new ArrayList<>();
@@ -98,7 +97,7 @@ public class TradingHudRenderer {
 
     private static void renderAndDecorateCostA(GuiGraphics guiGraphics, Font font, ItemStack realCost, ItemStack baseCost, int x, int y) {
         guiGraphics.renderFakeItem(realCost, x, y);
-        if (baseCost.getCount() == realCost.getCount()) {
+        if (baseCost.getCount() == realCost.getCount() || config.renderRealCostDirectly) {
             guiGraphics.renderItemDecorations(font, realCost, x, y);
         } else {
             guiGraphics.renderItemDecorations(font, baseCost, x, y, baseCost.getCount() == 1 ? "1" : null);

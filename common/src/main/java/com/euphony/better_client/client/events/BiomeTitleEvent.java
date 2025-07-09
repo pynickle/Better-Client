@@ -1,7 +1,6 @@
 package com.euphony.better_client.client.events;
 
-import com.euphony.better_client.utils.Utils;
-import net.minecraft.Util;
+import com.euphony.better_client.utils.BiomeUtils;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -10,178 +9,158 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.biome.Biome;
-import org.apache.commons.lang3.StringUtils;
 import org.joml.Matrix3x2fStack;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.StringJoiner;
 
 import static com.euphony.better_client.BetterClient.config;
 
 public class BiomeTitleEvent {
-    public static Biome previousBiome;
-    public static ResourceKey<Biome> displayBiome;
-    public static int displayTime = 0;
-    public static int alpha = 0;
-    public static int cooldownTime = 0;
-    public static int fadeTimer = 0;
-    public static boolean complete = false;
-    public static boolean fadingIn = false;
+    // 常量定义
+    private static final int MAX_ALPHA = 255;
+    private static final int TICKS_PER_SECOND = 20;
+
+    // 状态变量
+    private static Biome previousBiome;
+    private static ResourceKey<Biome> displayBiome;
+    private static int displayTime = 0;
+    private static int alpha = 0;
+    private static int cooldownTime = 0;
+    private static int fadeTimer = 0;
+    private static boolean complete = false;
+    private static boolean fadingIn = false;
+
+    // 缓存
     public static final Map<ResourceKey<Biome>, Component> NAME_CACHE = new HashMap<>();
 
     private BiomeTitleEvent() {}
 
     public static void clientPre(Minecraft minecraft) {
-        if (complete) {
-            if (!fadingIn) {
-                if (displayTime > 0) {
-                    displayTime--;
-                }
-                else if (fadeTimer > 0) {
-                    fadeTimer--;
-                    alpha = (int) (255F / (float) config.fadeOutTime * fadeTimer);
-                }
-                else {
-                    if (cooldownTime > 0) {
-                        cooldownTime--;
-                    }
-                }
-            }
-            else {
-                if(fadeTimer < config.fadeInTime) {
-                    fadeTimer++;
-                    alpha = (int) (255F / (float) config.fadeInTime * fadeTimer);
-                } else {
-                    fadeTimer = config.fadeOutTime;
-                    fadingIn = false;
-                    displayTime = (int) (config.displayDuration * 20);
-                    alpha = 255;
-                }
-            }
+        if (!complete) return;
+
+        if (fadingIn) {
+            handleFadeIn();
+        } else {
+            handleDisplay();
         }
     }
 
     public static void renderBiomeInfo(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
-        if (complete && config.enableBiomeTitle) {
-            Minecraft mc = Minecraft.getInstance();
+        if (!shouldRender()) return;
 
-            if (hideInF1(mc) || hideInF3(mc)) return;
+        Minecraft mc = Minecraft.getInstance();
+        Entity player = mc.getCameraEntity();
+        if (player == null) return;
 
-            Entity player = mc.getCameraEntity();
+        BlockPos pos = player.getOnPos();
+        if (mc.level == null || !mc.level.isLoaded(pos)) return;
 
-            if(player == null) return;
+        Holder<Biome> biomeHolder = mc.level.getBiome(pos);
+        if (!biomeHolder.isBound()) return;
 
-            BlockPos pos = player.getOnPos();
+        Biome currentBiome = biomeHolder.value();
 
-            if (mc.level != null && mc.level.isLoaded(pos)) {
-                Holder<Biome> biomeHolder = mc.level.getBiome(pos);
-
-                if (!biomeHolder.isBound())
-                    return;
-
-                Biome biome = biomeHolder.value();
-
-                boolean isPlayerUnderground = mc.level.dimensionType().hasSkyLight() && !mc.level.canSeeSky(pos);
-                boolean shouldUpdate = config.enableUndergroundUpdate || !isPlayerUnderground;
-
-                if (previousBiome != biome) {
-                    previousBiome = biome;
-                    if(cooldownTime == 0 && shouldUpdate) {
-                        biomeHolder.unwrapKey().ifPresent(key -> {
-                            cooldownTime = (int) (config.cooldownTime * 20);
-                            displayBiome = key;
-
-                            displayTime = 0;
-                            alpha = 0;
-                            fadingIn = true;
-                        });
-                    }
-                }
-
-                if (alpha > 0) {
-                    Font font = mc.font;
-                    float scale = (float) config.scale;
-
-                    Matrix3x2fStack pose = guiGraphics.pose();
-                    pose.pushMatrix();
-                    pose.translate((float) (guiGraphics.guiWidth() / 2D), (float) (guiGraphics.guiHeight() / 2D));
-                    pose.scale(scale, scale);
-
-                    Component biomeName = getBiomeName(displayBiome);
-                    int textWidth = font.width(biomeName);
-
-                    int y = - font.wordWrapHeight(biomeName.getString(), 999) / 2 + config.yOffset;
-
-                    guiGraphics.drawString(font, biomeName, (-textWidth / 2), y, 0xffffff | (alpha << 24), true);
-                    pose.popMatrix();
-                }
-            }
-        }
-    }
-
-    private static Component getBiomeName(ResourceKey<Biome> key) {
-        ResourceLocation location = key.location();
-        Component name = NAME_CACHE.computeIfAbsent(key, k -> {
-            String translationKey = Util.makeDescriptionId("biome", location);
-            MutableComponent biomeName = Component.translatable(translationKey);
-            MutableComponent displayName = biomeName;
-
-            String displayedText = biomeName.getString();
-
-            if (displayedText.equals(translationKey)) {
-                String biomePath = key.location().getPath();
-                String formattedBiomeName = snakeCaseToEnglish(biomePath);
-
-                displayName = Component.literal(formattedBiomeName);
-            }
-
-            return displayName;
-        });
-
-        MutableComponent displayName = name.copy();
-        if (config.enableModName) {
-            String modName = getModName(location);
-
-            if (modName != null)
-                displayName = displayName.append(Component.literal(String.format(" (%s)", modName)));
-        }
-        return displayName;
-    }
-
-    private static boolean hideInF1(Minecraft mc) {
-        return mc.options.hideGui && config.hideInF1;
-    }
-
-    private static boolean hideInF3(Minecraft mc) {
-        return mc.getDebugOverlay().showDebugScreen() && config.hideInF3;
-    }
-
-    private static String snakeCaseToEnglish(String biomePath) {
-        String[] words = biomePath.split("_");
-        StringJoiner formatted = new StringJoiner(" ");
-
-        for (String word : words) {
-            formatted.add(StringUtils.capitalize(word));
+        if (shouldUpdateBiome(currentBiome, pos, mc)) {
+            updateBiomeDisplay(biomeHolder);
         }
 
-        return formatted.toString();
-    }
-
-    private static String getModName(ResourceLocation location) {
-        String modId = location.getNamespace();
-
-        String displayName = Utils.getModDisplayName(modId);
-
-        return displayName == null ? snakeCaseToEnglish(modId) : displayName;
+        if (alpha > 0) {
+            renderBiomeTitle(guiGraphics, mc);
+        }
     }
 
     public static void clientLevelLoad(ClientLevel clientLevel) {
         complete = true;
+    }
+
+    // 私有辅助方法
+    private static void handleFadeIn() {
+        if (fadeTimer < config.fadeInTime) {
+            fadeTimer++;
+            alpha = calculateAlpha(fadeTimer, config.fadeInTime);
+        } else {
+            completeFadeIn();
+        }
+    }
+
+    private static void handleDisplay() {
+        if (displayTime > 0) {
+            displayTime--;
+        } else if (fadeTimer > 0) {
+            fadeTimer--;
+            alpha = calculateAlpha(fadeTimer, config.fadeOutTime);
+        } else if (cooldownTime > 0) {
+            cooldownTime--;
+        }
+    }
+
+    private static void completeFadeIn() {
+        fadeTimer = config.fadeOutTime;
+        fadingIn = false;
+        displayTime = (int) (config.displayDuration * TICKS_PER_SECOND);
+        alpha = MAX_ALPHA;
+    }
+
+    private static int calculateAlpha(int timer, int maxTime) {
+        return (int) ((float) MAX_ALPHA / maxTime * timer);
+    }
+
+    private static boolean shouldRender() {
+        return complete && config.enableBiomeTitle;
+    }
+
+    private static boolean shouldUpdateBiome(Biome currentBiome, BlockPos pos, Minecraft mc) {
+        if (previousBiome == currentBiome || cooldownTime > 0) return false;
+
+        boolean isUnderground = mc.level.dimensionType().hasSkyLight() && !mc.level.canSeeSky(pos);
+        return config.enableUndergroundUpdate || !isUnderground;
+    }
+
+    private static void updateBiomeDisplay(Holder<Biome> biomeHolder) {
+        previousBiome = biomeHolder.value();
+        biomeHolder.unwrapKey().ifPresent(BiomeTitleEvent::initializeBiomeDisplay);
+    }
+
+    private static void initializeBiomeDisplay(ResourceKey<Biome> key) {
+        cooldownTime = (int) (config.cooldownTime * TICKS_PER_SECOND);
+        displayBiome = key;
+        displayTime = 0;
+        alpha = 0;
+        fadeTimer = 0;
+        fadingIn = true;
+    }
+
+    private static void renderBiomeTitle(GuiGraphics guiGraphics, Minecraft mc) {
+        if (shouldHideDisplay(mc)) return;
+
+        Font font = mc.font;
+        float scale = (float) config.scale;
+
+        Matrix3x2fStack pose = guiGraphics.pose();
+        pose.pushMatrix();
+        pose.translate((float) (guiGraphics.guiWidth() / 2D), (float) (guiGraphics.guiHeight() / 2D));
+        pose.scale(scale, scale);
+
+        Component biomeName = getBiomeName(displayBiome);
+        int textWidth = font.width(biomeName);
+        int y = -font.wordWrapHeight(biomeName.getString(), 999) / 2 + config.yOffset;
+
+        guiGraphics.drawString(font, biomeName, (-textWidth / 2), y,
+            0xffffff | (alpha << 24), true);
+        pose.popMatrix();
+    }
+
+    private static boolean shouldHideDisplay(Minecraft mc) {
+        return (mc.options.hideGui && config.hideInF1) ||
+               (mc.getDebugOverlay().showDebugScreen() && config.hideInF3);
+    }
+
+    private static Component getBiomeName(ResourceKey<Biome> key) {
+        return NAME_CACHE.computeIfAbsent(key, k ->
+            BiomeUtils.createBiomeDisplayComponent(k, config.enableModName));
     }
 }

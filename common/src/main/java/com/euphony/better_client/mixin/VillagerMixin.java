@@ -167,19 +167,8 @@ public abstract class VillagerMixin extends AbstractVillager implements Reputati
     }
 
     @Override
-    public void better_client$setLockedTradeData(LockedTradeData data) {
-        this.better_client$lockedTradeData.setValue(data);
-        this.better_client$isDirty = false;
-    }
-
-    @Override
     public Optional<LockedTradeData> better_client$getLockedTradeData() {
         return Optional.ofNullable(better_client$lockedTradeData.getValue());
-    }
-
-    @Override
-    public void visibleTrades$regenerateTrades() {
-        better_client$regenerateLockedTradeData();
     }
 
     /**
