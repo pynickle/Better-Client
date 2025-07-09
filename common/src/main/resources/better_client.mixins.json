@@ -20,11 +20,7 @@
     "WorldOpenFlowsMixin"
   ],
   "mixins": [
-    "ClientPacketListenerMixin",
-    "ClientSideClientSideMerchantMixin",
-    "MerchantMenuMixin",
-    "MerchantMixin",
-    "VillagerMixin"
+    "ClientPacketListenerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

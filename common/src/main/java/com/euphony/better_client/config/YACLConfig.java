@@ -355,13 +355,6 @@ public class YACLConfig extends Config {
                 newVal -> config.enableDisplayRemainingSales = newVal
         );
 
-        Option<Boolean> enableVisibleTradeOpt = ConfigUtils.buildBooleanOption(
-                "enableVisibleTrade",
-                DEFAULTS.enableVisibleTrade,
-                () -> config.enableVisibleTrade,
-                newVal -> config.enableVisibleTrade = newVal
-        );
-
         return YetAnotherConfigLib.createBuilder()
                 .title(Component.translatable("yacl3.config.better_client:config"))
                 .category(ConfigCategory.createBuilder()
@@ -471,8 +464,7 @@ public class YACLConfig extends Config {
                                         enableAxolotlBucketFixOpt,
                                         enableChatHistoryRetentionOpt,
                                         enableBookSaveConfirmationOpt,
-                                        enableDisplayRemainingSalesOpt,
-                                        enableVisibleTradeOpt
+                                        enableDisplayRemainingSalesOpt
                                 ))
                                 .build())
                         .build())

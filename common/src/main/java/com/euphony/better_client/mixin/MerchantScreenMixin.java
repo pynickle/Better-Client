@@ -1,9 +1,7 @@
 package com.euphony.better_client.mixin;
 
-import com.euphony.better_client.api.IMerchantMenu;
 import com.euphony.better_client.screen.widget.FastTradingButton;
 import com.euphony.better_client.utils.ItemUtils;
-import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Tooltip;
@@ -222,8 +220,6 @@ public abstract class MerchantScreenMixin extends AbstractContainerScreen<Mercha
 
     @Shadow public abstract boolean mouseClicked(double d, double e, int i);
 
-    @Shadow private int scrollOff;
-
     public MerchantScreenMixin(MerchantMenu abstractContainerMenu, Inventory inventory, Component component) {
         super(abstractContainerMenu, inventory, component);
     }
@@ -243,10 +239,5 @@ public abstract class MerchantScreenMixin extends AbstractContainerScreen<Mercha
             guiGraphics.drawString(this.font, String.valueOf(merchantOffer.getMaxUses() - merchantOffer.getUses()), 0, 0, 0xFFFFFFFF, false);
             matrix3d.popMatrix();
         }
-    }
-
-    @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/trading/MerchantOffers;size()I", ordinal = 1))
-    private void disableOptionIfOutOfLevelRange(GuiGraphics guiGraphics, int i, int j, float f, CallbackInfo ci, @Local MerchantScreen.TradeOfferButton tradeOfferButton) {
-        tradeOfferButton.active = ((IMerchantMenu) this.menu).better_client$shouldAllowTrade(tradeOfferButton.getIndex() + scrollOff);
     }
 }
