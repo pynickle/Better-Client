@@ -119,6 +119,10 @@
   "yacl3.config.better_client:config.showDurabilityHint": "Show Durability Hint",
   "yacl3.config.better_client:config.showDurabilityHint.desc": "The durability prefix will be displayed.",
 
+  "yacl3.config.better_client:config.category.client.group.trading_hud": "Trading Hud",
+  "yacl3.config.better_client:config.enableTradingHud": "Enable Trading Hud",
+  "yacl3.config.better_client:config.enableTradingHud.desc": "Now, simply hover your mouse over a villager, and their trade items will be displayed in the upper left corner.",
+
   "yacl3.config.better_client:config.category.client.group.other": "Other",
   "yacl3.config.better_client:config.enableBeeInfo": "Enable Bee Info",
   "yacl3.config.better_client:config.enableBeeInfo.desc": "You can now see the number of bees and the amount of honey in beehives and bee nests, just like the feature added natively in 1.21.2.",

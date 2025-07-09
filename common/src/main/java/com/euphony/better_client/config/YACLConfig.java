@@ -32,6 +32,7 @@ public class YACLConfig extends Config {
     private static final String NO_EXPERIMENTAL_WARNING_GROUP = "no_experimental_warning";
     private static final String BUNDLE_UP_GROUP = "bundle_up";
     private static final String DURABILITY_TOOLTIP_GROUP = "durability_tooltip";
+    private static final String TRADING_HUD_GROUP = "trading_hud";
     private static final String OTHER_GROUP = "other";
 
     @Override
@@ -311,6 +312,14 @@ public class YACLConfig extends Config {
                 newVal -> config.showDurabilityHint = newVal
         );
 
+        // Trading Hud
+        Option<Boolean> enableTradingHudOpt = ConfigUtils.buildBooleanOption(
+                "enableTradingHud",
+                DEFAULTS.enableTradingHud,
+                () -> config.enableTradingHud,
+                newVal -> config.enableTradingHud = newVal
+        );
+
         // Other
         Option<Boolean> enableAxolotlBucketFixOpt = ConfigUtils.buildBooleanOption(
                 "enableAxolotlBucketFix",
@@ -441,6 +450,12 @@ public class YACLConfig extends Config {
                                         enableDurabilityTooltipOpt,
                                         showDurabilityWhenNotDamagedOpt,
                                         showDurabilityHintOpt
+                                ))
+                                .build())
+                        .group(OptionGroup.createBuilder()
+                                .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, TRADING_HUD_GROUP))
+                                .options(List.of(
+                                        enableTradingHudOpt
                                 ))
                                 .build())
                         .group(OptionGroup.createBuilder()
