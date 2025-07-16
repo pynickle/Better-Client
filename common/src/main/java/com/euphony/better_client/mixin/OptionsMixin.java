@@ -17,7 +17,7 @@ public class OptionsMixin implements IOptions {
     @Unique
     private OptionInstance<Boolean> better_client$pauseMusic;
 
-    @Inject(method = "<init>", at = @At("TAIL"))
+    @Inject(method = "<init>", at = @At("CTOR_HEAD"))
     public void init(Minecraft minecraft, File file, CallbackInfo ci) {
         this.better_client$pauseMusic = OptionInstance.createBoolean("options.pauseMusic", true);
     }
