@@ -7,6 +7,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import static com.euphony.better_client.BetterClient.config;
+
 /**
  * 本地玩家混入类，用于处理容器关闭事件
  */
@@ -19,6 +21,7 @@ public class LocalPlayerMixin {
      */
     @Inject(at = @At("HEAD"), method = "closeContainer")
     public void onCloseContainer(CallbackInfo ci) {
+        if(!config.enableTradingHud) return;
         TradingHudEvent.setWindowOpen(false);
     }
 }

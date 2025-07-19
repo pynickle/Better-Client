@@ -39,7 +39,7 @@ subprojects {
         // mappings loom.officialMojangMappings()
         mappings loom.layered() {
             officialMojangMappings()
-            parchment("org.parchmentmc.data:parchment-1.21.6:2025.06.29@zip")
+            parchment("org.parchmentmc.data:parchment-1.21.8:2025.07.18@zip")
         }
     }
 

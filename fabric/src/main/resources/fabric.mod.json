@@ -35,7 +35,7 @@
     "fabric-api": "*"
   },
   "suggests": {
-    "yet_another_config_lib_v3": ">=3.7.1",
+    "yet_another_config_lib_v3": ">=3.6",
     "another-mod": "*"
   }
 }

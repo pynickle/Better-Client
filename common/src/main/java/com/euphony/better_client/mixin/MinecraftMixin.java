@@ -1,6 +1,5 @@
 package com.euphony.better_client.mixin;
 
-import com.euphony.better_client.api.IOptions;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
@@ -28,7 +27,7 @@ public abstract class MinecraftMixin {
                     target = "Lnet/minecraft/client/Minecraft;setScreen(Lnet/minecraft/client/gui/screens/Screen;)V",
                     ordinal = 0))
     private void onPauseGame(boolean bl, CallbackInfo ci) {
-        if(config.enableMusicPause && ((IOptions)this.options).better_client$pauseMusic().get()) {
+        if(config.enableMusicPause) {
             if(config.pauseUiSound) {
                 this.soundManager.pauseAllExcept();
             } else {

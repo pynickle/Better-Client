@@ -13,6 +13,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import static com.euphony.better_client.BetterClient.config;
+
 /**
  * 多人游戏模式混入类，用于处理实体交互事件
  */
@@ -28,6 +30,8 @@ public abstract class MultiPlayerGameModeMixin {
      */
     @Inject(at = @At("HEAD"), method = "interact")
     public void onInteractWithEntity(Player player, Entity target, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
+        if(!config.enableTradingHud) return;
+
         if (!(target instanceof Merchant)) {
             return;
         }

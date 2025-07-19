@@ -20,7 +20,8 @@ import static com.euphony.better_client.BetterClient.config;
 
 public class Config {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-    private static final Path PATH = Platform.getConfigFolder().resolve(BetterClient.MOD_ID).resolve("client.json");
+    private static final Path BASE_PATH = Platform.getConfigFolder().resolve(BetterClient.MOD_ID);
+    private static final Path PATH = BASE_PATH.resolve("client.json");
 
     public static Config DEFAULTS = new Config();
 
@@ -100,6 +101,14 @@ public class Config {
     }
 
     public static void load() {
+        if(Files.notExists(BASE_PATH)) {
+            try {
+                Files.createDirectories(BASE_PATH);
+            } catch (Exception e) {
+                BetterClient.LOGGER.error("Couldn't create config directory: ", e);
+                return;
+            }
+        }
         if (Files.notExists(PATH)) {
             if(Utils.isAnyModLoaded("durabilitytooltip", "rmes-durability-tooltips")) {
                 config.enableDurabilityTooltip = false;

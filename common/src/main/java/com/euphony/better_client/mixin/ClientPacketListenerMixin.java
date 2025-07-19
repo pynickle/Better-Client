@@ -9,9 +9,12 @@ import net.minecraft.network.protocol.game.ClientboundOpenScreenPacket;
 import net.minecraft.network.protocol.game.ServerboundContainerClosePacket;
 import net.minecraft.world.inventory.MenuType;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import static com.euphony.better_client.BetterClient.config;
 
 /**
  * 客户端数据包监听器混入类，用于处理交易相关的数据包
@@ -26,6 +29,8 @@ public class ClientPacketListenerMixin {
      */
     @Inject(at = @At("HEAD"), method = "handleMerchantOffers", cancellable = true)
     public void onHandleMerchantOffers(ClientboundMerchantOffersPacket packet, CallbackInfo ci) {
+        if(!config.enableTradingHud) return;
+
         MerchantInfo.getInstance().setOffers(packet.getOffers());
 
         if (!TradingHudEvent.isWindowOpen()) {
@@ -40,9 +45,11 @@ public class ClientPacketListenerMixin {
      */
     @Inject(at = @At("HEAD"), method = "handleOpenScreen", cancellable = true)
     public void onHandleOpenScreen(ClientboundOpenScreenPacket packet, CallbackInfo ci) {
+        if(!config.enableTradingHud) return;
+
         if (!TradingHudEvent.isWindowOpen() && packet.getType() == MenuType.MERCHANT) {
             ci.cancel();
-            closeContainer(packet.getContainerId());
+            better_client$closeContainer(packet.getContainerId());
         }
     }
 
@@ -50,7 +57,10 @@ public class ClientPacketListenerMixin {
      * 关闭容器
      * @param containerId 容器ID
      */
-    private void closeContainer(int containerId) {
+    @Unique
+    private void better_client$closeContainer(int containerId) {
+        if (!config.enableTradingHud) return;
+
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.player != null) {
             minecraft.player.connection.send(new ServerboundContainerClosePacket(containerId));

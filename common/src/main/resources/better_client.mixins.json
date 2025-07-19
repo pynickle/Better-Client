@@ -13,9 +13,7 @@
     "MinecraftMixin",
     "MultiLineEditBoxMixin",
     "MultiPlayerGameModeMixin",
-    "OptionsMixin",
     "PlayerTabOverlayMixin",
-    "SoundsOptionScreenMixin",
     "WorldListEntryMixin",
     "WorldOpenFlowsMixin"
   ],
