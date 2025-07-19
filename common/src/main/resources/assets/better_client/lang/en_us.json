@@ -135,5 +135,8 @@
   "yacl3.config.better_client:config.enableBookSaveConfirmation": "Enable Book Save Confirmation",
   "yacl3.config.better_client:config.enableBookSaveConfirmation.desc": "When you make changes to the content of a book and close it without saving, a prompt will pop up reminding you to save.",
   "yacl3.config.better_client:config.enableDisplayRemainingSales": "Enable Display Remaining Sales",
-  "yacl3.config.better_client:config.enableDisplayRemainingSales.desc": "Display the remaining number of sales available under each button arrow on the trading screen."
+  "yacl3.config.better_client:config.enableDisplayRemainingSales.desc": "Display the remaining number of sales available under each button arrow on the trading screen.",
+  "yacl3.config.better_client:config.enableGlowingEnderEye": "Enable Glowing Ender Eye",
+  "yacl3.config.better_client:config.enableGlowingEnderEye.desc": "Eye of ender now glows when thrown, making it easier to see in dark environments."
+
 }

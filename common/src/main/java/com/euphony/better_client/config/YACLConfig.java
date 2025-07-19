@@ -355,6 +355,13 @@ public class YACLConfig extends Config {
                 newVal -> config.enableDisplayRemainingSales = newVal
         );
 
+        Option<Boolean> enableGlowingEnderEyeOpt = ConfigUtils.buildBooleanOption(
+                "enableGlowingEnderEye",
+                DEFAULTS.enableGlowingEnderEye,
+                () -> config.enableGlowingEnderEye,
+                newVal -> config.enableGlowingEnderEye = newVal
+        );
+
         return YetAnotherConfigLib.createBuilder()
                 .title(Component.translatable("yacl3.config.better_client:config"))
                 .category(ConfigCategory.createBuilder()
@@ -464,7 +471,8 @@ public class YACLConfig extends Config {
                                         enableAxolotlBucketFixOpt,
                                         enableChatHistoryRetentionOpt,
                                         enableBookSaveConfirmationOpt,
-                                        enableDisplayRemainingSalesOpt
+                                        enableDisplayRemainingSalesOpt,
+                                        enableGlowingEnderEyeOpt
                                 ))
                                 .build())
                         .build())
