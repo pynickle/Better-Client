@@ -13,16 +13,8 @@ import net.minecraft.world.item.ItemStack;
 public final class ItemUtils {
     private ItemUtils() {}
 
-    public static ResourceLocation getKey(Item item) {
-        return BuiltInRegistries.ITEM.getKey(item);
-    }
-
     public static MutableComponent createTooltip(String key) {
         return Component.translatable(key).withStyle(ChatFormatting.GRAY);
-    }
-
-    public static MutableComponent createTooltip(String key, Object... args) {
-        return Component.translatable(key, args).withStyle(ChatFormatting.GRAY);
     }
 
     public static int getItemTotalCount(Inventory inventory, ItemStack itemStack) {
