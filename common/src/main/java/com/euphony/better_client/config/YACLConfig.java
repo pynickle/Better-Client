@@ -362,6 +362,13 @@ public class YACLConfig extends Config {
                 newVal -> config.enableGlowingEnderEye = newVal
         );
 
+        Option<Boolean> enableWorldIconUpdateOpt = ConfigUtils.buildBooleanOption(
+                "enableWorldIconUpdate",
+                DEFAULTS.enableWorldIconUpdate,
+                () -> config.enableWorldIconUpdate,
+                newVal -> config.enableWorldIconUpdate = newVal
+        );
+
         return YetAnotherConfigLib.createBuilder()
                 .title(Component.translatable("yacl3.config.better_client:config"))
                 .category(ConfigCategory.createBuilder()
@@ -472,7 +479,8 @@ public class YACLConfig extends Config {
                                         enableChatHistoryRetentionOpt,
                                         enableBookSaveConfirmationOpt,
                                         enableDisplayRemainingSalesOpt,
-                                        enableGlowingEnderEyeOpt
+                                        enableGlowingEnderEyeOpt,
+                                        enableWorldIconUpdateOpt
                                 ))
                                 .build())
                         .build())

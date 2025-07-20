@@ -81,6 +81,7 @@ public class Config {
     public boolean enableBookSaveConfirmation = true;
     public boolean enableDisplayRemainingSales = true;
     public boolean enableGlowingEnderEye = true;
+    public boolean enableWorldIconUpdate = true;
 
     public Config() {}
 

@@ -137,5 +137,7 @@
   "yacl3.config.better_client:config.enableDisplayRemainingSales": "启用显示剩余销售额",
   "yacl3.config.better_client:config.enableDisplayRemainingSales.desc": "在交易界面上，每个箭头下方显示剩余的可用销售数量。",
   "yacl3.config.better_client:config.enableGlowingEnderEye": "启用发光末影之眼",
-  "yacl3.config.better_client:config.enableGlowingEnderEye.desc": "末影之眼现在在被投掷时会发光，使你在黑暗环境中更容易看到它。"
+  "yacl3.config.better_client:config.enableGlowingEnderEye.desc": "末影之眼现在在被投掷时会发光，使你在黑暗环境中更容易看到它。",
+  "yacl3.config.better_client:config.enableWorldIconUpdate": "启用世界图标更新",
+  "yacl3.config.better_client:config.enableWorldIconUpdate.desc": "这使得单人游戏世界图标在每次加载世界时都会重新生成，而不是保留原有的图标。"
 }

@@ -137,6 +137,7 @@
   "yacl3.config.better_client:config.enableDisplayRemainingSales": "Enable Display Remaining Sales",
   "yacl3.config.better_client:config.enableDisplayRemainingSales.desc": "Display the remaining number of sales available under each button arrow on the trading screen.",
   "yacl3.config.better_client:config.enableGlowingEnderEye": "Enable Glowing Ender Eye",
-  "yacl3.config.better_client:config.enableGlowingEnderEye.desc": "Eye of ender now glows when thrown, making it easier to see in dark environments."
-
+  "yacl3.config.better_client:config.enableGlowingEnderEye.desc": "Eye of ender now glows when thrown, making it easier to see in dark environments.",
+  "yacl3.config.better_client:config.enableWorldIconUpdate": "Enable World Icon Update",
+  "yacl3.config.better_client:config.enableWorldIconUpdate.desc": "This makes the single-player world icon regenerate each time the world is loaded instead of keeping the original icon."
 }
