@@ -77,11 +77,18 @@ public class Config {
     public boolean renderRealCostDirectly = true;
 
     public boolean enableAxolotlBucketFix = true;
+
     public boolean enableChatHistoryRetention = true;
+
     public boolean enableBookSaveConfirmation = true;
+
     public boolean enableDisplayRemainingSales = true;
+
     public boolean enableGlowingEnderEye = true;
+
     public boolean enableWorldIconUpdate = true;
+
+    public boolean enableFullBrightnessToggle = true;
 
     public Config() {}
 

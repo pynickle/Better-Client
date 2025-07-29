@@ -9,5 +9,6 @@ import net.fabricmc.api.Environment;
 public class KeyMapping {
     public static void registerKeyMapping() {
         KeyMappingRegistry.register(BCKeyMappings.BUNDLE_UP);
+        KeyMappingRegistry.register(BCKeyMappings.FULL_BRIGHTNESS_TOGGLE);
     }
 }

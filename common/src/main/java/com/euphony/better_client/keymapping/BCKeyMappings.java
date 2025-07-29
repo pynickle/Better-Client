@@ -10,4 +10,11 @@ public class BCKeyMappings {
             InputConstants.KEY_R,
             "category.better_client.keymapping"
     );
+
+    public static final KeyMapping FULL_BRIGHTNESS_TOGGLE = new KeyMapping(
+            "key.better_client.full_brightness_toggle",
+            InputConstants.Type.KEYSYM,
+            InputConstants.KEY_G,
+            "category.better_client.keymapping"
+    );
 }

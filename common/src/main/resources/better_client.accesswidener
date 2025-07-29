@@ -8,3 +8,7 @@ accessible field net/minecraft/world/inventory/Slot slot I
 accessible method net/minecraft/client/gui/screens/inventory/AbstractContainerScreen slotClicked (Lnet/minecraft/world/inventory/Slot;IILnet/minecraft/world/inventory/ClickType;)V
 accessible class net/minecraft/client/gui/screens/inventory/MerchantScreen$TradeOfferButton
 accessible method net/minecraft/world/entity/npc/Villager updateTrades ()V
+accessible field net/minecraft/client/Options gamma Lnet/minecraft/client/OptionInstance;
+mutable field net/minecraft/client/Options gamma Lnet/minecraft/client/OptionInstance;
+accessible field net/minecraft/client/OptionInstance value Ljava/lang/Object;
+mutable field net/minecraft/client/OptionInstance value Ljava/lang/Object;

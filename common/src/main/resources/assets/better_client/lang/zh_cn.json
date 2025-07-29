@@ -10,6 +10,7 @@
   "category.better_client.keymapping": "更好的客户端",
 
   "key.better_client.bundle_up": "一键收纳",
+  "key.better_client.full_brightness_toggle": "全亮切换",
 
   "info.better_client.durability_tooltip.number.durability_hint": "耐久度：%s",
   "info.better_client.durability_tooltip.number.full_durability": "%d",
@@ -18,8 +19,16 @@
   "text.better_client.help.missing": "§c无法打开配置界面",
   "text.better_client.desc.help.missing": "§7安装 YACL 模组来访问游戏内配置界面。",
 
-  "yacl3.config.better_client:config": "Enchanting Vanilla",
+  "yacl3.config.better_client:config": "更好的客户端",
   "yacl3.config.better_client:config.category.client": "客户端",
+  "yacl3.config.better_client:config.category.chat": "聊天",
+  "yacl3.config.better_client:config.category.cheating": "作弊",
+  "yacl3.config.better_client:config.category.merchant": "商人",
+  "yacl3.config.better_client:config.category.optimization": "优化",
+  "yacl3.config.better_client:config.category.screen": "屏幕",
+  "yacl3.config.better_client:config.category.tooltip": "工具提示",
+  "yacl3.config.better_client:config.category.utility": "实用工具",
+  "yacl3.config.better_client:config.category.visuality": "视觉效果",
 
   "yacl3.config.better_client:description.tick_explanation": "1 秒等于 20 个 tick。",
 
@@ -28,6 +37,14 @@
   "yacl3.config.better_client:config.enableFadingNightVision.desc": "夜视效果现在会淡出，而不是闪烁。",
   "yacl3.config.better_client:config.fadingOutDuration": "淡出持续时间",
   "yacl3.config.better_client:config.fadingOutDuration.desc": "夜视效果淡出的持续时间",
+
+  "yacl3.config.better_client:config.category.client.group.glowing_ender_eye": "发光末影之眼",
+  "yacl3.config.better_client:config.enableGlowingEnderEye": "启用发光末影之眼",
+  "yacl3.config.better_client:config.enableGlowingEnderEye.desc": "末影之眼现在在被投掷时会发光，使你在黑暗环境中更容易看到它。",
+
+  "yacl3.config.better_client:config.category.client.group.full_brightness_toggle": "全亮切换",
+  "yacl3.config.better_client:config.enableFullBrightnessToggle": "启用全亮切换",
+  "yacl3.config.better_client:config.enableFullBrightnessToggle.desc": "现在你可以通过按下快捷键来切换全亮模式。",
 
   "yacl3.config.better_client:config.category.client.group.better_ping_display": "更好的延迟显示",
   "yacl3.config.better_client:config.enableBetterPingDisplay": "启用更好的延迟显示",
@@ -40,10 +57,14 @@
   "yacl3.config.better_client:config.enableLongerChatHistory.desc": "聊天历史现在可从原版的 100 条扩展到 4096 条。",
   "yacl3.config.better_client:config.chatMaxMessages": "最多保留历史消息",
   "yacl3.config.better_client:config.chatMaxMessages.desc": "聊天历史中保留的信息数量上限",
+
+  "yacl3.config.better_client:config.category.client.group.timestamp": "时间戳",
   "yacl3.config.better_client:config.enableTimeStamp": "启用时间戳",
   "yacl3.config.better_client:config.enableTimeStamp.desc": "现在时间会显示在聊天信息之前。",
   "yacl3.config.better_client:config.timeStampColor": "时间戳颜色",
   "yacl3.config.better_client:config.timeStampColor.desc": "显示的时间颜色",
+  "yacl3.config.better_client:config.enableChatHistoryRetention": "启用聊天记录保留",
+  "yacl3.config.better_client:config.enableChatHistoryRetention.desc": "现在离开世界并不会清除聊天记录。",
 
   "yacl3.config.better_client:config.category.client.group.biome_title": "生物群系标题",
   "yacl3.config.better_client:config.enableBiomeTitle": "启用生物群系标题",
@@ -89,6 +110,10 @@
   "yacl3.config.better_client:config.enablePageTurnSound": "启用翻页音效",
   "yacl3.config.better_client:config.enablePageTurnSound.desc": "使用滚轮翻页时是否播放翻页声音。",
 
+  "yacl3.config.better_client:config.category.client.group.book_save_confirmation": "书籍保存确认",
+  "yacl3.config.better_client:config.enableBookSaveConfirmation": "启用书籍保存确认",
+  "yacl3.config.better_client:config.enableBookSaveConfirmation.desc": "当你对书籍内容进行修改后未保存即关闭时，系统会弹出提示框提醒您保存。",
+
   "yacl3.config.better_client:config.category.client.group.music_pause": "音乐暂停",
   "yacl3.config.better_client:config.enableMusicPause": "启用音乐暂停",
   "yacl3.config.better_client:config.enableMusicPause.desc": "现在，当游戏暂停时，音乐也会暂停，就像在1.21.5及以下版本中一样。",
@@ -101,11 +126,25 @@
   "yacl3.config.better_client:config.enableAltKey": "启用 Alt 键",
   "yacl3.config.better_client:config.enableAltKey.desc": "当物品可损坏或不可堆叠时，按住 Alt 键进行交易。",
 
+  "yacl3.config.better_client:config.category.client.group.trading_hud": "交易界面",
+  "yacl3.config.better_client:config.enableTradingHud": "启用交易界面",
+  "yacl3.config.better_client:config.enableTradingHud.desc": "现在只需要把鼠标对准村民，左上角就会显示他们的交易项目。",
+  "yacl3.config.better_client:config.renderRealCostDirectly": "直接渲染实际价格",
+  "yacl3.config.better_client:config.renderRealCostDirectly.desc": "直接渲染实际价格而不是基础和实际价格。",
+
+  "yacl3.config.better_client:config.category.client.group.remaining_sales": "剩余销售次数",
+  "yacl3.config.better_client:config.enableDisplayRemainingSales": "启用显示剩余销售次数",
+  "yacl3.config.better_client:config.enableDisplayRemainingSales.desc": "在交易界面上，每个箭头下方显示剩余的可用销售数量。",
+
   "yacl3.config.better_client:config.category.client.group.no_experimental_warning": "不显示实验性警告",
   "yacl3.config.better_client:config.enableNoExperimentalWarning": "启用不显示实验性警告",
   "yacl3.config.better_client:config.enableNoExperimentalWarning.desc": "创建实验性世界和进入实验性世界的警告将不再会出现。",
   "yacl3.config.better_client:config.enableExperimentalDisplay": "启用实验性文字显示",
   "yacl3.config.better_client:config.enableExperimentalDisplay.desc": "世界选择列表中的实验性字样不会隐藏。",
+
+  "yacl3.config.better_client:config.category.client.group.world_icon_update": "世界图标更新",
+  "yacl3.config.better_client:config.enableWorldIconUpdate": "启用世界图标更新",
+  "yacl3.config.better_client:config.enableWorldIconUpdate.desc": "这使得单人游戏世界图标在每次加载世界时都会重新生成，而不是保留原有的图标。",
 
   "yacl3.config.better_client:config.category.client.group.bundle_up": "一键收纳",
   "yacl3.config.better_client:config.enableBundleUp": "启用一键收纳",
@@ -119,25 +158,7 @@
   "yacl3.config.better_client:config.showDurabilityHint": "显示耐久度前缀",
   "yacl3.config.better_client:config.showDurabilityHint.desc": "耐久度前缀将显示。",
 
-  "yacl3.config.better_client:config.category.client.group.trading_hud": "交易界面",
-  "yacl3.config.better_client:config.enableTradingHud": "启用交易界面",
-  "yacl3.config.better_client:config.enableTradingHud.desc": "现在只需要把鼠标对准村民，左上角就会显示他们的交易项目。",
-  "yacl3.config.better_client:config.renderRealCostDirectly": "直接渲染实际价格",
-  "yacl3.config.better_client:config.renderRealCostDirectly.desc": "直接渲染实际价格而不是基础和实际价格。",
-
-  "yacl3.config.better_client:config.category.client.group.other": "其他",
-  "yacl3.config.better_client:config.enableBeeInfo": "启用蜂巢信息",
-  "yacl3.config.better_client:config.enableBeeInfo.desc": "您现在可以看到蜂箱和蜂巢中蜜蜂的数量和蜂蜜的含量，就像 1.21.2 中原版添加的功能一样。",
+  "yacl3.config.better_client:config.category.client.group.axolotl_bucket_fix": "美西螈桶修复",
   "yacl3.config.better_client:config.enableAxolotlBucketFix": "启用美西螈桶修复",
-  "yacl3.config.better_client:config.enableAxolotlBucketFix.desc": "现在装有不同种类美西螈的美西螈桶会显示不同的纹理。",
-  "yacl3.config.better_client:config.enableChatHistoryRetention": "启用聊天记录保留",
-  "yacl3.config.better_client:config.enableChatHistoryRetention.desc": "现在离开世界并不会清除聊天记录。",
-  "yacl3.config.better_client:config.enableBookSaveConfirmation": "启用书籍保存确认",
-  "yacl3.config.better_client:config.enableBookSaveConfirmation.desc": "当你对书籍内容进行修改后未保存即关闭时，系统会弹出提示框提醒您保存。",
-  "yacl3.config.better_client:config.enableDisplayRemainingSales": "启用显示剩余销售额",
-  "yacl3.config.better_client:config.enableDisplayRemainingSales.desc": "在交易界面上，每个箭头下方显示剩余的可用销售数量。",
-  "yacl3.config.better_client:config.enableGlowingEnderEye": "启用发光末影之眼",
-  "yacl3.config.better_client:config.enableGlowingEnderEye.desc": "末影之眼现在在被投掷时会发光，使你在黑暗环境中更容易看到它。",
-  "yacl3.config.better_client:config.enableWorldIconUpdate": "启用世界图标更新",
-  "yacl3.config.better_client:config.enableWorldIconUpdate.desc": "这使得单人游戏世界图标在每次加载世界时都会重新生成，而不是保留原有的图标。"
+  "yacl3.config.better_client:config.enableAxolotlBucketFix.desc": "现在装有不同种类美西螈的美西螈桶会显示不同的纹理。"
 }

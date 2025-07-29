@@ -10,6 +10,7 @@
   "category.better_client.keymapping": "Better Client",
 
   "key.better_client.bundle_up": "Bundle Up",
+  "key.better_client.full_brightness_toggle": "Full Brightness Toggle",
 
   "info.better_client.durability_tooltip.number.durability_hint": "Durability: %s",
   "info.better_client.durability_tooltip.number.full_durability": "%d",
@@ -18,8 +19,16 @@
   "text.better_client.help.missing": "§cCannot open config screen",
   "text.better_client.desc.help.missing": "§7Install YACL to access the config in-game.",
 
-  "yacl3.config.better_client:config": "Enchanting Vanilla",
+  "yacl3.config.better_client:config": "Better Client",
   "yacl3.config.better_client:config.category.client": "Client",
+  "yacl3.config.better_client:config.category.chat": "Chat",
+  "yacl3.config.better_client:config.category.cheating": "Cheating",
+  "yacl3.config.better_client:config.category.merchant": "Merchant",
+  "yacl3.config.better_client:config.category.optimization": "Optimization",
+  "yacl3.config.better_client:config.category.screen": "Screen",
+  "yacl3.config.better_client:config.category.tooltip": "Tooltip",
+  "yacl3.config.better_client:config.category.utility": "Utility",
+  "yacl3.config.better_client:config.category.visuality": "Visuality",
 
   "yacl3.config.better_client:description.tick_explanation": "1 second equals 20 ticks.",
 
@@ -28,6 +37,14 @@
   "yacl3.config.better_client:config.enableFadingNightVision.desc": "Night vision now fades out instead of flickering.",
   "yacl3.config.better_client:config.fadingOutDuration": "Fading Out Duration",
   "yacl3.config.better_client:config.fadingOutDuration.desc": "Duration of night vision effect fade out",
+
+  "yacl3.config.better_client:config.category.client.group.glowing_ender_eye": "Glowing Ender Eye",
+  "yacl3.config.better_client:config.enableGlowingEnderEye": "Enable Glowing Ender Eye",
+  "yacl3.config.better_client:config.enableGlowingEnderEye.desc": "Eye of ender now glows when thrown, making it easier to see in dark environments.",
+
+  "yacl3.config.better_client:config.category.client.group.full_brightness_toggle": "Full Brightness Toggle",
+  "yacl3.config.better_client:config.enableFullBrightnessToggle": "Enable Full Brightness Toggle",
+  "yacl3.config.better_client:config.enableFullBrightnessToggle.desc": "Now you can toggle full brightness on and off, making it easier to see in dark environments.",
 
   "yacl3.config.better_client:config.category.client.group.better_ping_display": "Better Ping Display",
   "yacl3.config.better_client:config.enableBetterPingDisplay": "Enable Better Ping Display",
@@ -40,10 +57,14 @@
   "yacl3.config.better_client:config.enableLongerChatHistory.desc": "Chat history now extends from the vanilla 100 to 4096.",
   "yacl3.config.better_client:config.chatMaxMessages": "Chat Max Messages",
   "yacl3.config.better_client:config.chatMaxMessages.desc": "Maximum number of messages retained in chat history",
+
+  "yacl3.config.better_client:config.category.client.group.timestamp": "Timestamp",
   "yacl3.config.better_client:config.enableTimeStamp": "Enable Time Stamp",
   "yacl3.config.better_client:config.enableTimeStamp.desc": "The time is now displayed before the chat message.",
   "yacl3.config.better_client:config.timeStampColor": "Time Stamp Color",
   "yacl3.config.better_client:config.timeStampColor.desc": "The color of the time displayed",
+  "yacl3.config.better_client:config.enableChatHistoryRetention": "Enable Chat History Retention",
+  "yacl3.config.better_client:config.enableChatHistoryRetention.desc": "Leaving the world now will not clear your chat history.",
 
   "yacl3.config.better_client:config.category.client.group.biome_title": "Biome Title",
   "yacl3.config.better_client:config.enableBiomeTitle": "Enable Biome Title",
@@ -89,6 +110,10 @@
   "yacl3.config.better_client:config.enablePageTurnSound": "Enable Page Turn Sound",
   "yacl3.config.better_client:config.enablePageTurnSound.desc": "Whether to play a page-turning sound when using the scroll wheel to turn pages.",
 
+  "yacl3.config.better_client:config.category.client.group.book_save_confirmation": "Book Save Confirmation",
+  "yacl3.config.better_client:config.enableBookSaveConfirmation": "Enable Book Save Confirmation",
+  "yacl3.config.better_client:config.enableBookSaveConfirmation.desc": "When you make changes to the content of a book and close it without saving, a prompt will pop up reminding you to save.",
+
   "yacl3.config.better_client:config.category.client.group.music_pause": "Music Pause",
   "yacl3.config.better_client:config.enableMusicPause": "Enable Music Pause",
   "yacl3.config.better_client:config.enableMusicPause.desc": "Now, when the game is paused, the music will also pause, just like in versions 1.21.5 and below.",
@@ -101,11 +126,25 @@
   "yacl3.config.better_client:config.enableAltKey": "Enable Alt Key",
   "yacl3.config.better_client:config.enableAltKey.desc": "When items are damageable or non-stackable, hold down the Alt key to trade.",
 
+  "yacl3.config.better_client:config.category.client.group.trading_hud": "Trading Hud",
+  "yacl3.config.better_client:config.enableTradingHud": "Enable Trading Hud",
+  "yacl3.config.better_client:config.enableTradingHud.desc": "Now, simply hover your mouse over a villager, and their trade items will be displayed in the upper left corner.",
+  "yacl3.config.better_client:config.renderRealCostDirectly": "Render Real Cost Directly",
+  "yacl3.config.better_client:config.renderRealCostDirectly.desc": "Directly render real prices rather than base and real prices.",
+
+  "yacl3.config.better_client:config.category.client.group.remaining_sales": "Remaining Sales",
+  "yacl3.config.better_client:config.enableDisplayRemainingSales": "Enable Display Remaining Sales",
+  "yacl3.config.better_client:config.enableDisplayRemainingSales.desc": "Display the remaining number of sales available under each button arrow on the trading screen.",
+
   "yacl3.config.better_client:config.category.client.group.no_experimental_warning": "No Experimental Warning",
   "yacl3.config.better_client:config.enableNoExperimentalWarning": "Enable No Experimental Warning",
   "yacl3.config.better_client:config.enableNoExperimentalWarning.desc": "The warning about creating experimental worlds and entering experimental worlds will no longer appear.",
   "yacl3.config.better_client:config.enableExperimentalDisplay": "Enable Experimental Display",
   "yacl3.config.better_client:config.enableExperimentalDisplay.desc": "The experimental label in the world selection list will not be hidden.",
+
+  "yacl3.config.better_client:config.category.client.group.world_icon_update": "World Icon Update",
+  "yacl3.config.better_client:config.enableWorldIconUpdate": "Enable World Icon Update",
+  "yacl3.config.better_client:config.enableWorldIconUpdate.desc": "This makes the single-player world icon regenerate each time the world is loaded instead of keeping the original icon.",
 
   "yacl3.config.better_client:config.category.client.group.bundle_up": "Bundle Up",
   "yacl3.config.better_client:config.enableBundleUp": "Enable Bundle Up",
@@ -119,25 +158,7 @@
   "yacl3.config.better_client:config.showDurabilityHint": "Show Durability Hint",
   "yacl3.config.better_client:config.showDurabilityHint.desc": "The durability prefix will be displayed.",
 
-  "yacl3.config.better_client:config.category.client.group.trading_hud": "Trading Hud",
-  "yacl3.config.better_client:config.enableTradingHud": "Enable Trading Hud",
-  "yacl3.config.better_client:config.enableTradingHud.desc": "Now, simply hover your mouse over a villager, and their trade items will be displayed in the upper left corner.",
-  "yacl3.config.better_client:config.renderRealCostDirectly": "Render Real Cost Directly",
-  "yacl3.config.better_client:config.renderRealCostDirectly.desc": "Directly render real prices rather than base and real prices.",
-
-  "yacl3.config.better_client:config.category.client.group.other": "Other",
-  "yacl3.config.better_client:config.enableBeeInfo": "Enable Bee Info",
-  "yacl3.config.better_client:config.enableBeeInfo.desc": "You can now see the number of bees and the amount of honey in beehives and bee nests, just like the feature added natively in 1.21.2.",
+  "yacl3.config.better_client:config.category.client.group.axolotl_bucket_fix": "Axolotl Bucket Fix",
   "yacl3.config.better_client:config.enableAxolotlBucketFix": "Enable Axolotl Bucket Fix",
-  "yacl3.config.better_client:config.enableAxolotlBucketFix.desc": "Now buckets containing different variants of axolotl display different textures.",
-  "yacl3.config.better_client:config.enableChatHistoryRetention": "Enable Chat History Retention",
-  "yacl3.config.better_client:config.enableChatHistoryRetention.desc": "Leaving the world now will not clear your chat history.",
-  "yacl3.config.better_client:config.enableBookSaveConfirmation": "Enable Book Save Confirmation",
-  "yacl3.config.better_client:config.enableBookSaveConfirmation.desc": "When you make changes to the content of a book and close it without saving, a prompt will pop up reminding you to save.",
-  "yacl3.config.better_client:config.enableDisplayRemainingSales": "Enable Display Remaining Sales",
-  "yacl3.config.better_client:config.enableDisplayRemainingSales.desc": "Display the remaining number of sales available under each button arrow on the trading screen.",
-  "yacl3.config.better_client:config.enableGlowingEnderEye": "Enable Glowing Ender Eye",
-  "yacl3.config.better_client:config.enableGlowingEnderEye.desc": "Eye of ender now glows when thrown, making it easier to see in dark environments.",
-  "yacl3.config.better_client:config.enableWorldIconUpdate": "Enable World Icon Update",
-  "yacl3.config.better_client:config.enableWorldIconUpdate.desc": "This makes the single-player world icon regenerate each time the world is loaded instead of keeping the original icon."
+  "yacl3.config.better_client:config.enableAxolotlBucketFix.desc": "Now buckets containing different variants of axolotl display different textures."
 }

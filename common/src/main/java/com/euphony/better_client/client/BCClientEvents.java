@@ -8,6 +8,7 @@ import dev.architectury.event.events.common.TickEvent;
 public class BCClientEvents {
     public static void init() {
         ClientTickEvent.CLIENT_PRE.register(BiomeTitleEvent::clientPre);
+        ClientTickEvent.CLIENT_LEVEL_PRE.register(FullBrightnessEvent::clientLevelPre);
 
         ClientChatEvent.RECEIVED.register(BeautifiedChatEvent::chatReceived);
 
