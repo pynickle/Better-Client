@@ -3,6 +3,7 @@ package com.euphony.better_client.neoforge.client;
 import com.euphony.better_client.BetterClient;
 import com.euphony.better_client.client.events.BiomeTitleEvent;
 import com.euphony.better_client.client.events.BundleUpEvent;
+import com.euphony.better_client.client.events.WorldIconUpdateEvent;
 import com.euphony.better_client.client.property.AxolotlBucketVariant;
 import com.euphony.better_client.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -11,10 +12,7 @@ import net.minecraft.server.packs.resources.ResourceManager;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.AddClientReloadListenersEvent;
-import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
-import net.neoforged.neoforge.client.event.RegisterSelectItemModelPropertyEvent;
-import net.neoforged.neoforge.client.event.ScreenEvent;
+import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 
 import java.util.concurrent.CompletableFuture;
@@ -40,5 +38,10 @@ public class BCClientNeoforge {
     @SubscribeEvent
     public static void onKeyPressed(ScreenEvent.KeyReleased.Post event) {
         BundleUpEvent.bundleUp(Minecraft.getInstance(), event.getScreen(), event.getKeyCode(), event.getScanCode(), event.getModifiers());
+    }
+
+    @SubscribeEvent
+    public static void onRenderLevelStage(RenderLevelStageEvent.AfterLevel event) {
+        WorldIconUpdateEvent.onRenderLevelStage();
     }
 }

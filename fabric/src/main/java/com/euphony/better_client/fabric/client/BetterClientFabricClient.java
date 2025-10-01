@@ -2,9 +2,11 @@ package com.euphony.better_client.fabric.client;
 
 import com.euphony.better_client.client.events.BiomeTitleEvent;
 import com.euphony.better_client.client.events.BundleUpEvent;
+import com.euphony.better_client.client.events.WorldIconUpdateEvent;
 import com.euphony.better_client.client.property.AxolotlBucketVariant;
 import com.euphony.better_client.utils.Utils;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
 import net.fabricmc.fabric.api.client.screen.v1.ScreenKeyboardEvents;
@@ -27,5 +29,7 @@ public final class BetterClientFabricClient implements ClientModInitializer {
                 BundleUpEvent.bundleUp(Minecraft.getInstance(), s, key, scancode, modifiers);
             });
         });
+
+        WorldRenderEvents.END.register(context -> WorldIconUpdateEvent.onRenderLevelStage());
     }
 }
