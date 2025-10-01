@@ -119,3 +119,4 @@ runs/
 !gradle-wrapper.jar
 /.vscode/
 /common/src/generated/resources/.cache/
+/.architectury-transformer/
