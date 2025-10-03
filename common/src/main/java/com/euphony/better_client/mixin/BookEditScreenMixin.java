@@ -1,6 +1,7 @@
 package com.euphony.better_client.mixin;
 
 import com.euphony.better_client.api.IMultiLineEditBox;
+import com.euphony.better_client.utils.KeyUtils;
 import net.minecraft.client.gui.components.MultiLineEditBox;
 import net.minecraft.client.gui.screens.ConfirmScreen;
 import net.minecraft.client.gui.screens.Screen;
@@ -76,7 +77,7 @@ public abstract class BookEditScreenMixin extends Screen {
         double scrollDelta = verticalAmount + horizontalAmount;
 
         double better_client$speedFactor = 1.0;
-        if (hasControlDown()) better_client$speedFactor *= config.ctrlSpeedMultiplier;
+        if (KeyUtils.hasControlDown()) better_client$speedFactor *= config.ctrlSpeedMultiplier;
 
         better_client$progress += scrollDelta * better_client$speedFactor;
 

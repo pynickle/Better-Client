@@ -144,7 +144,7 @@
 
   "yacl3.config.better_client:config.category.client.group.world_icon_update": "世界图标更新",
   "yacl3.config.better_client:config.enableWorldIconUpdate": "启用世界图标更新",
-  "yacl3.config.better_client:config.enableWorldIconUpdate.desc": "这使得单人游戏世界图标在每次加载世界时都会重新生成，而不是保留原有的图标。",
+  "yacl3.config.better_client:config.enableWorldIconUpdate.desc": "这使得单人游戏世界图标在每次加载世界时都会重新生成，而不是保留原有的图标。（目前暂时仅支持 NeoForge）",
 
   "yacl3.config.better_client:config.category.client.group.bundle_up": "一键收纳",
   "yacl3.config.better_client:config.enableBundleUp": "启用一键收纳",

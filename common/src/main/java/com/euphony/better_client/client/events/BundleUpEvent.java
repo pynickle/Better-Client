@@ -9,6 +9,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
+import net.minecraft.client.input.KeyEvent;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
@@ -23,10 +24,9 @@ import java.util.List;
 
 import static com.euphony.better_client.BetterClient.config;
 
-@Environment(EnvType.CLIENT)
 public class BundleUpEvent {
-    public static void bundleUp(Minecraft minecraft, Screen screen, int keyCode, int scanCode, int modifiers) {
-        if(!BCKeyMappings.BUNDLE_UP.matches(keyCode, scanCode) || !config.enableBundleUp) return;
+    public static void bundleUp(Minecraft minecraft, Screen screen, KeyEvent keyEvent) {
+        if(!BCKeyMappings.BUNDLE_UP.matches(keyEvent) || !config.enableBundleUp) return;
 
         List<BundleCandidate> candidates = new ArrayList<>();
 

@@ -1,5 +1,6 @@
 package com.euphony.better_client.mixin;
 
+import com.euphony.better_client.utils.KeyUtils;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.BookViewScreen;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
@@ -35,7 +36,7 @@ public abstract class BookViewScreenMixin extends Screen {
         double scrollDelta = verticalAmount + horizontalAmount;
 
         double better_client$speedFactor = 1.0;
-        if (hasControlDown()) better_client$speedFactor *= config.ctrlSpeedMultiplier;
+        if (KeyUtils.hasControlDown()) better_client$speedFactor *= config.ctrlSpeedMultiplier;
 
         better_client$progress += scrollDelta * better_client$speedFactor;
 

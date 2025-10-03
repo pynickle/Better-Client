@@ -7,8 +7,8 @@ import com.euphony.better_client.client.events.WorldIconUpdateEvent;
 import com.euphony.better_client.client.property.AxolotlBucketVariant;
 import com.euphony.better_client.utils.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.server.packs.resources.PreparableReloadListener.PreparationBarrier;
-import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.server.packs.resources.PreparableReloadListener;
+import net.minecraft.server.packs.resources.PreparableReloadListener.SharedState;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -22,7 +22,10 @@ import java.util.concurrent.Executor;
 public class BCClientNeoforge {
     @SubscribeEvent
     public static void onResourceManagerReload(AddClientReloadListenersEvent event) {
-        event.addListener(Utils.prefix("clear_name_cache"), (PreparationBarrier barrier, ResourceManager manager, Executor backgroundExecutor, Executor gameExecuter) -> CompletableFuture.runAsync(BiomeTitleEvent.NAME_CACHE::clear, backgroundExecutor).thenCompose(barrier::wait));
+        event.addListener(Utils.prefix("clear_name_cache"),
+                (SharedState manager, Executor backgroundExecutor, PreparableReloadListener.PreparationBarrier barrier, Executor gameExecuter)
+                        -> CompletableFuture.runAsync(BiomeTitleEvent.NAME_CACHE::clear, backgroundExecutor)
+        );
     }
 
     @SubscribeEvent
@@ -37,7 +40,7 @@ public class BCClientNeoforge {
 
     @SubscribeEvent
     public static void onKeyPressed(ScreenEvent.KeyReleased.Post event) {
-        BundleUpEvent.bundleUp(Minecraft.getInstance(), event.getScreen(), event.getKeyCode(), event.getScanCode(), event.getModifiers());
+        BundleUpEvent.bundleUp(Minecraft.getInstance(), event.getScreen(), event.getKeyEvent());
     }
 
     @SubscribeEvent

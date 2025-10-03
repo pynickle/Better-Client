@@ -25,7 +25,7 @@ public class WorldListEntryMixin {
     }
 
     @Redirect(
-            method = "render",
+            method = "<init>",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/world/level/storage/LevelSummary;getInfo()Lnet/minecraft/network/chat/Component;"
@@ -50,7 +50,7 @@ public class WorldListEntryMixin {
         } else if (levelSummary.requiresManualConversion()) {
             return Component.translatable("selectWorld.conversion").withStyle(ChatFormatting.RED);
         } else if (!levelSummary.isCompatible()) {
-            return Component.translatable("selectWorld.incompatible.info", new Object[]{levelSummary.getWorldVersionName()}).withStyle(ChatFormatting.RED);
+            return Component.translatable("selectWorld.incompatible.info", levelSummary.getWorldVersionName()).withStyle(ChatFormatting.RED);
         } else {
             MutableComponent mutableComponent = levelSummary.isHardcore() ? Component.empty().append(Component.translatable("gameMode.hardcore").withColor(-65536)) : Component.translatable("gameMode." + levelSummary.getGameMode().getName());
             if (levelSummary.hasCommands()) {

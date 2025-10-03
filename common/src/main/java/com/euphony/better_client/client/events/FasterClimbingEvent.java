@@ -9,7 +9,7 @@ import static com.euphony.better_client.BetterClient.config;
 public class FasterClimbingEvent {
 
     public static void playerPre(Player player) {
-        if(!player.level().isClientSide || !config.enableFasterClimbing) return;
+        if(!player.level().isClientSide() || !config.enableFasterClimbing) return;
 
         if (player.onClimbable() && !player.isCrouching()) {
             Climber climber = new Climber(player);

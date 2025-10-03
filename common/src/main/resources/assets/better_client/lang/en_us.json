@@ -144,7 +144,7 @@
 
   "yacl3.config.better_client:config.category.client.group.world_icon_update": "World Icon Update",
   "yacl3.config.better_client:config.enableWorldIconUpdate": "Enable World Icon Update",
-  "yacl3.config.better_client:config.enableWorldIconUpdate.desc": "This makes the single-player world icon regenerate each time the world is loaded instead of keeping the original icon.",
+  "yacl3.config.better_client:config.enableWorldIconUpdate.desc": "This makes the single-player world icon regenerate each time the world is loaded instead of keeping the original icon. (Currently only supports NeoForge)",
 
   "yacl3.config.better_client:config.category.client.group.bundle_up": "Bundle Up",
   "yacl3.config.better_client:config.enableBundleUp": "Enable Bundle Up",

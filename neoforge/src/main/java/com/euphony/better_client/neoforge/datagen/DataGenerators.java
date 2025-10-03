@@ -7,7 +7,9 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.metadata.PackMetadataGenerator;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
+import net.minecraft.server.packs.metadata.pack.PackFormat;
 import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
+import net.minecraft.util.InclusiveRange;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
@@ -23,9 +25,8 @@ public class DataGenerators {
 
         generator.addProvider(true, new ModelGenerator(output));
 
-        generator.addProvider(true, new PackMetadataGenerator(output).add(PackMetadataSection.TYPE, new PackMetadataSection(
+        generator.addProvider(true, new PackMetadataGenerator(output).add(PackMetadataSection.CLIENT_TYPE, new PackMetadataSection(
                 Component.literal("Resources for Better Client"),
-                DetectedVersion.BUILT_IN.packVersion(PackType.CLIENT_RESOURCES),
-                Optional.empty())));
+                new InclusiveRange<>(PackFormat.of(65), PackFormat.of(69)))));
     }
 }

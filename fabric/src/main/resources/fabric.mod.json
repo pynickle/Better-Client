@@ -28,10 +28,10 @@
     "better_client.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.16.13",
-    "minecraft": "~1.21.6",
+    "fabricloader": ">=0.16.14",
+    "minecraft": "~1.21.9",
     "java": ">=21",
-    "architectury": ">=17.0.6",
+    "architectury": ">=18.0.3",
     "fabric-api": "*"
   },
   "suggests": {
