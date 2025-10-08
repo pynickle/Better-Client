@@ -4,9 +4,9 @@
 
 **Better Client** is a mod making a better server experience for you.
 
-As its name suggests, this is a ***client-side*** only mod with all the features to optimize your gaming experience to the fullest!
+As its name suggests, this is a **_client-side_** only mod with all the features to optimize your gaming experience to the fullest!
 
-**All the features that have been added can be found in the [Wiki](https://github.com/pynickle/Better-Client/wiki)**
+**All the features that have been added can be found in the [Wiki](https://euphony.gitbook.io/better-client/)**
 
 ## Dependency
 
@@ -14,14 +14,12 @@ The vast majority of the features are switchable, and you can easily configure t
 
 Configuration files are also available.
 
+**Since 5.0.0 version, YACL has become an optional dependency. But still suggest you to install it.**
+
 ## Development
 
 This mod is actively being updated and more features will be added in the future!
 
-## Version Support
+### 6.3.1 is reported with possible performance issue, use 6.2.0 or newer version (with world icon update turn off) for better performance.
 
-* **1.21.1 Neoforge/Fabric: 1.1.2 (Active Updates)**
-* **1.21.4 Neoforge/Fabric: unplanned**
-* **1.21.5 Neoforge/Fabric: Consideration of future migration**
-
-### **Separated from mod [Enchanting Vanilla](https://www.curseforge.com/minecraft/mc-mods/enchanting-vanilla)**
+Add my [discord](https://discord.gg/J2TwHucyzk) and talk to me.
