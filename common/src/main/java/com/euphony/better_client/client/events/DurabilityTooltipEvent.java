@@ -1,5 +1,6 @@
 package com.euphony.better_client.client.events;
 
+import com.euphony.better_client.utils.ItemUtils;
 import com.euphony.better_client.utils.enums.TooltipCategory;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -27,9 +28,9 @@ public class DurabilityTooltipEvent {
                     Component maxDurabilityComponent = Component.literal(Integer.toString(maxDurability)).withStyle(ChatFormatting.GRAY);
                     MutableComponent number;
                     if(durability == maxDurability)
-                        number = Component.translatable("info.better_client.durability_tooltip.number.full_durability", maxDurabilityComponent).withStyle(ChatFormatting.GRAY);
+                        number = ItemUtils.createTooltip("info.better_client.durability_tooltip.number.full_durability", maxDurabilityComponent);
                     else
-                        number = Component.translatable("info.better_client.durability_tooltip.number.damaged", durabilityComponent, maxDurabilityComponent).withStyle(ChatFormatting.GRAY);
+                        number = ItemUtils.createTooltip("info.better_client.durability_tooltip.number.damaged", durabilityComponent, maxDurabilityComponent);
                     if(config.showDurabilityHint)
                         number = Component.translatable("info.better_client.durability_tooltip.number.durability_hint", number);
                     components.add(number);

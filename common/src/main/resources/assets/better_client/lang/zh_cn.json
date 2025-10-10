@@ -16,6 +16,17 @@
   "info.better_client.durability_tooltip.number.full_durability": "%d",
   "info.better_client.durability_tooltip.number.damaged": "%1$d / %2$d",
 
+  "info.better_client.tooltip.compass.lodestone_position": "磁石: %s, %s, %s",
+  "info.better_client.tooltip.compass.lodestone_position.other_dimension": "磁石(%s): %s, %s, %s",
+  "info.better_client.tooltip.compass.spawn_position": "出生点: %s, %s, %s",
+
+  "info.better_client.tooltip.recovery_compass.death_location": "死亡位置: %s, %s, %s",
+  "info.better_client.tooltip.recovery_compass.death_location.other_dimension": "死亡位置(%s): %s, %s, %s",
+
+  "info.better_client.tooltip.dimension.overworld": "主世界",
+  "info.better_client.tooltip.dimension.the_end": "末地",
+  "info.better_client.tooltip.dimension.the_nether": "下界",
+
   "text.better_client.help.missing": "§c无法打开配置界面",
   "text.better_client.desc.help.missing": "§7安装 YACL 模组来访问游戏内配置界面。",
 
@@ -157,6 +168,16 @@
   "yacl3.config.better_client:config.showDurabilityWhenNotDamaged.desc": "未损坏的物品也会显示耐久度。",
   "yacl3.config.better_client:config.showDurabilityHint": "显示耐久度前缀",
   "yacl3.config.better_client:config.showDurabilityHint.desc": "耐久度前缀将显示。",
+
+  "yacl3.config.better_client:config.category.client.group.compass_tooltip": "指南针提示",
+  "yacl3.config.better_client:config.enableCompassTooltip": "启用指南针提示",
+  "yacl3.config.better_client:config.enableCompassTooltip.desc": "指南针将显示其详细坐标和维度信息。",
+  "yacl3.config.better_client:config.enableNormalCompassTooltip": "启用普通指南针提示",
+  "yacl3.config.better_client:config.enableNormalCompassTooltip.desc": "启用指向出生点的指南针信息显示。",
+  "yacl3.config.better_client:config.enableLodestoneCompassTooltip": "启用磁石指南针提示",
+  "yacl3.config.better_client:config.enableLodestoneCompassTooltip.desc": "启用磁石指针信息显示。",
+  "yacl3.config.better_client:config.enableRecoveryCompassTooltip": "启用追溯指针提示",
+  "yacl3.config.better_client:config.enableRecoveryCompassTooltip.desc": "启用追溯指针信息显示。",
 
   "yacl3.config.better_client:config.category.client.group.axolotl_bucket_fix": "美西螈桶修复",
   "yacl3.config.better_client:config.enableAxolotlBucketFix": "启用美西螈桶修复",

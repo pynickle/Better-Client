@@ -16,6 +16,17 @@
   "info.better_client.durability_tooltip.number.full_durability": "%d",
   "info.better_client.durability_tooltip.number.damaged": "%1$d / %2$d",
 
+  "info.better_client.tooltip.compass.lodestone_position": "Lodestone: %s, %s, %s",
+  "info.better_client.tooltip.compass.lodestone_position.other_dimension": "Lodestone in %s: %s, %s, %s",
+  "info.better_client.tooltip.compass.spawn_position": "Spawn point: %s, %s, %s",
+
+  "info.better_client.tooltip.recovery_compass.death_location": "Death location: %s, %s, %s",
+  "info.better_client.tooltip.recovery_compass.death_location.other_dimension": "Death location in %s: %s, %s, %s",
+
+  "info.better_client.tooltip.dimension.overworld": "Overworld",
+  "info.better_client.tooltip.dimension.the_end": "The End",
+  "info.better_client.tooltip.dimension.the_nether": "The Nether",
+
   "text.better_client.help.missing": "§cCannot open config screen",
   "text.better_client.desc.help.missing": "§7Install YACL to access the config in-game.",
 
@@ -157,6 +168,16 @@
   "yacl3.config.better_client:config.showDurabilityWhenNotDamaged.desc": "Undamaged items will also display durability.",
   "yacl3.config.better_client:config.showDurabilityHint": "Show Durability Hint",
   "yacl3.config.better_client:config.showDurabilityHint.desc": "The durability prefix will be displayed.",
+
+  "yacl3.config.better_client:config.category.client.group.compass_tooltip": "Compass Tooltip",
+  "yacl3.config.better_client:config.enableCompassTooltip": "Enable Compass Tooltip",
+  "yacl3.config.better_client:config.enableCompassTooltip.desc": "The compass will display their detailed coordinates and dimensional information.",
+  "yacl3.config.better_client:config.enableNormalCompassTooltip": "Enable Normal Compass Tooltip",
+  "yacl3.config.better_client:config.enableNormalCompassTooltip.desc": "Enable compass information display pointing to the spawnpoint.",
+  "yacl3.config.better_client:config.enableLodestoneCompassTooltip": "Enable Lodestone Compass Tooltip",
+  "yacl3.config.better_client:config.enableLodestoneCompassTooltip.desc": "Enable lodestone compass information display.",
+  "yacl3.config.better_client:config.enableRecoveryCompassTooltip": "Enable Recovery Compass Tooltip",
+  "yacl3.config.better_client:config.enableRecoveryCompassTooltip.desc": "Enable recovery compass information display.",
 
   "yacl3.config.better_client:config.category.client.group.axolotl_bucket_fix": "Axolotl Bucket Fix",
   "yacl3.config.better_client:config.enableAxolotlBucketFix": "Enable Axolotl Bucket Fix",

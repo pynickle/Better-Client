@@ -17,6 +17,7 @@ public class BCClientEvents {
         TickEvent.PLAYER_PRE.register(FasterClimbingEvent::playerPre);
 
         ClientTooltipEvent.ITEM.register(DurabilityTooltipEvent::tooltip);
+        ClientTooltipEvent.ITEM.register(CompassTooltipEvent::tooltip);
 
         ClientTickEvent.CLIENT_LEVEL_POST.register(TradingHudEvent::clientLevelPost);
 

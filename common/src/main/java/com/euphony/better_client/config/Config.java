@@ -86,9 +86,14 @@ public class Config {
 
     public boolean enableGlowingEnderEye = true;
 
-    public boolean enableWorldIconUpdate = true;
+    public boolean enableWorldIconUpdate = false;
 
     public boolean enableFullBrightnessToggle = true;
+
+    public boolean enableCompassTooltip = true;
+    public boolean enableNormalCompassTooltip = true;
+    public boolean enableLodestoneTooltip = true;
+    public boolean enableRecoveryCompassTooltip = true;
 
     public Config() {}
 
