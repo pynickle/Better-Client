@@ -55,6 +55,4 @@ jobs:
 
           loaders: ${{ matrix.loader }}
 
-          files: |
-            ${{ matrix.loader }}/build/libs/!(*-@(dev|sources|javadoc)).jar
-            ${{ matrix.loader }}/build/libs/*-@(dev|sources|javadoc).jar
+          files: ${{ matrix.loader }}/build/libs/better_client-${{ matrix.loader }}-${{ github.ref_name }}.jar
