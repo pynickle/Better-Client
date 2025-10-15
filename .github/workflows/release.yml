@@ -1,0 +1,58 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "*"
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - loader: fabric
+            name: Fabric
+
+          - loader: neoforge
+            name: NeoForge
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: 21
+
+      - name: Build
+        run: ./gradlew :${{ matrix.loader }}:jar
+
+      - name: Publish
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          modrinth-id: uWsLN21d
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+
+          curseforge-id: 1250626
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+          changelog-file: CHANGELOG.md
+
+          name: [${{ matrix.loader }} 1.21.1] ${{ github.ref_name }}
+          version-type: release
+          version: ${{ github.ref_name }}+${{ matrix.loader }}
+          game-versions: 1.21.1
+          java: 21
+
+          loaders: ${{ matrix.loader }}
+
+          files: |
+            ${{ matrix.loader }}/build/libs/!(*-@(dev|sources|javadoc)).jar
+            ${{ matrix.loader }}/build/libs/*-@(dev|sources|javadoc).jar

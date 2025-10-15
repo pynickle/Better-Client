@@ -75,5 +75,7 @@
   "yacl3.config.better_client:config.enableChatHistoryRetention": "启用聊天记录保留",
   "yacl3.config.better_client:config.enableChatHistoryRetention.desc": "现在离开世界并不会清除聊天记录。",
   "yacl3.config.better_client:config.enableBookSaveConfirmation": "启用书籍保存确认",
-  "yacl3.config.better_client:config.enableBookSaveConfirmation.desc": "当你对书籍内容进行修改后未保存即关闭时，系统会弹出提示框提醒您保存。"
+  "yacl3.config.better_client:config.enableBookSaveConfirmation.desc": "当你对书籍内容进行修改后未保存即关闭时，系统会弹出提示框提醒您保存。",
+  "yacl3.config.better_client:config.enableGlowingEnderEye": "启用发光末影之眼",
+  "yacl3.config.better_client:config.enableGlowingEnderEye.desc": "末影之眼现在在被投掷时会发光，使你在黑暗环境中更容易看到它。"
 }

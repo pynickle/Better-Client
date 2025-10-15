@@ -77,6 +77,7 @@ public class BetterClientConfig {
     @SerialEntry public boolean enableAxolotlBucketFix = true;
     @SerialEntry public boolean enableChatHistoryRetention = true;
     @SerialEntry public boolean enableBookSaveConfirmation = true;
+    @SerialEntry public boolean enableGlowingEnderEye = true;
 
     public static YetAnotherConfigLib makeScreen() {
         return YetAnotherConfigLib.create(HANDLER, (defaults, config, builder) -> {
@@ -288,6 +289,12 @@ public class BetterClientConfig {
                             newVal -> config.enableBookSaveConfirmation = newVal)
                     .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
                     .build();
+            Option<Boolean> enableGlowingEnderEyeOpt = ConfigUtils.<Boolean>getGenericOption("enableGlowingEnderEye")
+                    .binding(defaults.enableGlowingEnderEye,
+                            () -> config.enableGlowingEnderEye,
+                            newVal -> config.enableGlowingEnderEye = newVal)
+                    .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
+                    .build();
 
             return builder
                     .title(Component.translatable("yacl3.config.better_client:config"))
@@ -348,7 +355,8 @@ public class BetterClientConfig {
                                             enableBeeInfoOpt,
                                             enableAxolotlBucketFixOpt,
                                             enableChatHistoryRetentionOpt,
-                                            enableBookSaveConfirmationOpt
+                                            enableBookSaveConfirmationOpt,
+                                            enableGlowingEnderEyeOpt
                                     ))
                                     .build())
                             .build())
