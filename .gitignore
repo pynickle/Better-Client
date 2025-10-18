@@ -119,3 +119,5 @@ runs/
 !gradle-wrapper.jar
 /.vscode/
 /common/src/generated/resources/.cache/
+
+/node_modules/
