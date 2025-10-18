@@ -37,9 +37,6 @@ jobs:
       - name: Make Gradle Wrapper executable
         run: chmod +x ./gradlew
 
-      #      - name: Build
-      #        run: ./gradlew :${{ matrix.loader }}:build
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
