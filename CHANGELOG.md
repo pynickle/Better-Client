@@ -1,3 +1,13 @@
+## [7.2.0](https://github.com/pynickle/Better-Client/compare/v7.1.0...v7.2.0) (2025-10-18)
+
+### ✨ 功能更新
+
+* trigger release for test ([810f13f](https://github.com/pynickle/Better-Client/commit/810f13fef1aa56e7b3593f4c6cfda7965331394f))
+
+### 🔧 其他更改
+
+* update version and add glob env ([fd57c15](https://github.com/pynickle/Better-Client/commit/fd57c15d394f0f05fa3d785ebdfa283e22a0c3fa))
+
 ## 7.1.0 (2025-10-18)
 
 ### ✨ 功能更新
