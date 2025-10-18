@@ -54,7 +54,7 @@ jobs:
           CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
           MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
           MOD_LOADERS: ${{ matrix.loader }}
-          DISPLAY_NAME: "[${{ matrix.name }} 1.21.1] ${ nextRelease.version }"
+          DISPLAY_NAME: "[${{ matrix.name }} 1.21.10] ${ nextRelease.version }"
           MODRINTH_VERSION_NUMBER: "${ nextRelease.version }+${{ matrix.loader }}"
         run: npx semantic-release
 
