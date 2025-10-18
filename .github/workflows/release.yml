@@ -53,7 +53,7 @@ jobs:
           MOD_LOADERS: ${{ matrix.loader }}
           DISPLAY_NAME: "[${{ matrix.name }} 1.21.10] ${ nextRelease.version }"
           MODRINTH_VERSION_NUMBER: "${ nextRelease.version }+${{ matrix.loader }}"
-          GLOB: ${{ matrix.loader }}/build/libs/better_client-${{ matrix.loader }}-${{ github.ref_name }}.jar
+          GLOB: "${{ matrix.loader }}/build/libs/better_client-${{ matrix.loader }}-${ nextRelease.version }.jar"
         run: npx semantic-release
 
 #      - name: Publish
