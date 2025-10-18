@@ -1,0 +1,91 @@
+{
+  "branches": [
+    "master"
+  ],
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    [
+      "@semantic-release/release-notes-generator",
+      {
+        "preset": "conventionalcommits",
+        "presetConfig": {
+          "types": [
+            { "type": "feat", "section": "✨ 功能更新" },
+            { "type": "fix", "section": "🐛 Bug修复" },
+            { "type": "docs", "section": "📚 文档更新" },
+            { "type": "style", "section": "💄 样式优化" },
+            { "type": "refactor", "section": "♻️ 代码重构" },
+            { "type": "perf", "section": "⚡ 性能优化" },
+            { "type": "test", "section": "✅ 测试" },
+            { "type": "build", "section": "📦 构建" },
+            { "type": "ci", "section": "👷 CI/CD" },
+            { "type": "chore", "section": "🔧 其他更改" }
+          ]
+        }
+      }
+    ],
+    [
+      "@semantic-release/exec",
+      {
+        "prepareCmd": "./gradlew :fabric:build -Pmod_version=${nextRelease.version} && ./gradlew :neoforge:build -Pmod_version=${nextRelease.version}"
+      }
+    ],
+    "@semantic-release/changelog",
+    [
+      "@semantic-release/git",
+      {
+        "assets": [
+          "CHANGELOG.md"
+        ],
+        "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+      }
+    ],
+    [
+      "@semantic-release/minecraft",
+      {
+        "game_versions": "1.21.1",
+        "curseforge": {
+          "project_id": "1250626",
+          "java_versions": 21,
+          "environments": "client",
+          "relations": {
+            "projects": [
+              {
+                "slug": "yacl",
+                "type": "requiredDependency"
+              },
+              {
+                "slug": "architectury-api",
+                "type": "requiredDependency"
+              }
+            ]
+          }
+        },
+        "modrinth": {
+          "project_id": "uWsLN21d",
+          "dependencies": [
+            {
+              "version_id": "lhGA9TYQ",
+              "dependency_type": "required"
+            },
+            {
+              "version_id": "1eAoo2KR",
+              "dependency_type": "required"
+            }
+          ]
+        }
+      }
+    ]
+  ],
+  "preset": "angular",
+  "releaseRules": [
+    {
+      "type": "refactor",
+      "release": "patch"
+    },
+    {
+      "type": "style",
+      "release": "patch"
+    }
+  ]
+}

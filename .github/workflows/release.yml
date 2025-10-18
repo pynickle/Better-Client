@@ -2,11 +2,14 @@ name: Release
 
 on:
   push:
-    tags:
+    branches:
       - "*"
 
 permissions:
-  contents: write
+  contents: write # to be able to publish a GitHub release
+  issues: write # to be able to comment on released issues
+  pull-requests: write # to be able to comment on released pull requests
+  id-token: write # to enable use of OIDC for npm provenance
 
 jobs:
   publish:
@@ -22,6 +25,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Java
         uses: actions/setup-java@v5
@@ -32,35 +37,56 @@ jobs:
       - name: Make Gradle Wrapper executable
         run: chmod +x ./gradlew
 
-      - name: Build
-        run: ./gradlew :${{ matrix.loader }}:build
+#      - name: Build
+#        run: ./gradlew :${{ matrix.loader }}:build
 
-      - name: Publish
-        uses: Kir-Antipov/mc-publish@v3.3
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          modrinth-id: uWsLN21d
-          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          node-version: "lts/*"
 
-          curseforge-id: 1250626
-          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+      - name: Install dependencies
+        run: npm ci
 
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Verify the integrity of provenance attestations and registry signatures for installed dependencies
+        run: npm audit signatures
 
-          changelog-file: CHANGELOG.md
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+          MOD_LOADERS: ${{ matrix.loader }}
+          DISPLAY_NAME: "[${{ matrix.name }} 1.21.1] ${ nextRelease.version }"
+          MODRINTH_VERSION_NUMBER: "${ nextRelease.version }+${{ matrix.loader }}"
+        run: npx semantic-release
 
-          name: "[${{ matrix.name }} 1.21.1] ${{ github.ref_name }}"
-          version-type: release
-          version: ${{ github.ref_name }}+${{ matrix.loader }}
-          game-versions: 1.21.1
-          loaders: ${{ matrix.loader }}
-          java: 21
-
-          dependencies: |
-            architectury-api(required)
-            yacl(required)
-
-          modrinth-featured: false
-
-          github-name: "[Minecraft 1.21.1] ${{ github.ref_name }}"
-
-          files: ${{ matrix.loader }}/build/libs/better_client-${{ matrix.loader }}-${{ github.ref_name }}.jar
+#      - name: Publish
+#        uses: Kir-Antipov/mc-publish@v3.3
+#        with:
+#          modrinth-id: uWsLN21d
+#          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+#
+#          curseforge-id: 1250626
+#          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+#
+#          github-token: ${{ secrets.GITHUB_TOKEN }}
+#
+#          changelog-file: CHANGELOG.md
+#
+#          name: "[${{ matrix.name }} 1.21.1] ${{ github.ref_name }}"
+#          version-type: release
+#          version: ${{ github.ref_name }}+${{ matrix.loader }}
+#          game-versions: 1.21.1
+#          loaders: ${{ matrix.loader }}
+#          java: 21
+#
+#          dependencies: |
+#            architectury-api(required)
+#            yacl(required)
+#
+#          modrinth-featured: false
+#
+#          github-name: "[Minecraft 1.21.1] ${{ github.ref_name }}"
+#
+#          files: ${{ matrix.loader }}/build/libs/better_client-${{ matrix.loader }}-${{ github.ref_name }}.jar
