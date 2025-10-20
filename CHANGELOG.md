@@ -1,3 +1,9 @@
+## [7.1.1](https://github.com/pynickle/Better-Client/compare/v7.1.0...v7.1.1) (2025-10-20)
+
+### 🐛 Bug修复
+
+* update package ([5640d7f](https://github.com/pynickle/Better-Client/commit/5640d7fa09d45c1dbeb808dd9a9c3fac67de2dad))
+
 ## 1.0.0 (2025-10-20)
 
 ### ✨ 功能更新
