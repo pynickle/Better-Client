@@ -21,6 +21,9 @@
             { "type": "ci", "section": "👷 CI/CD" },
             { "type": "chore", "section": "🔧 其他更改" }
           ]
+        },
+        "parserOpts": {
+          "noteKeywords": ["BREAKING CHANGE", "BREAKING CHANGES"]
         }
       }
     ],
@@ -32,9 +35,31 @@
     ],
     "@semantic-release/changelog",
     [
+      "@semantic-release/git",
+      {
+        "assets": [
+          "CHANGELOG.md"
+        ],
+        "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+      }
+    ],
+    [
       "semantic-release-minecraft",
       {
         "game_versions": "1.21.10",
+        "mod_loaders": "${ loader }",
+        "display_name": "[${ name } 1.21.10] ${ nextRelease.version }",
+        "glob": "${ loader }/build/libs/better_client-${ loader }-${ nextRelease.version }.jar",
+        "strategies": [
+          {
+            "loader": "fabric",
+            "name": "Fabric"
+          },
+          {
+            "loader": "neoforge",
+            "name": "NeoForge"
+          }
+        ],
         "curseforge": {
           "project_id": "1250626",
           "java_versions": 21,
@@ -54,6 +79,7 @@
         },
         "modrinth": {
           "project_id": "uWsLN21d",
+          "version_number": "${ nextRelease.version }+${ loader }",
           "dependencies": [
             {
               "version_id": "lhGA9TYQ",

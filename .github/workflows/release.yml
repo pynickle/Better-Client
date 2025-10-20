@@ -14,14 +14,6 @@ permissions:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        include:
-          - loader: fabric
-            name: Fabric
-
-          - loader: neoforge
-            name: NeoForge
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -50,10 +42,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
           MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
-          MOD_LOADERS: ${{ matrix.loader }}
-          DISPLAY_NAME: "[${{ matrix.name }} 1.21.10] ${ nextRelease.version }"
-          MODRINTH_VERSION_NUMBER: "${ nextRelease.version }+${{ matrix.loader }}"
-          GLOB: "${{ matrix.loader }}/build/libs/better_client-${{ matrix.loader }}-${ nextRelease.version }.jar"
         run: npx semantic-release
 
 #      - name: Publish
