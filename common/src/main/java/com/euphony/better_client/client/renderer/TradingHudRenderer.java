@@ -75,11 +75,8 @@ public class TradingHudRenderer {
                         }
 
                         guiGraphics.drawString(font, String.join(", ", enchantments), (i + 85), (n + 3), CommonColors.WHITE);
-
-                        ++m;
-                    } else {
-                        ++m;
                     }
+                    ++m;
                 }
             }
         });
