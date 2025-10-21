@@ -95,6 +95,8 @@ public class Config {
     public boolean enableLodestoneTooltip = true;
     public boolean enableRecoveryCompassTooltip = true;
 
+    public boolean enableSuspiciousStewTooltip = true;
+
     public Config() {}
 
     public static Config create() {

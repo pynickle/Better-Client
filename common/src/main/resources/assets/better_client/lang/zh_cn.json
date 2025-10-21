@@ -179,6 +179,10 @@
   "yacl3.config.better_client:config.enableRecoveryCompassTooltip": "启用追溯指针提示",
   "yacl3.config.better_client:config.enableRecoveryCompassTooltip.desc": "启用追溯指针信息显示。",
 
+  "yacl3.config.better_client:config.category.client.group.suspicious_stew_tooltip": "谜之炖菜效果提示",
+  "yacl3.config.better_client:config.enableSuspiciousStewTooltip": "启用谜之炖菜效果提示",
+  "yacl3.config.better_client:config.enableSuspiciousStewTooltip.desc": "谜之炖菜的效果现将永久显示在提示中。",
+
   "yacl3.config.better_client:config.category.client.group.axolotl_bucket_fix": "美西螈桶修复",
   "yacl3.config.better_client:config.enableAxolotlBucketFix": "启用美西螈桶修复",
   "yacl3.config.better_client:config.enableAxolotlBucketFix.desc": "现在装有不同种类美西螈的美西螈桶会显示不同的纹理。"

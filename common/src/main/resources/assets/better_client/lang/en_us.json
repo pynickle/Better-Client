@@ -179,6 +179,10 @@
   "yacl3.config.better_client:config.enableRecoveryCompassTooltip": "Enable Recovery Compass Tooltip",
   "yacl3.config.better_client:config.enableRecoveryCompassTooltip.desc": "Enable recovery compass information display.",
 
+  "yacl3.config.better_client:config.category.client.group.suspicious_stew_tooltip": "Suspicious Stew Effects Tooltip",
+  "yacl3.config.better_client:config.enableSuspiciousStewTooltip": "Enable Suspicious Stew Effects Tooltip",
+  "yacl3.config.better_client:config.enableSuspiciousStewTooltip.desc": "The effect of the Suspicious Stew will now be permanently displayed in the tooltip.",
+
   "yacl3.config.better_client:config.category.client.group.axolotl_bucket_fix": "Axolotl Bucket Fix",
   "yacl3.config.better_client:config.enableAxolotlBucketFix": "Enable Axolotl Bucket Fix",
   "yacl3.config.better_client:config.enableAxolotlBucketFix.desc": "Now buckets containing different variants of axolotl display different textures."

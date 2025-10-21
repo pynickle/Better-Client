@@ -2,8 +2,6 @@ package com.euphony.better_client.client.events;
 
 import com.euphony.better_client.keymapping.BCKeyMappings;
 import com.euphony.better_client.utils.records.BundleCandidate;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;

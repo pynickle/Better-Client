@@ -2,8 +2,6 @@ package com.euphony.better_client.config.screen;
 
 import com.euphony.better_client.config.screen.category.*;
 import com.euphony.better_client.config.screen.widget.CategoryButton;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;

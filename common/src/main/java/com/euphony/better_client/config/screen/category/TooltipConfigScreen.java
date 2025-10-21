@@ -18,6 +18,7 @@ import static com.euphony.better_client.config.YACLConfig.CLIENT_CATEGORY;
 public class TooltipConfigScreen{
     private static final String DURABILITY_TOOLTIP_GROUP = "durability_tooltip";
     private static final String COMPASS_TOOLTIP_GROUP = "compass_tooltip";
+    private static final String SUSPICIOUS_STEW_TOOLTIP_GROUP = "suspicious_stew_tooltip";
 
     public static Screen generateScreen(Screen parent) {
         // Durability Tooltip
@@ -69,6 +70,14 @@ public class TooltipConfigScreen{
                 newVal -> config.enableRecoveryCompassTooltip = newVal
         );
 
+        // Suspicious Stew Tooltip
+        Option<Boolean> enableSuspiciousStewTooltipOpt = ConfigUtils.buildBooleanOption(
+                "enableSuspiciousStewTooltip",
+                DEFAULTS.enableSuspiciousStewTooltip,
+                () -> config.enableSuspiciousStewTooltip,
+                newVal -> config.enableSuspiciousStewTooltip = newVal
+        );
+
         return YetAnotherConfigLib.createBuilder()
                 .title(Component.translatable("yacl3.config.better_client:config"))
                 .category(ConfigCategory.createBuilder()
@@ -88,6 +97,12 @@ public class TooltipConfigScreen{
                                         enableNormalCompassTooltipOpt,
                                         enableLodestoneCompassTooltipOpt,
                                         enableRecoveryCompassTooltipOpt
+                                ))
+                                .build())
+                        .group(OptionGroup.createBuilder()
+                                .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, SUSPICIOUS_STEW_TOOLTIP_GROUP))
+                                .options(List.of(
+                                        enableSuspiciousStewTooltipOpt
                                 ))
                                 .build())
                         .build())

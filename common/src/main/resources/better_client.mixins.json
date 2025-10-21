@@ -19,7 +19,8 @@
     "WorldOpenFlowsMixin"
   ],
   "mixins": [
-    "ClientPacketListenerMixin"
+    "ClientPacketListenerMixin",
+    "SuspiciousStewEffectsMixin"
   ],
   "injectors": {
     "defaultRequire": 1
