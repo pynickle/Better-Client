@@ -1,3 +1,9 @@
+## [7.2.0](https://github.com/pynickle/Better-Client/compare/v7.1.0...v7.2.0) (2025-10-21)
+
+### ✨ 功能更新
+
+* Add suspicious stew effect tooltip ([ea9294a](https://github.com/pynickle/Better-Client/commit/ea9294ab1e89f3e25af9531e358c3366acfa9294))
+
 ## [7.1.4](https://github.com/pynickle/Better-Client/compare/v7.1.3...v7.1.4) (2025-10-20)
 
 ### 🐛 Bug修复
