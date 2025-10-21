@@ -1,3 +1,16 @@
+## [7.2.1](https://github.com/pynickle/Better-Client/compare/v7.2.0...v7.2.1) (2025-10-21)
+
+### 🔧 Miscellaneous Changes
+
+* add imp to conventional commits type ([16b6a79](https://github.com/pynickle/Better-Client/commit/16b6a7949e43b06f0ff87613024131597d5cc4b7))
+* change language to english for changelog ([8fc4cc8](https://github.com/pynickle/Better-Client/commit/8fc4cc89b9958d11d5935f077fcb86d39e0d2cac))
+* update release rules to make imp trigger a patch ([2f81e8b](https://github.com/pynickle/Better-Client/commit/2f81e8ba8f7846817c37bced88219cfc70a06771))
+* update semantic-release-minecraft to test ([168ccb8](https://github.com/pynickle/Better-Client/commit/168ccb82ae7ad2369d20a9bebe8701c7774593b8))
+
+### 🚀 Improvements
+
+* improve the en_us translation for config ([e77d7e1](https://github.com/pynickle/Better-Client/commit/e77d7e1d6732edaf29d1611a6017684ce8e150e0))
+
 ## [7.2.0](https://github.com/pynickle/Better-Client/compare/v7.1.0...v7.2.0) (2025-10-21)
 
 ### ✨ 功能更新
