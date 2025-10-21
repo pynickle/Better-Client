@@ -37,39 +37,9 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Release
+      - name: Build And Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
           MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
         run: npx semantic-release
-
-#      - name: Publish
-#        uses: Kir-Antipov/mc-publish@v3.3
-#        with:
-#          modrinth-id: uWsLN21d
-#          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
-#
-#          curseforge-id: 1250626
-#          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
-#
-#          github-token: ${{ secrets.GITHUB_TOKEN }}
-#
-#          changelog-file: CHANGELOG.md
-#
-#          name: "[${{ matrix.name }} 1.21.1] ${{ github.ref_name }}"
-#          version-type: release
-#          version: ${{ github.ref_name }}+${{ matrix.loader }}
-#          game-versions: 1.21.1
-#          loaders: ${{ matrix.loader }}
-#          java: 21
-#
-#          dependencies: |
-#            architectury-api(required)
-#            yacl(required)
-#
-#          modrinth-featured: false
-#
-#          github-name: "[Minecraft 1.21.1] ${{ github.ref_name }}"
-#
-#          files: ${{ matrix.loader }}/build/libs/better_client-${{ matrix.loader }}-${{ github.ref_name }}.jar

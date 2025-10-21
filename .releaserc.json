@@ -82,11 +82,11 @@
           "version_number": "${ nextRelease.version }+${ loader }",
           "dependencies": [
             {
-              "version_id": "lhGA9TYQ",
+              "project_id": "lhGA9TYQ",
               "dependency_type": "optional"
             },
             {
-              "version_id": "1eAoo2KR",
+              "project_id": "1eAoo2KR",
               "dependency_type": "required"
             }
           ]
@@ -94,5 +94,15 @@
       }
     ]
   ],
-  "preset": "angular"
+  "preset": "conventionalcommits",
+  "releaseRules": [
+    {
+      "type": "ref",
+      "release": "patch"
+    },
+    {
+      "type": "style",
+      "release": "patch"
+    }
+  ]
 }

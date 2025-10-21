@@ -20,6 +20,4 @@ Configuration files are also available.
 
 This mod is actively being updated and more features will be added in the future!
 
-### 6.3.1 is reported with possible performance issue, use 6.2.0 or newer version (with world icon update turn off) for better performance.
-
 Add my [discord](https://discord.gg/J2TwHucyzk) and talk to me.
