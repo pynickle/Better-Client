@@ -51,6 +51,16 @@
         "mod_loaders": "${ loader }",
         "display_name": "[${ name } 1.21.9/10] ${ nextRelease.version }",
         "glob": "${ loader }/build/libs/better_client-${ loader }-${ nextRelease.version }.jar",
+        "dependencies": [
+          {
+            "slug": "architectury-api",
+            "type": "required"
+          },
+          {
+            "slug": "yacl",
+            "type": "optional"
+          }
+        ],
         "strategies": [
           {
             "loader": "fabric",
@@ -64,31 +74,11 @@
         "curseforge": {
           "project_id": "1250626",
           "java_versions": 21,
-          "environments": "client",
-          "relations": [
-            {
-              "slug": "yacl",
-              "type": "optionalDependency"
-            },
-            {
-              "slug": "architectury-api",
-              "type": "requiredDependency"
-            }
-          ]
+          "environments": "client"
         },
         "modrinth": {
           "project_id": "uWsLN21d",
-          "version_number": "${ nextRelease.version }+${ loader }",
-          "dependencies": [
-            {
-              "project_id": "lhGA9TYQ",
-              "dependency_type": "optional"
-            },
-            {
-              "project_id": "1eAoo2KR",
-              "dependency_type": "required"
-            }
-          ]
+          "version_number": "${ nextRelease.version }+${ loader }"
         }
       }
     ]
