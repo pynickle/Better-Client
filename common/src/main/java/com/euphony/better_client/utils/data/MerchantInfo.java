@@ -43,8 +43,8 @@ public class MerchantInfo {
 
     /**
      * 检查是否是同一个实体
-     * @param entityId 实体ID
-     * @return 如果是同一个实体则返回true
+     * @param entityId 实体 ID
+     * @return 如果是同一个实体则返回 true
      */
     public boolean isSameEntity(int entityId) {
         return getLastEntityId().map(id -> id == entityId).orElse(false);

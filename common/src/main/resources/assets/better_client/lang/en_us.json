@@ -66,7 +66,7 @@
   "yacl3.config.better_client:config.category.client.group.better_chat": "Better Chat",
   "yacl3.config.better_client:config.enableLongerChatHistory": "Enable Longer Chat History",
   "yacl3.config.better_client:config.enableLongerChatHistory.desc": "Extends chat history from the vanilla 100 messages to 4096.",
-  "yacl3.config.better_client:config.chatMaxMessages": "Chat Max Messages",
+  "yacl3.config.better_client:config.chatMaxMessages": "Maximum number of historical messages retained",
   "yacl3.config.better_client:config.chatMaxMessages.desc": "Maximum number of messages retained in chat history",
 
   "yacl3.config.better_client:config.category.client.group.timestamp": "Timestamp",
@@ -167,7 +167,7 @@
   "yacl3.config.better_client:config.showDurabilityWhenNotDamaged": "Show Durability When Not Damaged",
   "yacl3.config.better_client:config.showDurabilityWhenNotDamaged.desc": "Also display durability for undamaged items.",
   "yacl3.config.better_client:config.showDurabilityHint": "Show Durability Hint",
-  "yacl3.config.better_client:config.showDurabilityHint.desc": "Display a durability prefix.",
+  "yacl3.config.better_client:config.showDurabilityHint.desc": "Display a durability text prefix.",
 
   "yacl3.config.better_client:config.category.client.group.compass_tooltip": "Compass Tooltip",
   "yacl3.config.better_client:config.enableCompassTooltip": "Enable Compass Tooltip",

@@ -18,8 +18,8 @@ public class Utils {
 
     /**
      * 检查是否有任何一个指定的模组已加载
-     * @param modIds 要检查的模组ID列表
-     * @return 如果至少有一个模组已加载则返回true，否则返回false
+     * @param modIds 要检查的模组 ID 列表
+     * @return 如果至少有一个模组已加载则返回 true，否则返回 false
      */
     public static boolean isAnyModLoaded(String... modIds) {
         Collection<String> loadedMods = Platform.getModIds();

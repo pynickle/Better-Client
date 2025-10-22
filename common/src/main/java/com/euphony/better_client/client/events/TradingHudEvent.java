@@ -12,7 +12,7 @@ import net.minecraft.world.entity.Entity;
 import static com.euphony.better_client.BetterClient.config;
 
 /**
- * 交易HUD事件处理类
+ * 交易 HUD 事件处理类
  */
 public class TradingHudEvent {
     private static boolean isWindowOpen = false;
@@ -52,14 +52,14 @@ public class TradingHudEvent {
                 return;
             }
 
-            // 重置商人信息并设置新的实体ID
+            // 重置商人信息并设置新的实体 ID
             merchantInfo.reset();
             merchantInfo.setLastEntityId(entity.getId());
 
             // 发送交互包
             sendInteractionPacket(entity, player);
         } else {
-            // 清除最后的实体ID
+            // 清除最后的实体 ID
             merchantInfo.setLastEntityId(null);
         }
     }

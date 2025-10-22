@@ -55,7 +55,7 @@ public class ClientPacketListenerMixin {
 
     /**
      * 关闭容器
-     * @param containerId 容器ID
+     * @param containerId 容器 ID
      */
     @Unique
     private void better_client$closeContainer(int containerId) {

@@ -18,8 +18,8 @@ public class BiomeUtils {
     private BiomeUtils() {}
 
     /**
-     * 将snake_case格式转换为英文标题格式
-     * @param snakeCaseText snake_case格式的文本
+     * 将 snake_case 格式转换为英文标题格式
+     * @param snakeCaseText snake_case 格式的文本
      * @return 转换后的英文标题
      */
     public static String snakeCaseToTitle(String snakeCaseText) {
