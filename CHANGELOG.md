@@ -1,3 +1,13 @@
+## [7.2.2](https://github.com/pynickle/Better-Client/compare/v7.2.1...v7.2.2) (2025-10-22)
+
+### 🔧 Miscellaneous Changes
+
+* improve release workflow ([d93e3c0](https://github.com/pynickle/Better-Client/commit/d93e3c04dc43b3e1b1915b7d08067d586a150620))
+
+### 🚀 Improvements
+
+* improve chinese translation ([83d59c9](https://github.com/pynickle/Better-Client/commit/83d59c909bd4b51ed5d3ed69c5f394bfb5cd8766))
+
 ## [7.2.1](https://github.com/pynickle/Better-Client/compare/v7.2.0...v7.2.1) (2025-10-21)
 
 ### 🔧 Miscellaneous Changes
