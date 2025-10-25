@@ -1,9 +1,8 @@
 package com.euphony.better_client.mixin;
 
 import com.euphony.better_client.config.BetterClientConfig;
-import net.minecraft.client.gui.screens.ConfirmScreen;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.screens.inventory.BookEditScreen;
+import net.minecraft.client.gui.screens.inventory.BookViewScreen;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
@@ -11,43 +10,21 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 
-@Mixin(BookEditScreen.class)
-public abstract class BookEditScreenMixin extends Screen {
-    @Shadow private boolean isModified;
-
+@Mixin(BookViewScreen.class)
+public abstract class BookViewScreenMixin extends Screen {
     @Shadow protected abstract void pageBack();
-
-    @Shadow protected abstract void pageForward();
 
     @Shadow private int currentPage;
 
     @Shadow protected abstract int getNumPages();
 
+    @Shadow protected abstract void pageForward();
+
     @Unique
     double better_client$progress = 0;
 
-    protected BookEditScreenMixin(Component component) {
+    protected BookViewScreenMixin(Component component) {
         super(component);
-    }
-
-    @Override
-    public void onClose() {
-        if(!BetterClientConfig.HANDLER.instance().enableBookSaveConfirmation) {
-            super.onClose();
-            return;
-        }
-
-        if (this.isModified) {
-            this.minecraft.setScreen(new ConfirmScreen((response) -> {
-                if(response) {
-                    this.minecraft.setScreen(null);
-                } else {
-                    this.minecraft.setScreen(this);
-                }
-            }, Component.translatable("message.better_client.book_save.title"), Component.translatable("message.better_client.book_save.question")));
-        } else {
-            super.onClose();
-        }
     }
 
     @Override

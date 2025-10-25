@@ -68,6 +68,14 @@
   "yacl3.config.better_client:config.speedMultiplier": "Speed Multiplier",
   "yacl3.config.better_client:config.speedMultiplier.desc": "Speed multiplier, multiplied by the angle sin value, 2.0 corresponds to 30 degrees for the original speed.",
 
+  "yacl3.config.better_client:config.category.client.group.book_scroll": "Book Scroll",
+  "yacl3.config.better_client:config.enableBookScroll": "Enable Book Scroll",
+  "yacl3.config.better_client:config.enableBookScroll.desc": "Use the mouse wheel to turn book pages.",
+  "yacl3.config.better_client:config.ctrlSpeedMultiplier": "Ctrl Speed Multiplier",
+  "yacl3.config.better_client:config.ctrlSpeedMultiplier.desc": "Scroll acceleration multiplier while holding Ctrl.",
+  "yacl3.config.better_client:config.enablePageTurnSound": "Enable Page Turn Sound",
+  "yacl3.config.better_client:config.enablePageTurnSound.desc": "Play a page-turn sound when scrolling pages.",
+
   "yacl3.config.better_client:config.category.client.group.other": "Other",
   "yacl3.config.better_client:config.enableBeeInfo": "Enable Bee Info",
   "yacl3.config.better_client:config.enableBeeInfo.desc": "You can now see the number of bees and the amount of honey in beehives and bee nests, just like the feature added natively in 1.21.2.",
