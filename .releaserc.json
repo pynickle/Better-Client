@@ -1,6 +1,6 @@
 {
   "branches": [
-    "master"
+    "mc-1.21.1"
   ],
   "plugins": [
     "@semantic-release/commit-analyzer",
