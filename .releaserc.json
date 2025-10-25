@@ -1,11 +1,6 @@
 {
   "branches": [
-    "master",
-    {
-      "name": "mc-1.21.1",
-      "range": "1.x.x",
-      "channel": "1.x"
-    }
+    "master"
   ],
   "plugins": [
     "@semantic-release/commit-analyzer",
@@ -15,17 +10,21 @@
         "preset": "conventionalcommits",
         "presetConfig": {
           "types": [
-            { "type": "feat", "section": "✨ 功能更新" },
-            { "type": "fix", "section": "🐛 Bug修复" },
-            { "type": "docs", "section": "📚 文档更新" },
-            { "type": "style", "section": "💄 样式优化" },
-            { "type": "ref", "section": "♻️ 代码重构" },
-            { "type": "perf", "section": "⚡ 性能优化" },
-            { "type": "test", "section": "✅ 测试" },
-            { "type": "build", "section": "📦 构建" },
+            { "type": "feat", "section": "✨ Features" },
+            { "type": "fix", "section": "🐛 Bug Fixes" },
+            { "type": "docs", "section": "📚 Documentation" },
+            { "type": "style", "section": "💄 Style Improvements" },
+            { "type": "ref", "section": "♻️ Code Refactoring" },
+            { "type": "perf", "section": "⚡ Performance Improvements" },
+            { "type": "test", "section": "✅ Tests" },
+            { "type": "build", "section": "📦 Build System" },
             { "type": "ci", "section": "👷 CI/CD" },
-            { "type": "chore", "section": "🔧 其他更改" }
+            { "type": "chore", "section": "🔧 Miscellaneous Changes" },
+            { "type": "imp", "section": "🚀 Improvements" }
           ]
+        },
+        "parserOpts": {
+          "noteKeywords": ["BREAKING CHANGE", "BREAKING CHANGES"]
         }
       }
     ],
@@ -49,47 +48,53 @@
       "semantic-release-minecraft",
       {
         "game_versions": "1.21.1",
+        "mod_loaders": "${ loader }",
+        "display_name": "[${ name } 1.21.1] ${ nextRelease.version }",
+        "glob": "${ loader }/build/libs/better_client-${ loader }-${ nextRelease.version }.jar",
+        "dependencies": [
+          {
+            "slug": "architectury-api",
+            "type": "required"
+          },
+          {
+            "slug": "yacl",
+            "type": "required"
+          }
+        ],
+        "strategies": [
+          {
+            "loader": "fabric",
+            "name": "Fabric"
+          },
+          {
+            "loader": "neoforge",
+            "name": "NeoForge"
+          }
+        ],
         "curseforge": {
           "project_id": "1250626",
           "java_versions": 21,
-          "environments": "client",
-          "relations": {
-            "projects": [
-              {
-                "slug": "yacl",
-                "type": "requiredDependency"
-              },
-              {
-                "slug": "architectury-api",
-                "type": "requiredDependency"
-              }
-            ]
-          }
+          "environments": "client"
         },
         "modrinth": {
           "project_id": "uWsLN21d",
-          "dependencies": [
-            {
-              "version_id": "lhGA9TYQ",
-              "dependency_type": "required"
-            },
-            {
-              "version_id": "1eAoo2KR",
-              "dependency_type": "required"
-            }
-          ]
+          "version_number": "${ nextRelease.version }+${ loader }"
         }
       }
     ]
   ],
-  "preset": "angular",
+  "preset": "conventionalcommits",
   "releaseRules": [
     {
-      "type": "refactor",
+      "type": "ref",
       "release": "patch"
     },
     {
       "type": "style",
+      "release": "patch"
+    },
+    {
+      "type": "imp",
       "release": "patch"
     }
   ]
