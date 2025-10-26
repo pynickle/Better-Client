@@ -1,3 +1,9 @@
+## [7.2.3](https://github.com/pynickle/Better-Client/compare/v7.2.2...v7.2.3) (2025-10-26)
+
+### 🐛 Bug Fixes
+
+* make compatible with peek mod ([ed0555a](https://github.com/pynickle/Better-Client/commit/ed0555a45e67462cfe9d2e3b7ce79463d16a0861))
+
 ## [7.2.2](https://github.com/pynickle/Better-Client/compare/v7.2.1...v7.2.2) (2025-10-22)
 
 ### 🔧 Miscellaneous Changes
