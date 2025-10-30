@@ -1,3 +1,9 @@
+## [7.2.4](https://github.com/pynickle/Better-Client/compare/v7.2.3...v7.2.4) (2025-10-30)
+
+### 🐛 Bug Fixes
+
+* fix crash when disable fast trading ([225cc34](https://github.com/pynickle/Better-Client/commit/225cc344dd7081fe8fd22296e130f02f246d5443))
+
 ## [7.2.3](https://github.com/pynickle/Better-Client/compare/v7.2.2...v7.2.3) (2025-10-26)
 
 ### 🐛 Bug Fixes
