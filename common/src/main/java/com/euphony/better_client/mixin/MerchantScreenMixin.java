@@ -67,9 +67,9 @@ public abstract class MerchantScreenMixin extends AbstractContainerScreen<Mercha
     protected void containerTick() {
         super.containerTick();
 
-        this.better_client$fastTradingButton.active = false;
-
         if(!config.enableFastTrading) return;
+
+        this.better_client$fastTradingButton.active = false;
 
         Inventory inventory;
         if (this.minecraft != null) {
