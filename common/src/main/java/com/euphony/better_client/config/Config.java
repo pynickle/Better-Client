@@ -97,6 +97,9 @@ public class Config {
 
     public boolean enableSuspiciousStewTooltip = true;
 
+    public boolean enableChatFormatter = true;
+    public String posFormat = "{x}, {y}, {z}";
+
     public Config() {}
 
     public static Config create() {

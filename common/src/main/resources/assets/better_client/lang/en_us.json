@@ -77,6 +77,12 @@
   "yacl3.config.better_client:config.enableChatHistoryRetention": "Enable Chat History Retention",
   "yacl3.config.better_client:config.enableChatHistoryRetention.desc": "Leaving the world no longer clears your chat history.",
 
+  "yacl3.config.better_client:config.category.client.group.chat_formatter": "Chat Formatter",
+  "yacl3.config.better_client:config.enableChatFormatter": "Enable Chat Formatter",
+  "yacl3.config.better_client:config.enableChatFormatter.desc": "Automatic replacement of placeholders like {pos} with actual player coordinates.",
+  "yacl3.config.better_client:config.posFormat": "Pos Format",
+  "yacl3.config.better_client:config.posFormat.desc": "Defines how coordinates are formatted when replacing {pos}. Supports placeholders {x}, {y}, and {z}.",
+
   "yacl3.config.better_client:config.category.client.group.biome_title": "Biome Title",
   "yacl3.config.better_client:config.enableBiomeTitle": "Enable Biome Title",
   "yacl3.config.better_client:config.enableBiomeTitle.desc": "Displays a title when entering a new biome.",

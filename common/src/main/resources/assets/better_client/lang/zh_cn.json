@@ -77,6 +77,12 @@
   "yacl3.config.better_client:config.enableChatHistoryRetention": "启用聊天历史保留",
   "yacl3.config.better_client:config.enableChatHistoryRetention.desc": "离开世界将不再清除聊天历史。",
 
+  "yacl3.config.better_client:config.category.client.group.chat_formatter": "聊天格式化",
+  "yacl3.config.better_client:config.enableChatFormatter": "启用聊天格式化",
+  "yacl3.config.better_client:config.enableChatFormatter.desc": "自动将 {pos} 等占位符替换为玩家实际坐标",
+  "yacl3.config.better_client:config.posFormat": "坐标格式",
+  "yacl3.config.better_client:config.posFormat.desc": "定义替换 {pos} 时坐标的格式化规则。支持 {x}、{y} 和 {z} 占位符。",
+
   "yacl3.config.better_client:config.category.client.group.biome_title": "生物群系标题",
   "yacl3.config.better_client:config.enableBiomeTitle": "启用生物群系标题",
   "yacl3.config.better_client:config.enableBiomeTitle.desc": "进入新生物群系时显示标题。",

@@ -36,5 +36,4 @@ public class BeautifiedChatEvent {
         }
         return message.copy();
     }
-
 }

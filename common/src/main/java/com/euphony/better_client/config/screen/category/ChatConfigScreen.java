@@ -8,6 +8,7 @@ import dev.isxander.yacl3.api.OptionGroup;
 import dev.isxander.yacl3.api.YetAnotherConfigLib;
 import dev.isxander.yacl3.api.controller.ColorControllerBuilder;
 import dev.isxander.yacl3.api.controller.IntegerFieldControllerBuilder;
+import dev.isxander.yacl3.api.controller.StringControllerBuilder;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
@@ -21,6 +22,7 @@ import static com.euphony.better_client.config.YACLConfig.CLIENT_CATEGORY;
 public class ChatConfigScreen {
     private static final String BETTER_CHAT_GROUP = "better_chat";
     private static final String TIMESTAMP_GROUP = "timestamp";
+    private static final String CHAT_FORMATTER_GROUP = "chat_formatter";
 
     public static Screen generateScreen(Screen parent) {
         // Better Chat
@@ -60,6 +62,21 @@ public class ChatConfigScreen {
                 newVal -> config.enableChatHistoryRetention = newVal
         );
 
+        // Chat Formatter
+        Option<Boolean> enableChatFormatterOpt = ConfigUtils.buildBooleanOption(
+                "enableChatFormatter",
+                DEFAULTS.enableChatFormatter,
+                () -> config.enableChatFormatter,
+                newVal -> config.enableChatFormatter = newVal
+        );
+
+        Option<String> posFormatOpt = ConfigUtils.<String>getGenericOption("posFormat")
+                .binding(DEFAULTS.posFormat,
+                        () -> config.posFormat,
+                        newVal -> config.posFormat = newVal)
+                .controller(StringControllerBuilder::create)
+                .build();
+
         return YetAnotherConfigLib.createBuilder()
                 .title(Component.translatable("yacl3.config.better_client:config"))
                 .category(ConfigCategory.createBuilder()
@@ -77,6 +94,13 @@ public class ChatConfigScreen {
                                 .options(List.of(
                                         enableTimeStampOpt,
                                         timeStampColorOpt
+                                ))
+                                .build())
+                        .group(OptionGroup.createBuilder()
+                                .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, CHAT_FORMATTER_GROUP))
+                                .options(List.of(
+                                        enableChatFormatterOpt,
+                                        posFormatOpt
                                 ))
                                 .build())
                         .build())

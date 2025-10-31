@@ -1,18 +1,24 @@
 package com.euphony.better_client.mixin;
 
 import com.euphony.better_client.client.events.TradingHudEvent;
+import com.euphony.better_client.utils.FormatUtils;
 import com.euphony.better_client.utils.data.MerchantInfo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientPacketListener;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.game.ClientboundMerchantOffersPacket;
 import net.minecraft.network.protocol.game.ClientboundOpenScreenPacket;
 import net.minecraft.network.protocol.game.ServerboundContainerClosePacket;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.MenuType;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.util.Map;
 
 import static com.euphony.better_client.BetterClient.config;
 
@@ -65,5 +71,25 @@ public class ClientPacketListenerMixin {
         if (minecraft.player != null) {
             minecraft.player.connection.send(new ServerboundContainerClosePacket(containerId));
         }
+    }
+
+    @ModifyVariable(method = "sendChat", at = @At("HEAD"), argsOnly = true)
+    public String sendPublicMessage(String message) {
+        if (!config.enableChatFormatter) return message;
+
+        Player player = Minecraft.getInstance().player;
+        if (player == null) {
+            return message;
+        }
+
+        BlockPos pos = player.getOnPos();
+
+        return FormatUtils.format(message, Map.of(
+                "pos", FormatUtils.format(config.posFormat, Map.of(
+                        "x", pos.getX(),
+                        "y", pos.getY(),
+                        "z", pos.getZ()
+                ))
+        ));
     }
 }
