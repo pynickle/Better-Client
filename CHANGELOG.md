@@ -1,3 +1,9 @@
+## [7.3.0](https://github.com/pynickle/Better-Client/compare/v7.2.4...v7.3.0) (2025-10-31)
+
+### ✨ Features
+
+* add chat formatter ([0c2264f](https://github.com/pynickle/Better-Client/commit/0c2264f9b82543d89a3c73c55ae445c7372da48a))
+
 ## [7.2.4](https://github.com/pynickle/Better-Client/compare/v7.2.3...v7.2.4) (2025-10-30)
 
 ### 🐛 Bug Fixes
