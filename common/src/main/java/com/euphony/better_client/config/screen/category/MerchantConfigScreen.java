@@ -6,6 +6,7 @@ import dev.isxander.yacl3.api.ConfigCategory;
 import dev.isxander.yacl3.api.Option;
 import dev.isxander.yacl3.api.OptionGroup;
 import dev.isxander.yacl3.api.YetAnotherConfigLib;
+import dev.isxander.yacl3.api.controller.IntegerFieldControllerBuilder;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
@@ -42,6 +43,18 @@ public class MerchantConfigScreen {
                 () -> config.enableTradingHud,
                 newVal -> config.enableTradingHud = newVal
         );
+        Option<Integer> tradingHudXOffset = ConfigUtils.<Integer>getGenericOption("tradingHudXOffset")
+                .binding(DEFAULTS.tradingHudXOffset,
+                        () -> config.tradingHudXOffset,
+                        newVal -> config.tradingHudXOffset = newVal)
+                .controller(IntegerFieldControllerBuilder::create)
+                .build();
+        Option<Integer> tradingHudYOffset = ConfigUtils.<Integer>getGenericOption("tradingHudYOffset")
+                .binding(DEFAULTS.tradingHudYOffset,
+                        () -> config.tradingHudYOffset,
+                        newVal -> config.tradingHudYOffset = newVal)
+                .controller(IntegerFieldControllerBuilder::create)
+                .build();
         Option<Boolean> renderRealCostDirectlyOpt = ConfigUtils.buildBooleanOption(
                 "renderRealCostDirectly",
                 DEFAULTS.renderRealCostDirectly,
@@ -71,6 +84,8 @@ public class MerchantConfigScreen {
                                 .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, TRADING_HUD_GROUP))
                                 .options(List.of(
                                         enableTradingHudOpt,
+                                        tradingHudXOffset,
+                                        tradingHudYOffset,
                                         renderRealCostDirectlyOpt
                                 ))
                                 .build())

@@ -39,8 +39,8 @@ public class TradingHudRenderer {
         MerchantInfo.getInstance().getLastEntityId().ifPresent(lastId -> {
             MerchantOffers merchantOffers = MerchantInfo.getInstance().getOffers();
             if (!merchantOffers.isEmpty()) {
-                int i = 0;
-                int k = 5;
+                int i = config.tradingHudXOffset;
+                int k = 5 + config.tradingHudYOffset;
                 int l = i + 5 + 5;
                 int m = 0;
 

@@ -96,10 +96,10 @@ public class ScreenConfigScreen {
                         .range(0.3, 3.0))
                 .build();
 
-        Option<Integer> yOffsetOpt = ConfigUtils.<Integer>getGenericOption("yOffset")
-                .binding(DEFAULTS.yOffset,
-                        () -> config.yOffset,
-                        newVal -> config.yOffset = newVal)
+        Option<Integer> biomeTitleYOffset = ConfigUtils.<Integer>getGenericOption("biomeTitleYOffset")
+                .binding(DEFAULTS.biomeTitleYOffset,
+                        () -> config.biomeTitleYOffset,
+                        newVal -> config.biomeTitleYOffset = newVal)
                 .controller(opt -> IntegerFieldControllerBuilder.create(opt)
                         .range(-60, 60))
                 .build();
@@ -197,7 +197,7 @@ public class ScreenConfigScreen {
                                         fadeInTimeOpt,
                                         fadeOutTimeOpt,
                                         scaleOpt,
-                                        yOffsetOpt,
+                                        biomeTitleYOffset,
                                         colorOpt,
                                         cooldownTimeOpt,
                                         enableModNameOpt,

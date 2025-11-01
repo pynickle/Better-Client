@@ -48,7 +48,7 @@ public class Config {
     public int fadeInTime = 20;
     public int fadeOutTime = 20;
     public double scale = 2.1D;
-    public int yOffset = -10;
+    public int biomeTitleYOffset = -10;
     public int color = 0xFFFFFF;
     public double cooldownTime = 1.5D;
     public boolean enableModName = false;
@@ -74,6 +74,8 @@ public class Config {
     public boolean showDurabilityHint = true;
 
     public boolean enableTradingHud = true;
+    public int tradingHudXOffset = 0;
+    public int tradingHudYOffset = 0;
     public boolean renderRealCostDirectly = true;
 
     public boolean enableAxolotlBucketFix = true;

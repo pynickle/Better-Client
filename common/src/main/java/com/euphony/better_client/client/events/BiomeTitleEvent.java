@@ -147,7 +147,7 @@ public class BiomeTitleEvent {
 
         Component biomeName = getBiomeName(displayBiome);
         int textWidth = font.width(biomeName);
-        int y = -font.wordWrapHeight(biomeName.getString(), 999) / 2 + config.yOffset;
+        int y = -font.wordWrapHeight(biomeName.getString(), 999) / 2 + config.biomeTitleYOffset;
 
         guiGraphics.drawString(font, biomeName, (-textWidth / 2), y,
             0xffffff | (alpha << 24), true);
