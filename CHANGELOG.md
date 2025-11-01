@@ -1,3 +1,9 @@
+## [7.4.0](https://github.com/pynickle/Better-Client/compare/v7.3.0...v7.4.0) (2025-11-01)
+
+### ✨ Features
+
+* add x and y offset for trading hud ([7a9e9b6](https://github.com/pynickle/Better-Client/commit/7a9e9b6231a5bd908c22c38f5f6867592eb40b15))
+
 ## [7.3.0](https://github.com/pynickle/Better-Client/compare/v7.2.4...v7.3.0) (2025-10-31)
 
 ### ✨ Features
