@@ -37,9 +37,9 @@
   "yacl3.config.better_client:config.category.merchant": "商人",
   "yacl3.config.better_client:config.category.optimization": "优化",
   "yacl3.config.better_client:config.category.screen": "屏幕",
-  "yacl3.config.better_client:config.category.tooltip": "工具提示",
-  "yacl3.config.better_client:config.category.utility": "实用工具",
-  "yacl3.config.better_client:config.category.visuality": "视觉效果",
+  "yacl3.config.better_client:config.category.tooltip": "提示",
+  "yacl3.config.better_client:config.category.visuality": "视觉",
+  "yacl3.config.better_client:config.category.miscellaneities": "杂项",
 
   "yacl3.config.better_client:description.tick_explanation": "1 秒 = 20 tick。",
 

@@ -38,8 +38,8 @@
   "yacl3.config.better_client:config.category.optimization": "Optimization",
   "yacl3.config.better_client:config.category.screen": "Screen",
   "yacl3.config.better_client:config.category.tooltip": "Tooltip",
-  "yacl3.config.better_client:config.category.utility": "Utility",
   "yacl3.config.better_client:config.category.visuality": "Visuality",
+  "yacl3.config.better_client:config.category.miscellaneities": "Miscellaneities",
 
   "yacl3.config.better_client:description.tick_explanation": "1 second equals 20 ticks.",
 

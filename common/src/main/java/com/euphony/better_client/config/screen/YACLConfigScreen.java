@@ -25,7 +25,7 @@ public class YACLConfigScreen extends Screen {
     @Nullable
     private Screen tooltipConfigScreen = null;
     @Nullable
-    private Screen utilityConfigScreen = null;
+    private Screen miscellaneitiesConfigScreen = null;
     @Nullable
     private Screen visualityConfigScreen = null;
 
@@ -47,9 +47,9 @@ public class YACLConfigScreen extends Screen {
         assert this.minecraft != null;
         context.pose().pushMatrix();
         float scale = 2.0F;
-        context.pose().translate(this.width / 2, 10);
+        context.pose().translate((float) this.width / 2, 10);
         context.pose().scale(scale, scale);
-        context.pose().translate(-this.width / 2, 0);
+        context.pose().translate((float) -this.width / 2, 0);
         context.drawCenteredString(this.minecraft.font, Component.translatable("yacl3.config.better_client:config"), this.width / 2, 0, 0xFFFFFFFF);
         context.pose().popMatrix();
     }
@@ -118,19 +118,19 @@ public class YACLConfigScreen extends Screen {
         }));
 
         addRenderableWidget(new CategoryButton(startX + (buttonWidth + spacing) * 2, secondRowY, buttonWidth, buttonHeight,
-                Component.translatable("yacl3.config.better_client:config.category.utility"), Items.BUNDLE.getDefaultInstance(), (btn) -> {
-            if(this.utilityConfigScreen == null) {
-                this.utilityConfigScreen = UtilityConfigScreen.generateScreen(this);
-            }
-            this.minecraft.setScreen(this.utilityConfigScreen);
-        }));
-
-        addRenderableWidget(new CategoryButton(startX + (buttonWidth + spacing) * 3, secondRowY, buttonWidth, buttonHeight,
                 Component.translatable("yacl3.config.better_client:config.category.visuality"), Items.ENDER_EYE.getDefaultInstance(), (btn) -> {
             if(this.visualityConfigScreen == null) {
                 this.visualityConfigScreen = VisualityConfigScreen.generateScreen(this);
             }
             this.minecraft.setScreen(this.visualityConfigScreen);
+        }));
+
+        addRenderableWidget(new CategoryButton(startX + (buttonWidth + spacing) * 3, secondRowY, buttonWidth, buttonHeight,
+                Component.translatable("yacl3.config.better_client:config.category.miscellaneities"), Items.BUNDLE.getDefaultInstance(), (btn) -> {
+            if(this.miscellaneitiesConfigScreen == null) {
+                this.miscellaneitiesConfigScreen = MiscellaneitiesConfigScreen.generateScreen(this);
+            }
+            this.minecraft.setScreen(this.miscellaneitiesConfigScreen);
         }));
 
         // Done 按钮
