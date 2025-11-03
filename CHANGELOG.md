@@ -1,3 +1,10 @@
+## [7.4.1](https://github.com/pynickle/Better-Client/compare/v7.4.0...v7.4.1) (2025-11-03)
+
+### 🚀 Improvements
+
+* change the mod icon ([664e15d](https://github.com/pynickle/Better-Client/commit/664e15dadaead39291435daef5c0e1f6536b7dda))
+* improve some description ([73e7c7d](https://github.com/pynickle/Better-Client/commit/73e7c7d5b372c728990bc998e6fb8911ec5555a6))
+
 ## [7.4.0](https://github.com/pynickle/Better-Client/compare/v7.3.0...v7.4.0) (2025-11-01)
 
 ### ✨ Features
