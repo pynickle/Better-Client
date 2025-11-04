@@ -1,3 +1,9 @@
+## [7.4.3](https://github.com/pynickle/Better-Client/compare/v7.4.2...v7.4.3) (2025-11-04)
+
+### 🐛 Bug Fixes
+
+* fix wrong keymapping category name ([370f044](https://github.com/pynickle/Better-Client/commit/370f0442e156079122bd129f092c1b48eae4063b))
+
 ## [7.4.2](https://github.com/pynickle/Better-Client/compare/v7.4.1...v7.4.2) (2025-11-04)
 
 ### 🐛 Bug Fixes
