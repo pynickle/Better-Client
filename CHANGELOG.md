@@ -1,3 +1,9 @@
+## [7.4.2](https://github.com/pynickle/Better-Client/compare/v7.4.1...v7.4.2) (2025-11-04)
+
+### 🐛 Bug Fixes
+
+* fix suspicious stew tooltip not working ([de29635](https://github.com/pynickle/Better-Client/commit/de296354b900c9babf6c38ac957c9af8ade5fda8))
+
 ## [7.4.1](https://github.com/pynickle/Better-Client/compare/v7.4.0...v7.4.1) (2025-11-03)
 
 ### 🚀 Improvements
