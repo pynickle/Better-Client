@@ -7,7 +7,7 @@
 
   "message.better_client.fast_trading.alt": "物品可能损坏或不可堆叠。按住 Alt 执行交易。\n",
 
-  "category.better_client.keymapping": "更好的客户端",
+  "key.category.better_client.keymapping": "更好的客户端",
 
   "key.better_client.bundle_up": "一键收纳",
   "key.better_client.full_brightness_toggle": "全亮切换",

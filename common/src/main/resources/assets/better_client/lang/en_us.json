@@ -7,7 +7,7 @@
 
   "message.better_client.fast_trading.alt": "Items may be damaged or non-stackable. Hold Alt to execute the trade.\n",
 
-  "category.better_client.keymapping": "Better Client",
+  "key.category.better_client.keymapping": "Better Client",
 
   "key.better_client.bundle_up": "Bundle Up",
   "key.better_client.full_brightness_toggle": "Full Brightness Toggle",
