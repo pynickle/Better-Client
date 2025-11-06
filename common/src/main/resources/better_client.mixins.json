@@ -20,6 +20,8 @@
   ],
   "mixins": [
     "ClientPacketListenerMixin",
+    "LevelStorageSourceMixin",
+    "LevelSummaryMixin",
     "SuspiciousStewEffectsMixin"
   ],
   "injectors": {

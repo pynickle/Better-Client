@@ -24,6 +24,7 @@ public class ScreenConfigScreen {
     private static final String BOOK_SCROLL_GROUP = "book_scroll";
     private static final String NO_EXPERIMENTAL_WARNING_GROUP = "no_experimental_warning";
     private static final String BOOK_SAVE_CONFIRMATION_GROUP = "book_save_confirmation";
+    private static final String WORLD_PLAY_TIME_GROUP = "world_play_time";
 
     public static Screen generateScreen(Screen parent) {
         // Better Ping Display
@@ -176,6 +177,20 @@ public class ScreenConfigScreen {
                 newVal -> config.enableExperimentalDisplay = newVal
         );
 
+        // World Play Time
+        Option<Boolean> enableWorldPlayTimeOpt = ConfigUtils.buildBooleanOption(
+                "enableWorldPlayTime",
+                DEFAULTS.enableWorldPlayTime,
+                () -> config.enableWorldPlayTime,
+                newVal -> config.enableWorldPlayTime = newVal
+        );
+        Option<Color> worldPlayTimeColorOpt = ConfigUtils.<Color>getGenericOption("worldPlayTimeColor")
+                .binding(new Color(DEFAULTS.worldPlayTimeColor, false),
+                        () -> new Color(config.worldPlayTimeColor, false),
+                        newVal -> config.worldPlayTimeColor = newVal.getRGB())
+                .controller(opt -> ColorControllerBuilder.create(opt).allowAlpha(false))
+                .build();
+
         return YetAnotherConfigLib.createBuilder()
                 .title(Component.translatable("yacl3.config.better_client:config"))
                 .category(ConfigCategory.createBuilder()
@@ -223,6 +238,13 @@ public class ScreenConfigScreen {
                                 .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, BOOK_SAVE_CONFIRMATION_GROUP))
                                 .options(List.of(
                                         enableBookSaveConfirmationOpt
+                                ))
+                                .build())
+                        .group(OptionGroup.createBuilder()
+                                .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, WORLD_PLAY_TIME_GROUP))
+                                .options(List.of(
+                                        enableWorldPlayTimeOpt,
+                                        worldPlayTimeColorOpt
                                 ))
                                 .build())
                         .build())

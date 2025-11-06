@@ -7,6 +7,8 @@
 
   "message.better_client.fast_trading.alt": "Items may be damaged or non-stackable. Hold Alt to execute the trade.\n",
 
+  "message.world_play_time": "%sh",
+
   "key.category.better_client.keymapping": "Better Client",
 
   "key.better_client.bundle_up": "Bundle Up",
@@ -39,7 +41,7 @@
   "yacl3.config.better_client:config.category.screen": "Screen",
   "yacl3.config.better_client:config.category.tooltip": "Tooltip",
   "yacl3.config.better_client:config.category.visuality": "Visuality",
-  "yacl3.config.better_client:config.category.miscellaneities": "Miscellaneities",
+  "yacl3.config.better_client:config.category.miscellaneities": "Misc",
 
   "yacl3.config.better_client:description.tick_explanation": "1 second equals 20 ticks.",
 
@@ -195,5 +197,11 @@
 
   "yacl3.config.better_client:config.category.client.group.axolotl_bucket_fix": "Axolotl Bucket Fix",
   "yacl3.config.better_client:config.enableAxolotlBucketFix": "Enable Axolotl Bucket Fix",
-  "yacl3.config.better_client:config.enableAxolotlBucketFix.desc": "Buckets with different axolotl variants display distinct textures."
+  "yacl3.config.better_client:config.enableAxolotlBucketFix.desc": "Buckets with different axolotl variants display distinct textures.",
+
+  "yacl3.config.better_client:config.category.client.group.world_play_time": "World Play Time",
+  "yacl3.config.better_client:config.enableWorldPlayTime": "Enable World Play Time",
+  "yacl3.config.better_client:config.enableWorldPlayTime.desc": "Display the playtime for each world on the world selection screen.",
+  "yacl3.config.better_client:config.worldPlayTimeColor": "World Play Time Display Color",
+  "yacl3.config.better_client:config.worldPlayTimeColor.desc": "The color used to display icons and text."
 }

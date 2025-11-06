@@ -102,6 +102,9 @@ public class Config {
     public boolean enableChatFormatter = true;
     public String posFormat = "{x}, {y}, {z}";
 
+    public boolean enableWorldPlayTime = true;
+    public int worldPlayTimeColor = 0x808080;
+
     public Config() {}
 
     public static Config create() {

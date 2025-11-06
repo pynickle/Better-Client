@@ -7,6 +7,8 @@
 
   "message.better_client.fast_trading.alt": "物品可能损坏或不可堆叠。按住 Alt 执行交易。\n",
 
+  "message.world_play_time": "%s小时",
+
   "key.category.better_client.keymapping": "更好的客户端",
 
   "key.better_client.bundle_up": "一键收纳",
@@ -195,5 +197,11 @@
 
   "yacl3.config.better_client:config.category.client.group.axolotl_bucket_fix": "美西螈桶修复",
   "yacl3.config.better_client:config.enableAxolotlBucketFix": "启用美西螈桶修复",
-  "yacl3.config.better_client:config.enableAxolotlBucketFix.desc": "不同美西螈变体的桶将显示对应纹理。"
+  "yacl3.config.better_client:config.enableAxolotlBucketFix.desc": "不同美西螈变体的桶将显示对应纹理。",
+
+  "yacl3.config.better_client:config.category.client.group.world_play_time": "世界游玩时间",
+  "yacl3.config.better_client:config.enableWorldPlayTime": "启用世界游玩时间",
+  "yacl3.config.better_client:config.enableWorldPlayTime.desc": "在世界选择界面显示每个世界的游玩时长。",
+  "yacl3.config.better_client:config.worldPlayTimeColor": "世界游玩时间显示颜色",
+  "yacl3.config.better_client:config.worldPlayTimeColor.desc": "用于显示图标和文本的颜色。"
 }
