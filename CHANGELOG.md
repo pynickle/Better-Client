@@ -1,3 +1,9 @@
+## [7.5.0](https://github.com/pynickle/Better-Client/compare/v7.4.3...v7.5.0) (2025-11-06)
+
+### ✨ Features
+
+* add world play time ([6c3c0c2](https://github.com/pynickle/Better-Client/commit/6c3c0c2249497f5db2203cc827859861daeda43d))
+
 ## [7.4.3](https://github.com/pynickle/Better-Client/compare/v7.4.2...v7.4.3) (2025-11-04)
 
 ### 🐛 Bug Fixes
