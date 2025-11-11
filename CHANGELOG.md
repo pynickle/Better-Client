@@ -1,3 +1,9 @@
+## [7.6.1](https://github.com/pynickle/Better-Client/compare/v7.6.0...v7.6.1) (2025-11-11)
+
+### 🐛 Bug Fixes
+
+* fix incorrect lang key ([6803cab](https://github.com/pynickle/Better-Client/commit/6803caba7d1ee5b0dc5aca29c168017dd1f3ffb6))
+
 ## [7.6.0](https://github.com/pynickle/Better-Client/compare/v7.5.0...v7.6.0) (2025-11-11)
 
 ### ✨ Features
