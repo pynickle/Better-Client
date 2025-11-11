@@ -150,7 +150,7 @@ public class BiomeTitleEvent {
         int y = -font.wordWrapHeight(biomeName.getString(), 999) / 2 + config.biomeTitleYOffset;
 
         guiGraphics.drawString(font, biomeName, (-textWidth / 2), y,
-            0xffffff | (alpha << 24), true);
+            config.biomeTitleColor | (alpha << 24), true);
         pose.popMatrix();
     }
 

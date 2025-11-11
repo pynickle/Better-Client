@@ -105,14 +105,14 @@ public class ScreenConfigScreen {
                         .range(-60, 60))
                 .build();
 
-        Option<Color> colorOpt = ConfigUtils.<Color>getGenericOption("color")
-                .binding(new Color(DEFAULTS.color, false),
-                        () -> new Color(config.color, false),
-                        newVal -> config.color = newVal.getRGB())
+        Option<Color> biomeTitleColorOpt = ConfigUtils.<Color>getGenericOption("biomeTitleColor")
+                .binding(new Color(DEFAULTS.biomeTitleColor, false),
+                        () -> new Color(config.biomeTitleColor, false),
+                        newVal -> config.biomeTitleColor = newVal.getRGB())
                 .controller(opt -> ColorControllerBuilder.create(opt).allowAlpha(false))
                 .build();
 
-        Option<Double>  cooldownTimeOpt = ConfigUtils.<Double>getGenericOption("cooldownTime")
+        Option<Double> cooldownTimeOpt = ConfigUtils.<Double>getGenericOption("cooldownTime")
                 .binding(DEFAULTS.cooldownTime,
                         () -> config.cooldownTime,
                         newVal -> config.cooldownTime = newVal)
@@ -213,7 +213,7 @@ public class ScreenConfigScreen {
                                         fadeOutTimeOpt,
                                         scaleOpt,
                                         biomeTitleYOffset,
-                                        colorOpt,
+                                        biomeTitleColorOpt,
                                         cooldownTimeOpt,
                                         enableModNameOpt,
                                         enableUndergroundUpdateOpt
