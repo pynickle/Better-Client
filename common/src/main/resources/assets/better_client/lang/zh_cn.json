@@ -203,5 +203,21 @@
   "yacl3.config.better_client:config.enableWorldPlayTime": "启用世界游玩时间",
   "yacl3.config.better_client:config.enableWorldPlayTime.desc": "在世界选择界面显示每个世界的游玩时长。",
   "yacl3.config.better_client:config.worldPlayTimeColor": "世界游玩时间显示颜色",
-  "yacl3.config.better_client:config.worldPlayTimeColor.desc": "用于显示图标和文本的颜色。"
+  "yacl3.config.better_client:config.worldPlayTimeColor.desc": "用于显示图标和文本的颜色。",
+
+  "yacl3.config.better_client:config.category.client.group.trial_spawner_timer": "试炼刷怪笼计时器",
+  "yacl3.config.better_client:config.enableTrialSpawnerTimer": "启用试炼刷怪笼计时器",
+  "yacl3.config.better_client:config.enableTrialSpawnerTimer.desc": "试炼刷怪笼上方将出现一个倒计时器，显示其冷却时间。",
+  "yacl3.config.better_client:config.timerSeenThroughWalls": "隔墙可见计时器",
+  "yacl3.config.better_client:config.timerSeenThroughWalls.desc": "计时器能透过墙壁看到。",
+  "yacl3.config.better_client:config.highSensitivityMode": "高灵敏度模式",
+  "yacl3.config.better_client:config.highSensitivityMode.desc": "在每次渲染过程中检查计时器状态。",
+  "yacl3.config.better_client:config.trialSpawnerCooldown": "试炼刷怪笼冷却时间（秒）",
+  "yacl3.config.better_client:config.trailSpawnerCooldown.desc": "试炼刷怪笼的冷却时间。",
+  "yacl3.config.better_client:config.enableDynamicTimerColor": "启用动态计时器文字颜色",
+  "yacl3.config.better_client:config.enableDynamicTimerColor.desc": "计时器文字的颜色会随着进度推进而改变。",
+  "yacl3.config.better_client:config.timerColor": "计时器文字颜色",
+  "yacl3.config.better_client:config.timerColor.desc": "如果未启用动态计时器文字颜色，使用的文本颜色。",
+  "yacl3.config.better_client:config.enableDropShadow": "启用阴影效果",
+  "yacl3.config.better_client:config.enableDropShadow.desc": "使用文字阴影。"
 }

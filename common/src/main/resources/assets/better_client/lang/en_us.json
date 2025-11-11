@@ -203,5 +203,21 @@
   "yacl3.config.better_client:config.enableWorldPlayTime": "Enable World Play Time",
   "yacl3.config.better_client:config.enableWorldPlayTime.desc": "Display the playtime for each world on the world selection screen.",
   "yacl3.config.better_client:config.worldPlayTimeColor": "World Play Time Display Color",
-  "yacl3.config.better_client:config.worldPlayTimeColor.desc": "The color used to display icons and text."
+  "yacl3.config.better_client:config.worldPlayTimeColor.desc": "The color used to display icons and text.",
+
+  "yacl3.config.better_client:config.category.client.group.trial_spawner_timer": "Trial Spawner Timer",
+  "yacl3.config.better_client:config.enableTrialSpawnerTimer": "Enable Trial Spawner Timer",
+  "yacl3.config.better_client:config.enableTrialSpawnerTimer.desc": "A countdown timer will appear above the trial spawner, displaying its cooldown duration.",
+  "yacl3.config.better_client:config.timerSeenThroughWalls": "Timer Seen Through Walls",
+  "yacl3.config.better_client:config.timerSeenThroughWalls.desc": "The timer can be seen through the wall.",
+  "yacl3.config.better_client:config.highSensitivityMode": "High Sensitivity Mode",
+  "yacl3.config.better_client:config.highSensitivityMode.desc": "Check the timer status during each render.",
+  "yacl3.config.better_client:config.trialSpawnerCooldown": "Trial Spawner Cooldown (s)",
+  "yacl3.config.better_client:config.trailSpawnerCooldown.desc": "Cooldown Time for the Trial Spawner.",
+  "yacl3.config.better_client:config.enableDynamicTimerColor": "Enable Dynamic Timer Color",
+  "yacl3.config.better_client:config.enableDynamicTimerColor.desc": "The color of the timer text changes as progress advances.",
+  "yacl3.config.better_client:config.timerColor": "Timer Color",
+  "yacl3.config.better_client:config.timerColor.desc": "If dynamic timer color is not enabled, the color used for the text color.",
+  "yacl3.config.better_client:config.enableDropShadow": "Enable Drop Shadow",
+  "yacl3.config.better_client:config.enableDropShadow.desc": "Use text shadows."
 }

@@ -15,10 +15,12 @@
     "MultiLineEditBoxMixin",
     "MultiPlayerGameModeMixin",
     "PlayerTabOverlayMixin",
+    "TrailSpawnerRendererMixin",
     "WorldListEntryMixin",
     "WorldOpenFlowsMixin"
   ],
   "mixins": [
+    "ClientboundBlockUpdatePacketMixin",
     "ClientPacketListenerMixin",
     "LevelStorageSourceMixin",
     "LevelSummaryMixin",

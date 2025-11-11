@@ -49,7 +49,7 @@ public class Config {
     public int fadeOutTime = 20;
     public double scale = 2.1D;
     public int biomeTitleYOffset = -10;
-    public int color = 0xFFFFFF;
+    public int biomeTitleColor = 0xFFFFFF;
     public double cooldownTime = 1.5D;
     public boolean enableModName = false;
     public boolean enableUndergroundUpdate = false;
@@ -104,6 +104,14 @@ public class Config {
 
     public boolean enableWorldPlayTime = true;
     public int worldPlayTimeColor = 0x808080;
+
+    public boolean enableTrialSpawnerTimer = true;
+    public boolean timerSeenThroughWalls = false;
+    public boolean highSensitivityMode = true;
+    public long trialSpawnerCooldown = 1800;
+    public boolean enableDynamicTimerColor = true;
+    public int timerColor = 0xFF88FF;
+    public boolean enableDropShadow = true;
 
     public Config() {}
 
