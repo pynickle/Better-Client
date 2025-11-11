@@ -1,3 +1,18 @@
+## [7.6.0](https://github.com/pynickle/Better-Client/compare/v7.5.0...v7.6.0) (2025-11-11)
+
+### ✨ Features
+
+* add trial spawner timer ([12e916f](https://github.com/pynickle/Better-Client/commit/12e916fa3b00b51f51063255efcd7ddc71bbffd9))
+* allow editing of the alpha value for timer text color ([2ec2c68](https://github.com/pynickle/Better-Client/commit/2ec2c68657e6e00507fd26092834696d43c7893a))
+
+### 🐛 Bug Fixes
+
+* fix biome title color not working ([8c77a4c](https://github.com/pynickle/Better-Client/commit/8c77a4ca39363b6ed4240cb96f7646059063272f))
+
+### 🔧 Miscellaneous Changes
+
+* change npm to pnpm ([6358d23](https://github.com/pynickle/Better-Client/commit/6358d233b680d0ab9c2d03053e00f0d7b2b7af91))
+
 ## [7.5.0](https://github.com/pynickle/Better-Client/compare/v7.4.3...v7.5.0) (2025-11-06)
 
 ### ✨ Features
