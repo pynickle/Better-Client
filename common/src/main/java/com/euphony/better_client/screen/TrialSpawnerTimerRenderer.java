@@ -101,9 +101,7 @@ public class TrialSpawnerTimerRenderer {
     }
 
     private static int calculateTimerColor(Timer timer, long currentTime) {
-        if (!config.enableDynamicTimerColor) {
-            return 0xFF000000 | config.timerColor;
-        }
+        if (!config.enableDynamicTimerColor) return config.timerColor;
 
         double progress = timer.getProgress(currentTime); // 0.0 ~ 1.0
 

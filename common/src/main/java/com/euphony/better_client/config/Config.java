@@ -110,7 +110,7 @@ public class Config {
     public boolean highSensitivityMode = true;
     public long trialSpawnerCooldown = 1800;
     public boolean enableDynamicTimerColor = true;
-    public int timerColor = 0xFF88FF;
+    public int timerColor = 0xFFFF88FF;
     public boolean enableDropShadow = true;
 
     public Config() {}

@@ -94,10 +94,10 @@ public class VisualityConfigScreen {
         );
 
         Option<Color> timerColorOpt = ConfigUtils.<Color>getGenericOption("timerColor")
-                .binding(new Color(DEFAULTS.timerColor, false),
-                        () -> new Color(config.timerColor, false),
+                .binding(new Color(DEFAULTS.timerColor, true),
+                        () -> new Color(config.timerColor, true),
                         newVal -> config.timerColor = newVal.getRGB())
-                .controller(opt -> ColorControllerBuilder.create(opt).allowAlpha(false))
+                .controller(opt -> ColorControllerBuilder.create(opt).allowAlpha(true))
                 .build();
 
         Option<Boolean> enableDropShadowOpt = ConfigUtils.buildBooleanOption(
