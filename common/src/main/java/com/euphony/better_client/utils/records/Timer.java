@@ -12,7 +12,7 @@ public record Timer(long startTime, long cooldownTicks) {
      * 创建一个新的计时器
      *
      * @param startTime     计时器开始时的游戏时间（level.getGameTime()）
-     * @param cooldownTicks 冷却时长（tick，30分钟 = 36000 ticks）
+     * @param cooldownTicks 冷却时长（tick，30 分钟 = 36000 ticks）
      */
     public Timer {
     }
@@ -30,7 +30,7 @@ public record Timer(long startTime, long cooldownTicks) {
      * 获取剩余时间
      *
      * @param currentTime 当前游戏时间（level.getGameTime()）
-     * @return 剩余时间（tick），如果已过期则返回0
+     * @return 剩余时间（tick），如果已过期则返回 0
      */
     public long getRemainingTicks(long currentTime) {
         long remaining = getTimerEnd() - currentTime;

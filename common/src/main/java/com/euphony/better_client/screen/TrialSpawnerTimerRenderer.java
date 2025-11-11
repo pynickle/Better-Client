@@ -18,7 +18,7 @@ import static com.euphony.better_client.BetterClient.config;
 
 /**
  * 处理试炼刷怪笼计时器的渲染
- * 这些方法从Mixin钩子中调用
+ * 这些方法从 Mixin 钩子中调用
  */
 public class TrialSpawnerTimerRenderer {
     /**
@@ -108,16 +108,16 @@ public class TrialSpawnerTimerRenderer {
         int color;
 
         if (progress < 0.25) {
-            // 阶段1：红色（紧急）
+            // 阶段 1：红色（紧急）
             color = 0xFFFF0000; // 不透明红
         } else if (progress < 0.5) {
-            // 阶段2：橙色（注意）
+            // 阶段 2：橙色（注意）
             color = 0xFFFF8000; // 不透明橙
         } else if (progress < 0.75) {
-            // 阶段3：黄色（中等）
+            // 阶段 3：黄色（中等）
             color = 0xFFFFFF00; // 不透明黄
         } else {
-            // 阶段4：绿色（安全）
+            // 阶段 4：绿色（安全）
             color = 0xFF00FF00; // 不透明绿
         }
 

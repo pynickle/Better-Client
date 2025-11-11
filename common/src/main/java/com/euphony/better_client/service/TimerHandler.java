@@ -15,7 +15,7 @@ import static com.euphony.better_client.BetterClient.config;
 
 /**
  * 管理所有试炼刷怪笼的冷却计时器
- * 使用嵌套的ConcurrentHashMap: Level -> BlockPos -> Timer
+ * 使用嵌套的 ConcurrentHashMap: Level -> BlockPos -> Timer
  */
 public class TimerHandler {
     private static final Map<ResourceKey<Level>, Map<BlockPos, Timer>> timers = new ConcurrentHashMap<>();
@@ -59,7 +59,7 @@ public class TimerHandler {
      *
      * @param level 世界/维度
      * @param pos 试炼刷怪笼的位置
-     * @param startTime 计时器开始时间（游戏tick）
+     * @param startTime 计时器开始时间（游戏 tick）
      * @param cooldownTicks 冷却时长（tick）
      */
     public static void insertTimer(Level level, BlockPos pos, long startTime, long cooldownTicks) {
@@ -74,7 +74,7 @@ public class TimerHandler {
         Timer timer = new Timer(startTime, cooldownTicks);
         levelTimers.put(pos.immutable(), timer);
 
-        LOGGER.debug("为位置 {} 创建计时器，冷却时长: {} ticks", pos, cooldownTicks);
+        LOGGER.debug("为位置 {} 创建计时器，冷却时长：{} ticks", pos, cooldownTicks);
     }
 
     /**
@@ -82,7 +82,7 @@ public class TimerHandler {
      *
      * @param level 世界/维度
      * @param pos 试炼刷怪笼的位置
-     * @return Timer对象，如果不存在则返回null
+     * @return Timer 对象，如果不存在则返回 null
      */
     public static Timer getTimer(Level level, BlockPos pos) {
         if (level == null || pos == null) {
@@ -118,11 +118,11 @@ public class TimerHandler {
         Timer removedTimer = levelTimers.remove(pos);
 
         if (removedTimer != null) {
-            LOGGER.debug("删除位置 {} 的计时器，剩余时间: {} ticks",
+            LOGGER.debug("删除位置 {} 的计时器，剩余时间：{} ticks",
                     pos, removedTimer.getRemainingTicks(level.getGameTime()));
         }
 
-        // 如果该维度没有计时器了，清理整个Map
+        // 如果该维度没有计时器了，清理整个 Map
         if (levelTimers.isEmpty()) {
             timers.remove(dimension);
         }
@@ -148,12 +148,12 @@ public class TimerHandler {
         levelTimers.entrySet().removeIf(entry -> {
             boolean expired = entry.getValue().isExpired(currentTime);
             if (expired) {
-                LOGGER.debug("清理过期计时器: {}", entry.getKey());
+                LOGGER.debug("清理过期计时器：{}", entry.getKey());
             }
             return expired;
         });
 
-        // 如果该维度没有计时器了，清理整个Map
+        // 如果该维度没有计时器了，清理整个 Map
         if (levelTimers.isEmpty()) {
             timers.remove(level.dimension());
         }
@@ -197,7 +197,7 @@ public class TimerHandler {
             );
             onSpawnerStateUpdate(level, pos, spawnerState);
         } catch (Exception e) {
-            LOGGER.error("处理刷怪笼方块更新时出错: {}", pos, e);
+            LOGGER.error("处理刷怪笼方块更新时出错：{}", pos, e);
         }
     }
 
@@ -226,7 +226,7 @@ public class TimerHandler {
                 deleteTimer(level, pos);
             }
         } catch (Exception e) {
-            LOGGER.error("处理刷怪笼状态更新时出错: {} -> {}", pos, state, e);
+            LOGGER.error("处理刷怪笼状态更新时出错：{} -> {}", pos, state, e);
         }
     }
 

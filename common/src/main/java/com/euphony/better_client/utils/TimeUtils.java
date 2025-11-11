@@ -9,7 +9,7 @@ public class TimeUtils {
     private static final int SECONDS_PER_HOUR = 3600;
 
     /**
-     * 将tick转换为格式化的时间字符串（MM:SS）
+     * 将 tick 转换为格式化的时间字符串（MM:SS）
      *
      * @param ticks 时间（tick）
      * @return 格式化的时间字符串，例如 "15:30"
@@ -22,8 +22,8 @@ public class TimeUtils {
     }
 
     /**
-     * 将tick转换为格式化的时间字符串（HH:MM:SS）
-     * 用于超过1小时的情况
+     * 将 tick 转换为格式化的时间字符串（HH:MM:SS）
+     * 用于超过 1 小时的情况
      *
      * @param ticks 时间（tick）
      * @return 格式化的时间字符串，例如 "01:15:30"
@@ -42,7 +42,7 @@ public class TimeUtils {
     }
 
     /**
-     * 将tick转换为简洁的时间字符串
+     * 将 tick 转换为简洁的时间字符串
      * 自动选择合适的格式
      *
      * @param ticks 时间（tick）
@@ -59,7 +59,7 @@ public class TimeUtils {
     }
 
     /**
-     * 将tick转换为秒
+     * 将 tick 转换为秒
      *
      * @param ticks 时间（tick）
      * @return 秒数
@@ -69,20 +69,20 @@ public class TimeUtils {
     }
 
     /**
-     * 将秒转换为tick
+     * 将秒转换为 tick
      *
      * @param seconds 秒数
-     * @return tick数
+     * @return tick 数
      */
     public static long secondsToTicks(long seconds) {
         return seconds * TICKS_PER_SECOND;
     }
 
     /**
-     * 将分钟转换为tick
+     * 将分钟转换为 tick
      *
      * @param minutes 分钟数
-     * @return tick数
+     * @return tick 数
      */
     public static long minutesToTicks(long minutes) {
         return minutes * SECONDS_PER_MINUTE * TICKS_PER_SECOND;

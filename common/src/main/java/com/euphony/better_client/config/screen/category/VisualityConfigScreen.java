@@ -86,8 +86,8 @@ public class VisualityConfigScreen {
                 .controller(LongFieldControllerBuilder::create)
                 .build();
 
-        Option<Boolean> enableDynamicColorTimerOpt = ConfigUtils.buildBooleanOption(
-                "enableDynamicColorTimer",
+        Option<Boolean> enableDynamicTimerColorOpt = ConfigUtils.buildBooleanOption(
+                "enableDynamicTimerColor",
                 DEFAULTS.enableDynamicTimerColor,
                 () -> config.enableDynamicTimerColor,
                 newVal -> config.enableDynamicTimerColor = newVal
@@ -137,7 +137,7 @@ public class VisualityConfigScreen {
                                         timerSeenThroughWallsOpt,
                                         highSensitivityModeOpt,
                                         trialSpawnerCooldownOpt,
-                                        enableDynamicColorTimerOpt,
+                                        enableDynamicTimerColorOpt,
                                         timerColorOpt,
                                         enableDropShadowOpt
                                 ))
