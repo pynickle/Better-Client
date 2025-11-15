@@ -1,3 +1,9 @@
+## [7.7.0](https://github.com/pynickle/Better-Client/compare/v7.6.1...v7.7.0) (2025-11-15)
+
+### ✨ Features
+
+* add invisible item frame ([3abd806](https://github.com/pynickle/Better-Client/commit/3abd806b56e4518d3675555709586363795e1140))
+
 ## [7.6.1](https://github.com/pynickle/Better-Client/compare/v7.6.0...v7.6.1) (2025-11-11)
 
 ### 🐛 Bug Fixes
