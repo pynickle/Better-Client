@@ -22,15 +22,25 @@ public class CategoryButton extends Button {
         this.text = text;
     }
 
-    private static final WidgetSprites SPRITES = new WidgetSprites(ResourceLocation.withDefaultNamespace("widget/button"), ResourceLocation.withDefaultNamespace("widget/button_disabled"), ResourceLocation.withDefaultNamespace("widget/button_highlighted"));
+    private static final WidgetSprites SPRITES = new WidgetSprites(
+            ResourceLocation.withDefaultNamespace("widget/button"),
+            ResourceLocation.withDefaultNamespace("widget/button_disabled"),
+            ResourceLocation.withDefaultNamespace("widget/button_highlighted"));
 
     @Override
     public void renderWidget(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, SPRITES.get(this.active, this.isHoveredOrFocused()), this.getX(), this.getY(), this.getWidth(), this.getHeight());
+        guiGraphics.blitSprite(
+                RenderPipelines.GUI_TEXTURED,
+                SPRITES.get(this.active, this.isHoveredOrFocused()),
+                this.getX(),
+                this.getY(),
+                this.getWidth(),
+                this.getHeight());
 
         Minecraft mc = Minecraft.getInstance();
         guiGraphics.renderFakeItem(icon, getX() + 5, getY() + 2);
-        
-        guiGraphics.drawCenteredString(mc.font, text, getX() + width / 2 + MARGIN, getY() + (height - 8) / 2, 0xffffffff);
+
+        guiGraphics.drawCenteredString(
+                mc.font, text, getX() + width / 2 + MARGIN, getY() + (height - 8) / 2, 0xffffffff);
     }
 }

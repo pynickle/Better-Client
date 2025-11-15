@@ -1,17 +1,16 @@
 package com.euphony.better_client.service;
 
+import static com.euphony.better_client.BetterClient.LOGGER;
+import static com.euphony.better_client.BetterClient.config;
+
 import com.euphony.better_client.utils.records.Timer;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.trialspawner.TrialSpawnerState;
 import net.minecraft.world.level.block.state.BlockState;
-
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
-import static com.euphony.better_client.BetterClient.LOGGER;
-import static com.euphony.better_client.BetterClient.config;
 
 /**
  * 管理所有试炼刷怪笼的冷却计时器
@@ -28,8 +27,7 @@ public class TimerHandler {
      */
     public static boolean shouldReset(TrialSpawnerState state) {
         // 当刷怪笼进入非冷却状态时，删除计时器
-        return state != TrialSpawnerState.COOLDOWN &&
-                state != TrialSpawnerState.EJECTING_REWARD;
+        return state != TrialSpawnerState.COOLDOWN && state != TrialSpawnerState.EJECTING_REWARD;
     }
 
     /**
@@ -39,8 +37,7 @@ public class TimerHandler {
      * @return true 如果切换到该状态应创建计时器
      */
     public static boolean shouldCreate(TrialSpawnerState state) {
-        return state == TrialSpawnerState.COOLDOWN ||
-                state == TrialSpawnerState.EJECTING_REWARD;
+        return state == TrialSpawnerState.COOLDOWN || state == TrialSpawnerState.EJECTING_REWARD;
     }
 
     /**
@@ -118,8 +115,7 @@ public class TimerHandler {
         Timer removedTimer = levelTimers.remove(pos);
 
         if (removedTimer != null) {
-            LOGGER.debug("删除位置 {} 的计时器，剩余时间：{} ticks",
-                    pos, removedTimer.getRemainingTicks(level.getGameTime()));
+            LOGGER.debug("删除位置 {} 的计时器，剩余时间：{} ticks", pos, removedTimer.getRemainingTicks(level.getGameTime()));
         }
 
         // 如果该维度没有计时器了，清理整个 Map
@@ -192,9 +188,8 @@ public class TimerHandler {
         }
 
         try {
-            TrialSpawnerState spawnerState = blockState.getValue(
-                    net.minecraft.world.level.block.TrialSpawnerBlock.STATE
-            );
+            TrialSpawnerState spawnerState =
+                    blockState.getValue(net.minecraft.world.level.block.TrialSpawnerBlock.STATE);
             onSpawnerStateUpdate(level, pos, spawnerState);
         } catch (Exception e) {
             LOGGER.error("处理刷怪笼方块更新时出错：{}", pos, e);
@@ -236,9 +231,7 @@ public class TimerHandler {
      * @return 所有维度中活跃的计时器总数
      */
     public static int getActiveTimerCount() {
-        return timers.values().stream()
-                .mapToInt(Map::size)
-                .sum();
+        return timers.values().stream().mapToInt(Map::size).sum();
     }
 
     /**

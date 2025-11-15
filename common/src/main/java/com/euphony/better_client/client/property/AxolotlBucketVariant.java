@@ -1,5 +1,7 @@
 package com.euphony.better_client.client.property;
 
+import static com.euphony.better_client.BetterClient.config;
+
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.PrimitiveCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -14,15 +16,14 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-import static com.euphony.better_client.BetterClient.config;
-
 public record AxolotlBucketVariant(float variant) implements SelectItemModelProperty<Float> {
     public static final PrimitiveCodec<Float> VALUE_CODEC;
     public static final SelectItemModelProperty.Type<AxolotlBucketVariant, Float> TYPE;
 
     @Override
-    public Float get(ItemStack stack, ClientLevel level, LivingEntity entity, int seed, ItemDisplayContext itemDisplayContext) {
-        if(!config.enableAxolotlBucketFix) return 0f;
+    public Float get(
+            ItemStack stack, ClientLevel level, LivingEntity entity, int seed, ItemDisplayContext itemDisplayContext) {
+        if (!config.enableAxolotlBucketFix) return 0f;
 
         int axolotlType = 0;
         Axolotl.Variant customData;
@@ -48,6 +49,11 @@ public record AxolotlBucketVariant(float variant) implements SelectItemModelProp
 
     static {
         VALUE_CODEC = Codec.FLOAT;
-        TYPE = Type.create(RecordCodecBuilder.mapCodec((instance) -> instance.group(ExtraCodecs.NON_NEGATIVE_FLOAT.optionalFieldOf("variant", 0f).forGetter(AxolotlBucketVariant::variant)).apply(instance, AxolotlBucketVariant::new)), VALUE_CODEC);
+        TYPE = Type.create(
+                RecordCodecBuilder.mapCodec((instance) -> instance.group(ExtraCodecs.NON_NEGATIVE_FLOAT
+                                .optionalFieldOf("variant", 0f)
+                                .forGetter(AxolotlBucketVariant::variant))
+                        .apply(instance, AxolotlBucketVariant::new)),
+                VALUE_CODEC);
     }
 }

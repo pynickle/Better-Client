@@ -20,7 +20,7 @@ public abstract class MultiLineEditBoxMixin extends AbstractTextAreaWidget imple
 
     @ModifyReturnValue(method = "charTyped", at = @At("RETURN"))
     private boolean charTypedInject(boolean original) {
-        if(original) {
+        if (original) {
             better_client$isModified = true;
         }
         return original;

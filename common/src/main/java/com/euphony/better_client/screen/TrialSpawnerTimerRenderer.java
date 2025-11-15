@@ -1,8 +1,10 @@
 package com.euphony.better_client.screen;
 
-import com.euphony.better_client.utils.records.Timer;
+import static com.euphony.better_client.BetterClient.config;
+
 import com.euphony.better_client.service.TimerHandler;
 import com.euphony.better_client.utils.TimeUtils;
+import com.euphony.better_client.utils.records.Timer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
@@ -13,8 +15,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
 import org.joml.Matrix4f;
 import org.joml.Quaternionf;
-
-import static com.euphony.better_client.BetterClient.config;
 
 /**
  * 处理试炼刷怪笼计时器的渲染
@@ -29,8 +29,8 @@ public class TrialSpawnerTimerRenderer {
      * @param poseStack   用于绘制文本的矩阵变换
      * @param camera      摄像机
      */
-    public static void drawTimer(Level level, BlockPos pos, PoseStack poseStack,
-                                 SubmitNodeCollector nodeCollector, Camera camera) {
+    public static void drawTimer(
+            Level level, BlockPos pos, PoseStack poseStack, SubmitNodeCollector nodeCollector, Camera camera) {
         if (!config.enableTrialSpawnerTimer) return;
 
         if (Minecraft.getInstance().player == null || level == null) return;
@@ -54,7 +54,6 @@ public class TrialSpawnerTimerRenderer {
 
         // 绘制文本
         drawTextAboveBlock(text, color, poseStack, nodeCollector, camera);
-
     }
 
     /**
@@ -67,19 +66,15 @@ public class TrialSpawnerTimerRenderer {
      * @param poseStack 矩阵变换栈
      * @param camera 摄像机
      */
-    private static void drawTextAboveBlock(Component text, int color, PoseStack poseStack,
-                                           SubmitNodeCollector nodeCollector, Camera camera) {
+    private static void drawTextAboveBlock(
+            Component text, int color, PoseStack poseStack, SubmitNodeCollector nodeCollector, Camera camera) {
         poseStack.pushPose();
 
         float yRot = camera.getYRot();
         float xRot = camera.getXRot();
 
         Quaternionf rotation = new Quaternionf();
-        rotation.rotationYXZ(
-                (float) (-Math.PI) / 180 * (yRot - 180F),
-                (float) Math.PI / 180 * -xRot,
-                0.0f
-        );
+        rotation.rotationYXZ((float) (-Math.PI) / 180 * (yRot - 180F), (float) Math.PI / 180 * -xRot, 0.0f);
         poseStack.mulPose(rotation);
 
         Matrix4f matrix4f = poseStack.last().pose();
@@ -91,7 +86,17 @@ public class TrialSpawnerTimerRenderer {
         matrix4f.translate(1.0F - m / 2.0F, -9F, 0.0F);
 
         // 绘制文本
-        nodeCollector.submitText(poseStack, 0.5F, 0.5F, text.getVisualOrderText(), config.enableDropShadow, getDisplayMode(), 15728880, color, 0, 0);
+        nodeCollector.submitText(
+                poseStack,
+                0.5F,
+                0.5F,
+                text.getVisualOrderText(),
+                config.enableDropShadow,
+                getDisplayMode(),
+                15728880,
+                color,
+                0,
+                0);
 
         poseStack.popPose();
     }

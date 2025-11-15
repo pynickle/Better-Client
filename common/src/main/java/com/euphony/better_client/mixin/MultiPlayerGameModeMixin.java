@@ -1,5 +1,7 @@
 package com.euphony.better_client.mixin;
 
+import static com.euphony.better_client.BetterClient.config;
+
 import com.euphony.better_client.client.events.TradingHudEvent;
 import com.euphony.better_client.utils.data.MerchantInfo;
 import net.minecraft.client.multiplayer.MultiPlayerGameMode;
@@ -12,8 +14,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import static com.euphony.better_client.BetterClient.config;
 
 /**
  * 多人游戏模式混入类，用于处理实体交互事件
@@ -29,8 +29,9 @@ public abstract class MultiPlayerGameModeMixin {
      * @param cir 回调信息
      */
     @Inject(at = @At("HEAD"), method = "interact")
-    public void onInteractWithEntity(Player player, Entity target, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
-        if(!config.enableTradingHud) return;
+    public void onInteractWithEntity(
+            Player player, Entity target, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
+        if (!config.enableTradingHud) return;
 
         if (!(target instanceof Merchant)) {
             return;

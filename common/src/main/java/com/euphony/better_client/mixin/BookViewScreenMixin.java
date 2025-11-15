@@ -1,5 +1,7 @@
 package com.euphony.better_client.mixin;
 
+import static com.euphony.better_client.BetterClient.config;
+
 import com.euphony.better_client.utils.KeyUtils;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.BookViewScreen;
@@ -10,17 +12,19 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 
-import static com.euphony.better_client.BetterClient.config;
-
 @Mixin(BookViewScreen.class)
 public abstract class BookViewScreenMixin extends Screen {
-    @Shadow protected abstract void pageBack();
+    @Shadow
+    protected abstract void pageBack();
 
-    @Shadow private int currentPage;
+    @Shadow
+    private int currentPage;
 
-    @Shadow protected abstract int getNumPages();
+    @Shadow
+    protected abstract int getNumPages();
 
-    @Shadow protected abstract void pageForward();
+    @Shadow
+    protected abstract void pageForward();
 
     @Unique
     double better_client$progress = 0;
@@ -31,7 +35,7 @@ public abstract class BookViewScreenMixin extends Screen {
 
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double horizontalAmount, double verticalAmount) {
-        if(!config.enableBookScroll) return super.mouseScrolled(mouseX, mouseY, horizontalAmount, verticalAmount);
+        if (!config.enableBookScroll) return super.mouseScrolled(mouseX, mouseY, horizontalAmount, verticalAmount);
 
         double scrollDelta = verticalAmount + horizontalAmount;
 

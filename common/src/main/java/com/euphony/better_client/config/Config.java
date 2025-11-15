@@ -1,22 +1,20 @@
 package com.euphony.better_client.config;
 
+import static com.euphony.better_client.BetterClient.config;
 
 import com.euphony.better_client.BetterClient;
 import com.euphony.better_client.utils.Utils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dev.architectury.platform.Platform;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Collections;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.ConfirmLinkScreen;
 import net.minecraft.client.gui.screens.ConfirmScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Collections;
-
-import static com.euphony.better_client.BetterClient.config;
 
 public class Config {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
@@ -113,15 +111,18 @@ public class Config {
     public int timerColor = 0xFFFF88FF;
     public boolean enableDropShadow = true;
 
+    public boolean enableInvisibleItemFrame = true;
+
     public Config() {}
 
     public static Config create() {
-        if(!Platform.isModLoaded("yet_another_config_lib_v3")) return DEFAULTS;
+        if (!Platform.isModLoaded("yet_another_config_lib_v3")) return DEFAULTS;
 
         boolean accessibleInGame = false;
-        if(Platform.isFabric()) {
-            accessibleInGame = Platform.isModLoaded("modmenu") || (Platform.isModLoaded("catalogue") && Platform.isModLoaded("menulogue"));
-        } else if(Platform.isNeoForge()) {
+        if (Platform.isFabric()) {
+            accessibleInGame = Platform.isModLoaded("modmenu")
+                    || (Platform.isModLoaded("catalogue") && Platform.isModLoaded("menulogue"));
+        } else if (Platform.isNeoForge()) {
             accessibleInGame = true;
         }
         config = accessibleInGame ? new YACLConfig() : DEFAULTS;
@@ -132,7 +133,7 @@ public class Config {
     }
 
     public static void load() {
-        if(Files.notExists(BASE_PATH)) {
+        if (Files.notExists(BASE_PATH)) {
             try {
                 Files.createDirectories(BASE_PATH);
             } catch (Exception e) {
@@ -141,18 +142,19 @@ public class Config {
             }
         }
         if (Files.notExists(PATH)) {
-            if(Utils.isAnyModLoaded("durabilitytooltip", "rmes-durability-tooltips")) {
+            if (Utils.isAnyModLoaded("durabilitytooltip", "rmes-durability-tooltips")) {
                 config.enableDurabilityTooltip = false;
             }
-            if(Utils.isAnyModLoaded("hideexperimentalwarning")) {
+            if (Utils.isAnyModLoaded("hideexperimentalwarning")) {
                 config.enableNoExperimentalWarning = false;
             }
             save();
-        } else try {
-            config = GSON.fromJson(Files.readString(PATH), config.getClass());
-        } catch (Exception e) {
-            BetterClient.LOGGER.error("Couldn't load config file: ", e);
-        }
+        } else
+            try {
+                config = GSON.fromJson(Files.readString(PATH), config.getClass());
+            } catch (Exception e) {
+                BetterClient.LOGGER.error("Couldn't load config file: ", e);
+            }
     }
 
     public static void save() {
@@ -169,15 +171,12 @@ public class Config {
 
         return new ConfirmScreen(
                 clicked -> {
-                    if(clicked)
-                        ConfirmLinkScreen.confirmLinkNow(parent, link);
-                    else
-                        mc.setScreen(parent);
+                    if (clicked) ConfirmLinkScreen.confirmLinkNow(parent, link);
+                    else mc.setScreen(parent);
                 },
                 Component.translatable("text.better_client.help.missing"),
                 Component.translatable("text.better_client.desc.help.missing"),
                 Component.translatable("gui.continue"),
-                Component.translatable("gui.back")
-        );
+                Component.translatable("gui.back"));
     }
 }

@@ -22,6 +22,7 @@
   "mixins": [
     "ClientboundBlockUpdatePacketMixin",
     "ClientPacketListenerMixin",
+    "EntityMixin",
     "LevelStorageSourceMixin",
     "LevelSummaryMixin",
     "SuspiciousStewEffectsMixin"

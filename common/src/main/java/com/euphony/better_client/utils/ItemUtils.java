@@ -18,7 +18,7 @@ public final class ItemUtils {
         ItemStack itemStack1;
         int count = 0;
 
-        for(int i = 0; i < inventory.getNonEquipmentItems().size(); ++i) {
+        for (int i = 0; i < inventory.getNonEquipmentItems().size(); ++i) {
             itemStack1 = inventory.getNonEquipmentItems().get(i);
             if (!itemStack1.isEmpty() && ItemStack.isSameItemSameComponents(itemStack, itemStack1)) {
                 count += itemStack1.getCount();

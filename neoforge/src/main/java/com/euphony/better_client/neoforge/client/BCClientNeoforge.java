@@ -6,6 +6,8 @@ import com.euphony.better_client.client.events.BundleUpEvent;
 import com.euphony.better_client.client.events.WorldIconUpdateEvent;
 import com.euphony.better_client.client.property.AxolotlBucketVariant;
 import com.euphony.better_client.utils.Utils;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.packs.resources.PreparableReloadListener;
 import net.minecraft.server.packs.resources.PreparableReloadListener.SharedState;
@@ -15,17 +17,17 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
-
 @EventBusSubscriber(modid = BetterClient.MOD_ID, value = Dist.CLIENT)
 public class BCClientNeoforge {
     @SubscribeEvent
     public static void onResourceManagerReload(AddClientReloadListenersEvent event) {
-        event.addListener(Utils.prefix("clear_name_cache"),
-                (SharedState manager, Executor backgroundExecutor, PreparableReloadListener.PreparationBarrier barrier, Executor gameExecuter)
-                        -> CompletableFuture.runAsync(BiomeTitleEvent.NAME_CACHE::clear, backgroundExecutor)
-        );
+        event.addListener(
+                Utils.prefix("clear_name_cache"),
+                (SharedState manager,
+                        Executor backgroundExecutor,
+                        PreparableReloadListener.PreparationBarrier barrier,
+                        Executor gameExecuter) ->
+                        CompletableFuture.runAsync(BiomeTitleEvent.NAME_CACHE::clear, backgroundExecutor));
     }
 
     @SubscribeEvent

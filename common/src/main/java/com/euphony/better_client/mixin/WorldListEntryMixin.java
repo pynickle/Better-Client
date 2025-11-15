@@ -1,7 +1,10 @@
 package com.euphony.better_client.mixin;
 
+import static com.euphony.better_client.BetterClient.config;
+
 import com.euphony.better_client.api.IHasPlayTime;
 import com.euphony.better_client.utils.Utils;
+import java.util.Locale;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -21,10 +24,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.Locale;
-
-import static com.euphony.better_client.BetterClient.config;
-
 @Mixin(WorldSelectionList.WorldListEntry.class)
 public class WorldListEntryMixin {
     @Unique
@@ -34,10 +33,11 @@ public class WorldListEntryMixin {
     @Final
     LevelSummary summary;
 
-    @Redirect(method = "getNarration", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/storage/LevelSummary;isExperimental()Z"))
+    @Redirect(
+            method = "getNarration",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/storage/LevelSummary;isExperimental()Z"))
     private boolean disableExperimentalWarning(LevelSummary instance) {
-        if(config.enableNoExperimentalWarning
-                && !config.enableExperimentalDisplay) {
+        if (config.enableNoExperimentalWarning && !config.enableExperimentalDisplay) {
             return false;
         }
         return instance.isExperimental();
@@ -45,14 +45,13 @@ public class WorldListEntryMixin {
 
     @Redirect(
             method = "<init>",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/world/level/storage/LevelSummary;getInfo()Lnet/minecraft/network/chat/Component;"
-            )
-    )
+            at =
+                    @At(
+                            value = "INVOKE",
+                            target =
+                                    "Lnet/minecraft/world/level/storage/LevelSummary;getInfo()Lnet/minecraft/network/chat/Component;"))
     private Component modifyInfo(LevelSummary levelSummary) {
-        if(config.enableNoExperimentalWarning
-                && !config.enableExperimentalDisplay) {
+        if (config.enableNoExperimentalWarning && !config.enableExperimentalDisplay) {
             if (levelSummary.info == null) {
                 levelSummary.info = this.better_client$createInfo(levelSummary);
             }
@@ -69,17 +68,25 @@ public class WorldListEntryMixin {
         } else if (levelSummary.requiresManualConversion()) {
             return Component.translatable("selectWorld.conversion").withStyle(ChatFormatting.RED);
         } else if (!levelSummary.isCompatible()) {
-            return Component.translatable("selectWorld.incompatible.info", levelSummary.getWorldVersionName()).withStyle(ChatFormatting.RED);
+            return Component.translatable("selectWorld.incompatible.info", levelSummary.getWorldVersionName())
+                    .withStyle(ChatFormatting.RED);
         } else {
-            MutableComponent mutableComponent = levelSummary.isHardcore() ? Component.empty().append(Component.translatable("gameMode.hardcore").withColor(-65536)) : Component.translatable("gameMode." + levelSummary.getGameMode().getName());
+            MutableComponent mutableComponent = levelSummary.isHardcore()
+                    ? Component.empty()
+                            .append(Component.translatable("gameMode.hardcore").withColor(-65536))
+                    : Component.translatable(
+                            "gameMode." + levelSummary.getGameMode().getName());
             if (levelSummary.hasCommands()) {
                 mutableComponent.append(", ").append(Component.translatable("selectWorld.commands"));
             }
 
             MutableComponent mutableComponent2 = levelSummary.getWorldVersionName();
-            MutableComponent mutableComponent3 = Component.literal(", ").append(Component.translatable("selectWorld.version")).append(CommonComponents.SPACE);
+            MutableComponent mutableComponent3 = Component.literal(", ")
+                    .append(Component.translatable("selectWorld.version"))
+                    .append(CommonComponents.SPACE);
             if (levelSummary.shouldBackup()) {
-                mutableComponent3.append(mutableComponent2.withStyle(levelSummary.isDowngrade() ? ChatFormatting.RED : ChatFormatting.ITALIC));
+                mutableComponent3.append(mutableComponent2.withStyle(
+                        levelSummary.isDowngrade() ? ChatFormatting.RED : ChatFormatting.ITALIC));
             } else {
                 mutableComponent3.append(mutableComponent2);
             }
@@ -90,7 +97,8 @@ public class WorldListEntryMixin {
     }
 
     @Inject(at = @At("TAIL"), method = "renderContent")
-    public void renderContent(GuiGraphics guiGraphics, int mouseX, int mouseY, boolean pHovering, float pPartialTick, CallbackInfo ci) {
+    public void renderContent(
+            GuiGraphics guiGraphics, int mouseX, int mouseY, boolean pHovering, float pPartialTick, CallbackInfo ci) {
         if (!config.enableWorldPlayTime) return;
 
         if (!(this.summary instanceof IHasPlayTime hasPlayTime)) return;
@@ -106,7 +114,7 @@ public class WorldListEntryMixin {
         int textWidth = mc.font.width(component);
         if (textWidth == 0) return;
 
-        WorldSelectionList.WorldListEntry entry = (WorldSelectionList.WorldListEntry)(Object) this;
+        WorldSelectionList.WorldListEntry entry = (WorldSelectionList.WorldListEntry) (Object) this;
         int iconSize = 9;
         int spacing = 2;
         int totalWidth = iconSize + spacing + textWidth;
@@ -114,8 +122,20 @@ public class WorldListEntryMixin {
         int renderY = entry.getContentY();
 
         // 绘制图标
-        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, WORLD_PLAY_TIME_ICON, renderX, renderY, 0, 0, iconSize, iconSize, iconSize, iconSize, config.worldPlayTimeColor);
+        guiGraphics.blit(
+                RenderPipelines.GUI_TEXTURED,
+                WORLD_PLAY_TIME_ICON,
+                renderX,
+                renderY,
+                0,
+                0,
+                iconSize,
+                iconSize,
+                iconSize,
+                iconSize,
+                config.worldPlayTimeColor);
         // 绘制文字
-        guiGraphics.drawString(mc.font, component, renderX + iconSize + spacing, renderY + 1, config.worldPlayTimeColor, false);
+        guiGraphics.drawString(
+                mc.font, component, renderX + iconSize + spacing, renderY + 1, config.worldPlayTimeColor, false);
     }
 }

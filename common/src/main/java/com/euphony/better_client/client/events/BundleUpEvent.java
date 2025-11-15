@@ -1,7 +1,11 @@
 package com.euphony.better_client.client.events;
 
+import static com.euphony.better_client.BetterClient.config;
+
 import com.euphony.better_client.keymapping.BCKeyMappings;
 import com.euphony.better_client.utils.records.BundleCandidate;
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -17,37 +21,32 @@ import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.euphony.better_client.BetterClient.config;
-
 public class BundleUpEvent {
     public static void bundleUp(Minecraft minecraft, Screen screen, KeyEvent keyEvent) {
-        if(!BCKeyMappings.BUNDLE_UP.matches(keyEvent) || !config.enableBundleUp) return;
+        if (!BCKeyMappings.BUNDLE_UP.matches(keyEvent) || !config.enableBundleUp) return;
 
         List<BundleCandidate> candidates = new ArrayList<>();
 
         Player player = minecraft.player;
-        if(player == null || screen == null) return;
+        if (player == null || screen == null) return;
 
-        if(screen instanceof AbstractContainerScreen<?> containerScreen) {
-            if(containerScreen.hoveredSlot == null) return;
+        if (screen instanceof AbstractContainerScreen<?> containerScreen) {
+            if (containerScreen.hoveredSlot == null) return;
 
             Slot hoveredSlot = containerScreen.hoveredSlot;
             ItemStack selectedItem = hoveredSlot.getItem();
-            if(!selectedItem.is(ItemTags.BUNDLES)) return;
+            if (!selectedItem.is(ItemTags.BUNDLES)) return;
 
             if (containerScreen.getMenu() instanceof ChestMenu chestMenu) {
-                for(int i = 0; i < chestMenu.slots.size(); i++) {
+                for (int i = 0; i < chestMenu.slots.size(); i++) {
                     Slot slot = chestMenu.getSlot(i);
 
                     ItemStack stack = slot.getItem();
                     if (stack.isEmpty()) continue;
 
                     Container container = slot.container;
-                    if(container instanceof Inventory) {
-                        if(slot.slot >= 9) {
+                    if (container instanceof Inventory) {
+                        if (slot.slot >= 9) {
                             continue;
                         }
                     }
@@ -55,18 +54,18 @@ public class BundleUpEvent {
                     double efficiency = (double) stack.getMaxStackSize() / stack.getCount();
                     candidates.add(new BundleCandidate(slot, i, stack, efficiency));
                 }
-            } else if(containerScreen instanceof InventoryScreen
+            } else if (containerScreen instanceof InventoryScreen
                     || containerScreen instanceof CreativeModeInventoryScreen) {
                 var menu = containerScreen.getMenu();
 
-                for(int i = 0; i < menu.slots.size(); i++) {
+                for (int i = 0; i < menu.slots.size(); i++) {
                     Slot slot = menu.getSlot(i);
                     ItemStack stack = slot.getItem();
                     if (stack.isEmpty()) continue;
 
                     Container container = slot.container;
-                    if(container instanceof Inventory) {
-                        if(slot.slot >= 9) {
+                    if (container instanceof Inventory) {
+                        if (slot.slot >= 9) {
                             double efficiency = (double) stack.getMaxStackSize() / stack.getCount();
                             candidates.add(new BundleCandidate(slot, i, stack, efficiency));
                         }
@@ -75,13 +74,14 @@ public class BundleUpEvent {
             }
             candidates.sort(null);
 
-            for(BundleCandidate candidate : candidates) {
+            for (BundleCandidate candidate : candidates) {
                 performSlotSwap(containerScreen, hoveredSlot, candidate.slot(), player);
             }
         }
     }
 
-    public static void performSlotSwap(AbstractContainerScreen<?> screen, Slot bundleSlot, Slot targetSlot, Player player) {
+    public static void performSlotSwap(
+            AbstractContainerScreen<?> screen, Slot bundleSlot, Slot targetSlot, Player player) {
         screen.slotClicked(bundleSlot, 1, 0, ClickType.PICKUP);
 
         screen.slotClicked(targetSlot, 0, 0, ClickType.PICKUP);

@@ -1,8 +1,12 @@
 package com.euphony.better_client.mixin;
 
+import static com.euphony.better_client.BetterClient.config;
+
 import com.euphony.better_client.screen.widget.FastTradingButton;
 import com.euphony.better_client.utils.ItemUtils;
 import com.euphony.better_client.utils.KeyUtils;
+import java.util.HashMap;
+import java.util.Map;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Tooltip;
@@ -23,14 +27,10 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import static com.euphony.better_client.BetterClient.config;
-
 @Mixin(MerchantScreen.class)
 public abstract class MerchantScreenMixin extends AbstractContainerScreen<MerchantMenu> {
-    @Shadow private int shopItem;
+    @Shadow
+    private int shopItem;
 
     @Unique
     private int better_client$tradeState = 0;
@@ -46,28 +46,26 @@ public abstract class MerchantScreenMixin extends AbstractContainerScreen<Mercha
 
     @Inject(method = "init", at = @At("TAIL"))
     public void addSpeedTradeButton(CallbackInfo ci) {
-        if(!config.enableFastTrading) return;
+        if (!config.enableFastTrading) return;
 
         int i = (this.width - this.imageWidth) / 2;
         int j = (this.height - this.imageHeight) / 2;
 
-        this.better_client$fastTradingButton = new FastTradingButton( i + 247, j + 37, 18, 18, (button) -> {
+        this.better_client$fastTradingButton = new FastTradingButton(i + 247, j + 37, 18, 18, (button) -> {
             this.menu.setSelectionHint(this.shopItem);
             if (this.minecraft != null) {
                 this.minecraft.getConnection().send(new ServerboundSelectTradePacket(this.shopItem));
             }
             better_client$tradeState = 1;
         });
-        this.addRenderableWidget(
-                better_client$fastTradingButton
-        );
+        this.addRenderableWidget(better_client$fastTradingButton);
     }
 
     @Override
     protected void containerTick() {
         super.containerTick();
 
-        if(!config.enableFastTrading) return;
+        if (!config.enableFastTrading) return;
 
         this.better_client$fastTradingButton.active = false;
 
@@ -104,7 +102,8 @@ public abstract class MerchantScreenMixin extends AbstractContainerScreen<Mercha
                 }
 
                 Component tradeDescription;
-                if (this.better_client$lastCachedShopItem == this.shopItem && this.better_client$tradeDescriptionCache.containsKey(this.shopItem)) {
+                if (this.better_client$lastCachedShopItem == this.shopItem
+                        && this.better_client$tradeDescriptionCache.containsKey(this.shopItem)) {
                     tradeDescription = this.better_client$tradeDescriptionCache.get(this.shopItem);
                 } else {
                     tradeDescription = better_client$generateTradeDescription(merchantOffer);
@@ -187,8 +186,9 @@ public abstract class MerchantScreenMixin extends AbstractContainerScreen<Mercha
 
         MutableComponent component = Component.empty();
 
-        if(better_client$isInactiveAlt(sellItem)) {
-            component.append(Component.translatable("message.better_client.fast_trading.alt").withStyle(ChatFormatting.RED));
+        if (better_client$isInactiveAlt(sellItem)) {
+            component.append(Component.translatable("message.better_client.fast_trading.alt")
+                    .withStyle(ChatFormatting.RED));
         }
 
         component.append(ItemUtils.getWrappedItemName(costA));
@@ -221,17 +221,19 @@ public abstract class MerchantScreenMixin extends AbstractContainerScreen<Mercha
                 && (sellItem.isDamageableItem() || !sellItem.isStackable());
     }
 
-    @Shadow protected abstract void renderButtonArrows(GuiGraphics guiGraphics, MerchantOffer merchantOffer, int i, int j);
+    @Shadow
+    protected abstract void renderButtonArrows(GuiGraphics guiGraphics, MerchantOffer merchantOffer, int i, int j);
 
     public MerchantScreenMixin(MerchantMenu abstractContainerMenu, Inventory inventory, Component component) {
         super(abstractContainerMenu, inventory, component);
     }
 
     @Inject(
-            method = "renderButtonArrows(Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/world/item/trading/MerchantOffer;II)V",
-            at = @At("TAIL")
-    )
-    private void injectRenderButtonArrows(GuiGraphics guiGraphics, MerchantOffer merchantOffer, int i, int j, CallbackInfo ci) {
+            method =
+                    "renderButtonArrows(Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/world/item/trading/MerchantOffer;II)V",
+            at = @At("TAIL"))
+    private void injectRenderButtonArrows(
+            GuiGraphics guiGraphics, MerchantOffer merchantOffer, int i, int j, CallbackInfo ci) {
         if (config.enableDisplayRemainingSales) {
             // 计算剩余交易次数
             int remainingUses = merchantOffer.getMaxUses() - merchantOffer.getUses();

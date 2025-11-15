@@ -1,10 +1,9 @@
 package com.euphony.better_client.utils.data;
 
+import java.util.Optional;
 import net.minecraft.world.item.trading.MerchantOffers;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Optional;
 
 /**
  * 商人信息管理类，使用单例模式

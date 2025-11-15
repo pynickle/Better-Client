@@ -7,5 +7,6 @@ public class KeyMapping {
     public static void registerKeyMapping() {
         KeyMappingRegistry.register(BCKeyMappings.BUNDLE_UP);
         KeyMappingRegistry.register(BCKeyMappings.FULL_BRIGHTNESS_TOGGLE);
+        KeyMappingRegistry.register(BCKeyMappings.ITEM_FRAME_INVISIBILITY_TOGGLE);
     }
 }

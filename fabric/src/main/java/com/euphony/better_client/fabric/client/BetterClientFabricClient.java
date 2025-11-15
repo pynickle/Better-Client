@@ -18,7 +18,8 @@ public final class BetterClientFabricClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         HudElementRegistry.addFirst(ResourceLocation.withDefaultNamespace("title"), BiomeTitleEvent::renderBiomeInfo);
-        ResourceLoader.get(PackType.CLIENT_RESOURCES).registerReloader(Utils.prefix("name_cache_clear"), new BCResourceReloadListener());
+        ResourceLoader.get(PackType.CLIENT_RESOURCES)
+                .registerReloader(Utils.prefix("name_cache_clear"), new BCResourceReloadListener());
 
         SelectItemModelProperties.ID_MAPPER.put(Utils.prefix("variant"), AxolotlBucketVariant.TYPE);
 

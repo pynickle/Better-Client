@@ -17,8 +17,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ClientboundBlockUpdatePacket.class)
 public abstract class ClientboundBlockUpdatePacketMixin {
-    @Shadow public abstract BlockPos getPos();
-    @Shadow public abstract BlockState getBlockState();
+    @Shadow
+    public abstract BlockPos getPos();
+
+    @Shadow
+    public abstract BlockState getBlockState();
 
     @Inject(method = "handle(Lnet/minecraft/network/protocol/game/ClientGamePacketListener;)V", at = @At("HEAD"))
     public void onBlockUpdate(ClientGamePacketListener handler, CallbackInfo ci) {

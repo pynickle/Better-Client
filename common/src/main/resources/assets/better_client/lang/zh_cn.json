@@ -13,6 +13,7 @@
 
   "key.better_client.bundle_up": "一键收纳",
   "key.better_client.full_brightness_toggle": "全亮切换",
+  "key.better_client.item_frame_invisibility_toggle": "物品展示框隐形切换",
 
   "info.better_client.durability_tooltip.number.durability_hint": "耐久度：%s",
   "info.better_client.durability_tooltip.number.full_durability": "%d",
@@ -219,5 +220,9 @@
   "yacl3.config.better_client:config.timerColor": "计时器文字颜色",
   "yacl3.config.better_client:config.timerColor.desc": "如果未启用动态计时器文字颜色，使用的文本颜色。",
   "yacl3.config.better_client:config.enableDropShadow": "启用阴影效果",
-  "yacl3.config.better_client:config.enableDropShadow.desc": "使用文字阴影。"
+  "yacl3.config.better_client:config.enableDropShadow.desc": "使用文字阴影。",
+
+  "yacl3.config.better_client:config.category.client.group.invisible_item_frame": "隐形物品展示框",
+  "yacl3.config.better_client:config.enableInvisibleItemFrame": "启用隐形物品展示框",
+  "yacl3.config.better_client:config.enableInvisibleItemFrame.desc": "将准星对准物品展示框并按下对应按键即可隐藏它，持有物品展示框可查看隐藏的物品展示框。"
 }

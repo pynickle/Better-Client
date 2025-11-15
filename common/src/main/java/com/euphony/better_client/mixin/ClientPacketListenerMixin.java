@@ -1,8 +1,11 @@
 package com.euphony.better_client.mixin;
 
+import static com.euphony.better_client.BetterClient.config;
+
 import com.euphony.better_client.client.events.TradingHudEvent;
 import com.euphony.better_client.utils.FormatUtils;
 import com.euphony.better_client.utils.data.MerchantInfo;
+import java.util.Map;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.core.BlockPos;
@@ -18,10 +21,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.Map;
-
-import static com.euphony.better_client.BetterClient.config;
-
 /**
  * 客户端数据包监听器混入类，用于处理交易相关的数据包
  */
@@ -35,7 +34,7 @@ public class ClientPacketListenerMixin {
      */
     @Inject(at = @At("HEAD"), method = "handleMerchantOffers", cancellable = true)
     public void onHandleMerchantOffers(ClientboundMerchantOffersPacket packet, CallbackInfo ci) {
-        if(!config.enableTradingHud) return;
+        if (!config.enableTradingHud) return;
 
         MerchantInfo.getInstance().setOffers(packet.getOffers());
 
@@ -51,7 +50,7 @@ public class ClientPacketListenerMixin {
      */
     @Inject(at = @At("HEAD"), method = "handleOpenScreen", cancellable = true)
     public void onHandleOpenScreen(ClientboundOpenScreenPacket packet, CallbackInfo ci) {
-        if(!config.enableTradingHud) return;
+        if (!config.enableTradingHud) return;
 
         if (!TradingHudEvent.isWindowOpen() && packet.getType() == MenuType.MERCHANT) {
             ci.cancel();
@@ -84,12 +83,15 @@ public class ClientPacketListenerMixin {
 
         BlockPos pos = player.getOnPos();
 
-        return FormatUtils.format(message, Map.of(
-                "pos", FormatUtils.format(config.posFormat, Map.of(
-                        "x", pos.getX(),
-                        "y", pos.getY(),
-                        "z", pos.getZ()
-                ))
-        ));
+        return FormatUtils.format(
+                message,
+                Map.of(
+                        "pos",
+                        FormatUtils.format(
+                                config.posFormat,
+                                Map.of(
+                                        "x", pos.getX(),
+                                        "y", pos.getY(),
+                                        "z", pos.getZ()))));
     }
 }

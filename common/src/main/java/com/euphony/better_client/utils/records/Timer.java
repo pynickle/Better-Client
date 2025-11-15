@@ -14,8 +14,7 @@ public record Timer(long startTime, long cooldownTicks) {
      * @param startTime     计时器开始时的游戏时间（level.getGameTime()）
      * @param cooldownTicks 冷却时长（tick，30 分钟 = 36000 ticks）
      */
-    public Timer {
-    }
+    public Timer {}
 
     /**
      * 获取计时器结束时的游戏时间

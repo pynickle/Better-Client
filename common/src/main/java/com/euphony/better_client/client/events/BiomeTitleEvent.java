@@ -1,6 +1,10 @@
 package com.euphony.better_client.client.events;
 
+import static com.euphony.better_client.BetterClient.config;
+
 import com.euphony.better_client.utils.BiomeUtils;
+import java.util.HashMap;
+import java.util.Map;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -13,11 +17,6 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.biome.Biome;
 import org.joml.Matrix3x2fStack;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import static com.euphony.better_client.BetterClient.config;
 
 public class BiomeTitleEvent {
     // 常量定义
@@ -149,18 +148,15 @@ public class BiomeTitleEvent {
         int textWidth = font.width(biomeName);
         int y = -font.wordWrapHeight(biomeName.getString(), 999) / 2 + config.biomeTitleYOffset;
 
-        guiGraphics.drawString(font, biomeName, (-textWidth / 2), y,
-            config.biomeTitleColor | (alpha << 24), true);
+        guiGraphics.drawString(font, biomeName, (-textWidth / 2), y, config.biomeTitleColor | (alpha << 24), true);
         pose.popMatrix();
     }
 
     private static boolean shouldHideDisplay(Minecraft mc) {
-        return (mc.options.hideGui && config.hideInF1) ||
-               (mc.getDebugOverlay().showDebugScreen() && config.hideInF3);
+        return (mc.options.hideGui && config.hideInF1) || (mc.getDebugOverlay().showDebugScreen() && config.hideInF3);
     }
 
     private static Component getBiomeName(ResourceKey<Biome> key) {
-        return NAME_CACHE.computeIfAbsent(key, k ->
-            BiomeUtils.createBiomeDisplayComponent(k, config.enableModName));
+        return NAME_CACHE.computeIfAbsent(key, k -> BiomeUtils.createBiomeDisplayComponent(k, config.enableModName));
     }
 }

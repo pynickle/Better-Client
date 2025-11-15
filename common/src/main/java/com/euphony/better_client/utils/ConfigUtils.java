@@ -4,15 +4,6 @@ import com.euphony.better_client.BetterClient;
 import com.euphony.better_client.utils.enums.DescComponent;
 import dev.isxander.yacl3.api.*;
 import dev.isxander.yacl3.api.controller.BooleanControllerBuilder;
-import net.minecraft.client.Minecraft;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.packs.repository.PackRepository;
-import net.minecraft.server.packs.resources.Resource;
-
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,6 +13,14 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
+import javax.imageio.ImageIO;
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.packs.repository.PackRepository;
+import net.minecraft.server.packs.resources.Resource;
 
 public class ConfigUtils {
     public static final int IMG_WIDTH = 1920;
@@ -30,7 +29,7 @@ public class ConfigUtils {
     private static final Map<ResourceLocation, int[]> IMAGE_DIMENSIONS_CACHE = new HashMap<>();
 
     public static final OptionFlag RESOURCE_RELOAD = (client) -> {
-        if(client.hasSingleplayerServer()) {
+        if (client.hasSingleplayerServer()) {
             MinecraftServer server = client.getSingleplayerServer();
             if (server != null) {
                 PackRepository packrepository = server.getPackRepository();
@@ -45,8 +44,7 @@ public class ConfigUtils {
                 .name(getOptionName(name))
                 .description(OptionDescription.createBuilder()
                         .text(getDesc(name, null))
-                        .build()
-                );
+                        .build());
     }
 
     public static ButtonOption.Builder getButtonOption(String name) {
@@ -54,11 +52,11 @@ public class ConfigUtils {
                 .name(getButtonOptionName(name))
                 .description(OptionDescription.createBuilder()
                         .text(getDesc(name, null))
-                        .build()
-                );
+                        .build());
     }
 
-    public static Option<Boolean> buildBooleanOption(String name, boolean defaultValue, Supplier<Boolean> getter, Consumer<Boolean> setter) {
+    public static Option<Boolean> buildBooleanOption(
+            String name, boolean defaultValue, Supplier<Boolean> getter, Consumer<Boolean> setter) {
         return getBooleanOption(name)
                 .binding(defaultValue, getter, setter)
                 .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
@@ -70,8 +68,7 @@ public class ConfigUtils {
                 .name(getOptionName(name))
                 .description(OptionDescription.createBuilder()
                         .text(getDesc(name, null))
-                        .build()
-                );
+                        .build());
     }
 
     public static <T> Option.Builder<T> getGenericOption(String name) {
@@ -83,8 +80,7 @@ public class ConfigUtils {
                 .name(getOptionName(name))
                 .description(OptionDescription.createBuilder()
                         .text(getDesc(name, descComponent))
-                        .build()
-                );
+                        .build());
     }
 
     public static <T> Option.Builder<T> getGenericOption(String name, String image) {
@@ -98,8 +94,7 @@ public class ConfigUtils {
                 .description(OptionDescription.createBuilder()
                         .text(getDesc(name, descComponent))
                         .image(getImage(image), dimensions[0], dimensions[1])
-                        .build()
-                );
+                        .build());
     }
 
     public static int[] getImageDimensions(ResourceLocation location) {
@@ -110,28 +105,29 @@ public class ConfigUtils {
         Minecraft mc = Minecraft.getInstance();
 
         Optional<Resource> resource = mc.getResourceManager().getResource(location);
-        if(resource.isPresent()) {
+        if (resource.isPresent()) {
             try (InputStream inputStream = resource.get().open()) {
                 BufferedImage image = ImageIO.read(inputStream);
                 if (image != null) {
-                    int[] dimensions = new int[]{image.getWidth(), image.getHeight()};
+                    int[] dimensions = new int[] {image.getWidth(), image.getHeight()};
                     IMAGE_DIMENSIONS_CACHE.put(location, dimensions);
                     return dimensions;
                 }
             } catch (IOException e) {
-                return new int[]{IMG_WIDTH, IMG_HEIGHT};
+                return new int[] {IMG_WIDTH, IMG_HEIGHT};
             }
         }
-        return new int[]{IMG_WIDTH, IMG_HEIGHT};
+        return new int[] {IMG_WIDTH, IMG_HEIGHT};
     }
 
-
     public static Component getCategoryName(String category) {
-        return Component.translatable(String.format("yacl3.config.%s:config.category.%s", BetterClient.MOD_ID, category));
+        return Component.translatable(
+                String.format("yacl3.config.%s:config.category.%s", BetterClient.MOD_ID, category));
     }
 
     public static Component getGroupName(String category, String group) {
-        return Component.translatable(String.format("yacl3.config.%s:config.category.%s.group.%s", BetterClient.MOD_ID, category, group));
+        return Component.translatable(
+                String.format("yacl3.config.%s:config.category.%s.group.%s", BetterClient.MOD_ID, category, group));
     }
 
     private static Component getButtonOptionName(String option) {
@@ -143,7 +139,8 @@ public class ConfigUtils {
     }
 
     private static Component getDesc(String option, DescComponent descComponent) {
-        MutableComponent component = Component.translatable(String.format("yacl3.config.%s:config.%s.desc", BetterClient.MOD_ID, option));
+        MutableComponent component =
+                Component.translatable(String.format("yacl3.config.%s:config.%s.desc", BetterClient.MOD_ID, option));
         if (descComponent != null) component.append(Component.literal("\n\n").append(descComponent.getText()));
         return component;
     }

@@ -1,6 +1,9 @@
 package com.euphony.better_client.client.events;
 
+import static com.euphony.better_client.BetterClient.config;
+
 import com.euphony.better_client.utils.ItemUtils;
+import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -17,12 +20,9 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.LodestoneTracker;
 import net.minecraft.world.level.Level;
 
-import java.util.List;
-
-import static com.euphony.better_client.BetterClient.config;
-
 public class CompassTooltipEvent {
-    public static void tooltip(ItemStack itemStack, List<Component> components, Item.TooltipContext context, TooltipFlag tooltipFlag) {
+    public static void tooltip(
+            ItemStack itemStack, List<Component> components, Item.TooltipContext context, TooltipFlag tooltipFlag) {
         if (!config.enableCompassTooltip) return;
 
         if (itemStack.is(Items.COMPASS)) {
@@ -41,15 +41,14 @@ public class CompassTooltipEvent {
                 ResourceLocation location = pos.dimension().location();
 
                 if (level != null && location.equals(level.dimension().location())) {
-                    components.add(ItemUtils.createTooltip("info.better_client.tooltip.compass.lodestone_position",
-                            getPositionComponent(pos.pos())
-                    ));
+                    components.add(ItemUtils.createTooltip(
+                            "info.better_client.tooltip.compass.lodestone_position", getPositionComponent(pos.pos())));
                     return;
                 }
 
-                components.add(ItemUtils.createTooltip("info.better_client.tooltip.compass.lodestone_position.other_dimension",
-                        getPositionComponentWithDimension(location, pos.pos())
-                ));
+                components.add(ItemUtils.createTooltip(
+                        "info.better_client.tooltip.compass.lodestone_position.other_dimension",
+                        getPositionComponentWithDimension(location, pos.pos())));
             });
             return;
         }
@@ -57,10 +56,10 @@ public class CompassTooltipEvent {
         if (!config.enableNormalCompassTooltip) return;
 
         if (level != null && level.dimensionType().natural()) {
-            GlobalPos spawnPosition = GlobalPos.of(level.dimension(), level.getRespawnData().pos());
-            components.add(ItemUtils.createTooltip("info.better_client.tooltip.compass.spawn_position",
-                    getPositionComponent(spawnPosition.pos())
-            ));
+            GlobalPos spawnPosition =
+                    GlobalPos.of(level.dimension(), level.getRespawnData().pos());
+            components.add(ItemUtils.createTooltip(
+                    "info.better_client.tooltip.compass.spawn_position", getPositionComponent(spawnPosition.pos())));
         }
     }
 
@@ -80,22 +79,22 @@ public class CompassTooltipEvent {
         Level level = Minecraft.getInstance().level;
 
         if (level != null && location.equals(level.dimension().location())) {
-            components.add(ItemUtils.createTooltip("info.better_client.tooltip.recovery_compass.death_location",
-                    getPositionComponent(deathLocation.pos())
-            ));
+            components.add(ItemUtils.createTooltip(
+                    "info.better_client.tooltip.recovery_compass.death_location",
+                    getPositionComponent(deathLocation.pos())));
             return;
         }
 
-        components.add(ItemUtils.createTooltip("info.better_client.tooltip.recovery_compass.death_location.other_dimension",
-                getPositionComponentWithDimension(location, deathLocation.pos())
-        ));
+        components.add(ItemUtils.createTooltip(
+                "info.better_client.tooltip.recovery_compass.death_location.other_dimension",
+                getPositionComponentWithDimension(location, deathLocation.pos())));
     }
 
     public static Object[] getPositionComponent(BlockPos pos) {
-        return new Object[]{
-                Component.literal(String.valueOf(pos.getX())).withStyle(ChatFormatting.WHITE),
-                Component.literal(String.valueOf(pos.getY())).withStyle(ChatFormatting.WHITE),
-                Component.literal(String.valueOf(pos.getZ())).withStyle(ChatFormatting.WHITE)
+        return new Object[] {
+            Component.literal(String.valueOf(pos.getX())).withStyle(ChatFormatting.WHITE),
+            Component.literal(String.valueOf(pos.getY())).withStyle(ChatFormatting.WHITE),
+            Component.literal(String.valueOf(pos.getZ())).withStyle(ChatFormatting.WHITE)
         };
     }
 
@@ -103,14 +102,14 @@ public class CompassTooltipEvent {
         MutableComponent dimensionName = Component.translatable(location.toString());
 
         if (location.getNamespace().equals("minecraft")) {
-            dimensionName = Component.translatable(String.format("info.better_client.tooltip.dimension.%s", location.getPath()));
-
+            dimensionName = Component.translatable(
+                    String.format("info.better_client.tooltip.dimension.%s", location.getPath()));
         }
-        return new Object[]{
-                dimensionName.withStyle(ChatFormatting.WHITE),
-                Component.literal(String.valueOf(pos.getX())).withStyle(ChatFormatting.WHITE),
-                Component.literal(String.valueOf(pos.getY())).withStyle(ChatFormatting.WHITE),
-                Component.literal(String.valueOf(pos.getZ())).withStyle(ChatFormatting.WHITE)
+        return new Object[] {
+            dimensionName.withStyle(ChatFormatting.WHITE),
+            Component.literal(String.valueOf(pos.getX())).withStyle(ChatFormatting.WHITE),
+            Component.literal(String.valueOf(pos.getY())).withStyle(ChatFormatting.WHITE),
+            Component.literal(String.valueOf(pos.getZ())).withStyle(ChatFormatting.WHITE)
         };
     }
 }

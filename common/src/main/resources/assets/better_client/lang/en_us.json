@@ -13,6 +13,7 @@
 
   "key.better_client.bundle_up": "Bundle Up",
   "key.better_client.full_brightness_toggle": "Full Brightness Toggle",
+  "key.better_client.item_frame_invisibility_toggle": "Item Frame Invisibility Toggle",
 
   "info.better_client.durability_tooltip.number.durability_hint": "Durability: %s",
   "info.better_client.durability_tooltip.number.full_durability": "%d",
@@ -219,5 +220,9 @@
   "yacl3.config.better_client:config.timerColor": "Timer Color",
   "yacl3.config.better_client:config.timerColor.desc": "If dynamic timer color is not enabled, the color used for the text color.",
   "yacl3.config.better_client:config.enableDropShadow": "Enable Drop Shadow",
-  "yacl3.config.better_client:config.enableDropShadow.desc": "Use text shadows."
+  "yacl3.config.better_client:config.enableDropShadow.desc": "Use text shadows.",
+
+  "yacl3.config.better_client:config.category.client.group.invisible_item_frame": "Invisible Item Frame",
+  "yacl3.config.better_client:config.enableInvisibleItemFrame": "Enable Invisible Item Frame",
+  "yacl3.config.better_client:config.enableInvisibleItemFrame.desc": "Aim the crosshair at the item frame and press the assigned key to hide it. Holding the item frame allows you to see hidden item frames."
 }

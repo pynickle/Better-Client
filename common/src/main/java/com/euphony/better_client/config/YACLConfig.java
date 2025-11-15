@@ -13,7 +13,5 @@ public class YACLConfig extends Config {
     @Override
     public Screen makeScreen(Screen parent) {
         return new YACLConfigScreen(parent);
-
     }
 }
-

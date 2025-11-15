@@ -9,6 +9,7 @@ public class BCClientEvents {
     public static void init() {
         ClientTickEvent.CLIENT_PRE.register(BiomeTitleEvent::clientPre);
         ClientTickEvent.CLIENT_LEVEL_PRE.register(FullBrightnessEvent::clientLevelPre);
+        ClientTickEvent.CLIENT_LEVEL_PRE.register(InvisibleItemFrameEvent::clientLevelPre);
 
         ClientChatEvent.RECEIVED.register(BeautifiedChatEvent::chatReceived);
 

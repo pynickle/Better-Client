@@ -1,5 +1,7 @@
 package com.euphony.better_client.mixin;
 
+import static com.euphony.better_client.BetterClient.config;
+
 import com.euphony.better_client.utils.ColorUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -14,13 +16,15 @@ import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-import static com.euphony.better_client.BetterClient.config;
-
 @Mixin(PlayerTabOverlay.class)
 public abstract class PlayerTabOverlayMixin {
-    @Unique @Final private static final int PLAYER_SLOT_EXTRA_WIDTH = 45;
+    @Unique
+    @Final
+    private static final int PLAYER_SLOT_EXTRA_WIDTH = 45;
 
-    @Shadow @Final private Minecraft minecraft;
+    @Shadow
+    @Final
+    private Minecraft minecraft;
 
     @ModifyConstant(method = "render", constant = @Constant(intValue = 13))
     private int modifySlotWidthConstant(int original) {
@@ -30,10 +34,10 @@ public abstract class PlayerTabOverlayMixin {
     @Redirect(
             method = "render",
             at =
-            @At(
-                    value = "INVOKE",
-                    target =
-                            "Lnet/minecraft/client/gui/components/PlayerTabOverlay;renderPingIcon(Lnet/minecraft/client/gui/GuiGraphics;IIILnet/minecraft/client/multiplayer/PlayerInfo;)V"))
+                    @At(
+                            value = "INVOKE",
+                            target =
+                                    "Lnet/minecraft/client/gui/components/PlayerTabOverlay;renderPingIcon(Lnet/minecraft/client/gui/GuiGraphics;IIILnet/minecraft/client/multiplayer/PlayerInfo;)V"))
     private void redirectRenderPingIcon(
             PlayerTabOverlay overlay, GuiGraphics graphics, int width, int x, int y, PlayerInfo player) {
         if (config.enableBetterPingDisplay) {
@@ -43,19 +47,12 @@ public abstract class PlayerTabOverlayMixin {
         }
     }
 
-
     @Unique
     private static final int PING_TEXT_RENDER_OFFSET = -13;
 
     @Unique
     private static void better_client$render(
-            Minecraft mc,
-            PlayerTabOverlay overlay,
-            GuiGraphics graphics,
-            int width,
-            int x,
-            int y,
-            PlayerInfo player) {
+            Minecraft mc, PlayerTabOverlay overlay, GuiGraphics graphics, int width, int x, int y, PlayerInfo player) {
 
         String pingString = String.format("%dms", player.getLatency());
         int pingStringWidth = mc.font.width(pingString);

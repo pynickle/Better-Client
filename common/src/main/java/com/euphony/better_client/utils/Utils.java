@@ -2,10 +2,9 @@ package com.euphony.better_client.utils;
 
 import com.euphony.better_client.BetterClient;
 import dev.architectury.platform.Platform;
-import net.minecraft.resources.ResourceLocation;
-
 import java.util.Collection;
 import java.util.Locale;
+import net.minecraft.resources.ResourceLocation;
 
 public class Utils {
     public static String getModDisplayName(String modId) {

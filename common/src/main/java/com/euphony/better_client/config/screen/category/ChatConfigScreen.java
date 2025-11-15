@@ -1,5 +1,9 @@
 package com.euphony.better_client.config.screen.category;
 
+import static com.euphony.better_client.BetterClient.config;
+import static com.euphony.better_client.config.Config.DEFAULTS;
+import static com.euphony.better_client.config.YACLConfig.CLIENT_CATEGORY;
+
 import com.euphony.better_client.config.Config;
 import com.euphony.better_client.utils.ConfigUtils;
 import dev.isxander.yacl3.api.ConfigCategory;
@@ -9,15 +13,10 @@ import dev.isxander.yacl3.api.YetAnotherConfigLib;
 import dev.isxander.yacl3.api.controller.ColorControllerBuilder;
 import dev.isxander.yacl3.api.controller.IntegerFieldControllerBuilder;
 import dev.isxander.yacl3.api.controller.StringControllerBuilder;
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.network.chat.Component;
-
 import java.awt.*;
 import java.util.List;
-
-import static com.euphony.better_client.BetterClient.config;
-import static com.euphony.better_client.config.Config.DEFAULTS;
-import static com.euphony.better_client.config.YACLConfig.CLIENT_CATEGORY;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
 
 public class ChatConfigScreen {
     private static final String BETTER_CHAT_GROUP = "better_chat";
@@ -30,26 +29,25 @@ public class ChatConfigScreen {
                 "enableLongerChatHistory",
                 DEFAULTS.enableLongerChatHistory,
                 () -> config.enableLongerChatHistory,
-                newVal -> config.enableLongerChatHistory = newVal
-        );
+                newVal -> config.enableLongerChatHistory = newVal);
 
         Option<Integer> chatMaxMessagesOpt = ConfigUtils.<Integer>getGenericOption("chatMaxMessages")
-                .binding(DEFAULTS.chatMaxMessages,
+                .binding(
+                        DEFAULTS.chatMaxMessages,
                         () -> config.chatMaxMessages,
                         newVal -> config.chatMaxMessages = newVal)
-                .controller(opt -> IntegerFieldControllerBuilder.create(opt)
-                        .range(100, 32768))
+                .controller(opt -> IntegerFieldControllerBuilder.create(opt).range(100, 32768))
                 .build();
 
         Option<Boolean> enableTimeStampOpt = ConfigUtils.buildBooleanOption(
                 "enableTimeStamp",
                 DEFAULTS.enableTimeStamp,
                 () -> config.enableTimeStamp,
-                newVal -> config.enableTimeStamp = newVal
-        );
+                newVal -> config.enableTimeStamp = newVal);
 
         Option<Color> timeStampColorOpt = ConfigUtils.<Color>getGenericOption("timeStampColor")
-                .binding(new Color(DEFAULTS.timeStampColor, false),
+                .binding(
+                        new Color(DEFAULTS.timeStampColor, false),
                         () -> new Color(config.timeStampColor, false),
                         newVal -> config.timeStampColor = newVal.getRGB())
                 .controller(opt -> ColorControllerBuilder.create(opt).allowAlpha(false))
@@ -59,21 +57,17 @@ public class ChatConfigScreen {
                 "enableChatHistoryRetention",
                 DEFAULTS.enableChatHistoryRetention,
                 () -> config.enableChatHistoryRetention,
-                newVal -> config.enableChatHistoryRetention = newVal
-        );
+                newVal -> config.enableChatHistoryRetention = newVal);
 
         // Chat Formatter
         Option<Boolean> enableChatFormatterOpt = ConfigUtils.buildBooleanOption(
                 "enableChatFormatter",
                 DEFAULTS.enableChatFormatter,
                 () -> config.enableChatFormatter,
-                newVal -> config.enableChatFormatter = newVal
-        );
+                newVal -> config.enableChatFormatter = newVal);
 
         Option<String> posFormatOpt = ConfigUtils.<String>getGenericOption("posFormat")
-                .binding(DEFAULTS.posFormat,
-                        () -> config.posFormat,
-                        newVal -> config.posFormat = newVal)
+                .binding(DEFAULTS.posFormat, () -> config.posFormat, newVal -> config.posFormat = newVal)
                 .controller(StringControllerBuilder::create)
                 .build();
 
@@ -84,24 +78,15 @@ public class ChatConfigScreen {
                         .group(OptionGroup.createBuilder()
                                 .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, BETTER_CHAT_GROUP))
                                 .options(java.util.List.of(
-                                        enableLongerChatHistoryOpt,
-                                        chatMaxMessagesOpt,
-                                        enableChatHistoryRetentionOpt
-                                ))
+                                        enableLongerChatHistoryOpt, chatMaxMessagesOpt, enableChatHistoryRetentionOpt))
                                 .build())
                         .group(OptionGroup.createBuilder()
                                 .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, TIMESTAMP_GROUP))
-                                .options(List.of(
-                                        enableTimeStampOpt,
-                                        timeStampColorOpt
-                                ))
+                                .options(List.of(enableTimeStampOpt, timeStampColorOpt))
                                 .build())
                         .group(OptionGroup.createBuilder()
                                 .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, CHAT_FORMATTER_GROUP))
-                                .options(List.of(
-                                        enableChatFormatterOpt,
-                                        posFormatOpt
-                                ))
+                                .options(List.of(enableChatFormatterOpt, posFormatOpt))
                                 .build())
                         .build())
                 .save(Config::save)

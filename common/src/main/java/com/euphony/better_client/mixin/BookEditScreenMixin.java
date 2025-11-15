@@ -1,5 +1,7 @@
 package com.euphony.better_client.mixin;
 
+import static com.euphony.better_client.BetterClient.config;
+
 import com.euphony.better_client.api.IMultiLineEditBox;
 import com.euphony.better_client.utils.KeyUtils;
 import net.minecraft.client.gui.components.MultiLineEditBox;
@@ -16,19 +18,22 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import static com.euphony.better_client.BetterClient.config;
-
 @Mixin(BookEditScreen.class)
 public abstract class BookEditScreenMixin extends Screen {
-    @Shadow private MultiLineEditBox page;
+    @Shadow
+    private MultiLineEditBox page;
 
-    @Shadow protected abstract void pageBack();
+    @Shadow
+    protected abstract void pageBack();
 
-    @Shadow protected abstract void pageForward();
+    @Shadow
+    protected abstract void pageForward();
 
-    @Shadow private int currentPage;
+    @Shadow
+    private int currentPage;
 
-    @Shadow protected abstract int getNumPages();
+    @Shadow
+    protected abstract int getNumPages();
 
     @Unique
     private boolean better_client$isModified;
@@ -40,31 +45,37 @@ public abstract class BookEditScreenMixin extends Screen {
         super(component);
     }
 
-    @Inject(method = "appendPageToBook", at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/client/gui/screens/inventory/BookEditScreen;getNumPages()I",
-            shift =  At.Shift.AFTER))
+    @Inject(
+            method = "appendPageToBook",
+            at =
+                    @At(
+                            value = "INVOKE",
+                            target = "Lnet/minecraft/client/gui/screens/inventory/BookEditScreen;getNumPages()I",
+                            shift = At.Shift.AFTER))
     private void appendPageToBookInject(CallbackInfo ci) {
         this.better_client$isModified = true;
     }
 
     @Override
     public void onClose() {
-        if(!config.enableBookSaveConfirmation) {
+        if (!config.enableBookSaveConfirmation) {
             super.onClose();
             return;
         }
 
         if (this.better_client$isModified || ((IMultiLineEditBox) this.page).better_client$getIsModified()) {
-            this.minecraft.setScreen(new ConfirmScreen((response) -> {
-                if(response) {
-                    this.better_client$isModified = false;
-                    ((IMultiLineEditBox) this.page).better_client$setIsModified(false);
-                    this.minecraft.setScreen(null);
-                } else {
-                    this.minecraft.setScreen(this);
-                }
-            }, Component.translatable("message.better_client.book_save.title"), Component.translatable("message.better_client.book_save.question")));
+            this.minecraft.setScreen(new ConfirmScreen(
+                    (response) -> {
+                        if (response) {
+                            this.better_client$isModified = false;
+                            ((IMultiLineEditBox) this.page).better_client$setIsModified(false);
+                            this.minecraft.setScreen(null);
+                        } else {
+                            this.minecraft.setScreen(this);
+                        }
+                    },
+                    Component.translatable("message.better_client.book_save.title"),
+                    Component.translatable("message.better_client.book_save.question")));
         } else {
             super.onClose();
         }
@@ -72,7 +83,7 @@ public abstract class BookEditScreenMixin extends Screen {
 
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double horizontalAmount, double verticalAmount) {
-        if(!config.enableBookScroll) return super.mouseScrolled(mouseX, mouseY, horizontalAmount, verticalAmount);
+        if (!config.enableBookScroll) return super.mouseScrolled(mouseX, mouseY, horizontalAmount, verticalAmount);
 
         double scrollDelta = verticalAmount + horizontalAmount;
 

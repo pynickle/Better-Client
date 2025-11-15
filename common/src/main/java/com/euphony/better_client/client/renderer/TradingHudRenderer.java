@@ -1,6 +1,10 @@
 package com.euphony.better_client.client.renderer;
 
+import static com.euphony.better_client.BetterClient.config;
+
 import com.euphony.better_client.utils.data.MerchantInfo;
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -15,24 +19,20 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.item.trading.MerchantOffers;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.euphony.better_client.BetterClient.config;
-
 public class TradingHudRenderer {
-    private static final ResourceLocation TRADE_ARROW_OUT_OF_STOCK_SPRITE = ResourceLocation.withDefaultNamespace("container/villager/trade_arrow_out_of_stock");
-    private static final ResourceLocation TRADE_ARROW_SPRITE = ResourceLocation.withDefaultNamespace("container/villager/trade_arrow");
-    private static final ResourceLocation DISCOUNT_STRIKETHRUOGH_SPRITE = ResourceLocation.withDefaultNamespace("container/villager/discount_strikethrough");
+    private static final ResourceLocation TRADE_ARROW_OUT_OF_STOCK_SPRITE =
+            ResourceLocation.withDefaultNamespace("container/villager/trade_arrow_out_of_stock");
+    private static final ResourceLocation TRADE_ARROW_SPRITE =
+            ResourceLocation.withDefaultNamespace("container/villager/trade_arrow");
+    private static final ResourceLocation DISCOUNT_STRIKETHRUOGH_SPRITE =
+            ResourceLocation.withDefaultNamespace("container/villager/discount_strikethrough");
 
     public static void renderHud(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
-        if (!config.enableTradingHud)
-            return;
+        if (!config.enableTradingHud) return;
 
         Minecraft minecraft = Minecraft.getInstance();
         Player player = minecraft.player;
-        if (player == null)
-            return;
+        if (player == null) return;
 
         Font font = minecraft.font;
 
@@ -46,7 +46,7 @@ public class TradingHudRenderer {
 
                 int extraSpace = config.renderRealCostDirectly ? 0 : 10;
 
-                for(MerchantOffer merchantOffer : merchantOffers) {
+                for (MerchantOffer merchantOffer : merchantOffers) {
                     if (m < 7) {
                         ItemStack itemStack = merchantOffer.getBaseCostA();
                         ItemStack itemStack2 = merchantOffer.getCostA();
@@ -70,11 +70,13 @@ public class TradingHudRenderer {
                         if (EnchantmentHelper.hasAnyEnchantments(itemStack4)) {
                             for (var entry : itemEnchantmentsComponent.entrySet()) {
                                 var level = entry.getIntValue();
-                                enchantments.add(Enchantment.getFullname(entry.getKey(), level).getString());
+                                enchantments.add(Enchantment.getFullname(entry.getKey(), level)
+                                        .getString());
                             }
                         }
 
-                        guiGraphics.drawString(font, String.join(", ", enchantments), (i + 85), (n + 3), CommonColors.WHITE);
+                        guiGraphics.drawString(
+                                font, String.join(", ", enchantments), (i + 85), (n + 3), CommonColors.WHITE);
                     }
                     ++m;
                 }
@@ -82,17 +84,18 @@ public class TradingHudRenderer {
         });
     }
 
-
     private static void renderButtonArrows(GuiGraphics guiGraphics, MerchantOffer merchantOffers, int posX, int posY) {
         if (merchantOffers.isOutOfStock()) {
-            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, TRADE_ARROW_OUT_OF_STOCK_SPRITE, posX + 5 + 25 + 20, posY + 3, 10, 9);
+            guiGraphics.blitSprite(
+                    RenderPipelines.GUI_TEXTURED, TRADE_ARROW_OUT_OF_STOCK_SPRITE, posX + 5 + 25 + 20, posY + 3, 10, 9);
         } else {
-            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, TRADE_ARROW_SPRITE, posX + 5 + 25 + 20, posY + 3, 10, 9);
+            guiGraphics.blitSprite(
+                    RenderPipelines.GUI_TEXTURED, TRADE_ARROW_SPRITE, posX + 5 + 25 + 20, posY + 3, 10, 9);
         }
-
     }
 
-    private static void renderAndDecorateCostA(GuiGraphics guiGraphics, Font font, ItemStack realCost, ItemStack baseCost, int x, int y) {
+    private static void renderAndDecorateCostA(
+            GuiGraphics guiGraphics, Font font, ItemStack realCost, ItemStack baseCost, int x, int y) {
         guiGraphics.renderFakeItem(realCost, x, y);
         if (baseCost.getCount() == realCost.getCount() || config.renderRealCostDirectly) {
             guiGraphics.renderItemDecorations(font, realCost, x, y);
@@ -101,6 +104,5 @@ public class TradingHudRenderer {
             guiGraphics.renderItemDecorations(font, realCost, x + 14, y, realCost.getCount() == 1 ? "1" : null);
             guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, DISCOUNT_STRIKETHRUOGH_SPRITE, x + 7, y + 12, 9, 2);
         }
-
     }
 }

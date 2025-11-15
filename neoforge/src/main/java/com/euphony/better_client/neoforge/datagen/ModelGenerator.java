@@ -3,6 +3,8 @@ package com.euphony.better_client.neoforge.datagen;
 import com.euphony.better_client.BetterClient;
 import com.euphony.better_client.client.property.AxolotlBucketVariant;
 import com.euphony.better_client.utils.Utils;
+import java.util.Collections;
+import java.util.List;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
@@ -15,9 +17,6 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-
-import java.util.Collections;
-import java.util.List;
 
 public class ModelGenerator extends ModelProvider {
     public ModelGenerator(PackOutput output) {
@@ -34,17 +33,24 @@ public class ModelGenerator extends ModelProvider {
         ItemModel.Unbaked itemmodel$unbaked1 = createAxolotlBucketModel("_gold", itemModels);
         ItemModel.Unbaked itemmodel$unbaked2 = createAxolotlBucketModel("_cyan", itemModels);
         ItemModel.Unbaked itemmodel$unbaked3 = createAxolotlBucketModel("_blue", itemModels);
-        itemModels.itemModelOutput.accept(item, ItemModelUtils.select(new AxolotlBucketVariant(0), itemmodel$unbaked,
-                new SelectItemModel.SwitchCase<>(List.of(0.0f), ItemModelUtils.plainModel(ModelLocationUtils.getModelLocation(Items.AXOLOTL_BUCKET))),
-                new SelectItemModel.SwitchCase<>(List.of(0.01f), itemmodel$unbaked),
-                new SelectItemModel.SwitchCase<>(List.of(0.02f), itemmodel$unbaked1),
-                new SelectItemModel.SwitchCase<>(List.of(0.03f), itemmodel$unbaked2),
-                new SelectItemModel.SwitchCase<>(List.of(0.04f), itemmodel$unbaked3)));
+        itemModels.itemModelOutput.accept(
+                item,
+                ItemModelUtils.select(
+                        new AxolotlBucketVariant(0),
+                        itemmodel$unbaked,
+                        new SelectItemModel.SwitchCase<>(
+                                List.of(0.0f),
+                                ItemModelUtils.plainModel(ModelLocationUtils.getModelLocation(Items.AXOLOTL_BUCKET))),
+                        new SelectItemModel.SwitchCase<>(List.of(0.01f), itemmodel$unbaked),
+                        new SelectItemModel.SwitchCase<>(List.of(0.02f), itemmodel$unbaked1),
+                        new SelectItemModel.SwitchCase<>(List.of(0.03f), itemmodel$unbaked2),
+                        new SelectItemModel.SwitchCase<>(List.of(0.04f), itemmodel$unbaked3)));
     }
 
     public ItemModel.Unbaked createAxolotlBucketModel(String suffix, ItemModelGenerators itemModels) {
         ResourceLocation resourceLocation = Utils.prefix("item/axolotl_bucket" + suffix);
-        return ItemModelUtils.plainModel(ModelTemplates.FLAT_ITEM.create(resourceLocation, TextureMapping.layer0(resourceLocation), itemModels.modelOutput));
+        return ItemModelUtils.plainModel(ModelTemplates.FLAT_ITEM.create(
+                resourceLocation, TextureMapping.layer0(resourceLocation), itemModels.modelOutput));
     }
 
     public void itemModel(ItemModelGenerators itemModels, Item item) {
@@ -53,9 +59,13 @@ public class ModelGenerator extends ModelProvider {
 
     public void itemModel(ItemModelGenerators itemModels, Item item, ModelTemplate template) {
         ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(item);
-        ResourceLocation textureLoc = ResourceLocation.fromNamespaceAndPath(itemId.getNamespace(), "item/" + itemId.getPath());
+        ResourceLocation textureLoc =
+                ResourceLocation.fromNamespaceAndPath(itemId.getNamespace(), "item/" + itemId.getPath());
         TextureMapping textureMapping = new TextureMapping().put(TextureSlot.LAYER0, textureLoc);
-        itemModels.itemModelOutput.accept(item, new BlockModelWrapper.Unbaked(template.create(item, textureMapping, itemModels.modelOutput), Collections.emptyList()));
+        itemModels.itemModelOutput.accept(
+                item,
+                new BlockModelWrapper.Unbaked(
+                        template.create(item, textureMapping, itemModels.modelOutput), Collections.emptyList()));
     }
 
     public void itemModel(ItemModelGenerators itemModels, Item item, String loc) {
@@ -66,6 +76,9 @@ public class ModelGenerator extends ModelProvider {
         ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(item);
         ResourceLocation textureLoc = ResourceLocation.fromNamespaceAndPath(itemId.getNamespace(), "item/" + loc);
         TextureMapping textureMapping = new TextureMapping().put(TextureSlot.LAYER0, textureLoc);
-        itemModels.itemModelOutput.accept(item, new BlockModelWrapper.Unbaked(template.create(item, textureMapping, itemModels.modelOutput), Collections.emptyList()));
+        itemModels.itemModelOutput.accept(
+                item,
+                new BlockModelWrapper.Unbaked(
+                        template.create(item, textureMapping, itemModels.modelOutput), Collections.emptyList()));
     }
 }
