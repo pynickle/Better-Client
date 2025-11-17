@@ -1,10 +1,6 @@
 package com.euphony.better_client.client.events;
 
-import static com.euphony.better_client.BetterClient.config;
-
 import com.euphony.better_client.utils.BiomeUtils;
-import java.util.HashMap;
-import java.util.Map;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -17,6 +13,11 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.biome.Biome;
 import org.joml.Matrix3x2fStack;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.euphony.better_client.BetterClient.config;
 
 public class BiomeTitleEvent {
     // 常量定义

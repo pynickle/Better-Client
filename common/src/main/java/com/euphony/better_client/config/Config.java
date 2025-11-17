@@ -1,20 +1,21 @@
 package com.euphony.better_client.config;
 
-import static com.euphony.better_client.BetterClient.config;
-
 import com.euphony.better_client.BetterClient;
 import com.euphony.better_client.utils.Utils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dev.architectury.platform.Platform;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Collections;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.ConfirmLinkScreen;
 import net.minecraft.client.gui.screens.ConfirmScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Collections;
+
+import static com.euphony.better_client.BetterClient.config;
 
 public class Config {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();

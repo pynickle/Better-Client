@@ -1,7 +1,5 @@
 package com.euphony.better_client.mixin;
 
-import static com.euphony.better_client.BetterClient.config;
-
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.ChatComponent;
@@ -12,6 +10,8 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import static com.euphony.better_client.BetterClient.config;
 
 @Mixin(ChatComponent.class)
 public class ChatComponentMixin {

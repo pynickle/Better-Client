@@ -1,9 +1,6 @@
 package com.euphony.better_client.client.events;
 
-import static com.euphony.better_client.BetterClient.config;
-
 import com.euphony.better_client.utils.ItemUtils;
-import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -19,6 +16,10 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.LodestoneTracker;
 import net.minecraft.world.level.Level;
+
+import java.util.List;
+
+import static com.euphony.better_client.BetterClient.config;
 
 public class CompassTooltipEvent {
     public static void tooltip(

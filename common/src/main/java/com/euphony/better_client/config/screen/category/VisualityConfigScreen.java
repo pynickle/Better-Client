@@ -1,9 +1,5 @@
 package com.euphony.better_client.config.screen.category;
 
-import static com.euphony.better_client.BetterClient.config;
-import static com.euphony.better_client.config.Config.DEFAULTS;
-import static com.euphony.better_client.config.YACLConfig.CLIENT_CATEGORY;
-
 import com.euphony.better_client.config.Config;
 import com.euphony.better_client.utils.ConfigUtils;
 import dev.isxander.yacl3.api.ConfigCategory;
@@ -13,10 +9,15 @@ import dev.isxander.yacl3.api.YetAnotherConfigLib;
 import dev.isxander.yacl3.api.controller.ColorControllerBuilder;
 import dev.isxander.yacl3.api.controller.DoubleSliderControllerBuilder;
 import dev.isxander.yacl3.api.controller.LongFieldControllerBuilder;
-import java.awt.*;
-import java.util.List;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+
+import java.awt.*;
+import java.util.List;
+
+import static com.euphony.better_client.BetterClient.config;
+import static com.euphony.better_client.config.Config.DEFAULTS;
+import static com.euphony.better_client.config.YACLConfig.CLIENT_CATEGORY;
 
 public class VisualityConfigScreen {
     private static final String FADING_NIGHT_VISION_GROUP = "fading_night_vision";

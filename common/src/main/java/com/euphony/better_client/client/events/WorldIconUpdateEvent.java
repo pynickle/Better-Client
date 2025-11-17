@@ -1,15 +1,16 @@
 package com.euphony.better_client.client.events;
 
-import static com.euphony.better_client.BetterClient.LOGGER;
-import static com.euphony.better_client.BetterClient.config;
-
 import com.mojang.blaze3d.platform.NativeImage;
-import java.io.IOException;
-import java.nio.file.Path;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Screenshot;
 import net.minecraft.client.server.IntegratedServer;
+
+import java.io.IOException;
+import java.nio.file.Path;
+
+import static com.euphony.better_client.BetterClient.LOGGER;
+import static com.euphony.better_client.BetterClient.config;
 
 public class WorldIconUpdateEvent {
     public static void onRenderLevelStage() {

@@ -1,10 +1,10 @@
 package com.euphony.better_client.client.events;
 
-import static com.euphony.better_client.BetterClient.config;
-
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
+
+import static com.euphony.better_client.BetterClient.config;
 
 public class FasterClimbingEvent {
 

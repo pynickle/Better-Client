@@ -1,11 +1,8 @@
 package com.euphony.better_client.mixin;
 
-import static com.euphony.better_client.BetterClient.config;
-
 import com.euphony.better_client.client.events.TradingHudEvent;
 import com.euphony.better_client.utils.FormatUtils;
 import com.euphony.better_client.utils.data.MerchantInfo;
-import java.util.Map;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.core.BlockPos;
@@ -20,6 +17,10 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.util.Map;
+
+import static com.euphony.better_client.BetterClient.config;
 
 /**
  * 客户端数据包监听器混入类，用于处理交易相关的数据包

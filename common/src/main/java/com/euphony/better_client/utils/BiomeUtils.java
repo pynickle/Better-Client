@@ -1,6 +1,5 @@
 package com.euphony.better_client.utils;
 
-import java.util.StringJoiner;
 import net.minecraft.Util;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -8,6 +7,8 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
 import org.apache.commons.lang3.StringUtils;
+
+import java.util.StringJoiner;
 
 /**
  * 生物群系相关的工具方法

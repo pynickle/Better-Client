@@ -1,13 +1,13 @@
 package com.euphony.better_client.client.events;
 
-import static com.euphony.better_client.BetterClient.config;
-
 import com.euphony.better_client.keymapping.BCKeyMappings;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.MultiLineEditBox;
 import net.minecraft.client.multiplayer.ClientLevel;
+
+import static com.euphony.better_client.BetterClient.config;
 
 public class FullBrightnessEvent {
     private static boolean wasKeyPressed = false;

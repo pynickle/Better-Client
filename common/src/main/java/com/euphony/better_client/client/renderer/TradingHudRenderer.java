@@ -1,10 +1,6 @@
 package com.euphony.better_client.client.renderer;
 
-import static com.euphony.better_client.BetterClient.config;
-
 import com.euphony.better_client.utils.data.MerchantInfo;
-import java.util.ArrayList;
-import java.util.List;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -18,6 +14,11 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.item.trading.MerchantOffers;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.euphony.better_client.BetterClient.config;
 
 public class TradingHudRenderer {
     private static final ResourceLocation TRADE_ARROW_OUT_OF_STOCK_SPRITE =

@@ -1,18 +1,19 @@
 package com.euphony.better_client.config.screen.category;
 
-import static com.euphony.better_client.BetterClient.config;
-import static com.euphony.better_client.config.Config.DEFAULTS;
-import static com.euphony.better_client.config.YACLConfig.CLIENT_CATEGORY;
-
 import com.euphony.better_client.config.Config;
 import com.euphony.better_client.utils.ConfigUtils;
 import dev.isxander.yacl3.api.ConfigCategory;
 import dev.isxander.yacl3.api.Option;
 import dev.isxander.yacl3.api.OptionGroup;
 import dev.isxander.yacl3.api.YetAnotherConfigLib;
-import java.util.List;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+
+import java.util.List;
+
+import static com.euphony.better_client.BetterClient.config;
+import static com.euphony.better_client.config.Config.DEFAULTS;
+import static com.euphony.better_client.config.YACLConfig.CLIENT_CATEGORY;
 
 public class TooltipConfigScreen {
     private static final String DURABILITY_TOOLTIP_GROUP = "durability_tooltip";

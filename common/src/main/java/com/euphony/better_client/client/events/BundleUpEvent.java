@@ -1,11 +1,7 @@
 package com.euphony.better_client.client.events;
 
-import static com.euphony.better_client.BetterClient.config;
-
 import com.euphony.better_client.keymapping.BCKeyMappings;
 import com.euphony.better_client.utils.records.BundleCandidate;
-import java.util.ArrayList;
-import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -20,6 +16,11 @@ import net.minecraft.world.inventory.ChestMenu;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.euphony.better_client.BetterClient.config;
 
 public class BundleUpEvent {
     public static void bundleUp(Minecraft minecraft, Screen screen, KeyEvent keyEvent) {

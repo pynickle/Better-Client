@@ -1,7 +1,5 @@
 package com.euphony.better_client.client.events;
 
-import static com.euphony.better_client.BetterClient.config;
-
 import com.euphony.better_client.utils.TradingUtils;
 import com.euphony.better_client.utils.data.MerchantInfo;
 import net.minecraft.client.Minecraft;
@@ -10,6 +8,8 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.protocol.game.ServerboundInteractPacket;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
+
+import static com.euphony.better_client.BetterClient.config;
 
 /**
  * 交易 HUD 事件处理类

@@ -1,7 +1,5 @@
 package com.euphony.better_client.mixin;
 
-import static com.euphony.better_client.BetterClient.config;
-
 import com.euphony.better_client.api.IMultiLineEditBox;
 import com.euphony.better_client.utils.KeyUtils;
 import net.minecraft.client.gui.components.MultiLineEditBox;
@@ -17,6 +15,8 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import static com.euphony.better_client.BetterClient.config;
 
 @Mixin(BookEditScreen.class)
 public abstract class BookEditScreenMixin extends Screen {

@@ -1,6 +1,5 @@
 package com.euphony.better_client.utils;
 
-import java.util.Objects;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.Holder;
 import net.minecraft.world.entity.Entity;
@@ -10,6 +9,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.trading.Merchant;
+
+import java.util.Objects;
 
 /**
  * 交易相关的工具类

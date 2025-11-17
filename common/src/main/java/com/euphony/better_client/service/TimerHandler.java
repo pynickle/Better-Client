@@ -1,16 +1,17 @@
 package com.euphony.better_client.service;
 
-import static com.euphony.better_client.BetterClient.LOGGER;
-import static com.euphony.better_client.BetterClient.config;
-
 import com.euphony.better_client.utils.records.Timer;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.trialspawner.TrialSpawnerState;
 import net.minecraft.world.level.block.state.BlockState;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import static com.euphony.better_client.BetterClient.LOGGER;
+import static com.euphony.better_client.BetterClient.config;
 
 /**
  * 管理所有试炼刷怪笼的冷却计时器

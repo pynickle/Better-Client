@@ -1,7 +1,5 @@
 package com.euphony.better_client.mixin;
 
-import static com.euphony.better_client.BetterClient.config;
-
 import com.euphony.better_client.screen.TrialSpawnerTimerRenderer;
 import com.euphony.better_client.service.TimerHandler;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -21,6 +19,8 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import static com.euphony.better_client.BetterClient.config;
 
 @Mixin(TrialSpawnerRenderer.class)
 public class TrailSpawnerRendererMixin {

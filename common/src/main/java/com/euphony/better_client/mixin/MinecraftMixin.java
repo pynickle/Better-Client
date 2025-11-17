@@ -1,7 +1,5 @@
 package com.euphony.better_client.mixin;
 
-import static com.euphony.better_client.BetterClient.config;
-
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
@@ -15,6 +13,8 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import static com.euphony.better_client.BetterClient.config;
 
 @Mixin(Minecraft.class)
 public abstract class MinecraftMixin {

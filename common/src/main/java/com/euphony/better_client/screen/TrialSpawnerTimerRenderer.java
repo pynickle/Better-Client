@@ -1,7 +1,5 @@
 package com.euphony.better_client.screen;
 
-import static com.euphony.better_client.BetterClient.config;
-
 import com.euphony.better_client.service.TimerHandler;
 import com.euphony.better_client.utils.TimeUtils;
 import com.euphony.better_client.utils.records.Timer;
@@ -15,6 +13,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
 import org.joml.Matrix4f;
 import org.joml.Quaternionf;
+
+import static com.euphony.better_client.BetterClient.config;
 
 /**
  * 处理试炼刷怪笼计时器的渲染

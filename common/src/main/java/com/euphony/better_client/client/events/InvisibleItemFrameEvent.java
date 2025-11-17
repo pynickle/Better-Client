@@ -1,13 +1,13 @@
 package com.euphony.better_client.client.events;
 
-import static com.euphony.better_client.BetterClient.config;
-
 import com.euphony.better_client.keymapping.BCKeyMappings;
 import com.euphony.better_client.service.ItemFrameVisibilityManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.world.entity.decoration.ItemFrame;
 import net.minecraft.world.entity.player.Player;
+
+import static com.euphony.better_client.BetterClient.config;
 
 public class InvisibleItemFrameEvent {
     private static boolean wasKeyPressed = false;

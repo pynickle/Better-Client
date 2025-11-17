@@ -1,8 +1,12 @@
 package com.euphony.better_client.service;
 
-import static com.euphony.better_client.BetterClient.LOGGER;
-
 import com.google.gson.*;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.storage.LevelResource;
+import org.jetbrains.annotations.NotNull;
+
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
@@ -13,11 +17,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.storage.LevelResource;
-import org.jetbrains.annotations.NotNull;
+
+import static com.euphony.better_client.BetterClient.LOGGER;
 
 public class ItemFrameVisibilityManager {
     private static final ItemFrameVisibilityManager INSTANCE = new ItemFrameVisibilityManager();

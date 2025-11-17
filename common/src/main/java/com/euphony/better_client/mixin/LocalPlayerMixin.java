@@ -1,13 +1,13 @@
 package com.euphony.better_client.mixin;
 
-import static com.euphony.better_client.BetterClient.config;
-
 import com.euphony.better_client.client.events.TradingHudEvent;
 import net.minecraft.client.player.LocalPlayer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import static com.euphony.better_client.BetterClient.config;
 
 /**
  * 本地玩家混入类，用于处理容器关闭事件

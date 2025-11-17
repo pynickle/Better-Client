@@ -1,7 +1,5 @@
 package com.euphony.better_client.mixin;
 
-import static com.euphony.better_client.BetterClient.config;
-
 import com.euphony.better_client.utils.KeyUtils;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.BookViewScreen;
@@ -11,6 +9,8 @@ import net.minecraft.sounds.SoundEvents;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
+
+import static com.euphony.better_client.BetterClient.config;
 
 @Mixin(BookViewScreen.class)
 public abstract class BookViewScreenMixin extends Screen {

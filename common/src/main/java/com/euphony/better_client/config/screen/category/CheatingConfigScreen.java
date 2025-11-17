@@ -1,9 +1,5 @@
 package com.euphony.better_client.config.screen.category;
 
-import static com.euphony.better_client.BetterClient.config;
-import static com.euphony.better_client.config.Config.DEFAULTS;
-import static com.euphony.better_client.config.YACLConfig.CLIENT_CATEGORY;
-
 import com.euphony.better_client.config.Config;
 import com.euphony.better_client.utils.ConfigUtils;
 import dev.isxander.yacl3.api.ConfigCategory;
@@ -11,9 +7,14 @@ import dev.isxander.yacl3.api.Option;
 import dev.isxander.yacl3.api.OptionGroup;
 import dev.isxander.yacl3.api.YetAnotherConfigLib;
 import dev.isxander.yacl3.api.controller.DoubleSliderControllerBuilder;
-import java.util.List;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+
+import java.util.List;
+
+import static com.euphony.better_client.BetterClient.config;
+import static com.euphony.better_client.config.Config.DEFAULTS;
+import static com.euphony.better_client.config.YACLConfig.CLIENT_CATEGORY;
 
 public class CheatingConfigScreen {
     private static final String FASTER_CLIMBING_GROUP = "faster_climbing";

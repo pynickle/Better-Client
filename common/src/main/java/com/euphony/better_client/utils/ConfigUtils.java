@@ -3,7 +3,16 @@ package com.euphony.better_client.utils;
 import com.euphony.better_client.BetterClient;
 import com.euphony.better_client.utils.enums.DescComponent;
 import dev.isxander.yacl3.api.*;
-import dev.isxander.yacl3.api.controller.BooleanControllerBuilder;
+import dev.isxander.yacl3.api.controller.TickBoxControllerBuilder;
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.packs.repository.PackRepository;
+import net.minecraft.server.packs.resources.Resource;
+
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,14 +22,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
-import javax.imageio.ImageIO;
-import net.minecraft.client.Minecraft;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.packs.repository.PackRepository;
-import net.minecraft.server.packs.resources.Resource;
 
 public class ConfigUtils {
     public static final int IMG_WIDTH = 1920;
@@ -59,7 +60,7 @@ public class ConfigUtils {
             String name, boolean defaultValue, Supplier<Boolean> getter, Consumer<Boolean> setter) {
         return getBooleanOption(name)
                 .binding(defaultValue, getter, setter)
-                .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
+                .controller(TickBoxControllerBuilder::create)
                 .build();
     }
 

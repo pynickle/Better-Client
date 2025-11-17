@@ -1,16 +1,17 @@
 package com.euphony.better_client.client.events;
 
-import static com.euphony.better_client.BetterClient.config;
-
 import com.euphony.better_client.utils.ItemUtils;
 import com.euphony.better_client.utils.enums.TooltipCategory;
-import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+
+import java.util.List;
+
+import static com.euphony.better_client.BetterClient.config;
 
 public class DurabilityTooltipEvent {
     public static void tooltip(
