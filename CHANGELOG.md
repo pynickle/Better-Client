@@ -1,3 +1,9 @@
+## [7.7.1](https://github.com/pynickle/Better-Client/compare/v7.7.0...v7.7.1) (2025-11-17)
+
+### 🚀 Improvements
+
+* use tick box for boolean options in config ([e0a6821](https://github.com/pynickle/Better-Client/commit/e0a682111c84dab1c37691b0a4a2cb12dfbfce01))
+
 ## [7.7.0](https://github.com/pynickle/Better-Client/compare/v7.6.1...v7.7.0) (2025-11-15)
 
 ### ✨ Features
