@@ -17,7 +17,7 @@ public enum DescComponent {
 
     public Component getText() {
         return Component.translatable(
-                String.format("yacl3.config.%s:description.%s", BetterClient.MOD_ID, this.translationKey)
-        ).withStyle(this.formattings);
+                        String.format("yacl3.config.%s:description.%s", BetterClient.MOD_ID, this.translationKey))
+                .withStyle(this.formattings);
     }
 }

@@ -91,7 +91,7 @@ public class BetterClientConfig {
                     .binding(defaults.enableFadingNightVision,
                             () -> config.enableFadingNightVision,
                             newVal -> config.enableFadingNightVision = newVal)
-                    .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
+                    .controller(TickBoxControllerBuilder::create)
                     .build();
 
             Option<Double> fadingOutDurationOpt = ConfigUtils.<Double>getGenericOption("fadingOutDuration")
@@ -107,14 +107,14 @@ public class BetterClientConfig {
                     .binding(defaults.enableBetterPingDisplay,
                             () -> config.enableBetterPingDisplay,
                             newVal -> config.enableBetterPingDisplay = newVal)
-                    .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
+                    .controller(TickBoxControllerBuilder::create)
                     .build();
 
             Option<Boolean> enableDefaultPingBarsOpt = ConfigUtils.<Boolean>getGenericOption("enableDefaultPingBars", "default_ping_bars")
                     .binding(defaults.enableDefaultPingBars,
                             () -> config.enableDefaultPingBars,
                             newVal -> config.enableDefaultPingBars = newVal)
-                    .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
+                    .controller(TickBoxControllerBuilder::create)
                     .build();
 
             // Better Chat
@@ -122,7 +122,7 @@ public class BetterClientConfig {
                     .binding(defaults.enableLongerChatHistory,
                             () -> config.enableLongerChatHistory,
                             newVal -> config.enableLongerChatHistory = newVal)
-                    .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
+                    .controller(TickBoxControllerBuilder::create)
                     .build();
 
             Option<Integer> chatMaxMessagesOpt = ConfigUtils.<Integer>getGenericOption("chatMaxMessages")
@@ -137,7 +137,7 @@ public class BetterClientConfig {
                     .binding(defaults.enableTimeStamp,
                             () -> config.enableTimeStamp,
                             newVal -> config.enableTimeStamp = newVal)
-                    .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
+                    .controller(TickBoxControllerBuilder::create)
                     .build();
 
             Option<Color> timeStampColorOpt = ConfigUtils.<Color>getGenericOption("timeStampColor")
@@ -152,21 +152,21 @@ public class BetterClientConfig {
                     .binding(defaults.enableBiomeTitle,
                             () -> config.enableBiomeTitle,
                             newVal -> config.enableBiomeTitle = newVal)
-                    .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
+                    .controller(TickBoxControllerBuilder::create)
                     .build();
 
             Option<Boolean> hideInF1Opt = ConfigUtils.<Boolean>getGenericOption("hideInF1")
                     .binding(defaults.hideInF1,
                             () -> config.hideInF1,
                             newVal -> config.hideInF1 = newVal)
-                    .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
+                    .controller(TickBoxControllerBuilder::create)
                     .build();
 
             Option<Boolean> hideInF3Opt = ConfigUtils.<Boolean>getGenericOption("hideInF3")
                     .binding(defaults.hideInF3,
                             () -> config.hideInF3,
                             newVal -> config.hideInF3 = newVal)
-                    .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
+                    .controller(TickBoxControllerBuilder::create)
                     .build();
 
             Option<Double> displayDurationOpt = ConfigUtils.<Double>getGenericOption("displayDuration")
@@ -228,14 +228,14 @@ public class BetterClientConfig {
                     .binding(defaults.enableModName,
                             () -> config.enableModName,
                             newVal -> config.enableModName = newVal)
-                    .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
+                    .controller(TickBoxControllerBuilder::create)
                     .build();
 
             Option<Boolean> enableUndergroundUpdateOpt = ConfigUtils.<Boolean>getGenericOption("enableUndergroundUpdate")
                     .binding(defaults.enableUndergroundUpdate,
                             () -> config.enableUndergroundUpdate,
                             newVal -> config.enableUndergroundUpdate = newVal)
-                    .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
+                    .controller(TickBoxControllerBuilder::create)
                     .build();
 
             // Faster Climbing
@@ -243,21 +243,21 @@ public class BetterClientConfig {
                     .binding(defaults.enableFasterClimbing,
                             () -> config.enableFasterClimbing,
                             newVal -> config.enableFasterClimbing = newVal)
-                    .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
+                    .controller(TickBoxControllerBuilder::create)
                     .build();
 
             Option<Boolean> enableFasterUpwardOpt = ConfigUtils.<Boolean>getGenericOption("enableFasterUpward")
                     .binding(defaults.enableFasterUpward,
                             () -> config.enableFasterUpward,
                             newVal -> config.enableFasterUpward = newVal)
-                    .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
+                    .controller(TickBoxControllerBuilder::create)
                     .build();
 
             Option<Boolean> enableFasterDownwardOpt = ConfigUtils.<Boolean>getGenericOption("enableFasterDownward")
                     .binding(defaults.enableFasterDownward,
                             () -> config.enableFasterDownward,
                             newVal -> config.enableFasterDownward = newVal)
-                    .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
+                    .controller(TickBoxControllerBuilder::create)
                     .build();
 
             Option<Double> speedMultiplierOpt = ConfigUtils.<Double>getGenericOption("speedMultiplier")
@@ -273,7 +273,7 @@ public class BetterClientConfig {
                     .binding(defaults.enableBookScroll,
                             () -> config.enableBookScroll,
                             newVal -> config.enableBookScroll = newVal)
-                    .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
+                    .controller(TickBoxControllerBuilder::create)
                     .build();
 
             Option<Integer> ctrlSpeedMultiplierOpt = ConfigUtils.<Integer>getGenericOption("ctrlSpeedMultiplier")
@@ -288,7 +288,7 @@ public class BetterClientConfig {
                     .binding(defaults.enablePageTurnSound,
                             () -> config.enablePageTurnSound,
                             newVal -> config.enablePageTurnSound = newVal)
-                    .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
+                    .controller(TickBoxControllerBuilder::create)
                     .build();
 
             // Other
@@ -296,32 +296,32 @@ public class BetterClientConfig {
                     .binding(defaults.enableBeeInfo,
                             () -> config.enableBeeInfo,
                             newVal -> config.enableBeeInfo = newVal)
-                    .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
+                    .controller(TickBoxControllerBuilder::create)
                     .build();
 
             Option<Boolean> enableAxolotlBucketFixOpt = ConfigUtils.<Boolean>getGenericOption("enableAxolotlBucketFix", "axolotl_bucket")
                     .binding(defaults.enableAxolotlBucketFix,
                             () -> config.enableAxolotlBucketFix,
                             newVal -> config.enableAxolotlBucketFix = newVal)
-                    .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
+                    .controller(TickBoxControllerBuilder::create)
                     .build();
             Option<Boolean> enableChatHistoryRetentionOpt = ConfigUtils.<Boolean>getGenericOption("enableChatHistoryRetention")
                     .binding(defaults.enableChatHistoryRetention,
                             () -> config.enableChatHistoryRetention,
                             newVal -> config.enableChatHistoryRetention = newVal)
-                    .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
+                    .controller(TickBoxControllerBuilder::create)
                     .build();
             Option<Boolean> enableBookSaveConfirmationOpt = ConfigUtils.<Boolean>getGenericOption("enableBookSaveConfirmation")
                     .binding(defaults.enableBookSaveConfirmation,
                             () -> config.enableBookSaveConfirmation,
                             newVal -> config.enableBookSaveConfirmation = newVal)
-                    .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
+                    .controller(TickBoxControllerBuilder::create)
                     .build();
             Option<Boolean> enableGlowingEnderEyeOpt = ConfigUtils.<Boolean>getGenericOption("enableGlowingEnderEye")
                     .binding(defaults.enableGlowingEnderEye,
                             () -> config.enableGlowingEnderEye,
                             newVal -> config.enableGlowingEnderEye = newVal)
-                    .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
+                    .controller(TickBoxControllerBuilder::create)
                     .build();
 
             return builder

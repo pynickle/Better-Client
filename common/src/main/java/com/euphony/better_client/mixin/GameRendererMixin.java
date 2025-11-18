@@ -13,12 +13,14 @@ import org.spongepowered.asm.mixin.injection.At;
 public class GameRendererMixin {
     @ModifyReturnValue(method = "getNightVisionScale", at = @At("RETURN"))
     private static float getNightVisionScaleModify(float original, LivingEntity livingEntity, float pNanoTime) {
-        if(!BetterClientConfig.HANDLER.instance().enableFadingNightVision) return original;
+        if (!BetterClientConfig.HANDLER.instance().enableFadingNightVision) return original;
 
         int fadingOutTicks = (int) (BetterClientConfig.HANDLER.instance().fadingOutDuration * 20);
         MobEffectInstance mobeffectinstance = livingEntity.getEffect(MobEffects.NIGHT_VISION);
         if (mobeffectinstance != null) {
-            return !mobeffectinstance.endsWithin(fadingOutTicks) ? 1.0F : (1f / fadingOutTicks * (mobeffectinstance.getDuration() - pNanoTime));
+            return !mobeffectinstance.endsWithin(fadingOutTicks)
+                    ? 1.0F
+                    : (1f / fadingOutTicks * (mobeffectinstance.getDuration() - pNanoTime));
         } else {
             return 1.0F;
         }

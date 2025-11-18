@@ -15,13 +15,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(ChatComponent.class)
 public class ChatComponentMixin {
     @ModifyExpressionValue(
-            method = {"addMessageToDisplayQueue(Lnet/minecraft/client/GuiMessage;)V",
-                    "addMessageToQueue(Lnet/minecraft/client/GuiMessage;)V",
-                    "addRecentChat(Ljava/lang/String;)V"},
-            at = @At(value = "CONSTANT", args = "intValue=100")
-    )
+            method = {
+                "addMessageToDisplayQueue(Lnet/minecraft/client/GuiMessage;)V",
+                "addMessageToQueue(Lnet/minecraft/client/GuiMessage;)V",
+                "addRecentChat(Ljava/lang/String;)V"
+            },
+            at = @At(value = "CONSTANT", args = "intValue=100"))
     private int moreMessages(int chatMaxMessages) {
-        if(BetterClientConfig.HANDLER.instance().enableLongerChatHistory) {
+        if (BetterClientConfig.HANDLER.instance().enableLongerChatHistory) {
             return BetterClientConfig.HANDLER.instance().chatMaxMessages;
         }
         return chatMaxMessages;
@@ -30,8 +31,7 @@ public class ChatComponentMixin {
     @Inject(
             at = {@At("HEAD")},
             method = {"clearMessages(Z)V"},
-            cancellable = true
-    )
+            cancellable = true)
     public void clear(boolean clearHistory, CallbackInfo ci) {
         if (clearHistory && BetterClientConfig.HANDLER.instance().enableChatHistoryRetention) {
             ci.cancel();
@@ -52,11 +52,10 @@ public class ChatComponentMixin {
         return offset;
     }
 
-    @ModifyArg(method = "render", index = 1, at = @At(
-            value = "INVOKE",
-            target = "Lcom/mojang/blaze3d/vertex/PoseStack;translate(FFF)V",
-            ordinal = 0
-    ))
+    @ModifyArg(
+            method = "render",
+            index = 1,
+            at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/PoseStack;translate(FFF)V", ordinal = 0))
     private float offsetY(float y) {
         return y - better_client$getOffset();
     }
@@ -66,4 +65,3 @@ public class ChatComponentMixin {
         return original + better_client$getOffset();
     }
 }
-

@@ -12,12 +12,10 @@ import org.spongepowered.asm.mixin.injection.At;
 public class MinecraftMixin {
     @ModifyExpressionValue(
             method = "shouldEntityAppearGlowing",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/world/entity/Entity;isCurrentlyGlowing()Z"
-            )
-    )
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;isCurrentlyGlowing()Z"))
     private boolean seenByEyeOfTheForestThenGlow(boolean original, Entity entity) {
-        return BetterClientConfig.HANDLER.instance().enableGlowingEnderEye ? entity.getType() == EntityType.EYE_OF_ENDER || original : original;
+        return BetterClientConfig.HANDLER.instance().enableGlowingEnderEye
+                ? entity.getType() == EntityType.EYE_OF_ENDER || original
+                : original;
     }
 }

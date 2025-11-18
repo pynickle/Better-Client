@@ -12,13 +12,17 @@ import org.spongepowered.asm.mixin.Unique;
 
 @Mixin(BookViewScreen.class)
 public abstract class BookViewScreenMixin extends Screen {
-    @Shadow protected abstract void pageBack();
+    @Shadow
+    protected abstract void pageBack();
 
-    @Shadow private int currentPage;
+    @Shadow
+    private int currentPage;
 
-    @Shadow protected abstract int getNumPages();
+    @Shadow
+    protected abstract int getNumPages();
 
-    @Shadow protected abstract void pageForward();
+    @Shadow
+    protected abstract void pageForward();
 
     @Unique
     double better_client$progress = 0;
@@ -29,7 +33,8 @@ public abstract class BookViewScreenMixin extends Screen {
 
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double horizontalAmount, double verticalAmount) {
-        if(!BetterClientConfig.HANDLER.instance().enableBookScroll) return super.mouseScrolled(mouseX, mouseY, horizontalAmount, verticalAmount);
+        if (!BetterClientConfig.HANDLER.instance().enableBookScroll)
+            return super.mouseScrolled(mouseX, mouseY, horizontalAmount, verticalAmount);
 
         double scrollDelta = verticalAmount + horizontalAmount;
 

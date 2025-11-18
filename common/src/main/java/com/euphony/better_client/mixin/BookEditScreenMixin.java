@@ -13,15 +13,20 @@ import org.spongepowered.asm.mixin.Unique;
 
 @Mixin(BookEditScreen.class)
 public abstract class BookEditScreenMixin extends Screen {
-    @Shadow private boolean isModified;
+    @Shadow
+    private boolean isModified;
 
-    @Shadow protected abstract void pageBack();
+    @Shadow
+    protected abstract void pageBack();
 
-    @Shadow protected abstract void pageForward();
+    @Shadow
+    protected abstract void pageForward();
 
-    @Shadow private int currentPage;
+    @Shadow
+    private int currentPage;
 
-    @Shadow protected abstract int getNumPages();
+    @Shadow
+    protected abstract int getNumPages();
 
     @Unique
     double better_client$progress = 0;
@@ -32,19 +37,22 @@ public abstract class BookEditScreenMixin extends Screen {
 
     @Override
     public void onClose() {
-        if(!BetterClientConfig.HANDLER.instance().enableBookSaveConfirmation) {
+        if (!BetterClientConfig.HANDLER.instance().enableBookSaveConfirmation) {
             super.onClose();
             return;
         }
 
         if (this.isModified) {
-            this.minecraft.setScreen(new ConfirmScreen((response) -> {
-                if(response) {
-                    this.minecraft.setScreen(null);
-                } else {
-                    this.minecraft.setScreen(this);
-                }
-            }, Component.translatable("message.better_client.book_save.title"), Component.translatable("message.better_client.book_save.question")));
+            this.minecraft.setScreen(new ConfirmScreen(
+                    (response) -> {
+                        if (response) {
+                            this.minecraft.setScreen(null);
+                        } else {
+                            this.minecraft.setScreen(this);
+                        }
+                    },
+                    Component.translatable("message.better_client.book_save.title"),
+                    Component.translatable("message.better_client.book_save.question")));
         } else {
             super.onClose();
         }
@@ -52,7 +60,8 @@ public abstract class BookEditScreenMixin extends Screen {
 
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double horizontalAmount, double verticalAmount) {
-        if(!BetterClientConfig.HANDLER.instance().enableBookScroll) return super.mouseScrolled(mouseX, mouseY, horizontalAmount, verticalAmount);
+        if (!BetterClientConfig.HANDLER.instance().enableBookScroll)
+            return super.mouseScrolled(mouseX, mouseY, horizontalAmount, verticalAmount);
 
         double scrollDelta = verticalAmount + horizontalAmount;
 

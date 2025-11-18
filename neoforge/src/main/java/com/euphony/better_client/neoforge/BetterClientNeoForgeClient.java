@@ -11,6 +11,10 @@ import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 @Mod(value = BetterClient.MOD_ID, dist = Dist.CLIENT)
 public class BetterClientNeoForgeClient {
     public BetterClientNeoForgeClient(IEventBus bus) {
-        ModLoadingContext.get().registerExtensionPoint(IConfigScreenFactory.class, () -> (client, screen) -> BetterClientConfig.makeScreen().generateScreen(screen));
+        ModLoadingContext.get()
+                .registerExtensionPoint(
+                        IConfigScreenFactory.class,
+                        () -> (client, screen) ->
+                                BetterClientConfig.makeScreen().generateScreen(screen));
     }
 }

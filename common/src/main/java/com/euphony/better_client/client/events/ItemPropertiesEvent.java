@@ -12,7 +12,7 @@ import net.minecraft.world.item.component.CustomData;
 public class ItemPropertiesEvent {
     public static void clientSetup(Minecraft minecraft) {
         ItemPropertiesRegistry.register(Items.AXOLOTL_BUCKET, Utils.prefix("variant"), (stack, level, entity, seed) -> {
-            if(!BetterClientConfig.HANDLER.instance().enableAxolotlBucketFix) return 0;
+            if (!BetterClientConfig.HANDLER.instance().enableAxolotlBucketFix) return 0;
 
             int axolotlType = 0;
             CustomData customData;

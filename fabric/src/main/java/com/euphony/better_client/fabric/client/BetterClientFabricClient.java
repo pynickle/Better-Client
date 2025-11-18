@@ -11,6 +11,5 @@ public final class BetterClientFabricClient implements ClientModInitializer {
     public void onInitializeClient() {
         HudRenderCallback.EVENT.register(BiomeTitleEvent::renderBiomeInfo);
         ResourceManagerHelper.get(PackType.CLIENT_RESOURCES).registerReloadListener(new BCResourceReloadListener());
-
     }
 }
