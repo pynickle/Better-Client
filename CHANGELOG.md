@@ -1,3 +1,10 @@
+## [1.4.2](https://github.com/pynickle/Better-Client/compare/v1.4.1...v1.4.2) (2025-11-18)
+
+### 🚀 Improvements
+
+* use new logo for mod ([4376f00](https://github.com/pynickle/Better-Client/commit/4376f00dabd40ff10478bb56b478648134a92470))
+* use tick box for boolean options ([844722e](https://github.com/pynickle/Better-Client/commit/844722edadbf4d915a2c3436938540fb6d3e3706))
+
 ## [1.4.1](https://github.com/pynickle/Better-Client/compare/v1.4.0...v1.4.1) (2025-11-12)
 
 ### 🔧 Miscellaneous Changes
