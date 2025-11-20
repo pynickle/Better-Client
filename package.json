@@ -7,6 +7,6 @@
     "@semantic-release/release-notes-generator": "^14.1.0",
     "conventional-changelog-conventionalcommits": "^9.1.0",
     "semantic-release": "^25.0.2",
-    "semantic-release-minecraft": "^2.3.1"
+    "semantic-release-minecraft": "^2.3.5"
   }
 }

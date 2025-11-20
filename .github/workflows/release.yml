@@ -44,7 +44,6 @@ jobs:
 
       - name: Build And Release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
           MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
         run: npx semantic-release
