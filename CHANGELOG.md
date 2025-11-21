@@ -1,3 +1,13 @@
+## [1.5.0](https://github.com/pynickle/Better-Client/compare/v1.4.2...v1.5.0) (2025-11-21)
+
+### ✨ Features
+
+* port chat formatter to 1.21.1 ([38e1865](https://github.com/pynickle/Better-Client/commit/38e18658fdde8eaece35584a92df29d22896a22c))
+
+### 💄 Style Improvements
+
+* improve code ([6ac8f1d](https://github.com/pynickle/Better-Client/commit/6ac8f1d95830f839a2de846295009665f20421b9))
+
 ## [1.4.2](https://github.com/pynickle/Better-Client/compare/v1.4.1...v1.4.2) (2025-11-18)
 
 ### 🚀 Improvements
