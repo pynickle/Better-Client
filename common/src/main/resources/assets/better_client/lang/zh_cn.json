@@ -85,5 +85,11 @@
   "yacl3.config.better_client:config.enableBookSaveConfirmation": "启用书籍保存确认",
   "yacl3.config.better_client:config.enableBookSaveConfirmation.desc": "关闭修改过的书籍时提示保存。",
   "yacl3.config.better_client:config.enableGlowingEnderEye": "启用发光末影之眼",
-  "yacl3.config.better_client:config.enableGlowingEnderEye.desc": "被投掷的末影之眼会发光，使其在黑暗环境中更易被发现。"
+  "yacl3.config.better_client:config.enableGlowingEnderEye.desc": "被投掷的末影之眼会发光，使其在黑暗环境中更易被发现。",
+
+  "yacl3.config.better_client:config.category.client.group.chat_formatter": "聊天格式化",
+  "yacl3.config.better_client:config.enableChatFormatter": "启用聊天格式化",
+  "yacl3.config.better_client:config.enableChatFormatter.desc": "自动将 {pos} 等占位符替换为玩家实际坐标",
+  "yacl3.config.better_client:config.posFormat": "坐标格式",
+  "yacl3.config.better_client:config.posFormat.desc": "定义替换 {pos} 时坐标的格式化规则。支持 {x}、{y} 和 {z} 占位符。"
 }

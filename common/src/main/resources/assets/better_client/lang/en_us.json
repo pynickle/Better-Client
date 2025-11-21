@@ -86,5 +86,11 @@
   "yacl3.config.better_client:config.enableBookSaveConfirmation": "Enable Book Save Confirmation",
   "yacl3.config.better_client:config.enableBookSaveConfirmation.desc": "Prompts you to save if you close a modified book without saving.",
   "yacl3.config.better_client:config.enableGlowingEnderEye": "Enable Glowing Ender Eye",
-  "yacl3.config.better_client:config.enableGlowingEnderEye.desc": "Thrown Eyes of Ender glow, making them easier to see in dark environments."
+  "yacl3.config.better_client:config.enableGlowingEnderEye.desc": "Thrown Eyes of Ender glow, making them easier to see in dark environments.",
+
+  "yacl3.config.better_client:config.category.client.group.chat_formatter": "Chat Formatter",
+  "yacl3.config.better_client:config.enableChatFormatter": "Enable Chat Formatter",
+  "yacl3.config.better_client:config.enableChatFormatter.desc": "Automatic replacement of placeholders like {pos} with actual player coordinates.",
+  "yacl3.config.better_client:config.posFormat": "Pos Format",
+  "yacl3.config.better_client:config.posFormat.desc": "Defines how coordinates are formatted when replacing {pos}. Supports placeholders {x}, {y}, and {z}."
 }

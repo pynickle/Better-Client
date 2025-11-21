@@ -43,6 +43,7 @@ public class BetterClientConfig {
     private static final String BIOME_TITLE_GROUP = "biome_title";
     private static final String FASTER_CLIMBING_GROUP = "faster_climbing";
     private static final String BOOK_SCROLL_GROUP = "book_scroll";
+    private static final String CHAT_FORMATTER_GROUP = "chat_formatter";
     private static final String OTHER_GROUP = "other";
 
     @SerialEntry public boolean enableFadingNightVision = true;
@@ -83,6 +84,9 @@ public class BetterClientConfig {
     @SerialEntry public boolean enableChatHistoryRetention = true;
     @SerialEntry public boolean enableBookSaveConfirmation = true;
     @SerialEntry public boolean enableGlowingEnderEye = true;
+
+    @SerialEntry public boolean enableChatFormatter = true;
+    @SerialEntry public String posFormat = "{x}, {y}, {z}";
 
     public static YetAnotherConfigLib makeScreen() {
         return YetAnotherConfigLib.create(HANDLER, (defaults, config, builder) -> {
@@ -291,6 +295,21 @@ public class BetterClientConfig {
                     .controller(TickBoxControllerBuilder::create)
                     .build();
 
+            // Chat Formatter
+            Option<Boolean> enableChatFormatterOpt = ConfigUtils.<Boolean>getGenericOption("enableChatFormatter")
+                    .binding(defaults.enableChatFormatter,
+                            () -> config.enableChatFormatter,
+                            newVal -> config.enableChatFormatter = newVal)
+                    .controller(TickBoxControllerBuilder::create)
+                    .build();
+
+            Option<String> posFormatOpt = ConfigUtils.<String>getGenericOption("posFormat")
+                    .binding(defaults.posFormat,
+                            () -> config.posFormat,
+                            newVal -> config.posFormat = newVal)
+                    .controller(StringControllerBuilder::create)
+                    .build();
+
             // Other
             Option<Boolean> enableBeeInfoOpt = ConfigUtils.<Boolean>getGenericOption("enableBeeInfo", "bee_info")
                     .binding(defaults.enableBeeInfo,
@@ -383,6 +402,13 @@ public class BetterClientConfig {
                                             enableBookScrollOpt,
                                             ctrlSpeedMultiplierOpt,
                                             enablePageTurnSoundOpt
+                                    ))
+                                    .build())
+                            .group(OptionGroup.createBuilder()
+                                    .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, CHAT_FORMATTER_GROUP))
+                                    .options(List.of(
+                                            enableChatFormatterOpt,
+                                            posFormatOpt
                                     ))
                                     .build())
                             .group(OptionGroup.createBuilder()
