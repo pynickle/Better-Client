@@ -20,12 +20,13 @@ import java.nio.file.Path;
 import java.util.List;
 
 public class BetterClientConfig {
-    public static ConfigClassHandler<BetterClientConfig> HANDLER = ConfigClassHandler.createBuilder(BetterClientConfig.class)
+    public static ConfigClassHandler<BetterClientConfig> HANDLER = ConfigClassHandler.createBuilder(
+                    BetterClientConfig.class)
             .id(Utils.prefix("config"))
             .serializer(config -> GsonConfigSerializerBuilder.create(config)
                     .appendGsonBuilder(GsonBuilder::setPrettyPrinting)
-                    .setPath(Path.of("config", BetterClient.MOD_ID + "/client.json")).build()
-            )
+                    .setPath(Path.of("config", BetterClient.MOD_ID + "/client.json"))
+                    .build())
             .build();
 
     public static void load() {
@@ -91,152 +92,159 @@ public class BetterClientConfig {
     public static YetAnotherConfigLib makeScreen() {
         return YetAnotherConfigLib.create(HANDLER, (defaults, config, builder) -> {
             // Fading Night Vision
-            Option<Boolean> enableFadingNightVisionOpt = ConfigUtils.<Boolean>getGenericOption("enableFadingNightVision")
-                    .binding(defaults.enableFadingNightVision,
+            Option<Boolean> enableFadingNightVisionOpt = ConfigUtils.<Boolean>getGenericOption(
+                            "enableFadingNightVision")
+                    .binding(
+                            defaults.enableFadingNightVision,
                             () -> config.enableFadingNightVision,
                             newVal -> config.enableFadingNightVision = newVal)
                     .controller(TickBoxControllerBuilder::create)
                     .build();
 
             Option<Double> fadingOutDurationOpt = ConfigUtils.<Double>getGenericOption("fadingOutDuration")
-                    .binding(defaults.fadingOutDuration,
+                    .binding(
+                            defaults.fadingOutDuration,
                             () -> config.fadingOutDuration,
                             newVal -> config.fadingOutDuration = newVal)
                     .controller(opt -> DoubleSliderControllerBuilder.create(opt)
-                            .range(1.0, 5.0).step(0.5).formatValue(value -> Component.literal(value + "s")))
+                            .range(1.0, 5.0)
+                            .step(0.5)
+                            .formatValue(value -> Component.literal(value + "s")))
                     .build();
 
             // Better Ping Display
-            Option<Boolean> enableBetterPingDisplayOpt = ConfigUtils.<Boolean>getGenericOption("enableBetterPingDisplay", "better_ping_display")
-                    .binding(defaults.enableBetterPingDisplay,
+            Option<Boolean> enableBetterPingDisplayOpt = ConfigUtils.<Boolean>getGenericOption(
+                            "enableBetterPingDisplay", "better_ping_display")
+                    .binding(
+                            defaults.enableBetterPingDisplay,
                             () -> config.enableBetterPingDisplay,
                             newVal -> config.enableBetterPingDisplay = newVal)
                     .controller(TickBoxControllerBuilder::create)
                     .build();
 
-            Option<Boolean> enableDefaultPingBarsOpt = ConfigUtils.<Boolean>getGenericOption("enableDefaultPingBars", "default_ping_bars")
-                    .binding(defaults.enableDefaultPingBars,
+            Option<Boolean> enableDefaultPingBarsOpt = ConfigUtils.<Boolean>getGenericOption(
+                            "enableDefaultPingBars", "default_ping_bars")
+                    .binding(
+                            defaults.enableDefaultPingBars,
                             () -> config.enableDefaultPingBars,
                             newVal -> config.enableDefaultPingBars = newVal)
                     .controller(TickBoxControllerBuilder::create)
                     .build();
 
             // Better Chat
-            Option<Boolean> enableLongerChatHistoryOpt = ConfigUtils.<Boolean>getGenericOption("enableLongerChatHistory")
-                    .binding(defaults.enableLongerChatHistory,
+            Option<Boolean> enableLongerChatHistoryOpt = ConfigUtils.<Boolean>getGenericOption(
+                            "enableLongerChatHistory")
+                    .binding(
+                            defaults.enableLongerChatHistory,
                             () -> config.enableLongerChatHistory,
                             newVal -> config.enableLongerChatHistory = newVal)
                     .controller(TickBoxControllerBuilder::create)
                     .build();
 
             Option<Integer> chatMaxMessagesOpt = ConfigUtils.<Integer>getGenericOption("chatMaxMessages")
-                    .binding(defaults.chatMaxMessages,
+                    .binding(
+                            defaults.chatMaxMessages,
                             () -> config.chatMaxMessages,
                             newVal -> config.chatMaxMessages = newVal)
-                    .controller(opt -> IntegerFieldControllerBuilder.create(opt)
-                            .range(100, 32768))
+                    .controller(opt -> IntegerFieldControllerBuilder.create(opt).range(100, 32768))
                     .build();
 
             Option<Boolean> enableTimeStampOpt = ConfigUtils.<Boolean>getGenericOption("enableTimeStamp")
-                    .binding(defaults.enableTimeStamp,
+                    .binding(
+                            defaults.enableTimeStamp,
                             () -> config.enableTimeStamp,
                             newVal -> config.enableTimeStamp = newVal)
                     .controller(TickBoxControllerBuilder::create)
                     .build();
 
             Option<Color> timeStampColorOpt = ConfigUtils.<Color>getGenericOption("timeStampColor")
-                    .binding(defaults.timeStampColor,
+                    .binding(
+                            defaults.timeStampColor,
                             () -> config.timeStampColor,
                             newVal -> config.timeStampColor = newVal)
                     .controller(opt -> ColorControllerBuilder.create(opt).allowAlpha(false))
                     .build();
 
             // Biome Title
-            Option<Boolean> enableBiomeTitleOpt = ConfigUtils.<Boolean>getGenericOption("enableBiomeTitle", "biome_title")
-                    .binding(defaults.enableBiomeTitle,
+            Option<Boolean> enableBiomeTitleOpt = ConfigUtils.<Boolean>getGenericOption(
+                            "enableBiomeTitle", "biome_title")
+                    .binding(
+                            defaults.enableBiomeTitle,
                             () -> config.enableBiomeTitle,
                             newVal -> config.enableBiomeTitle = newVal)
                     .controller(TickBoxControllerBuilder::create)
                     .build();
 
             Option<Boolean> hideInF1Opt = ConfigUtils.<Boolean>getGenericOption("hideInF1")
-                    .binding(defaults.hideInF1,
-                            () -> config.hideInF1,
-                            newVal -> config.hideInF1 = newVal)
+                    .binding(defaults.hideInF1, () -> config.hideInF1, newVal -> config.hideInF1 = newVal)
                     .controller(TickBoxControllerBuilder::create)
                     .build();
 
             Option<Boolean> hideInF3Opt = ConfigUtils.<Boolean>getGenericOption("hideInF3")
-                    .binding(defaults.hideInF3,
-                            () -> config.hideInF3,
-                            newVal -> config.hideInF3 = newVal)
+                    .binding(defaults.hideInF3, () -> config.hideInF3, newVal -> config.hideInF3 = newVal)
                     .controller(TickBoxControllerBuilder::create)
                     .build();
 
             Option<Double> displayDurationOpt = ConfigUtils.<Double>getGenericOption("displayDuration")
-                    .binding(defaults.displayDuration,
+                    .binding(
+                            defaults.displayDuration,
                             () -> config.displayDuration,
                             newVal -> config.displayDuration = newVal)
                     .controller(opt -> DoubleSliderControllerBuilder.create(opt)
-                            .range(1.0, 5.0).step(0.5).formatValue(value -> Component.literal(value + "s")))
+                            .range(1.0, 5.0)
+                            .step(0.5)
+                            .formatValue(value -> Component.literal(value + "s")))
                     .build();
 
-            Option<Integer> fadeInTimeOpt = ConfigUtils.<Integer>getGenericOption("fadeInTime", DescComponent.TICK_EXPLANATION)
-                    .binding(defaults.fadeInTime,
-                            () -> config.fadeInTime,
-                            newVal -> config.fadeInTime = newVal)
+            Option<Integer> fadeInTimeOpt = ConfigUtils.<Integer>getGenericOption(
+                            "fadeInTime", DescComponent.TICK_EXPLANATION)
+                    .binding(defaults.fadeInTime, () -> config.fadeInTime, newVal -> config.fadeInTime = newVal)
                     .controller(opt -> IntegerFieldControllerBuilder.create(opt)
-                            .range(0, 60).formatValue(value -> Component.literal(value + " ticks")))
+                            .range(0, 60)
+                            .formatValue(value -> Component.literal(value + " ticks")))
                     .build();
 
-            Option<Integer> fadeOutTimeOpt = ConfigUtils.<Integer>getGenericOption("fadeOutTime", DescComponent.TICK_EXPLANATION)
-                    .binding(defaults.fadeOutTime,
-                            () -> config.fadeOutTime,
-                            newVal -> config.fadeOutTime = newVal)
+            Option<Integer> fadeOutTimeOpt = ConfigUtils.<Integer>getGenericOption(
+                            "fadeOutTime", DescComponent.TICK_EXPLANATION)
+                    .binding(defaults.fadeOutTime, () -> config.fadeOutTime, newVal -> config.fadeOutTime = newVal)
                     .controller(opt -> IntegerFieldControllerBuilder.create(opt)
-                            .range(0, 60).formatValue(value -> Component.literal(value + " ticks")))
+                            .range(0, 60)
+                            .formatValue(value -> Component.literal(value + " ticks")))
                     .build();
 
             Option<Double> scaleOpt = ConfigUtils.<Double>getGenericOption("scale")
-                    .binding(defaults.scale,
-                            () -> config.scale,
-                            newVal -> config.scale = newVal)
-                    .controller(opt -> DoubleFieldControllerBuilder.create(opt)
-                            .range(0.3, 3.0))
+                    .binding(defaults.scale, () -> config.scale, newVal -> config.scale = newVal)
+                    .controller(opt -> DoubleFieldControllerBuilder.create(opt).range(0.3, 3.0))
                     .build();
 
             Option<Integer> yOffsetOpt = ConfigUtils.<Integer>getGenericOption("yOffset")
-                    .binding(defaults.yOffset,
-                            () -> config.yOffset,
-                            newVal -> config.yOffset = newVal)
-                    .controller(opt -> IntegerFieldControllerBuilder.create(opt)
-                            .range(-60, 60))
+                    .binding(defaults.yOffset, () -> config.yOffset, newVal -> config.yOffset = newVal)
+                    .controller(opt -> IntegerFieldControllerBuilder.create(opt).range(-60, 60))
                     .build();
 
             Option<Color> colorOpt = ConfigUtils.<Color>getGenericOption("color")
-                    .binding(defaults.color,
-                            () -> config.color,
-                            newVal -> config.color = newVal)
+                    .binding(defaults.color, () -> config.color, newVal -> config.color = newVal)
                     .controller(opt -> ColorControllerBuilder.create(opt).allowAlpha(false))
                     .build();
 
-            Option<Double>  cooldownTimeOpt = ConfigUtils.<Double>getGenericOption("cooldownTime")
-                    .binding(defaults.cooldownTime,
-                            () -> config.cooldownTime,
-                            newVal -> config.cooldownTime = newVal)
+            Option<Double> cooldownTimeOpt = ConfigUtils.<Double>getGenericOption("cooldownTime")
+                    .binding(defaults.cooldownTime, () -> config.cooldownTime, newVal -> config.cooldownTime = newVal)
                     .controller(opt -> DoubleSliderControllerBuilder.create(opt)
-                            .range(0.0, 5.0).step(0.5).formatValue(value -> Component.literal(value + "s")))
+                            .range(0.0, 5.0)
+                            .step(0.5)
+                            .formatValue(value -> Component.literal(value + "s")))
                     .build();
 
             Option<Boolean> enableModNameOpt = ConfigUtils.<Boolean>getGenericOption("enableModName")
-                    .binding(defaults.enableModName,
-                            () -> config.enableModName,
-                            newVal -> config.enableModName = newVal)
+                    .binding(
+                            defaults.enableModName, () -> config.enableModName, newVal -> config.enableModName = newVal)
                     .controller(TickBoxControllerBuilder::create)
                     .build();
 
-            Option<Boolean> enableUndergroundUpdateOpt = ConfigUtils.<Boolean>getGenericOption("enableUndergroundUpdate")
-                    .binding(defaults.enableUndergroundUpdate,
+            Option<Boolean> enableUndergroundUpdateOpt = ConfigUtils.<Boolean>getGenericOption(
+                            "enableUndergroundUpdate")
+                    .binding(
+                            defaults.enableUndergroundUpdate,
                             () -> config.enableUndergroundUpdate,
                             newVal -> config.enableUndergroundUpdate = newVal)
                     .controller(TickBoxControllerBuilder::create)
@@ -244,52 +252,61 @@ public class BetterClientConfig {
 
             // Faster Climbing
             Option<Boolean> enableFasterClimbingOpt = ConfigUtils.<Boolean>getGenericOption("enableFasterClimbing")
-                    .binding(defaults.enableFasterClimbing,
+                    .binding(
+                            defaults.enableFasterClimbing,
                             () -> config.enableFasterClimbing,
                             newVal -> config.enableFasterClimbing = newVal)
                     .controller(TickBoxControllerBuilder::create)
                     .build();
 
             Option<Boolean> enableFasterUpwardOpt = ConfigUtils.<Boolean>getGenericOption("enableFasterUpward")
-                    .binding(defaults.enableFasterUpward,
+                    .binding(
+                            defaults.enableFasterUpward,
                             () -> config.enableFasterUpward,
                             newVal -> config.enableFasterUpward = newVal)
                     .controller(TickBoxControllerBuilder::create)
                     .build();
 
             Option<Boolean> enableFasterDownwardOpt = ConfigUtils.<Boolean>getGenericOption("enableFasterDownward")
-                    .binding(defaults.enableFasterDownward,
+                    .binding(
+                            defaults.enableFasterDownward,
                             () -> config.enableFasterDownward,
                             newVal -> config.enableFasterDownward = newVal)
                     .controller(TickBoxControllerBuilder::create)
                     .build();
 
             Option<Double> speedMultiplierOpt = ConfigUtils.<Double>getGenericOption("speedMultiplier")
-                    .binding(defaults.speedMultiplier,
+                    .binding(
+                            defaults.speedMultiplier,
                             () -> config.speedMultiplier,
                             newVal -> config.speedMultiplier = newVal)
                     .controller(opt -> DoubleSliderControllerBuilder.create(opt)
-                            .range(1.0, 10.0).step(0.5))
+                            .range(1.0, 10.0)
+                            .step(0.5))
                     .build();
 
             // Book Scroll
             Option<Boolean> enableBookScrollOpt = ConfigUtils.<Boolean>getGenericOption("enableBookScroll")
-                    .binding(defaults.enableBookScroll,
+                    .binding(
+                            defaults.enableBookScroll,
                             () -> config.enableBookScroll,
                             newVal -> config.enableBookScroll = newVal)
                     .controller(TickBoxControllerBuilder::create)
                     .build();
 
             Option<Integer> ctrlSpeedMultiplierOpt = ConfigUtils.<Integer>getGenericOption("ctrlSpeedMultiplier")
-                    .binding(defaults.ctrlSpeedMultiplier,
+                    .binding(
+                            defaults.ctrlSpeedMultiplier,
                             () -> config.ctrlSpeedMultiplier,
                             newVal -> config.ctrlSpeedMultiplier = newVal)
                     .controller(opt -> IntegerSliderControllerBuilder.create(opt)
-                            .range(1, 10).step(1))
+                            .range(1, 10)
+                            .step(1))
                     .build();
 
             Option<Boolean> enablePageTurnSoundOpt = ConfigUtils.<Boolean>getGenericOption("enablePageTurnSound")
-                    .binding(defaults.enablePageTurnSound,
+                    .binding(
+                            defaults.enablePageTurnSound,
                             () -> config.enablePageTurnSound,
                             newVal -> config.enablePageTurnSound = newVal)
                     .controller(TickBoxControllerBuilder::create)
@@ -297,69 +314,67 @@ public class BetterClientConfig {
 
             // Chat Formatter
             Option<Boolean> enableChatFormatterOpt = ConfigUtils.<Boolean>getGenericOption("enableChatFormatter")
-                    .binding(defaults.enableChatFormatter,
+                    .binding(
+                            defaults.enableChatFormatter,
                             () -> config.enableChatFormatter,
                             newVal -> config.enableChatFormatter = newVal)
                     .controller(TickBoxControllerBuilder::create)
                     .build();
 
             Option<String> posFormatOpt = ConfigUtils.<String>getGenericOption("posFormat")
-                    .binding(defaults.posFormat,
-                            () -> config.posFormat,
-                            newVal -> config.posFormat = newVal)
+                    .binding(defaults.posFormat, () -> config.posFormat, newVal -> config.posFormat = newVal)
                     .controller(StringControllerBuilder::create)
                     .build();
 
             // Other
             Option<Boolean> enableBeeInfoOpt = ConfigUtils.<Boolean>getGenericOption("enableBeeInfo", "bee_info")
-                    .binding(defaults.enableBeeInfo,
-                            () -> config.enableBeeInfo,
-                            newVal -> config.enableBeeInfo = newVal)
+                    .binding(
+                            defaults.enableBeeInfo, () -> config.enableBeeInfo, newVal -> config.enableBeeInfo = newVal)
                     .controller(TickBoxControllerBuilder::create)
                     .build();
 
-            Option<Boolean> enableAxolotlBucketFixOpt = ConfigUtils.<Boolean>getGenericOption("enableAxolotlBucketFix", "axolotl_bucket")
-                    .binding(defaults.enableAxolotlBucketFix,
+            Option<Boolean> enableAxolotlBucketFixOpt = ConfigUtils.<Boolean>getGenericOption(
+                            "enableAxolotlBucketFix", "axolotl_bucket")
+                    .binding(
+                            defaults.enableAxolotlBucketFix,
                             () -> config.enableAxolotlBucketFix,
                             newVal -> config.enableAxolotlBucketFix = newVal)
                     .controller(TickBoxControllerBuilder::create)
                     .build();
-            Option<Boolean> enableChatHistoryRetentionOpt = ConfigUtils.<Boolean>getGenericOption("enableChatHistoryRetention")
-                    .binding(defaults.enableChatHistoryRetention,
+            Option<Boolean> enableChatHistoryRetentionOpt = ConfigUtils.<Boolean>getGenericOption(
+                            "enableChatHistoryRetention")
+                    .binding(
+                            defaults.enableChatHistoryRetention,
                             () -> config.enableChatHistoryRetention,
                             newVal -> config.enableChatHistoryRetention = newVal)
                     .controller(TickBoxControllerBuilder::create)
                     .build();
-            Option<Boolean> enableBookSaveConfirmationOpt = ConfigUtils.<Boolean>getGenericOption("enableBookSaveConfirmation")
-                    .binding(defaults.enableBookSaveConfirmation,
+            Option<Boolean> enableBookSaveConfirmationOpt = ConfigUtils.<Boolean>getGenericOption(
+                            "enableBookSaveConfirmation")
+                    .binding(
+                            defaults.enableBookSaveConfirmation,
                             () -> config.enableBookSaveConfirmation,
                             newVal -> config.enableBookSaveConfirmation = newVal)
                     .controller(TickBoxControllerBuilder::create)
                     .build();
             Option<Boolean> enableGlowingEnderEyeOpt = ConfigUtils.<Boolean>getGenericOption("enableGlowingEnderEye")
-                    .binding(defaults.enableGlowingEnderEye,
+                    .binding(
+                            defaults.enableGlowingEnderEye,
                             () -> config.enableGlowingEnderEye,
                             newVal -> config.enableGlowingEnderEye = newVal)
                     .controller(TickBoxControllerBuilder::create)
                     .build();
 
-            return builder
-                    .title(Component.translatable("yacl3.config.better_client:config"))
+            return builder.title(Component.translatable("yacl3.config.better_client:config"))
                     .category(ConfigCategory.createBuilder()
                             .name(ConfigUtils.getCategoryName(CLIENT_CATEGORY))
                             .group(OptionGroup.createBuilder()
                                     .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, FADING_NIGHT_VISION_GROUP))
-                                    .options(List.of(
-                                            enableFadingNightVisionOpt,
-                                            fadingOutDurationOpt
-                                    ))
+                                    .options(List.of(enableFadingNightVisionOpt, fadingOutDurationOpt))
                                     .build())
                             .group(OptionGroup.createBuilder()
                                     .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, BETTER_PING_DISPLAY_GROUP))
-                                    .options(List.of(
-                                            enableBetterPingDisplayOpt,
-                                            enableDefaultPingBarsOpt
-                                    ))
+                                    .options(List.of(enableBetterPingDisplayOpt, enableDefaultPingBarsOpt))
                                     .build())
                             .group(OptionGroup.createBuilder()
                                     .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, BETTER_CHAT_GROUP))
@@ -367,8 +382,7 @@ public class BetterClientConfig {
                                             enableLongerChatHistoryOpt,
                                             chatMaxMessagesOpt,
                                             enableTimeStampOpt,
-                                            timeStampColorOpt
-                                    ))
+                                            timeStampColorOpt))
                                     .build())
                             .group(OptionGroup.createBuilder()
                                     .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, BIOME_TITLE_GROUP))
@@ -384,8 +398,7 @@ public class BetterClientConfig {
                                             colorOpt,
                                             cooldownTimeOpt,
                                             enableModNameOpt,
-                                            enableUndergroundUpdateOpt
-                                    ))
+                                            enableUndergroundUpdateOpt))
                                     .build())
                             .group(OptionGroup.createBuilder()
                                     .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, FASTER_CLIMBING_GROUP))
@@ -393,23 +406,16 @@ public class BetterClientConfig {
                                             enableFasterClimbingOpt,
                                             enableFasterUpwardOpt,
                                             enableFasterDownwardOpt,
-                                            speedMultiplierOpt
-                                    ))
+                                            speedMultiplierOpt))
                                     .build())
                             .group(OptionGroup.createBuilder()
                                     .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, BOOK_SCROLL_GROUP))
                                     .options(List.of(
-                                            enableBookScrollOpt,
-                                            ctrlSpeedMultiplierOpt,
-                                            enablePageTurnSoundOpt
-                                    ))
+                                            enableBookScrollOpt, ctrlSpeedMultiplierOpt, enablePageTurnSoundOpt))
                                     .build())
                             .group(OptionGroup.createBuilder()
                                     .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, CHAT_FORMATTER_GROUP))
-                                    .options(List.of(
-                                            enableChatFormatterOpt,
-                                            posFormatOpt
-                                    ))
+                                    .options(List.of(enableChatFormatterOpt, posFormatOpt))
                                     .build())
                             .group(OptionGroup.createBuilder()
                                     .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, OTHER_GROUP))
@@ -418,8 +424,7 @@ public class BetterClientConfig {
                                             enableAxolotlBucketFixOpt,
                                             enableChatHistoryRetentionOpt,
                                             enableBookSaveConfirmationOpt,
-                                            enableGlowingEnderEyeOpt
-                                    ))
+                                            enableGlowingEnderEyeOpt))
                                     .build())
                             .build())
                     .save(BetterClientConfig::save);

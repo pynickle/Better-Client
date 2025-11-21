@@ -16,11 +16,17 @@ import java.util.concurrent.CompletableFuture;
 public class BCClientNeoforge {
     @SubscribeEvent
     public static void onResourceManagerReload(RegisterClientReloadListenersEvent event) {
-        event.registerReloadListener((barrier, manager, preparationsProfiler, reloadProfiler, backgroundExecutor, gameExecutor) -> CompletableFuture.runAsync(BiomeTitleEvent.NAME_CACHE::clear, backgroundExecutor).thenCompose(barrier::wait));
+        event.registerReloadListener(
+                (barrier, manager, preparationsProfiler, reloadProfiler, backgroundExecutor, gameExecutor) ->
+                        CompletableFuture.runAsync(BiomeTitleEvent.NAME_CACHE::clear, backgroundExecutor)
+                                .thenCompose(barrier::wait));
     }
 
     @SubscribeEvent
     public static void onRegisterGuiLayers(RegisterGuiLayersEvent event) {
-        event.registerAbove(VanillaGuiLayers.TITLE, ResourceLocation.fromNamespaceAndPath(BetterClient.MOD_ID, "overlay"), BiomeTitleEvent::renderBiomeInfo);
+        event.registerAbove(
+                VanillaGuiLayers.TITLE,
+                ResourceLocation.fromNamespaceAndPath(BetterClient.MOD_ID, "overlay"),
+                BiomeTitleEvent::renderBiomeInfo);
     }
 }
