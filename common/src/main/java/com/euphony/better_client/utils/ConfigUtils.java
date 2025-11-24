@@ -1,16 +1,19 @@
 package com.euphony.better_client.utils;
 
 import com.euphony.better_client.BetterClient;
+import com.euphony.better_client.config.screen.option.TradingHudPos;
 import com.euphony.better_client.utils.enums.DescComponent;
 import dev.isxander.yacl3.api.ButtonOption;
 import dev.isxander.yacl3.api.Option;
 import dev.isxander.yacl3.api.OptionDescription;
 import dev.isxander.yacl3.api.controller.TickBoxControllerBuilder;
+import dev.isxander.yacl3.api.controller.ValueFormatter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -27,6 +30,8 @@ public class ConfigUtils {
     public static final int IMG_HEIGHT = 991;
 
     private static final Map<ResourceLocation, int[]> IMAGE_DIMENSIONS_CACHE = new HashMap<>();
+
+    public static final ValueFormatter<TradingHudPos> TRADING_HUD_POS_VALUE_FORMATTER = formatting -> Component.literal(StringUtils.capitalize(formatting.name().replaceAll("_", " ")));
 
     public static ButtonOption.Builder getButtonOption(String name) {
         return ButtonOption.createBuilder()
