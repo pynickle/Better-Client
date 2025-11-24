@@ -153,6 +153,8 @@
   "yacl3.config.better_client:config.tradingHudXOffset.desc": "相对于屏幕左上角的 X 轴偏移量。",
   "yacl3.config.better_client:config.tradingHudYOffset": "Y 轴坐标偏移",
   "yacl3.config.better_client:config.tradingHudYOffset.desc": "相对于屏幕左上角的 Y 轴偏移量。",
+  "yacl3.config.better_client:config.tradingHudPos": "交易界面位置",
+  "yacl3.config.better_client:config.tradingHudPos.desc": "快速选择常用位置。",
   "yacl3.config.better_client:config.renderRealCostDirectly": "仅显示实际价格",
   "yacl3.config.better_client:config.renderRealCostDirectly.desc": "仅显示实际价格而非基础与实际价格。",
 

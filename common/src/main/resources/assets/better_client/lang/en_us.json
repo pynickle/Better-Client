@@ -153,6 +153,8 @@
   "yacl3.config.better_client:config.tradingHudXOffset.desc": "X-axis offset relative to the screen left-right corner.",
   "yacl3.config.better_client:config.tradingHudYOffset": "Y-coordinate Offset",
   "yacl3.config.better_client:config.tradingHudYOffset.desc": "Y-axis offset relative to the screen left-right corner.",
+  "yacl3.config.better_client:config.tradingHudPos": "Trading Hud Pos",
+  "yacl3.config.better_client:config.tradingHudPos.desc": "Quickly select common positions.",
   "yacl3.config.better_client:config.renderRealCostDirectly": "Show Only Real Prices",
   "yacl3.config.better_client:config.renderRealCostDirectly.desc": "Show only real prices instead of both base and real prices.",
 
