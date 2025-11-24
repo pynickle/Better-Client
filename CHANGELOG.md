@@ -1,3 +1,20 @@
+## [7.7.2](https://github.com/pynickle/Better-Client/compare/v7.7.1...v7.7.2) (2025-11-24)
+
+### 🐛 Bug Fixes
+
+* fix missing formatter ([c413900](https://github.com/pynickle/Better-Client/commit/c413900251d572610ef74565f8acfd8af4220f8d))
+
+### 🔧 Miscellaneous Changes
+
+* update dependency ([502978a](https://github.com/pynickle/Better-Client/commit/502978a918957fcafed2e327d00749aec8837549))
+* update dependency ([eb6f34f](https://github.com/pynickle/Better-Client/commit/eb6f34f0e133144609451bdc113d25d0d8ced813))
+* update dependency ([361c31f](https://github.com/pynickle/Better-Client/commit/361c31ff356f8dcfefc31f69a7680f37a0f25360))
+* update dependency ([3831920](https://github.com/pynickle/Better-Client/commit/38319201128ab649606c9dc6d39d59fbe51ad568))
+
+### 🚀 Improvements
+
+* add common trading hud pos ([eee84ba](https://github.com/pynickle/Better-Client/commit/eee84ba566af11911d19fb5bf7488c60f6c09875))
+
 ## [7.7.1](https://github.com/pynickle/Better-Client/compare/v7.7.0...v7.7.1) (2025-11-17)
 
 ### 🚀 Improvements
