@@ -5,12 +5,9 @@ import com.euphony.better_client.client.events.BiomeTitleEvent;
 import com.euphony.better_client.client.events.BundleUpEvent;
 import com.euphony.better_client.client.events.WorldIconUpdateEvent;
 import com.euphony.better_client.client.property.AxolotlBucketVariant;
+import com.euphony.better_client.service.listener.BCResourceReloadListener;
 import com.euphony.better_client.utils.Utils;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
 import net.minecraft.client.Minecraft;
-import net.minecraft.server.packs.resources.PreparableReloadListener;
-import net.minecraft.server.packs.resources.PreparableReloadListener.SharedState;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -21,13 +18,7 @@ import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 public class BCClientNeoforge {
     @SubscribeEvent
     public static void onResourceManagerReload(AddClientReloadListenersEvent event) {
-        event.addListener(
-                Utils.prefix("clear_name_cache"),
-                (SharedState manager,
-                        Executor backgroundExecutor,
-                        PreparableReloadListener.PreparationBarrier barrier,
-                        Executor gameExecuter) ->
-                        CompletableFuture.runAsync(BiomeTitleEvent.NAME_CACHE::clear, backgroundExecutor));
+        event.addListener(Utils.prefix("clear_name_cache"), new BCResourceReloadListener());
     }
 
     @SubscribeEvent

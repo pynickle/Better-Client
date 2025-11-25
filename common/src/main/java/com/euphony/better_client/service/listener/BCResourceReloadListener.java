@@ -1,11 +1,12 @@
-package com.euphony.better_client.fabric.client;
+package com.euphony.better_client.service.listener;
 
-import static com.euphony.better_client.client.events.BiomeTitleEvent.NAME_CACHE;
+import net.minecraft.server.packs.resources.PreparableReloadListener;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
-import net.minecraft.server.packs.resources.PreparableReloadListener;
-import org.jetbrains.annotations.NotNull;
+
+import static com.euphony.better_client.client.events.BiomeTitleEvent.NAME_CACHE;
 
 public class BCResourceReloadListener implements PreparableReloadListener {
     @Override
