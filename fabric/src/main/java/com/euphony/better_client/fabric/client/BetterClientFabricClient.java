@@ -3,6 +3,7 @@ package com.euphony.better_client.fabric.client;
 import com.euphony.better_client.client.events.BiomeTitleEvent;
 import com.euphony.better_client.client.events.BundleUpEvent;
 import com.euphony.better_client.client.property.AxolotlBucketVariant;
+import com.euphony.better_client.service.listener.BCResourceReloadListener;
 import com.euphony.better_client.utils.Utils;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;

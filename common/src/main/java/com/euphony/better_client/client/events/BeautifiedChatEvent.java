@@ -3,10 +3,11 @@ package com.euphony.better_client.client.events;
 import dev.architectury.event.CompoundEventResult;
 import net.minecraft.network.chat.ChatType;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.network.chat.MutableComponent;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static com.euphony.better_client.BetterClient.config;
 
@@ -26,10 +27,21 @@ public class BeautifiedChatEvent {
         if (message.getString().matches(VANILLA_FORMAT)) {
             MutableComponent output = Component.empty();
             if (config.enableTimeStamp) {
-                Date now = new Date();
-                String timestamp = new SimpleDateFormat("[dd:HH:mm] ").format(now);
+                ZonedDateTime now = ZonedDateTime.now();
+                String shortTimestamp = now.format(DateTimeFormatter.ofPattern("'['HH:mm:ss']' "));
 
-                output.append(Component.literal(timestamp).withColor(config.timeStampColor));
+                String fullDateTimeText = now.format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")) +
+                        "\nUTC" + now.getOffset();
+
+                Component fullHoverText = Component.literal(fullDateTimeText);
+
+                HoverEvent hoverEvent = new HoverEvent.ShowText(fullHoverText);
+
+                output.append(
+                        Component.literal(shortTimestamp)
+                                .withColor(config.timeStampColor)
+                                .withStyle(style -> style.withHoverEvent(hoverEvent))
+                );
             }
             output.append(message);
             return output;

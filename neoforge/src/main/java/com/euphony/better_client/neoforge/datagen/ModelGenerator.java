@@ -3,8 +3,6 @@ package com.euphony.better_client.neoforge.datagen;
 import com.euphony.better_client.BetterClient;
 import com.euphony.better_client.client.property.AxolotlBucketVariant;
 import com.euphony.better_client.utils.Utils;
-import java.util.Collections;
-import java.util.List;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
@@ -17,6 +15,9 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+
+import java.util.Collections;
+import java.util.List;
 
 public class ModelGenerator extends ModelProvider {
     public ModelGenerator(PackOutput output) {
