@@ -1,6 +1,6 @@
-package com.euphony.better_client.config.screen.action;
+package com.euphony.better_client.config.action;
 
-import com.euphony.better_client.config.screen.option.TradingHudPos;
+import com.euphony.better_client.config.option.TradingHudPos;
 import dev.isxander.yacl3.api.Option;
 import dev.isxander.yacl3.api.OptionEventListener;
 import net.minecraft.client.Minecraft;

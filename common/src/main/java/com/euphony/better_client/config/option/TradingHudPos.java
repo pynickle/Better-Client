@@ -1,4 +1,4 @@
-package com.euphony.better_client.config.screen.option;
+package com.euphony.better_client.config.option;
 
 public enum TradingHudPos {
     TOP_LEFT,

@@ -1,7 +1,7 @@
 package com.euphony.better_client.config;
 
 import com.euphony.better_client.BetterClient;
-import com.euphony.better_client.config.screen.option.TradingHudPos;
+import com.euphony.better_client.config.option.TradingHudPos;
 import com.euphony.better_client.utils.Utils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

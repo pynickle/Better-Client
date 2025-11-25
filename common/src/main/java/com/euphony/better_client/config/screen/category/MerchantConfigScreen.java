@@ -1,14 +1,14 @@
 package com.euphony.better_client.config.screen.category;
 
 import com.euphony.better_client.config.Config;
-import com.euphony.better_client.config.screen.action.TradingHudPosAction;
-import com.euphony.better_client.config.screen.option.TradingHudPos;
+import com.euphony.better_client.config.action.TradingHudPosAction;
+import com.euphony.better_client.config.option.TradingHudPos;
 import com.euphony.better_client.utils.ConfigUtils;
 import dev.isxander.yacl3.api.ConfigCategory;
 import dev.isxander.yacl3.api.Option;
 import dev.isxander.yacl3.api.OptionGroup;
 import dev.isxander.yacl3.api.YetAnotherConfigLib;
-import dev.isxander.yacl3.api.controller.EnumControllerBuilder;
+import dev.isxander.yacl3.api.controller.EnumDropdownControllerBuilder;
 import dev.isxander.yacl3.api.controller.IntegerFieldControllerBuilder;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -60,7 +60,8 @@ public class MerchantConfigScreen {
         Option<TradingHudPos> tradingHudPos = ConfigUtils.<TradingHudPos>getGenericOption("tradingHudPos")
                 .binding(DEFAULTS.tradingHudPos, () -> config.tradingHudPos, newVal -> config.tradingHudPos = newVal)
                 .addListener(new TradingHudPosAction(tradingHudXOffset, tradingHudYOffset))
-                .controller(opt -> EnumControllerBuilder.create(opt).enumClass(TradingHudPos.class).formatValue(ConfigUtils.TRADING_HUD_POS_VALUE_FORMATTER))
+                .controller(opt -> EnumDropdownControllerBuilder.create(opt)
+                        .formatValue(ConfigUtils.TRADING_HUD_POS_VALUE_FORMATTER))
                 .build();
         Option<Boolean> renderRealCostDirectlyOpt = ConfigUtils.buildBooleanOption(
                 "renderRealCostDirectly",

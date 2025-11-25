@@ -1,7 +1,7 @@
 package com.euphony.better_client.utils;
 
 import com.euphony.better_client.BetterClient;
-import com.euphony.better_client.config.screen.option.TradingHudPos;
+import com.euphony.better_client.config.option.TradingHudPos;
 import com.euphony.better_client.utils.enums.DescComponent;
 import dev.isxander.yacl3.api.ButtonOption;
 import dev.isxander.yacl3.api.Option;
@@ -31,7 +31,8 @@ public class ConfigUtils {
 
     private static final Map<ResourceLocation, int[]> IMAGE_DIMENSIONS_CACHE = new HashMap<>();
 
-    public static final ValueFormatter<TradingHudPos> TRADING_HUD_POS_VALUE_FORMATTER = formatting -> Component.literal(StringUtils.capitalize(formatting.name().replaceAll("_", " ")));
+    public static final ValueFormatter<TradingHudPos> TRADING_HUD_POS_VALUE_FORMATTER = formatting ->
+            Component.literal(StringUtils.capitalize(formatting.name().replaceAll("_", " ")));
 
     public static ButtonOption.Builder getButtonOption(String name) {
         return ButtonOption.createBuilder()
