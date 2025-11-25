@@ -1,3 +1,17 @@
+## [7.8.0](https://github.com/pynickle/Better-Client/compare/v7.7.2...v7.8.0) (2025-11-25)
+
+### ✨ Features
+
+* add hover action for timestamp before chat messages ([d462780](https://github.com/pynickle/Better-Client/commit/d462780eabeb634120c740a5674566c1f82c2d01))
+
+### 🐛 Bug Fixes
+
+* fix neoforge can not start ([5992121](https://github.com/pynickle/Better-Client/commit/5992121e7eedf1dbb7eb6916f866f8de15c53364))
+
+### 🚀 Improvements
+
+* use enum dropdown controller instead of enum controller ([7109022](https://github.com/pynickle/Better-Client/commit/71090226b673f4d27d82c9e5a3fc6dc77867e1b3))
+
 ## [7.7.2](https://github.com/pynickle/Better-Client/compare/v7.7.1...v7.7.2) (2025-11-24)
 
 ### 🐛 Bug Fixes
