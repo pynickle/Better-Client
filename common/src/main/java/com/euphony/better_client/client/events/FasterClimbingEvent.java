@@ -3,6 +3,7 @@ package com.euphony.better_client.client.events;
 import com.euphony.better_client.config.BetterClientConfig;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 
 public class FasterClimbingEvent {
@@ -10,18 +11,17 @@ public class FasterClimbingEvent {
     public static void playerPre(Player player) {
         if (!player.level().isClientSide || !BetterClientConfig.HANDLER.instance().enableFasterClimbing) return;
 
-        if (player.onClimbable() && !player.isCrouching()) {
+        if (player.onClimbable()) {
             Climber climber = new Climber(player);
 
-            if (BetterClientConfig.HANDLER.instance().enableFasterDownward
-                    && climber.isFacingDownward()
-                    && !climber.isMovingForward()
-                    && !climber.isMovingBackward()) {
-                climber.moveDownFaster();
-            } else if (BetterClientConfig.HANDLER.instance().enableFasterUpward
-                    && climber.isFacingUpward()
-                    && climber.isMovingForward()) {
-                climber.moveUpFaster();
+            if ((!player.isCrouching() && !player.getInBlockState().is(Blocks.SCAFFOLDING)) || (BetterClientConfig.HANDLER.instance().enableScaffolding && player.getInBlockState().is(Blocks.SCAFFOLDING))) {
+                if (BetterClientConfig.HANDLER.instance().enableFasterDownward && climber.isFacingDownward()
+                        && !climber.isMovingForward() && !climber.isMovingBackward()) {
+                    climber.moveDownFaster();
+                } else if (BetterClientConfig.HANDLER.instance().enableFasterUpward && climber.isFacingUpward()
+                        && (climber.isMovingForward() || player.jumping)) {
+                    climber.moveUpFaster();
+                }
             }
         }
     }

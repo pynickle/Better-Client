@@ -61,6 +61,7 @@ public class BetterClientConfig {
     @SerialEntry public boolean enableFasterClimbing = false;
     @SerialEntry public boolean enableFasterUpward = true;
     @SerialEntry public boolean enableFasterDownward = true;
+    @SerialEntry public boolean enableScaffolding = true;
     @SerialEntry public double speedMultiplier = 2.0D;
 
     @SerialEntry public boolean enableBiomeTitle = true;
@@ -275,6 +276,14 @@ public class BetterClientConfig {
                     .controller(TickBoxControllerBuilder::create)
                     .build();
 
+            Option<Boolean> enableScaffoldingOpt = ConfigUtils.<Boolean>getGenericOption("enableScaffolding")
+                    .binding(
+                            defaults.enableScaffolding,
+                            () -> config.enableScaffolding,
+                            newVal -> config.enableScaffolding = newVal)
+                    .controller(TickBoxControllerBuilder::create)
+                    .build();
+
             Option<Double> speedMultiplierOpt = ConfigUtils.<Double>getGenericOption("speedMultiplier")
                     .binding(
                             defaults.speedMultiplier,
@@ -406,6 +415,7 @@ public class BetterClientConfig {
                                             enableFasterClimbingOpt,
                                             enableFasterUpwardOpt,
                                             enableFasterDownwardOpt,
+                                            enableScaffoldingOpt,
                                             speedMultiplierOpt))
                                     .build())
                             .group(OptionGroup.createBuilder()

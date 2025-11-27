@@ -65,6 +65,8 @@
   "yacl3.config.better_client:config.enableFasterUpward.desc": "Enable faster upward climbing.",
   "yacl3.config.better_client:config.enableFasterDownward": "Enable Faster Downward",
   "yacl3.config.better_client:config.enableFasterDownward.desc": "Enable faster downward climbing.",
+  "yacl3.config.better_client:config.enableScaffolding": "Enable Scaffolding",
+  "yacl3.config.better_client:config.enableScaffolding.desc": "Enjoy faster climbing on scaffolding.",
   "yacl3.config.better_client:config.speedMultiplier": "Speed Multiplier",
   "yacl3.config.better_client:config.speedMultiplier.desc": "Speed multiplier, scaled by sin(view angle). 2.0 means the original speed at 30 degrees.",
 
