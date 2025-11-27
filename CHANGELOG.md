@@ -1,3 +1,9 @@
+## [1.6.0](https://github.com/pynickle/Better-Client/compare/v1.5.0...v1.6.0) (2025-11-27)
+
+### ✨ Features
+
+* add scaffolding support for faster climbing ([199a099](https://github.com/pynickle/Better-Client/commit/199a09968035aea4b9cabcca44f2c840c6bbccbe))
+
 ## [1.5.0](https://github.com/pynickle/Better-Client/compare/v1.4.2...v1.5.0) (2025-11-21)
 
 ### ✨ Features
