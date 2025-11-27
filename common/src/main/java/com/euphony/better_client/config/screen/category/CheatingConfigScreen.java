@@ -39,6 +39,12 @@ public class CheatingConfigScreen {
                 () -> config.enableFasterDownward,
                 newVal -> config.enableFasterDownward = newVal);
 
+        Option<Boolean> enableScaffoldingOpt = ConfigUtils.buildBooleanOption(
+                "enableScaffolding",
+                DEFAULTS.enableScaffolding,
+                () -> config.enableScaffolding,
+                newVal -> config.enableScaffolding = newVal);
+
         Option<Double> speedMultiplierOpt = ConfigUtils.<Double>getGenericOption("speedMultiplier")
                 .binding(
                         DEFAULTS.speedMultiplier,
@@ -59,6 +65,7 @@ public class CheatingConfigScreen {
                                         enableFasterClimbingOpt,
                                         enableFasterUpwardOpt,
                                         enableFasterDownwardOpt,
+                                        enableScaffoldingOpt,
                                         speedMultiplierOpt))
                                 .build())
                         .build())

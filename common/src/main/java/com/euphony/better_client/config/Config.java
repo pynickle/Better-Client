@@ -39,6 +39,7 @@ public class Config {
     public boolean enableFasterClimbing = false;
     public boolean enableFasterUpward = true;
     public boolean enableFasterDownward = true;
+    public boolean enableScaffolding = true;
     public double speedMultiplier = 2.0D;
 
     public boolean enableBiomeTitle = true;

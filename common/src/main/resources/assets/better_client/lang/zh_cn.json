@@ -119,6 +119,8 @@
   "yacl3.config.better_client:config.enableFasterUpward.desc": "启用更快的向上爬梯。",
   "yacl3.config.better_client:config.enableFasterDownward": "启用更快的向下爬梯",
   "yacl3.config.better_client:config.enableFasterDownward.desc": "启用更快的向下爬梯。",
+  "yacl3.config.better_client:config.enableScaffolding": "启用脚手架",
+  "yacl3.config.better_client:config.enableScaffolding.desc": "在脚手架上享受快速攀爬。",
   "yacl3.config.better_client:config.speedMultiplier": "速度乘数",
   "yacl3.config.better_client:config.speedMultiplier.desc": "速度乘数，按 sin(视角角度) 缩放。2.0 表示 30 度为原速。",
 
