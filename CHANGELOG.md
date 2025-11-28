@@ -1,3 +1,9 @@
+## [7.9.1](https://github.com/pynickle/Better-Client/compare/v7.9.0...v7.9.1) (2025-11-28)
+
+### 🚀 Improvements
+
+* improve trading hud pos choice ([a70c715](https://github.com/pynickle/Better-Client/commit/a70c71596c25f9a8c369a5b82e1c3ca5ca17eaec))
+
 ## [7.9.0](https://github.com/pynickle/Better-Client/compare/v7.8.0...v7.9.0) (2025-11-27)
 
 ### ✨ Features
