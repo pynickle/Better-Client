@@ -120,4 +120,6 @@ runs/
 /.vscode/
 /common/src/generated/resources/.cache/
 /.architectury-transformer/
-node_modules
+
+node_modules/
+.trae/

@@ -40,8 +40,40 @@ public class TradingHudRenderer {
         MerchantInfo.getInstance().getLastEntityId().ifPresent(lastId -> {
             MerchantOffers merchantOffers = MerchantInfo.getInstance().getOffers();
             if (!merchantOffers.isEmpty()) {
-                int i = config.tradingHudXOffset;
-                int k = 5 + config.tradingHudYOffset;
+                // Get screen dimensions
+                int screenWidth = minecraft.getWindow().getGuiScaledWidth();
+                int screenHeight = minecraft.getWindow().getGuiScaledHeight();
+
+                // Calculate visible offers and HUD dimensions
+                int visibleOffers = Math.min(merchantOffers.size(), 7);
+                int hudHeight = visibleOffers * 20;
+                int hudWidth = 90;
+
+                // Calculate initial position based on config
+                int i, k;
+                switch (config.tradingHudPos) {
+                    case TOP_LEFT -> {
+                        i = 0;
+                        k = 5;
+                    }
+                    case TOP_RIGHT -> {
+                        i = screenWidth - hudWidth;
+                        k = 5;
+                    }
+                    case BOTTOM_LEFT -> {
+                        i = 0;
+                        k = screenHeight - hudHeight - 5;
+                    }
+                    case BOTTOM_RIGHT -> {
+                        i = screenWidth - hudWidth;
+                        k = screenHeight - hudHeight - 5;
+                    }
+                    default -> {
+                        i = config.tradingHudXOffset;
+                        k = 5 + config.tradingHudYOffset;
+                    }
+                }
+
                 int l = i + 5 + 5;
                 int m = 0;
 
