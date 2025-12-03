@@ -1,3 +1,9 @@
+## [7.10.0](https://github.com/pynickle/Better-Client/compare/v7.9.1...v7.10.0) (2025-12-03)
+
+### ✨ Features
+
+* add lower shield ([3db2f88](https://github.com/pynickle/Better-Client/commit/3db2f88cf0ae68d733b941a89e8b4fa70455009a))
+
 ## [7.9.1](https://github.com/pynickle/Better-Client/compare/v7.9.0...v7.9.1) (2025-11-28)
 
 ### 🚀 Improvements
