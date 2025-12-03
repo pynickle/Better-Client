@@ -228,5 +228,11 @@
 
   "yacl3.config.better_client:config.category.client.group.invisible_item_frame": "Invisible Item Frame",
   "yacl3.config.better_client:config.enableInvisibleItemFrame": "Enable Invisible Item Frame",
-  "yacl3.config.better_client:config.enableInvisibleItemFrame.desc": "Aim the crosshair at the item frame and press the assigned key to hide it. Holding the item frame allows you to see hidden item frames."
+  "yacl3.config.better_client:config.enableInvisibleItemFrame.desc": "Aim the crosshair at the item frame and press the assigned key to hide it. Holding the item frame allows you to see hidden item frames.",
+
+  "yacl3.config.better_client:config.category.client.group.lower_shield": "Lower Shield",
+  "yacl3.config.better_client:config.enableLowerShield": "Enable Lower Shield",
+  "yacl3.config.better_client:config.enableLowerShield.desc": "The shield appears lower, not obstructing the field of view.",
+  "yacl3.config.better_client:config.shieldOffset": "Shield Offset",
+  "yacl3.config.better_client:config.shieldOffset.desc": "How much the shield moves up and down."
 }

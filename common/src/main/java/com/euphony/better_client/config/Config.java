@@ -117,6 +117,9 @@ public class Config {
 
     public boolean enableInvisibleItemFrame = true;
 
+    public boolean enableLowerShield = true;
+    public double shieldOffset = -2;
+
     public Config() {}
 
     public static Config create() {

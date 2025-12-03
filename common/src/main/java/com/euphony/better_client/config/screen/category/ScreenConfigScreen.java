@@ -25,6 +25,7 @@ public class ScreenConfigScreen {
     private static final String NO_EXPERIMENTAL_WARNING_GROUP = "no_experimental_warning";
     private static final String BOOK_SAVE_CONFIRMATION_GROUP = "book_save_confirmation";
     private static final String WORLD_PLAY_TIME_GROUP = "world_play_time";
+    private static final String LOWER_SHIELD_GROUP = "lower_shield";
 
     public static Screen generateScreen(Screen parent) {
         // Better Ping Display
@@ -174,6 +175,19 @@ public class ScreenConfigScreen {
                 .controller(opt -> ColorControllerBuilder.create(opt).allowAlpha(false))
                 .build();
 
+        // Lower Shield
+        Option<Boolean> enableLowerShieldOpt = ConfigUtils.buildBooleanOption(
+                "enableLowerShield",
+                DEFAULTS.enableLowerShield,
+                () -> config.enableLowerShield,
+                newVal -> config.enableLowerShield = newVal);
+        Option<Double> shieldOffsetOpt = ConfigUtils.<Double>getGenericOption("shieldOffset")
+                .binding(DEFAULTS.shieldOffset, () -> config.shieldOffset, newVal -> config.shieldOffset = newVal)
+                .controller(opt -> DoubleSliderControllerBuilder.create(opt)
+                        .range(-5.0, 5.0)
+                        .step(0.5))
+                .build();
+
         return YetAnotherConfigLib.createBuilder()
                 .title(Component.translatable("yacl3.config.better_client:config"))
                 .category(ConfigCategory.createBuilder()
@@ -215,6 +229,10 @@ public class ScreenConfigScreen {
                         .group(OptionGroup.createBuilder()
                                 .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, WORLD_PLAY_TIME_GROUP))
                                 .options(List.of(enableWorldPlayTimeOpt, worldPlayTimeColorOpt))
+                                .build())
+                        .group(OptionGroup.createBuilder()
+                                .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, LOWER_SHIELD_GROUP))
+                                .options(List.of(enableLowerShieldOpt, shieldOffsetOpt))
                                 .build())
                         .build())
                 .save(Config::save)

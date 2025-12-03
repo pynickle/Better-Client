@@ -12,4 +12,6 @@ dependencies {
     modImplementation "dev.architectury:architectury:$rootProject.architectury_api_version"
 
     modImplementation("dev.isxander:yet-another-config-lib:${yacl_version}+1.21.9-fabric")
+
+    modImplementation "com.github.ramixin:mixson-fabric:${mixson_version}"
 }

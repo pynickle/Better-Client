@@ -32,6 +32,10 @@ subprojects {
             name 'Xander Maven'
             url 'https://maven.isxander.dev/releases'
         }
+        maven {
+            // Mixson
+            url 'https://jitpack.io'
+        }
     }
 
     dependencies {

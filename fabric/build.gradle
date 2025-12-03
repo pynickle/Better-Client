@@ -51,6 +51,8 @@ dependencies {
 
     modImplementation("dev.isxander:yet-another-config-lib:${yacl_version}+1.21.9-fabric")
 
+    modImplementation "com.github.ramixin:mixson-fabric:${mixson_version}"
+
     modImplementation("com.terraformersmc:modmenu:${rootProject.modmenu_version}")
 
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }

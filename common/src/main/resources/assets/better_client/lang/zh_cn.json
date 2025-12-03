@@ -228,5 +228,11 @@
 
   "yacl3.config.better_client:config.category.client.group.invisible_item_frame": "隐形物品展示框",
   "yacl3.config.better_client:config.enableInvisibleItemFrame": "启用隐形物品展示框",
-  "yacl3.config.better_client:config.enableInvisibleItemFrame.desc": "将准星对准物品展示框并按下对应按键即可隐藏它，持有物品展示框可查看隐藏的物品展示框。"
+  "yacl3.config.better_client:config.enableInvisibleItemFrame.desc": "将准星对准物品展示框并按下对应按键即可隐藏它，持有物品展示框可查看隐藏的物品展示框。",
+
+  "yacl3.config.better_client:config.category.client.group.lower_shield": "更低的盾牌",
+  "yacl3.config.better_client:config.enableLowerShield": "启用更低的盾牌",
+  "yacl3.config.better_client:config.enableLowerShield.desc": "盾牌位置更低，不会阻挡视野。",
+  "yacl3.config.better_client:config.shieldOffset": "盾牌偏移量",
+  "yacl3.config.better_client:config.shieldOffset.desc": "盾牌上下移动的幅度。"
 }
