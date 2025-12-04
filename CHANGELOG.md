@@ -1,3 +1,9 @@
+## [7.10.1](https://github.com/pynickle/Better-Client/compare/v7.10.0...v7.10.1) (2025-12-04)
+
+### 🐛 Bug Fixes
+
+* fix crash on 7.10.0 ([f243ed1](https://github.com/pynickle/Better-Client/commit/f243ed123a64a7d51c4349b0630031cdd8aac15e))
+
 ## [7.10.0](https://github.com/pynickle/Better-Client/compare/v7.9.1...v7.10.0) (2025-12-03)
 
 ### ✨ Features
