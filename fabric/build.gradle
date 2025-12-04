@@ -43,17 +43,19 @@ repositories {
 }
 
 dependencies {
-    modImplementation "net.fabricmc:fabric-loader:$rootProject.fabric_loader_version"
+    modImplementation("net.fabricmc:fabric-loader:$rootProject.fabric_loader_version")
 
-    modImplementation "net.fabricmc.fabric-api:fabric-api:$rootProject.fabric_api_version"
+    modImplementation("net.fabricmc.fabric-api:fabric-api:$rootProject.fabric_api_version")
 
-    modImplementation "dev.architectury:architectury-fabric:$rootProject.architectury_api_version"
+    modImplementation("dev.architectury:architectury-fabric:$rootProject.architectury_api_version")
 
     modImplementation("dev.isxander:yet-another-config-lib:${yacl_version}+1.21.9-fabric")
 
-    modImplementation "com.github.ramixin:mixson-fabric:${mixson_version}"
+    modImplementation("com.github.ramixin:mixson-fabric:${mixson_version}")
 
     modImplementation("com.terraformersmc:modmenu:${rootProject.modmenu_version}")
+
+    include("com.github.ramixin:mixson-fabric:${mixson_version}")
 
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':common', configuration: 'transformProductionFabric')
