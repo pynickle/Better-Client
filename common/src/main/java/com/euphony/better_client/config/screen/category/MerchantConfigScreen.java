@@ -42,21 +42,21 @@ public class MerchantConfigScreen {
                 DEFAULTS.enableTradingHud,
                 () -> config.enableTradingHud,
                 newVal -> config.enableTradingHud = newVal);
-        Option<Integer> tradingHudXOffset = ConfigUtils.<Integer>getGenericOption("tradingHudXOffset")
+        Option<Integer> tradingHudXOffsetOpt = ConfigUtils.<Integer>getGenericOption("tradingHudXOffset")
                 .binding(
                         DEFAULTS.tradingHudXOffset,
                         () -> config.tradingHudXOffset,
                         newVal -> config.tradingHudXOffset = newVal)
                 .controller(IntegerFieldControllerBuilder::create)
                 .build();
-        Option<Integer> tradingHudYOffset = ConfigUtils.<Integer>getGenericOption("tradingHudYOffset")
+        Option<Integer> tradingHudYOffsetOpt = ConfigUtils.<Integer>getGenericOption("tradingHudYOffset")
                 .binding(
                         DEFAULTS.tradingHudYOffset,
                         () -> config.tradingHudYOffset,
                         newVal -> config.tradingHudYOffset = newVal)
                 .controller(IntegerFieldControllerBuilder::create)
                 .build();
-        Option<TradingHudPos> tradingHudPos = ConfigUtils.<TradingHudPos>getGenericOption("tradingHudPos")
+        Option<TradingHudPos> tradingHudPosOpt = ConfigUtils.<TradingHudPos>getGenericOption("tradingHudPos")
                 .binding(DEFAULTS.tradingHudPos, () -> config.tradingHudPos, newVal -> config.tradingHudPos = newVal)
                 .controller(opt -> EnumControllerBuilder.create(opt)
                         .enumClass(TradingHudPos.class)
@@ -86,9 +86,9 @@ public class MerchantConfigScreen {
                                 .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, TRADING_HUD_GROUP))
                                 .options(List.of(
                                         enableTradingHudOpt,
-                                        tradingHudXOffset,
-                                        tradingHudYOffset,
-                                        tradingHudPos,
+                                        tradingHudXOffsetOpt,
+                                        tradingHudYOffsetOpt,
+                                        tradingHudPosOpt,
                                         renderRealCostDirectlyOpt))
                                 .build())
                         .group(OptionGroup.createBuilder()

@@ -1,6 +1,7 @@
 package com.euphony.better_client.client;
 
 import com.euphony.better_client.client.events.*;
+import com.euphony.better_client.client.renderer.TotemBarRenderer;
 import com.euphony.better_client.client.renderer.TradingHudRenderer;
 import dev.architectury.event.events.client.*;
 import dev.architectury.event.events.common.TickEvent;
@@ -23,5 +24,6 @@ public class BCClientEvents {
         ClientTickEvent.CLIENT_LEVEL_POST.register(TradingHudEvent::clientLevelPost);
 
         ClientGuiEvent.RENDER_HUD.register(TradingHudRenderer::renderHud);
+        ClientGuiEvent.RENDER_HUD.register(TotemBarRenderer::render);
     }
 }

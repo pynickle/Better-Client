@@ -1,6 +1,7 @@
 package com.euphony.better_client.config.screen.category;
 
 import com.euphony.better_client.config.Config;
+import com.euphony.better_client.config.option.TotemBarRenderMode;
 import com.euphony.better_client.utils.ConfigUtils;
 import com.euphony.better_client.utils.enums.DescComponent;
 import dev.isxander.yacl3.api.ConfigCategory;
@@ -26,6 +27,7 @@ public class ScreenConfigScreen {
     private static final String BOOK_SAVE_CONFIRMATION_GROUP = "book_save_confirmation";
     private static final String WORLD_PLAY_TIME_GROUP = "world_play_time";
     private static final String LOWER_SHIELD_GROUP = "lower_shield";
+    private static final String TOTEM_BAR_GROUP = "totem_bar";
 
     public static Screen generateScreen(Screen parent) {
         // Better Ping Display
@@ -188,6 +190,23 @@ public class ScreenConfigScreen {
                         .step(0.5))
                 .build();
 
+        // Totem Bar
+        Option<Boolean> enableTotemBarOpt = ConfigUtils.buildBooleanOption(
+                "enableTotemBar",
+                DEFAULTS.enableTotemBar,
+                () -> config.enableTotemBar,
+                newVal -> config.enableTotemBar = newVal);
+        Option<TotemBarRenderMode> totemBarRenderModeOpt = ConfigUtils.<TotemBarRenderMode>getGenericOption("totemBarRenderMode")
+                .binding(DEFAULTS.totemBarRenderMode, () -> config.totemBarRenderMode, newVal -> config.totemBarRenderMode = newVal)
+                .controller(opt -> EnumControllerBuilder.create(opt)
+                        .enumClass(TotemBarRenderMode.class)
+                        .formatValue(ConfigUtils.TOTEM_BAR_RENDER_MODE_VALUE_FORMATTER))
+                .build();
+        Option<Integer> totemBarYOffsetOpt = ConfigUtils.<Integer>getGenericOption("totemBarYOffset")
+                .binding(DEFAULTS.totemBarYOffset, () -> config.totemBarYOffset, newVal -> config.totemBarYOffset = newVal)
+                .controller(IntegerFieldControllerBuilder::create)
+                .build();
+
         return YetAnotherConfigLib.createBuilder()
                 .title(Component.translatable("yacl3.config.better_client:config"))
                 .category(ConfigCategory.createBuilder()
@@ -233,6 +252,10 @@ public class ScreenConfigScreen {
                         .group(OptionGroup.createBuilder()
                                 .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, LOWER_SHIELD_GROUP))
                                 .options(List.of(enableLowerShieldOpt, shieldOffsetOpt))
+                                .build())
+                        .group(OptionGroup.createBuilder()
+                                .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, TOTEM_BAR_GROUP))
+                                .options(List.of(enableTotemBarOpt, totemBarRenderModeOpt, totemBarYOffsetOpt))
                                 .build())
                         .build())
                 .save(Config::save)

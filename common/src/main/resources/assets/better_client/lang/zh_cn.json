@@ -234,5 +234,13 @@
   "yacl3.config.better_client:config.enableLowerShield": "启用更低的盾牌",
   "yacl3.config.better_client:config.enableLowerShield.desc": "盾牌位置更低，不会阻挡视野。",
   "yacl3.config.better_client:config.shieldOffset": "盾牌偏移量",
-  "yacl3.config.better_client:config.shieldOffset.desc": "盾牌上下移动的幅度。"
+  "yacl3.config.better_client:config.shieldOffset.desc": "盾牌上下移动的幅度。",
+
+  "yacl3.config.better_client:config.category.client.group.totem_bar": "图腾条",
+  "yacl3.config.better_client:config.enableTotemBar": "启用图腾条",
+  "yacl3.config.better_client:config.enableTotemBar.desc": "显示一个条，显示你背包中的图腾数量。",
+  "yacl3.config.better_client:config.totemBarRenderMode": "图腾条渲染模式",
+  "yacl3.config.better_client:config.totemBarRenderMode.desc": "决定何时显示图腾条。",
+  "yacl3.config.better_client:config.totemBarYOffset": "图腾条 Y 轴偏移",
+  "yacl3.config.better_client:config.totemBarYOffset.desc": "图腾条的 Y 轴偏移量。"
 }

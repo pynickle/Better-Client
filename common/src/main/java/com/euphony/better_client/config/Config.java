@@ -1,6 +1,7 @@
 package com.euphony.better_client.config;
 
 import com.euphony.better_client.BetterClient;
+import com.euphony.better_client.config.option.TotemBarRenderMode;
 import com.euphony.better_client.config.option.TradingHudPos;
 import com.euphony.better_client.utils.Utils;
 import com.google.gson.Gson;
@@ -119,6 +120,10 @@ public class Config {
 
     public boolean enableLowerShield = true;
     public double shieldOffset = -2;
+
+    public boolean enableTotemBar = true;
+    public TotemBarRenderMode totemBarRenderMode = TotemBarRenderMode.COMBINED;
+    public int totemBarYOffset = 0;
 
     public Config() {}
 
