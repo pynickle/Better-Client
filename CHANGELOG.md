@@ -1,3 +1,9 @@
+## [7.11.0](https://github.com/pynickle/Better-Client/compare/v7.10.1...v7.11.0) (2025-12-05)
+
+### ✨ Features
+
+* add totem bar ([8285fa3](https://github.com/pynickle/Better-Client/commit/8285fa3d32503b8aef9d672fe32e3aaec5b8e8f9))
+
 ## [7.10.1](https://github.com/pynickle/Better-Client/compare/v7.10.0...v7.10.1) (2025-12-04)
 
 ### 🐛 Bug Fixes
