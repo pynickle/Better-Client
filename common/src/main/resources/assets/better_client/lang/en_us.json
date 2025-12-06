@@ -238,9 +238,9 @@
 
   "yacl3.config.better_client:config.category.client.group.totem_bar": "Totem Bar",
   "yacl3.config.better_client:config.enableTotemBar": "Enable Totem Bar",
-  "yacl3.config.better_client:config.enableTotemBar.desc": "Displays a bar showing the number of totems in your inventory.",
+  "yacl3.config.better_client:config.enableTotemBar.desc": "Display a bar icon to indicate the number of totems you currently possess.",
   "yacl3.config.better_client:config.totemBarRenderMode": "Totem Bar Render Mode",
-  "yacl3.config.better_client:config.totemBarRenderMode.desc": "Determines when the totem bar is displayed.",
+  "yacl3.config.better_client:config.totemBarRenderMode.desc": "Determines the number of totems to render.",
   "yacl3.config.better_client:config.totemBarYOffset": "Totem Bar Y Offset",
   "yacl3.config.better_client:config.totemBarYOffset.desc": "Y-axis offset for the totem bar."
 }
