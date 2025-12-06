@@ -1,3 +1,9 @@
+## [7.11.1](https://github.com/pynickle/Better-Client/compare/v7.11.0...v7.11.1) (2025-12-06)
+
+### 🚀 Improvements
+
+* improve config description ([76fec1d](https://github.com/pynickle/Better-Client/commit/76fec1debf15ba9074b8694e6a6d93c8fcdc04f1))
+
 ## [7.11.0](https://github.com/pynickle/Better-Client/compare/v7.10.1...v7.11.0) (2025-12-05)
 
 ### ✨ Features
