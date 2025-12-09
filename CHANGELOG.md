@@ -1,3 +1,13 @@
+## [7.12.0](https://github.com/pynickle/Better-Client/compare/v7.11.1...v7.12.0) (2025-12-09)
+
+### ✨ Features
+
+* add client weather ([90d772b](https://github.com/pynickle/Better-Client/commit/90d772b9b41f60d43e1280fcc207a76f8e31fb9c))
+
+### 🐛 Bug Fixes
+
+* just mistake ([4b64b53](https://github.com/pynickle/Better-Client/commit/4b64b53317849508b25fc29f81d8b8827a2c4187))
+
 ## [7.11.1](https://github.com/pynickle/Better-Client/compare/v7.11.0...v7.11.1) (2025-12-06)
 
 ### 🚀 Improvements
