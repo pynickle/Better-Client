@@ -1,6 +1,6 @@
 package com.euphony.better_client.mixin;
 
-import com.euphony.better_client.utils.KeyUtils;
+import com.euphony.better_client.utils.mc.KeyUtils;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.BookViewScreen;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;

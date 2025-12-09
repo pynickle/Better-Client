@@ -1,4 +1,4 @@
-package com.euphony.better_client.utils;
+package com.euphony.better_client.utils.mc;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.Minecraft;

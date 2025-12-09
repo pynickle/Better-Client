@@ -1,7 +1,7 @@
 package com.euphony.better_client.client.events;
 
-import com.euphony.better_client.utils.ItemUtils;
 import com.euphony.better_client.utils.enums.TooltipCategory;
+import com.euphony.better_client.utils.mc.ItemUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;

@@ -1,6 +1,6 @@
 package com.euphony.better_client.client.events;
 
-import com.euphony.better_client.utils.BiomeUtils;
+import com.euphony.better_client.utils.mc.BiomeUtils;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;

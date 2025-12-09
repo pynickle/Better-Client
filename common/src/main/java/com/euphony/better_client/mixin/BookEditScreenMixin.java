@@ -1,7 +1,7 @@
 package com.euphony.better_client.mixin;
 
 import com.euphony.better_client.api.IMultiLineEditBox;
-import com.euphony.better_client.utils.KeyUtils;
+import com.euphony.better_client.utils.mc.KeyUtils;
 import net.minecraft.client.gui.components.MultiLineEditBox;
 import net.minecraft.client.gui.screens.ConfirmScreen;
 import net.minecraft.client.gui.screens.Screen;

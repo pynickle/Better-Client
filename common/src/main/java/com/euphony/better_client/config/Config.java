@@ -125,6 +125,8 @@ public class Config {
     public TotemBarRenderMode totemBarRenderMode = TotemBarRenderMode.COMBINED;
     public int totemBarYOffset = 0;
 
+    public boolean enableClientWeather = true;
+
     public Config() {}
 
     public static Config create() {

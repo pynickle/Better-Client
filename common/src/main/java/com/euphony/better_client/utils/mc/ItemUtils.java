@@ -1,4 +1,4 @@
-package com.euphony.better_client.utils;
+package com.euphony.better_client.utils.mc;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.component.DataComponents;

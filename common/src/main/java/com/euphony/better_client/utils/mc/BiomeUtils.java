@@ -1,5 +1,6 @@
-package com.euphony.better_client.utils;
+package com.euphony.better_client.utils.mc;
 
+import com.euphony.better_client.utils.Utils;
 import net.minecraft.Util;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;

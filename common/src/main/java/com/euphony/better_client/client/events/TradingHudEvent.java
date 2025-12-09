@@ -1,7 +1,7 @@
 package com.euphony.better_client.client.events;
 
-import com.euphony.better_client.utils.TradingUtils;
 import com.euphony.better_client.utils.data.MerchantInfo;
+import com.euphony.better_client.utils.mc.TradingUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;

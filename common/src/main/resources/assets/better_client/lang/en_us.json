@@ -9,6 +9,11 @@
 
   "message.world_play_time": "%sh",
 
+  "command.cweather.off": "Client weather control has been disabled",
+  "command.cweather.clear": "Set the weather to clear",
+  "command.cweather.rain": "Set the weather to rain",
+  "command.cweather.thunder": "Set the weather to thunder",
+
   "key.category.better_client.keymapping": "Better Client",
 
   "key.better_client.bundle_up": "Bundle Up",
@@ -242,5 +247,9 @@
   "yacl3.config.better_client:config.totemBarRenderMode": "Totem Bar Render Mode",
   "yacl3.config.better_client:config.totemBarRenderMode.desc": "Determines the number of totems to render.",
   "yacl3.config.better_client:config.totemBarYOffset": "Totem Bar Y Offset",
-  "yacl3.config.better_client:config.totemBarYOffset.desc": "Y-axis offset for the totem bar."
+  "yacl3.config.better_client:config.totemBarYOffset.desc": "Y-axis offset for the totem bar.",
+
+  "yacl3.config.better_client:config.category.client.group.client_weather": "Client Weather",
+  "yacl3.config.better_client:config.enableClientWeather": "Enable Client Weather",
+  "yacl3.config.better_client:config.enableClientWeather.desc": "Use the cweather command to adjust client-side weather without affecting the server."
 }

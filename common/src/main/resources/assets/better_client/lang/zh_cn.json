@@ -9,6 +9,11 @@
 
   "message.world_play_time": "%s小时",
 
+  "command.cweather.off": "已关闭客户端天气控制",
+  "command.cweather.clear": "客户端天气已设为晴天",
+  "command.cweather.rain": "客户端天气已设为雨天",
+  "command.cweather.thunder": "客户端天气已设为雷雨",
+
   "key.category.better_client.keymapping": "更好的客户端",
 
   "key.better_client.bundle_up": "一键收纳",
@@ -242,5 +247,9 @@
   "yacl3.config.better_client:config.totemBarRenderMode": "图腾条渲染模式",
   "yacl3.config.better_client:config.totemBarRenderMode.desc": "确定要渲染的图腾数量。",
   "yacl3.config.better_client:config.totemBarYOffset": "图腾条 Y 轴偏移",
-  "yacl3.config.better_client:config.totemBarYOffset.desc": "图腾条的 Y 轴偏移量。"
+  "yacl3.config.better_client:config.totemBarYOffset.desc": "图腾条的 Y 轴偏移量。",
+
+  "yacl3.config.better_client:config.category.client.group.client_weather": "客户端天气",
+  "yacl3.config.better_client:config.enableClientWeather": "启用客户端天气",
+  "yacl3.config.better_client:config.enableClientWeather.desc": "使用 cweather 命令调整客户端天气，而不会影响服务器。"
 }

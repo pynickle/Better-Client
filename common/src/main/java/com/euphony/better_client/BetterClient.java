@@ -1,5 +1,6 @@
 package com.euphony.better_client;
 
+import com.euphony.better_client.client.BCClientCommands;
 import com.euphony.better_client.client.BCClientEvents;
 import com.euphony.better_client.client.init.KeyMapping;
 import com.euphony.better_client.client.resource.ResourceModification;
@@ -19,5 +20,6 @@ public final class BetterClient {
         ResourceModification.init();
 
         BCClientEvents.init();
+        BCClientCommands.init();
     }
 }

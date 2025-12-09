@@ -1,8 +1,8 @@
 package com.euphony.better_client.mixin;
 
 import com.euphony.better_client.screen.widget.FastTradingButton;
-import com.euphony.better_client.utils.ItemUtils;
-import com.euphony.better_client.utils.KeyUtils;
+import com.euphony.better_client.utils.mc.ItemUtils;
+import com.euphony.better_client.utils.mc.KeyUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Tooltip;

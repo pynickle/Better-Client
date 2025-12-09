@@ -1,7 +1,7 @@
 package com.euphony.better_client.config.screen.category;
 
 import com.euphony.better_client.config.Config;
-import com.euphony.better_client.utils.ConfigUtils;
+import com.euphony.better_client.config.ConfigUtils;
 import dev.isxander.yacl3.api.ConfigCategory;
 import dev.isxander.yacl3.api.Option;
 import dev.isxander.yacl3.api.OptionGroup;
@@ -25,6 +25,7 @@ public class VisualityConfigScreen {
     private static final String FULL_BRIGHTNESS_TOGGLE_GROUP = "full_brightness_toggle";
     private static final String TRAIL_SPAWNER_TIMER_GROUP = "trial_spawner_timer";
     private static final String INVISIBLE_ITEM_FRAME_GROUP = "invisible_item_frame";
+    private static final String CLIENT_WEATHER_GROUP = "client_weather_group";
 
     public static Screen generateScreen(Screen parent) {
         // Fading Night Vision
@@ -112,6 +113,13 @@ public class VisualityConfigScreen {
                 () -> config.enableInvisibleItemFrame,
                 newVal -> config.enableInvisibleItemFrame = newVal);
 
+        // Client Weather
+        Option<Boolean> enableClientWeatherOpt = ConfigUtils.buildBooleanOption(
+                "enableClientWeather",
+                DEFAULTS.enableClientWeather,
+                () -> config.enableClientWeather,
+                newVal -> config.enableClientWeather = newVal);
+
         return YetAnotherConfigLib.createBuilder()
                 .title(Component.translatable("yacl3.config.better_client:config"))
                 .category(ConfigCategory.createBuilder()
@@ -142,6 +150,10 @@ public class VisualityConfigScreen {
                         .group(OptionGroup.createBuilder()
                                 .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, INVISIBLE_ITEM_FRAME_GROUP))
                                 .options(List.of(enableInvisibleItemFrameOpt))
+                                .build())
+                        .group(OptionGroup.createBuilder()
+                                .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, CLIENT_WEATHER_GROUP))
+                                .options(List.of(enableClientWeatherOpt))
                                 .build())
                         .build())
                 .save(Config::save)

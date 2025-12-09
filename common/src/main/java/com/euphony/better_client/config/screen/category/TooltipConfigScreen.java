@@ -1,7 +1,7 @@
 package com.euphony.better_client.config.screen.category;
 
 import com.euphony.better_client.config.Config;
-import com.euphony.better_client.utils.ConfigUtils;
+import com.euphony.better_client.config.ConfigUtils;
 import dev.isxander.yacl3.api.ConfigCategory;
 import dev.isxander.yacl3.api.Option;
 import dev.isxander.yacl3.api.OptionGroup;

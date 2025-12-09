@@ -9,6 +9,7 @@
     "ChatComponentMixin",
     "CreateWorldScreenMixin",
     "GameRendererMixin",
+    "LevelMixin",
     "LocalPlayerMixin",
     "MerchantScreenMixin",
     "MinecraftMixin",

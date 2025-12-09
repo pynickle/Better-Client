@@ -1,8 +1,9 @@
-package com.euphony.better_client.utils;
+package com.euphony.better_client.config;
 
 import com.euphony.better_client.BetterClient;
 import com.euphony.better_client.config.option.TotemBarRenderMode;
 import com.euphony.better_client.config.option.TradingHudPos;
+import com.euphony.better_client.utils.Utils;
 import com.euphony.better_client.utils.enums.DescComponent;
 import dev.isxander.yacl3.api.ButtonOption;
 import dev.isxander.yacl3.api.Option;

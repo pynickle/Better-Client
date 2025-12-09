@@ -59,7 +59,7 @@ dependencies {
 
     modImplementation("dev.architectury:architectury-neoforge:$rootProject.architectury_api_version")
 
-    implementation("dev.isxander:yet-another-config-lib:${yacl_version}+1.21.9-neoforge"){
+    implementation("dev.isxander:yet-another-config-lib:${yacl_version}+1.21.10-neoforge"){
         exclude group: "net.neoforged.fancymodloader", module: "loader"
     }
 
