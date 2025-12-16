@@ -54,9 +54,7 @@ public abstract class MerchantScreenMixin extends AbstractContainerScreen<Mercha
 
         this.better_client$fastTradingButton = new FastTradingButton(i + 247, j + 37, 18, 18, (button) -> {
             this.menu.setSelectionHint(this.shopItem);
-            if (this.minecraft != null) {
-                this.minecraft.getConnection().send(new ServerboundSelectTradePacket(this.shopItem));
-            }
+            this.minecraft.getConnection().send(new ServerboundSelectTradePacket(this.shopItem));
             better_client$tradeState = 1;
         });
         this.addRenderableWidget(better_client$fastTradingButton);
