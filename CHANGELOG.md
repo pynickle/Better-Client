@@ -1,3 +1,17 @@
+## [8.0.0](https://github.com/pynickle/Better-Client/compare/v7.12.0...v8.0.0) (2025-12-16)
+
+### ⚠ BREAKING CHANGES
+
+* Port to 1.21.11
+
+### ✨ Features
+
+* port to 1.21.11 ([e9904d6](https://github.com/pynickle/Better-Client/commit/e9904d63574d55a001a7b51f0e8bd912830189fc))
+
+### 🐛 Bug Fixes
+
+* remove unused accesswideners ([9a84198](https://github.com/pynickle/Better-Client/commit/9a841981d403adac3cefdf30ecc1962de28f9d53))
+
 ## [7.12.0](https://github.com/pynickle/Better-Client/compare/v7.11.1...v7.12.0) (2025-12-09)
 
 ### ✨ Features
