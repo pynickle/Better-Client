@@ -1,7 +1,7 @@
 package com.euphony.better_client.client.events;
 
 import com.mojang.blaze3d.platform.NativeImage;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Screenshot;
 import net.minecraft.client.server.IntegratedServer;

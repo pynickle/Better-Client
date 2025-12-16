@@ -9,6 +9,7 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.FormattedText;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.biome.Biome;
@@ -147,7 +148,7 @@ public class BiomeTitleEvent {
 
         Component biomeName = getBiomeName(displayBiome);
         int textWidth = font.width(biomeName);
-        int y = -font.wordWrapHeight(biomeName.getString(), 999) / 2 + config.biomeTitleYOffset;
+        int y = -font.wordWrapHeight(FormattedText.of(biomeName.getString()), 999) / 2 + config.biomeTitleYOffset;
 
         guiGraphics.drawString(font, biomeName, (-textWidth / 2), y, config.biomeTitleColor | (alpha << 24), true);
         pose.popMatrix();

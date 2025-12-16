@@ -13,7 +13,7 @@ import dev.isxander.yacl3.api.controller.ValueFormatter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.Resource;
 import org.apache.commons.lang3.StringUtils;
 
@@ -31,7 +31,7 @@ public class ConfigUtils {
     public static final int IMG_WIDTH = 1920;
     public static final int IMG_HEIGHT = 991;
 
-    private static final Map<ResourceLocation, int[]> IMAGE_DIMENSIONS_CACHE = new HashMap<>();
+    private static final Map<Identifier, int[]> IMAGE_DIMENSIONS_CACHE = new HashMap<>();
 
     public static final ValueFormatter<TradingHudPos> TRADING_HUD_POS_VALUE_FORMATTER = formatting ->
             Component.literal(StringUtils.capitalize(formatting.name().replaceAll("_", " ")));
@@ -88,7 +88,7 @@ public class ConfigUtils {
                         .build());
     }
 
-    public static int[] getImageDimensions(ResourceLocation location) {
+    public static int[] getImageDimensions(Identifier location) {
         if (IMAGE_DIMENSIONS_CACHE.containsKey(location)) {
             return IMAGE_DIMENSIONS_CACHE.get(location);
         }
@@ -136,7 +136,7 @@ public class ConfigUtils {
         return component;
     }
 
-    private static ResourceLocation getImage(String name) {
+    private static Identifier getImage(String name) {
         return Utils.prefix(String.format("config/%s.png", name));
     }
 }

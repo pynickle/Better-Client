@@ -6,15 +6,15 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Items;
 
 import static com.euphony.better_client.BetterClient.config;
 
 public class TotemBarRenderer {
-    private static final ResourceLocation TEX_FULL  = Utils.prefix("textures/gui/sprites/totem.png");
-    private static final ResourceLocation TEX_EMPTY = Utils.prefix("textures/gui/sprites/totem_empty.png");
+    private static final Identifier TEX_FULL  = Utils.prefix("textures/gui/sprites/totem.png");
+    private static final Identifier TEX_EMPTY = Utils.prefix("textures/gui/sprites/totem_empty.png");
 
     public static void render(GuiGraphics ctx, DeltaTracker tickCounter) {
         if (!config.enableTotemBar) return;
@@ -61,7 +61,7 @@ public class TotemBarRenderer {
                 case INVENTORY_ONLY -> true;
                 case COMBINED -> i >= (total - hand);
             };
-            ResourceLocation tex = isFull ? TEX_FULL : TEX_EMPTY;
+            Identifier tex = isFull ? TEX_FULL : TEX_EMPTY;
 
             ctx.blit(
                     tex,

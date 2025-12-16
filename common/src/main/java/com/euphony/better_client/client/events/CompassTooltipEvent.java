@@ -9,7 +9,7 @@ import net.minecraft.core.GlobalPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -39,9 +39,9 @@ public class CompassTooltipEvent {
         Level level = Minecraft.getInstance().level;
         if (lodestoneTracker != null && lodestoneTracker.target().isPresent() && config.enableLodestoneTooltip) {
             lodestoneTracker.target().ifPresent(pos -> {
-                ResourceLocation location = pos.dimension().location();
+                Identifier location = pos.dimension().identifier();
 
-                if (level != null && location.equals(level.dimension().location())) {
+                if (level != null && location.equals(level.dimension().identifier())) {
                     components.add(ItemUtils.createTooltip(
                             "info.better_client.tooltip.compass.lodestone_position", getPositionComponent(pos.pos())));
                     return;
@@ -56,7 +56,7 @@ public class CompassTooltipEvent {
 
         if (!config.enableNormalCompassTooltip) return;
 
-        if (level != null && level.dimensionType().natural()) {
+        if (level != null) {
             GlobalPos spawnPosition =
                     GlobalPos.of(level.dimension(), level.getRespawnData().pos());
             components.add(ItemUtils.createTooltip(
@@ -75,11 +75,11 @@ public class CompassTooltipEvent {
             return;
         }
 
-        ResourceLocation location = deathLocation.dimension().location();
+        Identifier location = deathLocation.dimension().identifier();
 
         Level level = Minecraft.getInstance().level;
 
-        if (level != null && location.equals(level.dimension().location())) {
+        if (level != null && location.equals(level.dimension().identifier())) {
             components.add(ItemUtils.createTooltip(
                     "info.better_client.tooltip.recovery_compass.death_location",
                     getPositionComponent(deathLocation.pos())));
@@ -99,7 +99,7 @@ public class CompassTooltipEvent {
         };
     }
 
-    public static Object[] getPositionComponentWithDimension(ResourceLocation location, BlockPos pos) {
+    public static Object[] getPositionComponentWithDimension(Identifier location, BlockPos pos) {
         MutableComponent dimensionName = Component.translatable(location.toString());
 
         if (location.getNamespace().equals("minecraft")) {

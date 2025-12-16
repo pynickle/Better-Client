@@ -2,7 +2,7 @@ package com.euphony.better_client.utils;
 
 import com.euphony.better_client.BetterClient;
 import dev.architectury.platform.Platform;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.Collection;
 import java.util.Locale;
@@ -12,8 +12,8 @@ public class Utils {
         return Platform.getMod(modId).getName();
     }
 
-    public static ResourceLocation prefix(String name) {
-        return ResourceLocation.fromNamespaceAndPath(BetterClient.MOD_ID, name.toLowerCase(Locale.ROOT));
+    public static Identifier prefix(String name) {
+        return Identifier.fromNamespaceAndPath(BetterClient.MOD_ID, name.toLowerCase(Locale.ROOT));
     }
 
     /**

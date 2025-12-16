@@ -12,13 +12,13 @@ import net.fabricmc.fabric.api.client.screen.v1.ScreenKeyboardEvents;
 import net.fabricmc.fabric.api.resource.v1.ResourceLoader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.item.properties.select.SelectItemModelProperties;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.PackType;
 
 public final class BetterClientFabricClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        HudElementRegistry.addFirst(ResourceLocation.withDefaultNamespace("title"), BiomeTitleEvent::renderBiomeInfo);
+        HudElementRegistry.addFirst(Identifier.withDefaultNamespace("title"), BiomeTitleEvent::renderBiomeInfo);
         ResourceLoader.get(PackType.CLIENT_RESOURCES)
                 .registerReloader(Utils.prefix("name_cache_clear"), new BCResourceReloadListener());
 

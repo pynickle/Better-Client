@@ -8,13 +8,16 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Constant;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import static com.euphony.better_client.BetterClient.config;
 
 @Mixin(ChatComponent.class)
-public class ChatComponentMixin {
+public abstract class ChatComponentMixin {
     @ModifyExpressionValue(
             method = {
                 "addMessageToDisplayQueue(Lnet/minecraft/client/GuiMessage;)V",
@@ -53,20 +56,8 @@ public class ChatComponentMixin {
         return offset;
     }
 
-    @ModifyArg(
-            method = "render",
-            index = 1,
-            at =
-                    @At(
-                            value = "INVOKE",
-                            target = "Lorg/joml/Matrix3x2fStack;translate(FF)Lorg/joml/Matrix3x2f;",
-                            ordinal = 0))
-    private float offsetY(float y) {
-        return y - better_client$getOffset();
-    }
-
-    @ModifyConstant(method = "screenToChatY", constant = @Constant(doubleValue = 40.0))
-    private double textBottomOffset(double original) {
-        return original + better_client$getOffset();
+    @ModifyConstant(method = "render(Lnet/minecraft/client/gui/components/ChatComponent$ChatGraphicsAccess;IIZ)V", constant = @Constant(intValue = 40))
+    private int textBottomOffset(int constant) {
+        return constant + better_client$getOffset();
     }
 }

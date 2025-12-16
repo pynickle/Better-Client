@@ -1,7 +1,7 @@
 package com.euphony.better_client.client.resource;
 
 import com.google.gson.JsonPrimitive;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Items;
 import net.ramixin.mixson.inline.Mixson;
 
@@ -13,7 +13,7 @@ import static com.euphony.better_client.BetterClient.config;
 public class ResourceModification {
     public static void init() {
         if (config.enableLowerShield) List.of(Items.SHIELD).forEach(item -> {
-            ResourceLocation id = item.arch$registryName();
+            Identifier id = item.arch$registryName();
             if (id != null) {
                 String namespace = id.getNamespace();
                 String path = id.getPath();

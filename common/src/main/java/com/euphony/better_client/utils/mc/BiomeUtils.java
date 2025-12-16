@@ -1,11 +1,11 @@
 package com.euphony.better_client.utils.mc;
 
 import com.euphony.better_client.utils.Utils;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.biome.Biome;
 import org.apache.commons.lang3.StringUtils;
 
@@ -39,7 +39,7 @@ public class BiomeUtils {
      * @param location 资源位置
      * @return 模组显示名称，如果获取不到则返回格式化的命名空间
      */
-    public static String getModDisplayName(ResourceLocation location) {
+    public static String getModDisplayName(Identifier location) {
         String modId = location.getNamespace();
         String displayName = Utils.getModDisplayName(modId);
         return displayName != null ? displayName : snakeCaseToTitle(modId);
@@ -52,7 +52,7 @@ public class BiomeUtils {
      * @return 生物群系显示组件
      */
     public static Component createBiomeDisplayComponent(ResourceKey<Biome> key, boolean enableModName) {
-        ResourceLocation location = key.location();
+        Identifier location = key.identifier();
         String translationKey = Util.makeDescriptionId("biome", location);
         MutableComponent biomeName = Component.translatable(translationKey);
 

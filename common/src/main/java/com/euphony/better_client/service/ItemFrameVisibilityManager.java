@@ -45,7 +45,7 @@ public class ItemFrameVisibilityManager {
         }
 
         // 组合维度和服务器信息作为唯一标识
-        String dimension = level.dimension().location().toString();
+        String dimension = level.dimension().registry().toString();
         String server;
         if (client.hasSingleplayerServer()) {
             // 单机存档

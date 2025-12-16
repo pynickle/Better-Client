@@ -6,7 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.RenderPipelines;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.CommonColors;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -21,12 +21,12 @@ import java.util.List;
 import static com.euphony.better_client.BetterClient.config;
 
 public class TradingHudRenderer {
-    private static final ResourceLocation TRADE_ARROW_OUT_OF_STOCK_SPRITE =
-            ResourceLocation.withDefaultNamespace("container/villager/trade_arrow_out_of_stock");
-    private static final ResourceLocation TRADE_ARROW_SPRITE =
-            ResourceLocation.withDefaultNamespace("container/villager/trade_arrow");
-    private static final ResourceLocation DISCOUNT_STRIKETHRUOGH_SPRITE =
-            ResourceLocation.withDefaultNamespace("container/villager/discount_strikethrough");
+    private static final Identifier TRADE_ARROW_OUT_OF_STOCK_SPRITE =
+            Identifier.withDefaultNamespace("container/villager/trade_arrow_out_of_stock");
+    private static final Identifier TRADE_ARROW_SPRITE =
+            Identifier.withDefaultNamespace("container/villager/trade_arrow");
+    private static final Identifier DISCOUNT_STRIKETHRUOGH_SPRITE =
+            Identifier.withDefaultNamespace("container/villager/discount_strikethrough");
 
     public static void renderHud(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
         if (!config.enableTradingHud) return;

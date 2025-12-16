@@ -10,7 +10,7 @@ import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.storage.LevelSummary;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -28,7 +28,7 @@ import static com.euphony.better_client.BetterClient.config;
 @Mixin(WorldSelectionList.WorldListEntry.class)
 public class WorldListEntryMixin {
     @Unique
-    private static final ResourceLocation WORLD_PLAY_TIME_ICON = Utils.prefix("textures/gui/world_play_time.png");
+    private static final Identifier WORLD_PLAY_TIME_ICON = Utils.prefix("textures/gui/world_play_time.png");
 
     @Shadow
     @Final

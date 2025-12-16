@@ -12,7 +12,7 @@ import net.minecraft.client.renderer.item.ItemModel;
 import net.minecraft.client.renderer.item.SelectItemModel;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 
@@ -49,7 +49,7 @@ public class ModelGenerator extends ModelProvider {
     }
 
     public ItemModel.Unbaked createAxolotlBucketModel(String suffix, ItemModelGenerators itemModels) {
-        ResourceLocation resourceLocation = Utils.prefix("item/axolotl_bucket" + suffix);
+        Identifier resourceLocation = Utils.prefix("item/axolotl_bucket" + suffix);
         return ItemModelUtils.plainModel(ModelTemplates.FLAT_ITEM.create(
                 resourceLocation, TextureMapping.layer0(resourceLocation), itemModels.modelOutput));
     }
@@ -59,9 +59,9 @@ public class ModelGenerator extends ModelProvider {
     }
 
     public void itemModel(ItemModelGenerators itemModels, Item item, ModelTemplate template) {
-        ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(item);
-        ResourceLocation textureLoc =
-                ResourceLocation.fromNamespaceAndPath(itemId.getNamespace(), "item/" + itemId.getPath());
+        Identifier itemId = BuiltInRegistries.ITEM.getKey(item);
+        Identifier textureLoc =
+                Identifier.fromNamespaceAndPath(itemId.getNamespace(), "item/" + itemId.getPath());
         TextureMapping textureMapping = new TextureMapping().put(TextureSlot.LAYER0, textureLoc);
         itemModels.itemModelOutput.accept(
                 item,
@@ -74,8 +74,8 @@ public class ModelGenerator extends ModelProvider {
     }
 
     public void itemModel(ItemModelGenerators itemModels, Item item, ModelTemplate template, String loc) {
-        ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(item);
-        ResourceLocation textureLoc = ResourceLocation.fromNamespaceAndPath(itemId.getNamespace(), "item/" + loc);
+        Identifier itemId = BuiltInRegistries.ITEM.getKey(item);
+        Identifier textureLoc = Identifier.fromNamespaceAndPath(itemId.getNamespace(), "item/" + loc);
         TextureMapping textureMapping = new TextureMapping().put(TextureSlot.LAYER0, textureLoc);
         itemModels.itemModelOutput.accept(
                 item,

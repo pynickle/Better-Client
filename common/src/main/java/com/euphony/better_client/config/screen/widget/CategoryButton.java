@@ -6,7 +6,7 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
@@ -23,12 +23,12 @@ public class CategoryButton extends Button {
     }
 
     private static final WidgetSprites SPRITES = new WidgetSprites(
-            ResourceLocation.withDefaultNamespace("widget/button"),
-            ResourceLocation.withDefaultNamespace("widget/button_disabled"),
-            ResourceLocation.withDefaultNamespace("widget/button_highlighted"));
+            Identifier.withDefaultNamespace("widget/button"),
+            Identifier.withDefaultNamespace("widget/button_disabled"),
+            Identifier.withDefaultNamespace("widget/button_highlighted"));
 
     @Override
-    public void renderWidget(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+    public void renderContents(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         guiGraphics.blitSprite(
                 RenderPipelines.GUI_TEXTURED,
                 SPRITES.get(this.active, this.isHoveredOrFocused()),

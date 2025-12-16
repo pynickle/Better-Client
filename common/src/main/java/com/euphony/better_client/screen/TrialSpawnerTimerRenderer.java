@@ -70,8 +70,8 @@ public class TrialSpawnerTimerRenderer {
             Component text, int color, PoseStack poseStack, SubmitNodeCollector nodeCollector, Camera camera) {
         poseStack.pushPose();
 
-        float yRot = camera.getYRot();
-        float xRot = camera.getXRot();
+        float yRot = camera.yRot();
+        float xRot = camera.xRot();
 
         Quaternionf rotation = new Quaternionf();
         rotation.rotationYXZ((float) (-Math.PI) / 180 * (yRot - 180F), (float) Math.PI / 180 * -xRot, 0.0f);
