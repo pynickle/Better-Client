@@ -1,3 +1,13 @@
+## [8.1.0](https://github.com/pynickle/Better-Client/compare/v8.0.0...v8.1.0) (2025-12-31)
+
+### ✨ Features
+
+* reimplement the image for config ([8ff2aec](https://github.com/pynickle/Better-Client/commit/8ff2aecfa4dde1b69b5c8e09f49e689d0a0ff37e))
+
+### 🐛 Bug Fixes
+
+* fix fabric code in common ([af8a95c](https://github.com/pynickle/Better-Client/commit/af8a95c311c3dc1f03a800ba87795f1da4c5c642))
+
 ## [8.0.0](https://github.com/pynickle/Better-Client/compare/v7.12.0...v8.0.0) (2025-12-16)
 
 ### ⚠ BREAKING CHANGES
