@@ -54,11 +54,29 @@ public class ConfigUtils {
                 .build();
     }
 
+    public static Option<Boolean> buildBooleanOption(
+            String name, String image, boolean defaultValue, Supplier<Boolean> getter, Consumer<Boolean> setter) {
+        return getBooleanOption(name, image)
+                .binding(defaultValue, getter, setter)
+                .controller(TickBoxControllerBuilder::create)
+                .build();
+    }
+
     public static Option.Builder<Boolean> getBooleanOption(String name) {
         return Option.<Boolean>createBuilder()
                 .name(getOptionName(name))
                 .description(OptionDescription.createBuilder()
                         .text(getDesc(name, null))
+                        .build());
+    }
+
+    public static Option.Builder<Boolean> getBooleanOption(String name, String image) {
+        int[] dimensions = getImageDimensions(Utils.prefix(String.format("config/%s.png", image)));
+        return Option.<Boolean>createBuilder()
+                .name(getOptionName(name))
+                .description(OptionDescription.createBuilder()
+                        .text(getDesc(name, null))
+                        .image(getImage(image), dimensions[0], dimensions[1])
                         .build());
     }
 

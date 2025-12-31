@@ -42,6 +42,7 @@ public class ChatConfigScreen {
 
         Option<Boolean> enableTimeStampOpt = ConfigUtils.buildBooleanOption(
                 "enableTimeStamp",
+                "chat/timestamp",
                 DEFAULTS.enableTimeStamp,
                 () -> config.enableTimeStamp,
                 newVal -> config.enableTimeStamp = newVal);

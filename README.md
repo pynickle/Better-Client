@@ -1,5 +1,3 @@
-![title.png](title.png)
-
 ## Description
 
 **Better Client** is a mod making a better server experience for you.

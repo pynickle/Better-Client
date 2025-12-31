@@ -23,6 +23,7 @@ public class OptimizationConfigScreen {
     public static Screen generateScreen(Screen parent) {
         Option<Boolean> enableAxolotlBucketFixOpt = ConfigUtils.buildBooleanOption(
                 "enableAxolotlBucketFix",
+                "optimization/axolotl_bucket_fix",
                 DEFAULTS.enableAxolotlBucketFix,
                 () -> config.enableAxolotlBucketFix,
                 newVal -> config.enableAxolotlBucketFix = newVal);

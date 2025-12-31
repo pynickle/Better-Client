@@ -33,6 +33,7 @@ public class ScreenConfigScreen {
         // Better Ping Display
         Option<Boolean> enableBetterPingDisplayOpt = ConfigUtils.buildBooleanOption(
                 "enableBetterPingDisplay",
+                "screen/better_ping_display",
                 DEFAULTS.enableBetterPingDisplay,
                 () -> config.enableBetterPingDisplay,
                 newVal -> config.enableBetterPingDisplay = newVal);

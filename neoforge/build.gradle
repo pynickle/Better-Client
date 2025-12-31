@@ -48,10 +48,6 @@ repositories {
         name = 'NeoForged'
         url = 'https://maven.neoforged.net/releases'
     }
-    maven {
-        name = 'Kotlin for Forge'
-        url = 'https://thedarkcolour.github.io/KotlinForForge/'
-    }
 }
 
 dependencies {
@@ -59,9 +55,9 @@ dependencies {
 
     modImplementation("dev.architectury:architectury-neoforge:$rootProject.architectury_api_version")
 
-    /* implementation("dev.isxander:yet-another-config-lib:${yacl_version}+1.21.10-neoforge"){
+    implementation("dev.isxander:yet-another-config-lib:${yacl_version}+1.21.11-neoforge"){
         exclude group: "net.neoforged.fancymodloader", module: "loader"
-    } */
+    }
 
     modImplementation("com.github.ramixin:mixson-neoforge:${mixson_version}")
 
