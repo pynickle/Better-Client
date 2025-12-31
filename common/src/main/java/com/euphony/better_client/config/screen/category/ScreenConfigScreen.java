@@ -197,14 +197,21 @@ public class ScreenConfigScreen {
                 DEFAULTS.enableTotemBar,
                 () -> config.enableTotemBar,
                 newVal -> config.enableTotemBar = newVal);
-        Option<TotemBarRenderMode> totemBarRenderModeOpt = ConfigUtils.<TotemBarRenderMode>getGenericOption("totemBarRenderMode")
-                .binding(DEFAULTS.totemBarRenderMode, () -> config.totemBarRenderMode, newVal -> config.totemBarRenderMode = newVal)
+        Option<TotemBarRenderMode> totemBarRenderModeOpt = ConfigUtils.<TotemBarRenderMode>getGenericOption(
+                        "totemBarRenderMode")
+                .binding(
+                        DEFAULTS.totemBarRenderMode,
+                        () -> config.totemBarRenderMode,
+                        newVal -> config.totemBarRenderMode = newVal)
                 .controller(opt -> EnumControllerBuilder.create(opt)
                         .enumClass(TotemBarRenderMode.class)
                         .formatValue(ConfigUtils.TOTEM_BAR_RENDER_MODE_VALUE_FORMATTER))
                 .build();
         Option<Integer> totemBarYOffsetOpt = ConfigUtils.<Integer>getGenericOption("totemBarYOffset")
-                .binding(DEFAULTS.totemBarYOffset, () -> config.totemBarYOffset, newVal -> config.totemBarYOffset = newVal)
+                .binding(
+                        DEFAULTS.totemBarYOffset,
+                        () -> config.totemBarYOffset,
+                        newVal -> config.totemBarYOffset = newVal)
                 .controller(IntegerFieldControllerBuilder::create)
                 .build();
 

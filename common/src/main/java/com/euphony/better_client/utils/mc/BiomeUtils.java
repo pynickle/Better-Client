@@ -1,11 +1,11 @@
 package com.euphony.better_client.utils.mc;
 
 import com.euphony.better_client.utils.Utils;
-import net.minecraft.util.Util;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.Util;
 import net.minecraft.world.level.biome.Biome;
 import org.apache.commons.lang3.StringUtils;
 

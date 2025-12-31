@@ -2,7 +2,7 @@ package com.euphony.better_client.client.renderer;
 
 import com.euphony.better_client.config.option.TotemBarRenderMode;
 import com.euphony.better_client.utils.Utils;
-import net.fabricmc.loader.api.FabricLoader;
+import dev.architectury.platform.Platform;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -89,7 +89,7 @@ public class TotemBarRenderer {
                     int extraLines = (int) Math.ceil((hp - 20f) / 20f);
                     offset += extraLines * spacing;
                 }
-                if (FabricLoader.getInstance().isModLoaded("bettermounthud")) {
+                if (Platform.isModLoaded("bettermounthud")) {
                     offset += spacing;
                 }
             }

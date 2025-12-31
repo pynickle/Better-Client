@@ -1,10 +1,10 @@
 package com.euphony.better_client.client.events;
 
 import com.mojang.blaze3d.platform.NativeImage;
-import net.minecraft.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Screenshot;
 import net.minecraft.client.server.IntegratedServer;
+import net.minecraft.util.Util;
 
 import java.io.IOException;
 import java.nio.file.Path;
