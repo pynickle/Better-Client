@@ -17,6 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collections;
 
+import static com.euphony.better_client.BetterClient.LOGGER;
 import static com.euphony.better_client.BetterClient.config;
 
 public class Config {
@@ -152,7 +153,7 @@ public class Config {
             try {
                 Files.createDirectories(BASE_PATH);
             } catch (Exception e) {
-                BetterClient.LOGGER.error("Couldn't create config directory: ", e);
+                LOGGER.error("Couldn't create config directory: ", e);
                 return;
             }
         }
@@ -168,7 +169,7 @@ public class Config {
             try {
                 config = GSON.fromJson(Files.readString(PATH), config.getClass());
             } catch (Exception e) {
-                BetterClient.LOGGER.error("Couldn't load config file: ", e);
+                LOGGER.error("Couldn't load config file: ", e);
             }
     }
 
@@ -176,7 +177,7 @@ public class Config {
         try {
             Files.write(PATH, Collections.singleton(GSON.toJson(config)));
         } catch (Exception e) {
-            BetterClient.LOGGER.error("Couldn't save config file: ", e);
+            LOGGER.error("Couldn't save config file: ", e);
         }
     }
 

@@ -5,7 +5,6 @@ import com.euphony.better_client.client.renderer.TotemBarRenderer;
 import com.euphony.better_client.client.renderer.TradingHudRenderer;
 import com.euphony.better_client.service.ItemFrameVisibilityManager;
 import dev.architectury.event.events.client.*;
-import dev.architectury.event.events.common.LifecycleEvent;
 import dev.architectury.event.events.common.TickEvent;
 
 public class BCClientEvents {

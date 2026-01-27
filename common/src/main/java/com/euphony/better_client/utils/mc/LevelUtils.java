@@ -1,6 +1,5 @@
 package com.euphony.better_client.utils.mc;
 
-import com.mojang.authlib.minecraft.client.MinecraftClient;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.world.level.storage.LevelResource;

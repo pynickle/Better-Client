@@ -14,55 +14,55 @@ import static com.euphony.better_client.BetterClient.LOGGER;
 import static com.euphony.better_client.BetterClient.config;
 
 /**
- * 管理所有试炼刷怪笼的冷却计时器
- * 使用嵌套的 ConcurrentHashMap: Level -> BlockPos -> Timer
+ * Manages cooldown timers for all trial spawners
+ * Uses nested ConcurrentHashMap: Level -> BlockPos -> Timer
  */
 public class TimerHandler {
     private static final Map<ResourceKey<Level>, Map<BlockPos, Timer>> timers = new ConcurrentHashMap<>();
 
     /**
-     * 判断试炼刷怪笼切换到此状态时是否应该删除计时器
-     *
-     * @param state 要测试的状态
-     * @return true 如果切换到该状态应删除计时器
-     */
+ * Determines if the timer should be deleted when the trial spawner switches to this state
+ *
+ * @param state The state to test
+ * @return true if switching to this state should delete the timer
+ */
     public static boolean shouldReset(TrialSpawnerState state) {
-        // 当刷怪笼进入非冷却状态时，删除计时器
+        // Remove timer when spawner enters non-cooldown state
         return state != TrialSpawnerState.COOLDOWN && state != TrialSpawnerState.EJECTING_REWARD;
     }
 
     /**
-     * 判断该状态是否应该触发计时器创建（如果还没有计时器）
-     *
-     * @param state 要测试的状态
-     * @return true 如果切换到该状态应创建计时器
-     */
+ * Determines if this state should trigger timer creation (if no timer exists yet)
+ *
+ * @param state The state to test
+ * @return true if switching to this state should create a timer
+ */
     public static boolean shouldCreate(TrialSpawnerState state) {
         return state == TrialSpawnerState.COOLDOWN || state == TrialSpawnerState.EJECTING_REWARD;
     }
 
     /**
-     * 检查指定位置是否有活跃的冷却计时器
-     *
-     * @param level 世界/维度
-     * @param pos 试炼刷怪笼的位置
-     * @return true 如果存在活跃的计时器
-     */
+ * Checks if there's an active cooldown timer at the specified position
+ *
+ * @param level World/dimension
+ * @param pos Trial spawner position
+ * @return true if an active timer exists
+ */
     public static boolean hasTimer(Level level, BlockPos pos) {
         return getTimer(level, pos) != null;
     }
 
     /**
-     * 为指定位置的试炼刷怪笼创建计时器
-     *
-     * @param level 世界/维度
-     * @param pos 试炼刷怪笼的位置
-     * @param startTime 计时器开始时间（游戏 tick）
-     * @param cooldownTicks 冷却时长（tick）
-     */
+ * Creates a timer for the trial spawner at the specified position
+ *
+ * @param level World/dimension
+ * @param pos Trial spawner position
+ * @param startTime Timer start time (game ticks)
+ * @param cooldownTicks Cooldown duration (ticks)
+ */
     public static void insertTimer(Level level, BlockPos pos, long startTime, long cooldownTicks) {
         if (level == null || pos == null) {
-            LOGGER.warn("尝试插入计时器时传入 null 参数");
+            LOGGER.warn("Null parameters passed when trying to insert timer");
             return;
         }
 
@@ -72,16 +72,16 @@ public class TimerHandler {
         Timer timer = new Timer(startTime, cooldownTicks);
         levelTimers.put(pos.immutable(), timer);
 
-        LOGGER.debug("为位置 {} 创建计时器，冷却时长：{} ticks", pos, cooldownTicks);
+        LOGGER.debug("Created timer for position {}, cooldown duration: {} ticks", pos, cooldownTicks);
     }
 
     /**
-     * 获取指定位置的计时器
-     *
-     * @param level 世界/维度
-     * @param pos 试炼刷怪笼的位置
-     * @return Timer 对象，如果不存在则返回 null
-     */
+ * Gets the timer at the specified position
+ *
+ * @param level World/dimension
+ * @param pos Trial spawner position
+ * @return Timer object, or null if none exists
+ */
     public static Timer getTimer(Level level, BlockPos pos) {
         if (level == null || pos == null) {
             return null;
@@ -96,10 +96,10 @@ public class TimerHandler {
     }
 
     /**
-     * 删除指定位置的计时器
+     * Deletes the timer at the specified position
      *
-     * @param level 世界/维度
-     * @param pos 试炼刷怪笼的位置
+     * @param level World/dimension
+     * @param pos Trial spawner position
      */
     public static void deleteTimer(Level level, BlockPos pos) {
         if (level == null || pos == null) {
@@ -116,20 +116,20 @@ public class TimerHandler {
         Timer removedTimer = levelTimers.remove(pos);
 
         if (removedTimer != null) {
-            LOGGER.debug("删除位置 {} 的计时器，剩余时间：{} ticks", pos, removedTimer.getRemainingTicks(level.getGameTime()));
+            LOGGER.debug("Deleted timer for position {}, remaining time: {} ticks", pos, removedTimer.getRemainingTicks(level.getGameTime()));
         }
 
-        // 如果该维度没有计时器了，清理整个 Map
+        // If no timers remain in this dimension, clean up the entire Map
         if (levelTimers.isEmpty()) {
             timers.remove(dimension);
         }
     }
 
     /**
-     * 清理所有已过期的计时器
-     * 可以定期调用以防止内存泄漏
+     * Cleans up all expired timers
+     * Can be called periodically to prevent memory leaks
      *
-     * @param level 要清理的世界
+     * @param level World to clean up
      */
     public static void cleanupExpiredTimers(Level level) {
         if (level == null) {
@@ -145,44 +145,44 @@ public class TimerHandler {
         levelTimers.entrySet().removeIf(entry -> {
             boolean expired = entry.getValue().isExpired(currentTime);
             if (expired) {
-                LOGGER.debug("清理过期计时器：{}", entry.getKey());
-            }
+                    LOGGER.debug("Cleaning up expired timer: {}", entry.getKey());
+                }
             return expired;
         });
 
-        // 如果该维度没有计时器了，清理整个 Map
+        // If no timers remain in this dimension, clean up the entire Map
         if (levelTimers.isEmpty()) {
             timers.remove(level.dimension());
         }
     }
 
     /**
-     * 清理指定维度的所有计时器
+     * Cleans up all timers in the specified dimension
      *
-     * @param dimension 要清理的维度
+     * @param dimension Dimension to clean up
      */
     public static void clearDimension(ResourceKey<Level> dimension) {
         timers.remove(dimension);
-        LOGGER.debug("清理维度 {} 的所有计时器", dimension);
+        LOGGER.debug("Cleaned up all timers in dimension {}", dimension);
     }
 
     /**
-     * 清理所有计时器
+     * Cleans up all timers
      */
     public static void clearAll() {
         timers.clear();
-        LOGGER.debug("清理所有计时器");
+        LOGGER.debug("Cleaned up all timers");
     }
 
-    // ==================== 刷怪笼状态更新处理 ====================
+    // ==================== Spawner State Update Handling ====================
 
     /**
-     * 处理试炼刷怪笼方块更新，检测是否需要创建/删除计时器
-     *
-     * @param level 试炼刷怪笼所在的世界
-     * @param pos 试炼刷怪笼的位置
-     * @param blockState 试炼刷怪笼的方块状态
-     */
+ * Handles trial spawner block updates, checking if timers need to be created/deleted
+ *
+ * @param level World containing the trial spawner
+ * @param pos Trial spawner position
+ * @param blockState Trial spawner block state
+ */
     public static void onSpawnerBlockUpdate(Level level, BlockPos pos, BlockState blockState) {
         if (!config.enableTrialSpawnerTimer) {
             return;
@@ -193,17 +193,17 @@ public class TimerHandler {
                     blockState.getValue(net.minecraft.world.level.block.TrialSpawnerBlock.STATE);
             onSpawnerStateUpdate(level, pos, spawnerState);
         } catch (Exception e) {
-            LOGGER.error("处理刷怪笼方块更新时出错：{}", pos, e);
+            LOGGER.error("Error handling spawner block update at: {}", pos, e);
         }
     }
 
     /**
-     * 处理试炼刷怪笼状态更新，检测是否需要创建/删除计时器
-     *
-     * @param level 试炼刷怪笼所在的世界
-     * @param pos 试炼刷怪笼的位置
-     * @param state 试炼刷怪笼的状态
-     */
+ * Handles trial spawner state updates, checking if timers need to be created/deleted
+ *
+ * @param level World containing the trial spawner
+ * @param pos Trial spawner position
+ * @param state Trial spawner state
+ */
     public static void onSpawnerStateUpdate(Level level, BlockPos pos, TrialSpawnerState state) {
         if (!config.enableTrialSpawnerTimer || level == null || pos == null || state == null) {
             return;
@@ -217,29 +217,29 @@ public class TimerHandler {
                 return;
             }
 
-            // 如果应该重置计时器，则删除现有计时器
+            // If timer should be reset, delete existing timer
             if (shouldReset(state)) {
                 deleteTimer(level, pos);
             }
         } catch (Exception e) {
-            LOGGER.error("处理刷怪笼状态更新时出错：{} -> {}", pos, state, e);
+            LOGGER.error("Error handling spawner state update at: {} -> {}", pos, state, e);
         }
     }
 
     /**
-     * 获取当前活跃的计时器数量
+     * Gets the number of currently active timers
      *
-     * @return 所有维度中活跃的计时器总数
+     * @return Total number of active timers across all dimensions
      */
     public static int getActiveTimerCount() {
         return timers.values().stream().mapToInt(Map::size).sum();
     }
 
     /**
-     * 获取指定维度的计时器数量
+     * Gets the number of timers in the specified dimension
      *
-     * @param dimension 维度
-     * @return 该维度中的计时器数量
+     * @param dimension Dimension
+     * @return Number of timers in this dimension
      */
     public static int getTimerCount(ResourceKey<Level> dimension) {
         Map<BlockPos, Timer> levelTimers = timers.get(dimension);

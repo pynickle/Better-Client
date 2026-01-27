@@ -128,7 +128,7 @@ public class BiomeTitleEvent {
                 }
             }
         } catch (IOException e) {
-            LOGGER.error("[BetterClient] Couldn't load biome visits: ", e);
+            LOGGER.error("Couldn't load biome visits: ", e);
         }
     }
 
