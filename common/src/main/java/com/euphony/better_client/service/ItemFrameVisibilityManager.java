@@ -1,178 +1,144 @@
 package com.euphony.better_client.service;
 
-import com.google.gson.*;
-import net.minecraft.client.Minecraft;
+import com.euphony.better_client.utils.JsonUtils;
+import com.euphony.better_client.utils.mc.DataUtils;
+import com.euphony.better_client.utils.mc.LevelUtils;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.storage.LevelResource;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 
 import static com.euphony.better_client.BetterClient.LOGGER;
 
 public class ItemFrameVisibilityManager {
-    private static final ItemFrameVisibilityManager INSTANCE = new ItemFrameVisibilityManager();
+    // Only holds data for the currently active world to save memory
+    private static final Set<BlockPos> currentWorldHiddenFrames = new HashSet<>();
 
-    private final Map<String, Set<BlockPos>> hiddenFramesByWorld = new HashMap<>();
+    private static final Path BASE_PATH = DataUtils.getDataDir();
+    private static final Path ITEM_FRAME_INVISIBILITY_PATH = BASE_PATH.resolve("item_frame_visibility.json");
 
-    private ItemFrameVisibilityManager() {
-        loadFromFile();
-    }
+    private ItemFrameVisibilityManager() {}
 
-    public static ItemFrameVisibilityManager getInstance() {
-        return INSTANCE;
+    public static void clientLevelLoad(ClientLevel level) {
+        loadForCurrentWorld(level);
     }
 
     /**
-     * 获取当前世界的唯一标识符
+     * Toggles the visibility state of an item frame at the given position.
+     * Triggers an asynchronous save.
      */
-    private String getCurrentWorldKey() {
-        Minecraft client = Minecraft.getInstance();
-        ClientLevel level = client.level;
-
-        if (level == null) {
-            return "unknown";
+    public static void toggleFrameVisibility(BlockPos pos) {
+        synchronized (currentWorldHiddenFrames) {
+            if (currentWorldHiddenFrames.contains(pos)) {
+                currentWorldHiddenFrames.remove(pos);
+            } else {
+                currentWorldHiddenFrames.add(pos);
+            }
         }
+        saveToFileAsync();
+    }
 
-        // 组合维度和服务器信息作为唯一标识
-        String dimension = level.dimension().registry().toString();
-        String server;
-        if (client.hasSingleplayerServer()) {
-            // 单机存档
-            Path worldPath = client.getSingleplayerServer()
-                    .getWorldPath(LevelResource.LEVEL_DATA_FILE)
-                    .getParent()
-                    .getFileName();
-            server = "local:" + worldPath;
-        } else {
-            // 服务器
-            String serverAddr = client.getCurrentServer() != null ? client.getCurrentServer().ip : "unknown_server";
-            server = "remote:" + serverAddr;
+    /**
+     * Checks if the item frame at the given position should be hidden.
+     */
+    public static boolean isFrameHidden(BlockPos pos) {
+        synchronized (currentWorldHiddenFrames) {
+            return currentWorldHiddenFrames.contains(pos);
         }
-
-        return server + "_" + dimension;
     }
 
     /**
-     * 切换物品展示框的隐形状态
+     * Reloads data specific to the current world.
+     * Should be called when the client joins a world/server.
      */
-    public void toggleFrameVisibility(BlockPos pos) {
-        String worldKey = getCurrentWorldKey();
-        Set<BlockPos> hiddenFrames = hiddenFramesByWorld.computeIfAbsent(worldKey, k -> new HashSet<>());
+    public static void loadForCurrentWorld(ClientLevel level) {
+        synchronized (currentWorldHiddenFrames) {
+            currentWorldHiddenFrames.clear();
 
-        if (hiddenFrames.contains(pos)) {
-            hiddenFrames.remove(pos);
-        } else {
-            hiddenFrames.add(pos);
-        }
-        saveToFile();
-    }
-
-    /**
-     * 检查物品展示框是否应该隐形
-     */
-    public boolean isFrameHidden(BlockPos pos) {
-        String worldKey = getCurrentWorldKey();
-        Set<BlockPos> hiddenFrames = hiddenFramesByWorld.get(worldKey);
-        return hiddenFrames != null && hiddenFrames.contains(pos);
-    }
-
-    /**
-     * 清理当前世界的数据（可选，用于内存管理）
-     */
-    public void clearCurrentWorld() {
-        String worldKey = getCurrentWorldKey();
-        hiddenFramesByWorld.remove(worldKey);
-        saveToFile();
-    }
-
-    /**
-     * 清理所有数据
-     */
-    public void clearAll() {
-        hiddenFramesByWorld.clear();
-        saveToFile();
-    }
-
-    /**
-     * 将所有世界数据保存到文件
-     */
-    private void saveToFile() {
-        Path savePath = getSavePath();
-
-        try {
-            Files.createDirectories(savePath.getParent());
-            JsonObject root = getJsonObject();
-
-            try (Writer writer = Files.newBufferedWriter(savePath, StandardCharsets.UTF_8)) {
-                new GsonBuilder().setPrettyPrinting().create().toJson(root, writer);
+            if (Files.notExists(ITEM_FRAME_INVISIBILITY_PATH)) {
+                return;
             }
 
-        } catch (IOException e) {
-            LOGGER.warn("[BetterClient] 保存展示框数据失败", e);
-        }
-    }
+            try (Reader reader = Files.newBufferedReader(ITEM_FRAME_INVISIBILITY_PATH, StandardCharsets.UTF_8)) {
+                JsonObject root = JsonParser.parseReader(reader).getAsJsonObject();
 
-    private @NotNull JsonObject getJsonObject() {
-        JsonObject root = new JsonObject();
-        for (Map.Entry<String, Set<BlockPos>> entry : hiddenFramesByWorld.entrySet()) {
-            JsonArray positions = new JsonArray();
-            for (BlockPos pos : entry.getValue()) {
-                JsonObject p = new JsonObject();
-                p.addProperty("x", pos.getX());
-                p.addProperty("y", pos.getY());
-                p.addProperty("z", pos.getZ());
-                positions.add(p);
-            }
-            root.add(entry.getKey(), positions);
-        }
-        return root;
-    }
-
-    /**
-     * 从文件加载数据
-     */
-    private void loadFromFile() {
-        Path savePath = getSavePath();
-
-        if (!Files.exists(savePath)) {
-            return;
-        }
-
-        try (Reader reader = Files.newBufferedReader(savePath, StandardCharsets.UTF_8)) {
-            JsonObject root = JsonParser.parseReader(reader).getAsJsonObject();
-            hiddenFramesByWorld.clear();
-
-            for (Map.Entry<String, JsonElement> entry : root.entrySet()) {
-                String worldKey = entry.getKey();
-                JsonArray positions = entry.getValue().getAsJsonArray();
-                Set<BlockPos> posSet = new HashSet<>();
-                for (JsonElement elem : positions) {
-                    JsonObject obj = elem.getAsJsonObject();
-                    int x = obj.get("x").getAsInt();
-                    int y = obj.get("y").getAsInt();
-                    int z = obj.get("z").getAsInt();
-                    posSet.add(new BlockPos(x, y, z));
+                String worldId = LevelUtils.getCurrentWorldKey(level);
+                if (root.has(worldId)) {
+                    JsonArray positions = root.getAsJsonArray(worldId);
+                    for (JsonElement elem : positions) {
+                        JsonObject obj = elem.getAsJsonObject();
+                        int x = obj.get("x").getAsInt();
+                        int y = obj.get("y").getAsInt();
+                        int z = obj.get("z").getAsInt();
+                        currentWorldHiddenFrames.add(new BlockPos(x, y, z));
+                    }
                 }
-                hiddenFramesByWorld.put(worldKey, posSet);
+            } catch (Exception e) {
+                LOGGER.error("[BetterClient] Failed to load item frame data: ", e);
             }
-        } catch (Exception e) {
-            LOGGER.error("[BetterClient] 加载展示框数据失败: ", e);
         }
     }
 
-    private static Path getSavePath() {
-        Minecraft client = Minecraft.getInstance();
-        return client.gameDirectory.toPath().resolve("better-client").resolve("item_frame_visibility.json");
+    /**
+     * Saves the current world's data to file asynchronously.
+     * Reads the existing file, updates the current world key, and writes back.
+     */
+    private static void saveToFileAsync() {
+        // Create a snapshot of the set to avoid ConcurrentModificationException during async write
+        final Set<BlockPos> framesSnapshot;
+        synchronized (currentWorldHiddenFrames) {
+            framesSnapshot = new HashSet<>(currentWorldHiddenFrames);
+        }
+
+        CompletableFuture.runAsync(() -> {
+            try {
+                if (Files.notExists(BASE_PATH)) {
+                    Files.createDirectories(BASE_PATH);
+                }
+
+                // 1. Read existing data (to preserve other worlds)
+                JsonObject root;
+                if (Files.exists(ITEM_FRAME_INVISIBILITY_PATH)) {
+                    try (Reader reader =
+                            Files.newBufferedReader(ITEM_FRAME_INVISIBILITY_PATH, StandardCharsets.UTF_8)) {
+                        root = JsonUtils.GSON.fromJson(reader, JsonObject.class);
+                    } catch (Exception e) {
+                        root = new JsonObject();
+                    }
+                } else {
+                    root = new JsonObject();
+                }
+
+                if (root == null) root = new JsonObject();
+
+                // 2. Update current world data
+                JsonArray positions = new JsonArray();
+                for (BlockPos pos : framesSnapshot) {
+                    JsonObject p = new JsonObject();
+                    p.addProperty("x", pos.getX());
+                    p.addProperty("y", pos.getY());
+                    p.addProperty("z", pos.getZ());
+                    positions.add(p);
+                }
+                root.add(LevelUtils.getCurrentWorldKey(), positions);
+
+                // 3. Write back to file
+                Files.writeString(ITEM_FRAME_INVISIBILITY_PATH, JsonUtils.GSON.toJson(root), StandardCharsets.UTF_8);
+
+            } catch (IOException e) {
+                LOGGER.warn("[BetterClient] Failed to save item frame data", e);
+            }
+        });
     }
 }

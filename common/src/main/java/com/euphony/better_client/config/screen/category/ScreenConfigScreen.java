@@ -125,6 +125,12 @@ public class ScreenConfigScreen {
                 () -> config.enableUndergroundUpdate,
                 newVal -> config.enableUndergroundUpdate = newVal);
 
+        Option<Boolean> enableFirstEntryOnlyOpt = ConfigUtils.buildBooleanOption(
+                "enableFirstEntryOnly",
+                DEFAULTS.enableFirstEntryOnly,
+                () -> config.enableFirstEntryOnly,
+                newVal -> config.enableFirstEntryOnly = newVal);
+
         // Book Scroll
         Option<Boolean> enableBookScrollOpt = ConfigUtils.buildBooleanOption(
                 "enableBookScroll",
@@ -237,7 +243,8 @@ public class ScreenConfigScreen {
                                         biomeTitleColorOpt,
                                         cooldownTimeOpt,
                                         enableModNameOpt,
-                                        enableUndergroundUpdateOpt))
+                                        enableUndergroundUpdateOpt,
+                                        enableFirstEntryOnlyOpt))
                                 .build())
                         .group(OptionGroup.createBuilder()
                                 .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, BOOK_SCROLL_GROUP))

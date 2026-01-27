@@ -29,10 +29,9 @@ public class EntityMixin {
         if (this.better_client$TARGET instanceof ItemFrame && this.level.isClientSide()) {
             Minecraft client = Minecraft.getInstance();
             LocalPlayer player = client.player;
-            ItemFrameVisibilityManager manager = ItemFrameVisibilityManager.getInstance();
 
             BlockPos entityId = ((ItemFrame) this.better_client$TARGET).getPos();
-            boolean isHidden = manager.isFrameHidden(entityId);
+            boolean isHidden = ItemFrameVisibilityManager.isFrameHidden(entityId);
 
             // 如果物品展示框被标记为隐形
             if (isHidden) {

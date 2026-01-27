@@ -5,7 +5,6 @@ import com.euphony.better_client.client.events.BiomeTitleEvent;
 import com.euphony.better_client.client.events.BundleUpEvent;
 import com.euphony.better_client.client.events.WorldIconUpdateEvent;
 import com.euphony.better_client.client.property.AxolotlBucketVariant;
-import com.euphony.better_client.service.listener.BCResourceReloadListener;
 import com.euphony.better_client.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.neoforged.api.distmarker.Dist;
@@ -16,11 +15,6 @@ import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 
 @EventBusSubscriber(modid = BetterClient.MOD_ID, value = Dist.CLIENT)
 public class BCClientNeoforge {
-    @SubscribeEvent
-    public static void onResourceManagerReload(AddClientReloadListenersEvent event) {
-        event.addListener(Utils.prefix("clear_name_cache"), new BCResourceReloadListener());
-    }
-
     @SubscribeEvent
     public static void onRegisterGuiLayers(RegisterGuiLayersEvent event) {
         event.registerAbove(VanillaGuiLayers.TITLE, Utils.prefix("biome_title"), BiomeTitleEvent::renderBiomeInfo);

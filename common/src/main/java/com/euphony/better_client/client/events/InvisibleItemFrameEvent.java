@@ -30,14 +30,14 @@ public class InvisibleItemFrameEvent {
         }
 
         if (isKeyPressed && !wasKeyPressed) {
-            fullBrightnessToggle(minecraft);
+            invisibleItemFrameToggle(minecraft);
         }
 
         wasKeyPressed = isKeyPressed;
     }
 
-    public static void fullBrightnessToggle(Minecraft minecraft) {
+    public static void invisibleItemFrameToggle(Minecraft minecraft) {
         ItemFrame frame = (ItemFrame) minecraft.crosshairPickEntity;
-        ItemFrameVisibilityManager.getInstance().toggleFrameVisibility(frame.getPos());
+        ItemFrameVisibilityManager.toggleFrameVisibility(frame.getPos());
     }
 }

@@ -1,6 +1,13 @@
 package com.euphony.better_client.client.events;
 
+import com.euphony.better_client.utils.JsonUtils;
 import com.euphony.better_client.utils.mc.BiomeUtils;
+import com.euphony.better_client.utils.mc.DataUtils;
+import com.euphony.better_client.utils.mc.LevelUtils;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -8,24 +15,34 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.biome.Biome;
 import org.joml.Matrix3x2fStack;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.IOException;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 
+import static com.euphony.better_client.BetterClient.LOGGER;
 import static com.euphony.better_client.BetterClient.config;
 
 public class BiomeTitleEvent {
-    // 常量定义
+    // Constants
     private static final int MAX_ALPHA = 255;
     private static final int TICKS_PER_SECOND = 20;
 
-    // 状态变量
+    // State Variables
     private static Biome previousBiome;
     private static ResourceKey<Biome> displayBiome;
     private static int displayTime = 0;
@@ -35,13 +52,91 @@ public class BiomeTitleEvent {
     private static boolean complete = false;
     private static boolean fadingIn = false;
 
-    // 缓存
-    public static final Map<ResourceKey<Biome>, Component> NAME_CACHE = new HashMap<>();
+    private static final Set<ResourceKey<Biome>> VISITED_BIOMES = Collections.synchronizedSet(new HashSet<>());
+
+    // File Paths
+    private static final Path BASE_PATH = DataUtils.getDataDir();
+    private static final Path BIOME_VISITS_PATH = BASE_PATH.resolve("biome_visits.json");
 
     private BiomeTitleEvent() {}
 
+    /**
+     * Saves visited biome data to a JSON file asynchronously.
+     * Moved to a background thread to prevent game freeze/stutter during rendering.
+     */
+    private static void saveBiomeVisits() {
+        if (!config.enableFirstEntryOnly) return;
+
+        // Run I/O in a separate thread
+        CompletableFuture.runAsync(() -> {
+            try {
+                if (Files.notExists(BASE_PATH)) {
+                    Files.createDirectories(BASE_PATH);
+                }
+
+                JsonObject root;
+                if (Files.exists(BIOME_VISITS_PATH)) {
+                    try (Reader reader = Files.newBufferedReader(BIOME_VISITS_PATH, StandardCharsets.UTF_8)) {
+                        root = JsonUtils.GSON.fromJson(reader, JsonObject.class);
+                    }
+                    if (root == null) root = new JsonObject();
+                } else {
+                    root = new JsonObject();
+                }
+
+                String worldId = LevelUtils.getCurrentWorldKey();
+
+                JsonArray biomeArray = new JsonArray();
+                synchronized (VISITED_BIOMES) {
+                    for (ResourceKey<Biome> biome : VISITED_BIOMES) {
+                        biomeArray.add(biome.identifier().toString());
+                    }
+                }
+                root.add(worldId, biomeArray);
+
+                Files.writeString(BIOME_VISITS_PATH, JsonUtils.GSON.toJson(root), StandardCharsets.UTF_8);
+            } catch (IOException e) {
+                LOGGER.error("Couldn't save biome visits: ", e);
+            }
+        });
+    }
+
+    /**
+     * Loads visited biome data from disk.
+     */
+    private static void loadBiomeVisits(ClientLevel level) {
+        if (!config.enableFirstEntryOnly) return;
+
+        // Corrected logic: Return if file does NOT exist
+        if (Files.notExists(BIOME_VISITS_PATH)) return;
+
+        try (Reader reader = Files.newBufferedReader(BIOME_VISITS_PATH, StandardCharsets.UTF_8)) {
+            JsonObject root = JsonParser.parseReader(reader).getAsJsonObject();
+
+            VISITED_BIOMES.clear();
+
+            String worldId = LevelUtils.getCurrentWorldKey(level);
+
+            if (root.has(worldId)) {
+                JsonArray biomes = root.getAsJsonArray(worldId);
+                for (JsonElement elem : biomes) {
+                    Identifier biomeLoc = Identifier.tryParse(elem.getAsString());
+                    if (biomeLoc != null) {
+                        ResourceKey<Biome> biomeKey = ResourceKey.create(Registries.BIOME, biomeLoc);
+                        VISITED_BIOMES.add(biomeKey);
+                    }
+                }
+            }
+        } catch (IOException e) {
+            LOGGER.error("[BetterClient] Couldn't load biome visits: ", e);
+        }
+    }
+
+    /**
+     * Tick update logic.
+     */
     public static void clientPre(Minecraft minecraft) {
-        if (!complete) return;
+        if (!complete || minecraft.isPaused()) return;
 
         if (fadingIn) {
             handleFadeIn();
@@ -50,6 +145,9 @@ public class BiomeTitleEvent {
         }
     }
 
+    /**
+     * Main rendering method.
+     */
     public static void renderBiomeInfo(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
         if (!shouldRender()) return;
 
@@ -74,11 +172,17 @@ public class BiomeTitleEvent {
         }
     }
 
-    public static void clientLevelLoad(ClientLevel clientLevel) {
+    /**
+     * Reset state on level load.
+     */
+    public static void clientLevelLoad(ClientLevel level) {
         complete = true;
+        // Clear runtime cache for fresh start if needed, or just load persistence
+        loadBiomeVisits(level);
     }
 
-    // 私有辅助方法
+    // ================= Private Helper Methods =================
+
     private static void handleFadeIn() {
         if (fadeTimer < config.fadeInTime) {
             fadeTimer++;
@@ -107,6 +211,7 @@ public class BiomeTitleEvent {
     }
 
     private static int calculateAlpha(int timer, int maxTime) {
+        if (maxTime == 0) return MAX_ALPHA;
         return (int) ((float) MAX_ALPHA / maxTime * timer);
     }
 
@@ -115,10 +220,31 @@ public class BiomeTitleEvent {
     }
 
     private static boolean shouldUpdateBiome(Biome currentBiome, BlockPos pos, Minecraft mc) {
-        if (previousBiome == currentBiome || cooldownTime > 0) return false;
+        if (previousBiome == currentBiome || cooldownTime > 0 || mc.level == null) return false;
 
         boolean isUnderground = mc.level.dimensionType().hasSkyLight() && !mc.level.canSeeSky(pos);
-        return config.enableUndergroundUpdate || !isUnderground;
+        if (!(config.enableUndergroundUpdate || !isUnderground)) return false;
+
+        // Check if we should only display on first entry
+        if (config.enableFirstEntryOnly) {
+            Holder<Biome> biomeHolder = mc.level.getBiome(pos);
+            return biomeHolder
+                    .unwrapKey()
+                    .map(key -> {
+                        synchronized (VISITED_BIOMES) {
+                            if (VISITED_BIOMES.contains(key)) {
+                                return false;
+                            }
+                            VISITED_BIOMES.add(key);
+                        }
+                        // Save asynchronously
+                        saveBiomeVisits();
+                        return true;
+                    })
+                    .orElse(false);
+        }
+
+        return true;
     }
 
     private static void updateBiomeDisplay(Holder<Biome> biomeHolder) {
@@ -141,8 +267,11 @@ public class BiomeTitleEvent {
         Font font = mc.font;
         float scale = (float) config.scale;
 
+        // Use PoseStack (standard MC mapping)
         Matrix3x2fStack pose = guiGraphics.pose();
         pose.pushMatrix();
+
+        // Center on screen
         pose.translate((float) (guiGraphics.guiWidth() / 2D), (float) (guiGraphics.guiHeight() / 2D));
         pose.scale(scale, scale);
 
@@ -150,7 +279,9 @@ public class BiomeTitleEvent {
         int textWidth = font.width(biomeName);
         int y = -font.wordWrapHeight(FormattedText.of(biomeName.getString()), 999) / 2 + config.biomeTitleYOffset;
 
+        // Render text centered
         guiGraphics.drawString(font, biomeName, (-textWidth / 2), y, config.biomeTitleColor | (alpha << 24), true);
+
         pose.popMatrix();
     }
 
@@ -159,6 +290,6 @@ public class BiomeTitleEvent {
     }
 
     private static Component getBiomeName(ResourceKey<Biome> key) {
-        return NAME_CACHE.computeIfAbsent(key, k -> BiomeUtils.createBiomeDisplayComponent(k, config.enableModName));
+        return BiomeUtils.createBiomeDisplayComponent(key, config.enableModName);
     }
 }

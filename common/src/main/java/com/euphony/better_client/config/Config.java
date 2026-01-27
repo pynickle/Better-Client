@@ -55,6 +55,7 @@ public class Config {
     public double cooldownTime = 1.5D;
     public boolean enableModName = false;
     public boolean enableUndergroundUpdate = false;
+    public boolean enableFirstEntryOnly = false;
 
     public boolean enableBookScroll = true;
     public int ctrlSpeedMultiplier = 5;

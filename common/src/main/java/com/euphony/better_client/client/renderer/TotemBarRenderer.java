@@ -13,7 +13,7 @@ import net.minecraft.world.item.Items;
 import static com.euphony.better_client.BetterClient.config;
 
 public class TotemBarRenderer {
-    private static final Identifier TEX_FULL  = Utils.prefix("textures/gui/sprites/totem.png");
+    private static final Identifier TEX_FULL = Utils.prefix("textures/gui/sprites/totem.png");
     private static final Identifier TEX_EMPTY = Utils.prefix("textures/gui/sprites/totem_empty.png");
 
     public static void render(GuiGraphics ctx, DeltaTracker tickCounter) {
@@ -26,7 +26,7 @@ public class TotemBarRenderer {
         int totInventory = client.player.getInventory().countItem(Items.TOTEM_OF_UNDYING);
         int handTotems = 0;
         if (client.player.getMainHandItem().is(Items.TOTEM_OF_UNDYING)) handTotems++;
-        if (client.player.getOffhandItem().is(Items.TOTEM_OF_UNDYING))  handTotems++;
+        if (client.player.getOffhandItem().is(Items.TOTEM_OF_UNDYING)) handTotems++;
 
         drawIcons(ctx, totInventory, handTotems);
     }
@@ -57,20 +57,14 @@ public class TotemBarRenderer {
         y -= getTotemBarYOffset(client, iconSize + ySpace);
 
         for (int i = 0; i < total; i++) {
-            boolean isFull = switch (config.totemBarRenderMode) {
-                case INVENTORY_ONLY -> true;
-                case COMBINED -> i >= (total - hand);
-            };
+            boolean isFull =
+                    switch (config.totemBarRenderMode) {
+                        case INVENTORY_ONLY -> true;
+                        case COMBINED -> i >= (total - hand);
+                    };
             Identifier tex = isFull ? TEX_FULL : TEX_EMPTY;
 
-            ctx.blit(
-                    tex,
-                    x0 + i * step,
-                    y,
-                    x0 + i * step + iconSize,
-                    y + iconSize,
-                    0f, 1f, 0f, 1f
-            );
+            ctx.blit(tex, x0 + i * step, y, x0 + i * step + iconSize, y + iconSize, 0f, 1f, 0f, 1f);
         }
     }
 

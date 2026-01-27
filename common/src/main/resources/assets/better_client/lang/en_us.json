@@ -116,6 +116,8 @@
   "yacl3.config.better_client:config.enableModName.desc": "Displays the mod name after the biome name.",
   "yacl3.config.better_client:config.enableUndergroundUpdate": "Enable Underground Update",
   "yacl3.config.better_client:config.enableUndergroundUpdate.desc": "Also displays the title when the player is underground.",
+  "yacl3.config.better_client:config.enableFirstEntryOnly": "Enable First Entry Only",
+  "yacl3.config.better_client:config.enableFirstEntryOnly.desc": "Only display the biome title when entering a biome for the first time.",
 
   "yacl3.config.better_client:config.category.client.group.faster_climbing": "Faster Climbing",
   "yacl3.config.better_client:config.enableFasterClimbing": "Enable Faster Climbing",

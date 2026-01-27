@@ -3,7 +3,6 @@ package com.euphony.better_client.fabric.client;
 import com.euphony.better_client.client.events.BiomeTitleEvent;
 import com.euphony.better_client.client.events.BundleUpEvent;
 import com.euphony.better_client.client.property.AxolotlBucketVariant;
-import com.euphony.better_client.service.listener.BCResourceReloadListener;
 import com.euphony.better_client.utils.Utils;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
@@ -19,8 +18,6 @@ public final class BetterClientFabricClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         HudElementRegistry.addFirst(Identifier.withDefaultNamespace("title"), BiomeTitleEvent::renderBiomeInfo);
-        ResourceLoader.get(PackType.CLIENT_RESOURCES)
-                .registerReloader(Utils.prefix("name_cache_clear"), new BCResourceReloadListener());
 
         SelectItemModelProperties.ID_MAPPER.put(Utils.prefix("variant"), AxolotlBucketVariant.TYPE);
 

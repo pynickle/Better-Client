@@ -116,6 +116,8 @@
   "yacl3.config.better_client:config.enableModName.desc": "生物群系名称后显示模组名称。",
   "yacl3.config.better_client:config.enableUndergroundUpdate": "启用地下更新",
   "yacl3.config.better_client:config.enableUndergroundUpdate.desc": "当玩家处于地下时，也会显示标题。",
+  "yacl3.config.better_client:config.enableFirstEntryOnly": "仅首次进入时显示",
+  "yacl3.config.better_client:config.enableFirstEntryOnly.desc": "仅在首次进入生物群系时显示生物群系标题。",
 
   "yacl3.config.better_client:config.category.client.group.faster_climbing": "更快的爬梯",
   "yacl3.config.better_client:config.enableFasterClimbing": "启用更快的爬梯",
