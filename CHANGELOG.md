@@ -1,3 +1,17 @@
+## [8.2.0](https://github.com/pynickle/Better-Client/compare/v8.1.0...v8.2.0) (2026-01-28)
+
+### ✨ Features
+
+* add biome title for only first entry ([92caa82](https://github.com/pynickle/Better-Client/commit/92caa82046843f507dc5c3667841323f3ef8f06b))
+
+### 💄 Style Improvements
+
+* standardize portions of the code ([f4d47cf](https://github.com/pynickle/Better-Client/commit/f4d47cf3da68801c319639d6ba2826a2a797b73b))
+
+### 🔧 Miscellaneous Changes
+
+* fix build issue ([51fa6e5](https://github.com/pynickle/Better-Client/commit/51fa6e59e852e15198b39c5416b759b32315fe29))
+
 ## [8.1.0](https://github.com/pynickle/Better-Client/compare/v8.0.0...v8.1.0) (2025-12-31)
 
 ### ✨ Features
