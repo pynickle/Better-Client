@@ -25,7 +25,7 @@ public class VisualityConfigScreen {
     private static final String FULL_BRIGHTNESS_TOGGLE_GROUP = "full_brightness_toggle";
     private static final String TRAIL_SPAWNER_TIMER_GROUP = "trial_spawner_timer";
     private static final String INVISIBLE_ITEM_FRAME_GROUP = "invisible_item_frame";
-    private static final String CLIENT_WEATHER_GROUP = "client_weather_group";
+    private static final String CLIENT_WEATHER_GROUP = "client_weather";
 
     public static Screen generateScreen(Screen parent) {
         // Fading Night Vision
