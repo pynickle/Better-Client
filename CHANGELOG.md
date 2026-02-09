@@ -1,3 +1,9 @@
+## [8.2.1](https://github.com/pynickle/Better-Client/compare/v8.2.0...v8.2.1) (2026-02-09)
+
+### 🐛 Bug Fixes
+
+* fix wrong group name ([4514f59](https://github.com/pynickle/Better-Client/commit/4514f5990fd32c2cbfd0e450e7582943e5fbbfd5))
+
 ## [8.2.0](https://github.com/pynickle/Better-Client/compare/v8.1.0...v8.2.0) (2026-01-28)
 
 ### ✨ Features
