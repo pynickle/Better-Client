@@ -227,11 +227,11 @@ public class ScreenConfigScreen {
                         .name(ConfigUtils.getCategoryName(CLIENT_CATEGORY))
                         .group(OptionGroup.createBuilder()
                                 .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, BETTER_PING_DISPLAY_GROUP))
-                                .options(java.util.List.of(enableBetterPingDisplayOpt, enableDefaultPingBarsOpt))
+                                .options(List.of(enableBetterPingDisplayOpt, enableDefaultPingBarsOpt))
                                 .build())
                         .group(OptionGroup.createBuilder()
                                 .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, BIOME_TITLE_GROUP))
-                                .options(java.util.List.of(
+                                .options(List.of(
                                         enableBiomeTitleOpt,
                                         hideInF1Opt,
                                         hideInF3Opt,

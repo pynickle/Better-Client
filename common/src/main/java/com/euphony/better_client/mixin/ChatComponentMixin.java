@@ -56,7 +56,9 @@ public abstract class ChatComponentMixin {
         return offset;
     }
 
-    @ModifyConstant(method = "render(Lnet/minecraft/client/gui/components/ChatComponent$ChatGraphicsAccess;IIZ)V", constant = @Constant(intValue = 40))
+    @ModifyConstant(
+            method = "render(Lnet/minecraft/client/gui/components/ChatComponent$ChatGraphicsAccess;IIZ)V",
+            constant = @Constant(intValue = 40))
     private int textBottomOffset(int constant) {
         return constant + better_client$getOffset();
     }

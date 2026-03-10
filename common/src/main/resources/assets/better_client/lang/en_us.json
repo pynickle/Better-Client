@@ -20,7 +20,8 @@
   "key.better_client.full_brightness_toggle": "Full Brightness Toggle",
   "key.better_client.item_frame_invisibility_toggle": "Item Frame Invisibility Toggle",
 
-  "info.better_client.durability_tooltip.number.durability_hint": "Durability: %s",
+  "info.better_client.durability_tooltip.durability_hint": "Durability: %s",
+  "info.better_client.durability_tooltip.percentage": "%d",
   "info.better_client.durability_tooltip.number.full_durability": "%d",
   "info.better_client.durability_tooltip.number.damaged": "%1$d / %2$d",
 
@@ -188,10 +189,12 @@
   "yacl3.config.better_client:config.category.client.group.durability_tooltip": "Durability Tooltip",
   "yacl3.config.better_client:config.enableDurabilityTooltip": "Enable Durability Tooltip",
   "yacl3.config.better_client:config.enableDurabilityTooltip.desc": "Adds durability information to tooltips for damageable items.",
+  "yacl3.config.better_client:config.durabilityTooltipStyle": "Durability Tooltip Style",
+  "yacl3.config.better_client:config.durabilityTooltipStyle.desc": "Determines how durability information is displayed in tooltips.",
   "yacl3.config.better_client:config.showDurabilityWhenNotDamaged": "Show Durability When Not Damaged",
   "yacl3.config.better_client:config.showDurabilityWhenNotDamaged.desc": "Also display durability for undamaged items.",
   "yacl3.config.better_client:config.showDurabilityHint": "Show Durability Hint",
-  "yacl3.config.better_client:config.showDurabilityHint.desc": "Display a durability text prefix.",
+  "yacl3.config.better_client:config.showDurabilityHint.desc": "Display a durability text prefix for number and percentage style.",
 
   "yacl3.config.better_client:config.category.client.group.compass_tooltip": "Compass Tooltip",
   "yacl3.config.better_client:config.enableCompassTooltip": "Enable Compass Tooltip",

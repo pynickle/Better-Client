@@ -20,7 +20,8 @@
   "key.better_client.full_brightness_toggle": "全亮切换",
   "key.better_client.item_frame_invisibility_toggle": "物品展示框隐形切换",
 
-  "info.better_client.durability_tooltip.number.durability_hint": "耐久度：%s",
+  "info.better_client.durability_tooltip.durability_hint": "耐久度：%s",
+  "info.better_client.durability_tooltip.percentage": "%d",
   "info.better_client.durability_tooltip.number.full_durability": "%d",
   "info.better_client.durability_tooltip.number.damaged": "%1$d / %2$d",
 
@@ -188,10 +189,12 @@
   "yacl3.config.better_client:config.category.client.group.durability_tooltip": "耐久提示",
   "yacl3.config.better_client:config.enableDurabilityTooltip": "启用耐久提示",
   "yacl3.config.better_client:config.enableDurabilityTooltip.desc": "可损坏物品的提示将显示耐久信息。",
+  "yacl3.config.better_client:config.durabilityTooltipStyle": "耐久提示样式",
+  "yacl3.config.better_client:config.durabilityTooltipStyle.desc": "决定耐久信息在提示里的显示方式。",
   "yacl3.config.better_client:config.showDurabilityWhenNotDamaged": "未损坏时显示耐久",
   "yacl3.config.better_client:config.showDurabilityWhenNotDamaged.desc": "未损坏物品也将显示耐久。",
   "yacl3.config.better_client:config.showDurabilityHint": "显示耐久文本前缀",
-  "yacl3.config.better_client:config.showDurabilityHint.desc": "显示耐久文本前缀。",
+  "yacl3.config.better_client:config.showDurabilityHint.desc": "为数字和百分比样式显示耐久文本前缀。",
 
   "yacl3.config.better_client:config.category.client.group.compass_tooltip": "指南针提示",
   "yacl3.config.better_client:config.enableCompassTooltip": "启用指南针提示",

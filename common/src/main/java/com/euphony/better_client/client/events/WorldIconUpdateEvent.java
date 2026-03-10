@@ -26,8 +26,9 @@ public class WorldIconUpdateEvent {
     }
 
     private static void captureCleanScreenshot(Path path) {
-        Screenshot.takeScreenshot(Minecraft.getInstance().getMainRenderTarget(), (nativeImage) -> Util.ioPool()
-                .execute(() -> {
+        Screenshot.takeScreenshot(
+                Minecraft.getInstance().getMainRenderTarget(),
+                (nativeImage) -> Util.ioPool().execute(() -> {
                     int i = nativeImage.getWidth();
                     int j = nativeImage.getHeight();
                     int k = 0;

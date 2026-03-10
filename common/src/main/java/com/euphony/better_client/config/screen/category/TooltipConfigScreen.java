@@ -2,10 +2,12 @@ package com.euphony.better_client.config.screen.category;
 
 import com.euphony.better_client.config.Config;
 import com.euphony.better_client.config.ConfigUtils;
+import com.euphony.better_client.utils.enums.DurabilityTooltipStyle;
 import dev.isxander.yacl3.api.ConfigCategory;
 import dev.isxander.yacl3.api.Option;
 import dev.isxander.yacl3.api.OptionGroup;
 import dev.isxander.yacl3.api.YetAnotherConfigLib;
+import dev.isxander.yacl3.api.controller.EnumControllerBuilder;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
@@ -27,6 +29,12 @@ public class TooltipConfigScreen {
                 DEFAULTS.enableDurabilityTooltip,
                 () -> config.enableDurabilityTooltip,
                 newVal -> config.enableDurabilityTooltip = newVal);
+        Option<DurabilityTooltipStyle> durabilityTooltipStyleOpt = ConfigUtils.<DurabilityTooltipStyle>getGenericOption("durabilityTooltipStyle")
+                .binding(DEFAULTS.durabilityTooltipStyle, () -> config.durabilityTooltipStyle, newVal -> config.durabilityTooltipStyle = newVal)
+                .controller(opt -> EnumControllerBuilder.create(opt)
+                        .enumClass(DurabilityTooltipStyle.class)
+                        .formatValue(ConfigUtils.DURABILITY_TOOLTIP_STYLE_VALUE_FORMATTER))
+                .build();
         Option<Boolean> showDurabilityWhenNotDamagedOpt = ConfigUtils.buildBooleanOption(
                 "showDurabilityWhenNotDamaged",
                 DEFAULTS.showDurabilityWhenNotDamaged,
@@ -78,6 +86,7 @@ public class TooltipConfigScreen {
                                 .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, DURABILITY_TOOLTIP_GROUP))
                                 .options(List.of(
                                         enableDurabilityTooltipOpt,
+                                        durabilityTooltipStyleOpt,
                                         showDurabilityWhenNotDamagedOpt,
                                         showDurabilityHintOpt))
                                 .build())

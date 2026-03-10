@@ -4,6 +4,7 @@ import com.euphony.better_client.BetterClient;
 import com.euphony.better_client.config.option.TotemBarRenderMode;
 import com.euphony.better_client.config.option.TradingHudPos;
 import com.euphony.better_client.utils.Utils;
+import com.euphony.better_client.utils.enums.DurabilityTooltipStyle;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dev.architectury.platform.Platform;
@@ -74,6 +75,7 @@ public class Config {
     public boolean enableBundleUp = true;
 
     public boolean enableDurabilityTooltip = true;
+    public DurabilityTooltipStyle durabilityTooltipStyle = DurabilityTooltipStyle.NUMBER;
     public boolean showDurabilityWhenNotDamaged = true;
     public boolean showDurabilityHint = true;
 
