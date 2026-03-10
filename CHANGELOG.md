@@ -1,3 +1,13 @@
+## [8.3.0](https://github.com/pynickle/Better-Client/compare/v8.2.1...v8.3.0) (2026-03-10)
+
+### ✨ Features
+
+* add durability tooltip style config ([2677527](https://github.com/pynickle/Better-Client/commit/2677527495d91eca80b4722909db5ac48dc05759))
+
+### 🚀 Improvements
+
+* improve enum config value display ([9c142d5](https://github.com/pynickle/Better-Client/commit/9c142d5fdf4b5ad386858bc8980783142c8cbd46))
+
 ## [8.2.1](https://github.com/pynickle/Better-Client/compare/v8.2.0...v8.2.1) (2026-02-09)
 
 ### 🐛 Bug Fixes
