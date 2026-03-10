@@ -5,6 +5,7 @@ import com.euphony.better_client.config.option.TotemBarRenderMode;
 import com.euphony.better_client.config.option.TradingHudPos;
 import com.euphony.better_client.utils.Utils;
 import com.euphony.better_client.utils.enums.DescComponent;
+import com.euphony.better_client.utils.enums.DurabilityTooltipStyle;
 import dev.isxander.yacl3.api.ButtonOption;
 import dev.isxander.yacl3.api.Option;
 import dev.isxander.yacl3.api.OptionDescription;
@@ -27,16 +28,20 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+import static com.euphony.better_client.utils.StringUtils.toTitleCase;
+
 public class ConfigUtils {
     public static final int IMG_WIDTH = 1920;
     public static final int IMG_HEIGHT = 991;
 
     private static final Map<Identifier, int[]> IMAGE_DIMENSIONS_CACHE = new HashMap<>();
 
-    public static final ValueFormatter<TradingHudPos> TRADING_HUD_POS_VALUE_FORMATTER = formatting ->
-            Component.literal(StringUtils.capitalize(formatting.name().replaceAll("_", " ")));
-    public static final ValueFormatter<TotemBarRenderMode> TOTEM_BAR_RENDER_MODE_VALUE_FORMATTER = formatting ->
-            Component.literal(StringUtils.capitalize(formatting.name().replaceAll("_", " ")));
+    public static final ValueFormatter<TradingHudPos> TRADING_HUD_POS_VALUE_FORMATTER =
+            value -> Component.literal(toTitleCase(value.name()));
+    public static final ValueFormatter<DurabilityTooltipStyle> DURABILITY_TOOLTIP_STYLE_VALUE_FORMATTER =
+            value -> Component.literal(toTitleCase(value.name()));
+    public static final ValueFormatter<TotemBarRenderMode> TOTEM_BAR_RENDER_MODE_VALUE_FORMATTER =
+            value -> Component.literal(toTitleCase(value.name()));
 
     public static ButtonOption.Builder getButtonOption(String name) {
         return ButtonOption.createBuilder()
