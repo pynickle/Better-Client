@@ -1,3 +1,9 @@
+## [8.4.0](https://github.com/pynickle/Better-Client/compare/v8.3.0...v8.4.0) (2026-03-11)
+
+### ✨ Features
+
+* add dropped glowing ender eye ([696c0e3](https://github.com/pynickle/Better-Client/commit/696c0e3fc288018b83f99596eb331b6266faa8be))
+
 ## [8.3.0](https://github.com/pynickle/Better-Client/compare/v8.2.1...v8.3.0) (2026-03-10)
 
 ### ✨ Features
