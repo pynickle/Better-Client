@@ -6,6 +6,7 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.decoration.ItemFrame;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
@@ -14,6 +15,8 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import static com.euphony.better_client.BetterClient.config;
 
 @Mixin(Entity.class)
 public class EntityMixin {
@@ -42,6 +45,22 @@ public class EntityMixin {
                     cir.setReturnValue(true);
                 }
             }
+        }
+    }
+
+    @Inject(
+            method = "isCurrentlyGlowing",
+            at = @At("RETURN"),
+            cancellable = true
+    )
+    private void makeDroppedEnderEyeGlowing(CallbackInfoReturnable<Boolean> cir) {
+        Entity self = (Entity) (Object) this;
+
+        if (self instanceof ItemEntity itemEntity
+                && config.enableDroppedGlowingEnderEye
+                && itemEntity.getItem().is(Items.ENDER_EYE)
+                && self.level().isClientSide()) {
+            cir.setReturnValue(true);
         }
     }
 }

@@ -61,6 +61,8 @@
   "yacl3.config.better_client:config.category.client.group.glowing_ender_eye": "Glowing Ender Eye",
   "yacl3.config.better_client:config.enableGlowingEnderEye": "Enable Glowing Ender Eye",
   "yacl3.config.better_client:config.enableGlowingEnderEye.desc": "Thrown Eyes of Ender glow, making them easier to see in dark environments.",
+  "yacl3.config.better_client:config.enableDroppedGlowingEnderEye": "Enable Dropped Glowing Ender Eye",
+  "yacl3.config.better_client:config.enableDroppedGlowingEnderEye.desc": "Dropped Eyes of Ender also glow, making them easier to find after being thrown.",
 
   "yacl3.config.better_client:config.category.client.group.full_brightness_toggle": "Full Brightness Toggle",
   "yacl3.config.better_client:config.enableFullBrightnessToggle": "Enable Full Brightness Toggle",

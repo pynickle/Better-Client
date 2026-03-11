@@ -52,6 +52,12 @@ public class VisualityConfigScreen {
                 () -> config.enableGlowingEnderEye,
                 newVal -> config.enableGlowingEnderEye = newVal);
 
+        Option<Boolean> enableDroppedGlowingEnderEyeOpt = ConfigUtils.buildBooleanOption(
+                "enableDroppedGlowingEnderEye",
+                DEFAULTS.enableDroppedGlowingEnderEye,
+                () -> config.enableDroppedGlowingEnderEye,
+                newVal -> config.enableDroppedGlowingEnderEye = newVal);
+
         // Full Brightness Toggle
         Option<Boolean> enableFullBrightnessToggleOpt = ConfigUtils.buildBooleanOption(
                 "enableFullBrightnessToggle",
@@ -130,7 +136,7 @@ public class VisualityConfigScreen {
                                 .build())
                         .group(OptionGroup.createBuilder()
                                 .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, GLOWING_ENDER_EYE_GROUP))
-                                .options(List.of(enableGlowingEnderEyeOpt))
+                                .options(List.of(enableGlowingEnderEyeOpt, enableDroppedGlowingEnderEyeOpt))
                                 .build())
                         .group(OptionGroup.createBuilder()
                                 .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, FULL_BRIGHTNESS_TOGGLE_GROUP))
