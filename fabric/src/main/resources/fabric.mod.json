@@ -37,5 +37,6 @@
   "suggests": {
     "yet_another_config_lib_v3": ">=3.6",
     "another-mod": "*"
-  }
+  },
+  "accessWidener": "better_client.accesswidener"
 }
