@@ -1,3 +1,9 @@
+## [8.4.1](https://github.com/pynickle/Better-Client/compare/v8.4.0...v8.4.1) (2026-03-13)
+
+### 🐛 Bug Fixes
+
+* fix crash ([09de5c1](https://github.com/pynickle/Better-Client/commit/09de5c1f3e124578f8265bfc9c94f08ec0277021))
+
 ## [8.4.0](https://github.com/pynickle/Better-Client/compare/v8.3.0...v8.4.0) (2026-03-11)
 
 ### ✨ Features
