@@ -1,8 +1,5 @@
 package com.euphony.better_client;
 
-import com.euphony.better_client.client.BCClientCommands;
-import com.euphony.better_client.client.BCClientEvents;
-import com.euphony.better_client.client.init.KeyMapping;
 import com.euphony.better_client.client.resource.ResourceModification;
 import com.euphony.better_client.config.Config;
 import com.mojang.logging.LogUtils;
@@ -15,11 +12,6 @@ public final class BetterClient {
     public static Config config = Config.create();
 
     public static void init() {
-        KeyMapping.registerKeyMapping();
-
         ResourceModification.init();
-
-        BCClientEvents.init();
-        BCClientCommands.init();
     }
 }

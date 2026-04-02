@@ -24,7 +24,7 @@ public abstract class ClientboundBlockUpdatePacketMixin {
     public abstract BlockState getBlockState();
 
     @Inject(method = "handle(Lnet/minecraft/network/protocol/game/ClientGamePacketListener;)V", at = @At("HEAD"))
-    public void onBlockUpdate(ClientGamePacketListener handler, CallbackInfo ci) {
+    public void onBlockUpdate(ClientGamePacketListener listener, CallbackInfo ci) {
         Level level = Minecraft.getInstance().level;
 
         if (getBlockState().getBlock() instanceof AirBlock) {

@@ -20,8 +20,8 @@ import static com.euphony.better_client.BetterClient.config;
 public abstract class ChatComponentMixin {
     @ModifyExpressionValue(
             method = {
-                "addMessageToDisplayQueue(Lnet/minecraft/client/GuiMessage;)V",
-                "addMessageToQueue(Lnet/minecraft/client/GuiMessage;)V",
+                "addMessageToDisplayQueue(Lnet/minecraft/client/multiplayer/chat/GuiMessage;)V",
+                "addMessageToQueue(Lnet/minecraft/client/multiplayer/chat/GuiMessage;)V",
                 "addRecentChat(Ljava/lang/String;)V"
             },
             at = @At(value = "CONSTANT", args = "intValue=100"))
@@ -36,8 +36,8 @@ public abstract class ChatComponentMixin {
             at = {@At("HEAD")},
             method = {"clearMessages(Z)V"},
             cancellable = true)
-    public void clear(boolean clearHistory, CallbackInfo ci) {
-        if (clearHistory && config.enableChatHistoryRetention) {
+    public void clear(boolean history, CallbackInfo ci) {
+        if (history && config.enableChatHistoryRetention) {
             ci.cancel();
         }
     }
@@ -57,7 +57,8 @@ public abstract class ChatComponentMixin {
     }
 
     @ModifyConstant(
-            method = "render(Lnet/minecraft/client/gui/components/ChatComponent$ChatGraphicsAccess;IIZ)V",
+            method =
+                    "extractRenderState(Lnet/minecraft/client/gui/components/ChatComponent$ChatGraphicsAccess;IILnet/minecraft/client/gui/components/ChatComponent$DisplayMode;)V",
             constant = @Constant(intValue = 40))
     private int textBottomOffset(int constant) {
         return constant + better_client$getOffset();

@@ -6,13 +6,11 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.TrialSpawnerRenderer;
-import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
+import net.minecraft.client.renderer.blockentity.state.SpawnerRenderState;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
-import net.minecraft.client.renderer.state.CameraRenderState;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.TrialSpawnerBlock;
-import net.minecraft.world.level.block.entity.trialspawner.TrialSpawnerState;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -30,13 +28,13 @@ public class TrailSpawnerRendererMixin {
 
     @Inject(
             method =
-                    "submit(Lnet/minecraft/client/renderer/blockentity/state/BlockEntityRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;Lnet/minecraft/client/renderer/state/CameraRenderState;)V",
+                    "submit(Lnet/minecraft/client/renderer/blockentity/state/SpawnerRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;Lnet/minecraft/client/renderer/state/level/CameraRenderState;)V",
             at = @At("RETURN"))
     public void onRender(
-            BlockEntityRenderState renderState,
+            SpawnerRenderState state,
             PoseStack poseStack,
-            SubmitNodeCollector nodeCollector,
-            CameraRenderState cameraRenderState,
+            SubmitNodeCollector submitNodeCollector,
+            CameraRenderState camera,
             CallbackInfo ci) {
 
         Minecraft minecraft = Minecraft.getInstance();
@@ -44,14 +42,13 @@ public class TrailSpawnerRendererMixin {
 
         if (level == null) return;
 
-        BlockPos pos = renderState.blockPos;
+        BlockPos pos = state.blockPos;
 
         // 绘制计时器（如果存在）
-        TrialSpawnerTimerRenderer.drawTimer(level, pos, poseStack, nodeCollector, entityRenderer.camera);
+        TrialSpawnerTimerRenderer.drawTimer(level, pos, poseStack, submitNodeCollector, entityRenderer.camera);
 
         if (config.highSensitivityMode) {
-            TrialSpawnerState spawnerState = renderState.blockState.getValue(TrialSpawnerBlock.STATE);
-            TimerHandler.onSpawnerStateUpdate(level, pos, spawnerState);
+            TimerHandler.onSpawnerStateUpdate(level, pos, null);
         }
     }
 }

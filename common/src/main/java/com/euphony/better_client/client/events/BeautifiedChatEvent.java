@@ -1,6 +1,6 @@
 package com.euphony.better_client.client.events;
 
-import dev.architectury.event.CompoundEventResult;
+import com.euphony.better_client.event.CompoundEventResult;
 import net.minecraft.network.chat.ChatType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.HoverEvent;

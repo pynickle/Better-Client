@@ -7,16 +7,15 @@ import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
 import net.minecraft.client.data.models.model.*;
-import net.minecraft.client.renderer.item.BlockModelWrapper;
 import net.minecraft.client.renderer.item.ItemModel;
 import net.minecraft.client.renderer.item.SelectItemModel;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 
-import java.util.Collections;
 import java.util.List;
 
 public class ModelGenerator extends ModelProvider {
@@ -51,7 +50,7 @@ public class ModelGenerator extends ModelProvider {
     public ItemModel.Unbaked createAxolotlBucketModel(String suffix, ItemModelGenerators itemModels) {
         Identifier resourceLocation = Utils.prefix("item/axolotl_bucket" + suffix);
         return ItemModelUtils.plainModel(ModelTemplates.FLAT_ITEM.create(
-                resourceLocation, TextureMapping.layer0(resourceLocation), itemModels.modelOutput));
+                resourceLocation, TextureMapping.layer0(new Material(resourceLocation)), itemModels.modelOutput));
     }
 
     public void itemModel(ItemModelGenerators itemModels, Item item) {
@@ -60,13 +59,10 @@ public class ModelGenerator extends ModelProvider {
 
     public void itemModel(ItemModelGenerators itemModels, Item item, ModelTemplate template) {
         Identifier itemId = BuiltInRegistries.ITEM.getKey(item);
-        Identifier textureLoc =
-                Identifier.fromNamespaceAndPath(itemId.getNamespace(), "item/" + itemId.getPath());
-        TextureMapping textureMapping = new TextureMapping().put(TextureSlot.LAYER0, textureLoc);
+        Identifier textureLoc = Identifier.fromNamespaceAndPath(itemId.getNamespace(), "item/" + itemId.getPath());
+        TextureMapping textureMapping = new TextureMapping().put(TextureSlot.LAYER0, new Material(textureLoc));
         itemModels.itemModelOutput.accept(
-                item,
-                new BlockModelWrapper.Unbaked(
-                        template.create(item, textureMapping, itemModels.modelOutput), Collections.emptyList()));
+                item, ItemModelUtils.plainModel(template.create(item, textureMapping, itemModels.modelOutput)));
     }
 
     public void itemModel(ItemModelGenerators itemModels, Item item, String loc) {
@@ -76,10 +72,8 @@ public class ModelGenerator extends ModelProvider {
     public void itemModel(ItemModelGenerators itemModels, Item item, ModelTemplate template, String loc) {
         Identifier itemId = BuiltInRegistries.ITEM.getKey(item);
         Identifier textureLoc = Identifier.fromNamespaceAndPath(itemId.getNamespace(), "item/" + loc);
-        TextureMapping textureMapping = new TextureMapping().put(TextureSlot.LAYER0, textureLoc);
+        TextureMapping textureMapping = new TextureMapping().put(TextureSlot.LAYER0, new Material(textureLoc));
         itemModels.itemModelOutput.accept(
-                item,
-                new BlockModelWrapper.Unbaked(
-                        template.create(item, textureMapping, itemModels.modelOutput), Collections.emptyList()));
+                item, ItemModelUtils.plainModel(template.create(item, textureMapping, itemModels.modelOutput)));
     }
 }

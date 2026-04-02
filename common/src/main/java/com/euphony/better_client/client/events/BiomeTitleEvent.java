@@ -11,7 +11,7 @@ import com.google.gson.JsonParser;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -148,7 +148,7 @@ public class BiomeTitleEvent {
     /**
      * Main rendering method.
      */
-    public static void renderBiomeInfo(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
+    public static void renderBiomeInfo(GuiGraphicsExtractor guiGraphics, DeltaTracker deltaTracker) {
         if (!shouldRender()) return;
 
         Minecraft mc = Minecraft.getInstance();
@@ -261,7 +261,7 @@ public class BiomeTitleEvent {
         fadingIn = true;
     }
 
-    private static void renderBiomeTitle(GuiGraphics guiGraphics, Minecraft mc) {
+    private static void renderBiomeTitle(GuiGraphicsExtractor guiGraphics, Minecraft mc) {
         if (shouldHideDisplay(mc)) return;
 
         Font font = mc.font;
@@ -280,7 +280,7 @@ public class BiomeTitleEvent {
         int y = -font.wordWrapHeight(FormattedText.of(biomeName.getString()), 999) / 2 + config.biomeTitleYOffset;
 
         // Render text centered
-        guiGraphics.drawString(font, biomeName, (-textWidth / 2), y, config.biomeTitleColor | (alpha << 24), true);
+        guiGraphics.text(font, biomeName, (-textWidth / 2), y, config.biomeTitleColor | (alpha << 24), true);
 
         pose.popMatrix();
     }

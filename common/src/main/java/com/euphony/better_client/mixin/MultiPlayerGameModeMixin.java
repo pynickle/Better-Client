@@ -8,6 +8,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.trading.Merchant;
+import net.minecraft.world.phys.EntityHitResult;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -30,16 +31,20 @@ public abstract class MultiPlayerGameModeMixin {
      */
     @Inject(at = @At("HEAD"), method = "interact")
     public void onInteractWithEntity(
-            Player player, Entity target, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
+            Player player,
+            Entity entity,
+            EntityHitResult hitResult,
+            InteractionHand hand,
+            CallbackInfoReturnable<InteractionResult> cir) {
         if (!config.enableTradingHud) return;
 
-        if (!(target instanceof Merchant)) {
+        if (!(entity instanceof Merchant)) {
             return;
         }
 
         MerchantInfo merchantInfo = MerchantInfo.getInstance();
         merchantInfo.getLastEntityId().ifPresent(lastEntityId -> {
-            if (target.getId() == lastEntityId && !merchantInfo.getOffers().isEmpty()) {
+            if (entity.getId() == lastEntityId && !merchantInfo.getOffers().isEmpty()) {
                 TradingHudEvent.setWindowOpen(true);
             }
         });

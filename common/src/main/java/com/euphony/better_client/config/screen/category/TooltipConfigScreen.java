@@ -29,8 +29,12 @@ public class TooltipConfigScreen {
                 DEFAULTS.enableDurabilityTooltip,
                 () -> config.enableDurabilityTooltip,
                 newVal -> config.enableDurabilityTooltip = newVal);
-        Option<DurabilityTooltipStyle> durabilityTooltipStyleOpt = ConfigUtils.<DurabilityTooltipStyle>getGenericOption("durabilityTooltipStyle")
-                .binding(DEFAULTS.durabilityTooltipStyle, () -> config.durabilityTooltipStyle, newVal -> config.durabilityTooltipStyle = newVal)
+        Option<DurabilityTooltipStyle> durabilityTooltipStyleOpt = ConfigUtils.<DurabilityTooltipStyle>getGenericOption(
+                        "durabilityTooltipStyle")
+                .binding(
+                        DEFAULTS.durabilityTooltipStyle,
+                        () -> config.durabilityTooltipStyle,
+                        newVal -> config.durabilityTooltipStyle = newVal)
                 .controller(opt -> EnumControllerBuilder.create(opt)
                         .enumClass(DurabilityTooltipStyle.class)
                         .formatValue(ConfigUtils.DURABILITY_TOOLTIP_STYLE_VALUE_FORMATTER))

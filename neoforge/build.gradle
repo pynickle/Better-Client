@@ -16,10 +16,9 @@ architectury {
     neoForge()
 }
 
+sourceSets.main.resources { srcDir project(':common').file('src/generated/resources').getAbsolutePath() }
 
 loom {
-    accessWidenerPath = project(":common").loom.accessWidenerPath
-
     runs {
         data {
             clientData()
@@ -29,8 +28,6 @@ loom {
         }
     }
 }
-
-sourceSets.main.resources { srcDir project(':common').file('src/generated/resources').getAbsolutePath() }
 
 configurations {
     common

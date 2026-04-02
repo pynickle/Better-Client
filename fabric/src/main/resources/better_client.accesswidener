@@ -1,11 +1,10 @@
 accessWidener v2 official
 accessible class net/minecraft/client/Options$FieldAccess
 accessible field net/minecraft/world/level/storage/LevelSummary info Lnet/minecraft/network/chat/Component;
-accessible method net/minecraft/client/gui/components/PlayerTabOverlay renderPingIcon (Lnet/minecraft/client/gui/GuiGraphics;IIILnet/minecraft/client/multiplayer/PlayerInfo;)V
 accessible field net/minecraft/world/inventory/MerchantMenu tradeContainer Lnet/minecraft/world/inventory/MerchantContainer;
 accessible field net/minecraft/client/gui/screens/inventory/AbstractContainerScreen hoveredSlot Lnet/minecraft/world/inventory/Slot;
 accessible field net/minecraft/world/inventory/Slot slot I
-accessible method net/minecraft/client/gui/screens/inventory/AbstractContainerScreen slotClicked (Lnet/minecraft/world/inventory/Slot;IILnet/minecraft/world/inventory/ClickType;)V
+accessible method net/minecraft/client/gui/screens/inventory/AbstractContainerScreen slotClicked (Lnet/minecraft/world/inventory/Slot;IILnet/minecraft/world/inventory/ContainerInput;)V
 accessible field net/minecraft/client/Options gamma Lnet/minecraft/client/OptionInstance;
 mutable field net/minecraft/client/Options gamma Lnet/minecraft/client/OptionInstance;
 accessible field net/minecraft/client/OptionInstance value Ljava/lang/Object;

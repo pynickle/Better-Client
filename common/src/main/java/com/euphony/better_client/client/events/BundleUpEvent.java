@@ -13,7 +13,7 @@ import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ChestMenu;
-import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
@@ -83,12 +83,12 @@ public class BundleUpEvent {
 
     public static void performSlotSwap(
             AbstractContainerScreen<?> screen, Slot bundleSlot, Slot targetSlot, Player player) {
-        screen.slotClicked(bundleSlot, 1, 0, ClickType.PICKUP);
+        screen.slotClicked(bundleSlot, 1, 0, ContainerInput.PICKUP);
 
-        screen.slotClicked(targetSlot, 0, 0, ClickType.PICKUP);
+        screen.slotClicked(targetSlot, 0, 0, ContainerInput.PICKUP);
 
         if (!player.containerMenu.getCarried().isEmpty()) {
-            screen.slotClicked(bundleSlot, 1, 0, ClickType.PICKUP);
+            screen.slotClicked(bundleSlot, 1, 0, ContainerInput.PICKUP);
         }
     }
 }

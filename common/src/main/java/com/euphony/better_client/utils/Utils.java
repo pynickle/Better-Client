@@ -1,7 +1,7 @@
 package com.euphony.better_client.utils;
 
 import com.euphony.better_client.BetterClient;
-import dev.architectury.platform.Platform;
+import com.euphony.better_client.platform.Platform;
 import net.minecraft.resources.Identifier;
 
 import java.util.Collection;

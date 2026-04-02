@@ -34,7 +34,7 @@ public abstract class MinecraftMixin {
                             target =
                                     "Lnet/minecraft/client/Minecraft;setScreen(Lnet/minecraft/client/gui/screens/Screen;)V",
                             ordinal = 0))
-    private void onPauseGame(boolean bl, CallbackInfo ci) {
+    private void onPauseGame(boolean suppressPauseMenuIfWeReallyArePausing, CallbackInfo ci) {
         if (config.enableMusicPause) {
             if (config.pauseUiSound) {
                 this.soundManager.pauseAllExcept();

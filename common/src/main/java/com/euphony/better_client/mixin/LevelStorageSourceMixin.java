@@ -22,9 +22,10 @@ import java.nio.file.Path;
 public class LevelStorageSourceMixin {
     @Inject(at = @At("RETURN"), method = "makeLevelSummary")
     public void onMakeLevelSummary(
-            Dynamic<?> dynamic,
+            Dynamic<?> dataTag,
             LevelStorageSource.LevelDirectory levelDirectory,
             boolean locked,
+            int dataVersion,
             CallbackInfoReturnable<LevelSummary> cir) {
         LevelSummary summary = cir.getReturnValue();
         if (!(summary instanceof IHasPlayTime playTimeSummary)) return;
@@ -33,7 +34,7 @@ public class LevelStorageSourceMixin {
         File dir = statsDir.toFile();
         if (!dir.isDirectory()) return;
 
-        File[] files = dir.listFiles((d, name) -> name.endsWith(".json"));
+        File[] files = dir.listFiles((_, name) -> name.endsWith(".json"));
         if (files == null || files.length == 0) return;
 
         int totalTicks = 0;

@@ -4,7 +4,7 @@ import com.euphony.better_client.api.IHasPlayTime;
 import com.euphony.better_client.utils.Utils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.worldselection.WorldSelectionList;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.CommonComponents;
@@ -32,7 +32,7 @@ public class WorldListEntryMixin {
 
     @Shadow
     @Final
-    LevelSummary summary;
+    private LevelSummary summary;
 
     @Redirect(
             method = "getNarration",
@@ -97,9 +97,9 @@ public class WorldListEntryMixin {
         }
     }
 
-    @Inject(at = @At("TAIL"), method = "renderContent")
-    public void renderContent(
-            GuiGraphics guiGraphics, int mouseX, int mouseY, boolean pHovering, float pPartialTick, CallbackInfo ci) {
+    @Inject(at = @At("TAIL"), method = "extractContent")
+    public void extractContent(
+            GuiGraphicsExtractor graphics, int mouseX, int mouseY, boolean hovered, float a, CallbackInfo ci) {
         if (!config.enableWorldPlayTime) return;
 
         if (!(this.summary instanceof IHasPlayTime hasPlayTime)) return;
@@ -123,7 +123,7 @@ public class WorldListEntryMixin {
         int renderY = entry.getContentY();
 
         // 绘制图标
-        guiGraphics.blit(
+        graphics.blit(
                 RenderPipelines.GUI_TEXTURED,
                 WORLD_PLAY_TIME_ICON,
                 renderX,
@@ -136,7 +136,6 @@ public class WorldListEntryMixin {
                 iconSize,
                 config.worldPlayTimeColor);
         // 绘制文字
-        guiGraphics.drawString(
-                mc.font, component, renderX + iconSize + spacing, renderY + 1, config.worldPlayTimeColor, false);
+        graphics.text(mc.font, component, renderX + iconSize + spacing, renderY + 1, config.worldPlayTimeColor, false);
     }
 }

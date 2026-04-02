@@ -2,7 +2,7 @@ package com.euphony.better_client.mixin;
 
 import com.euphony.better_client.utils.ColorUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.PlayerTabOverlay;
 import net.minecraft.client.multiplayer.PlayerInfo;
 import org.spongepowered.asm.mixin.Final;
@@ -26,24 +26,28 @@ public abstract class PlayerTabOverlayMixin {
     @Final
     private Minecraft minecraft;
 
-    @ModifyConstant(method = "render", constant = @Constant(intValue = 13))
+    @Shadow
+    protected abstract void extractPingIcon(
+            GuiGraphicsExtractor graphics, int slotWidth, int xo, int yo, PlayerInfo info);
+
+    @ModifyConstant(method = "extractRenderState", constant = @Constant(intValue = 13))
     private int modifySlotWidthConstant(int original) {
         return original + PLAYER_SLOT_EXTRA_WIDTH;
     }
 
     @Redirect(
-            method = "render",
+            method = "extractRenderState",
             at =
                     @At(
                             value = "INVOKE",
                             target =
-                                    "Lnet/minecraft/client/gui/components/PlayerTabOverlay;renderPingIcon(Lnet/minecraft/client/gui/GuiGraphics;IIILnet/minecraft/client/multiplayer/PlayerInfo;)V"))
+                                    "Lnet/minecraft/client/gui/components/PlayerTabOverlay;extractPingIcon(Lnet/minecraft/client/gui/GuiGraphicsExtractor;IIILnet/minecraft/client/multiplayer/PlayerInfo;)V"))
     private void redirectRenderPingIcon(
-            PlayerTabOverlay overlay, GuiGraphics graphics, int width, int x, int y, PlayerInfo player) {
+            PlayerTabOverlay overlay, GuiGraphicsExtractor graphics, int slotWidth, int xo, int yo, PlayerInfo info) {
         if (config.enableBetterPingDisplay) {
-            better_client$render(minecraft, overlay, graphics, width, x, y, player);
+            better_client$render(minecraft, overlay, graphics, slotWidth, xo, yo, info);
         } else {
-            overlay.renderPingIcon(graphics, width, x, y, player);
+            this.extractPingIcon(graphics, slotWidth, xo, yo, info);
         }
     }
 
@@ -52,7 +56,13 @@ public abstract class PlayerTabOverlayMixin {
 
     @Unique
     private static void better_client$render(
-            Minecraft mc, PlayerTabOverlay overlay, GuiGraphics graphics, int width, int x, int y, PlayerInfo player) {
+            Minecraft mc,
+            PlayerTabOverlay overlay,
+            GuiGraphicsExtractor graphics,
+            int width,
+            int x,
+            int y,
+            PlayerInfo player) {
         String pingString = String.format("%dms", player.getLatency());
         int pingStringWidth = mc.font.width(pingString);
         int pingTextColor = ColorUtils.getPingTextColor(player.getLatency());
@@ -62,10 +72,10 @@ public abstract class PlayerTabOverlayMixin {
             textX += PING_TEXT_RENDER_OFFSET;
         }
 
-        graphics.drawString(mc.font, pingString, textX, y, pingTextColor);
+        graphics.text(mc.font, pingString, textX, y, pingTextColor);
 
         if (config.enableDefaultPingBars) {
-            overlay.renderPingIcon(graphics, width, x, y, player);
+            ((PlayerTabOverlayMixin) (Object) overlay).extractPingIcon(graphics, width, x, y, player);
         }
     }
 }

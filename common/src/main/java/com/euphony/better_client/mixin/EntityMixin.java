@@ -48,11 +48,7 @@ public class EntityMixin {
         }
     }
 
-    @Inject(
-            method = "isCurrentlyGlowing",
-            at = @At("RETURN"),
-            cancellable = true
-    )
+    @Inject(method = "isCurrentlyGlowing", at = @At("RETURN"), cancellable = true)
     private void makeDroppedEnderEyeGlowing(CallbackInfoReturnable<Boolean> cir) {
         Entity self = (Entity) (Object) this;
 

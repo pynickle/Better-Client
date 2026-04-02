@@ -13,15 +13,15 @@ import static com.euphony.better_client.BetterClient.config;
 @Mixin(GameRenderer.class)
 public abstract class GameRendererMixin {
     @ModifyReturnValue(method = "getNightVisionScale", at = @At("RETURN"))
-    private static float getNightVisionScaleModify(float original, LivingEntity livingEntity, float pNanoTime) {
+    private static float getNightVisionScaleModify(float original, LivingEntity camera, float a) {
         if (!config.enableFadingNightVision) return original;
 
         int fadingOutTicks = (int) (config.fadingOutDuration * 20);
-        MobEffectInstance mobeffectinstance = livingEntity.getEffect(MobEffects.NIGHT_VISION);
+        MobEffectInstance mobeffectinstance = camera.getEffect(MobEffects.NIGHT_VISION);
         if (mobeffectinstance != null) {
             return !mobeffectinstance.endsWithin(fadingOutTicks)
                     ? 1.0F
-                    : (1f / fadingOutTicks * (mobeffectinstance.getDuration() - pNanoTime));
+                    : (1f / fadingOutTicks * (mobeffectinstance.getDuration() - a));
         } else {
             return 1.0F;
         }

@@ -2,7 +2,7 @@ package com.euphony.better_client.config.screen;
 
 import com.euphony.better_client.config.screen.category.*;
 import com.euphony.better_client.config.screen.widget.CategoryButton;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
@@ -44,21 +44,19 @@ public class YACLConfigScreen extends Screen {
 
     @Override
     public void onClose() {
-        assert this.minecraft != null;
         this.minecraft.setScreen(this.parent);
     }
 
     @Override
-    public void render(GuiGraphics context, int mouseX, int mouseY, float delta) {
-        super.render(context, mouseX, mouseY, delta);
+    public void extractRenderState(GuiGraphicsExtractor context, int mouseX, int mouseY, float delta) {
+        super.extractRenderState(context, mouseX, mouseY, delta);
 
-        assert this.minecraft != null;
         context.pose().pushMatrix();
         float scale = 2.0F;
         context.pose().translate((float) this.width / 2, 10);
         context.pose().scale(scale, scale);
         context.pose().translate((float) -this.width / 2, 0);
-        context.drawCenteredString(
+        context.centeredText(
                 this.minecraft.font,
                 Component.translatable("yacl3.config.better_client:config"),
                 this.width / 2,
@@ -85,7 +83,7 @@ public class YACLConfigScreen extends Screen {
                 buttonWidth,
                 buttonHeight,
                 Component.translatable("yacl3.config.better_client:config.category.chat"),
-                Items.WRITABLE_BOOK.getDefaultInstance(),
+                Items.WRITABLE_BOOK,
                 (btn) -> {
                     if (this.chatConfigScreen == null) {
                         this.chatConfigScreen = ChatConfigScreen.generateScreen(this);
@@ -99,7 +97,7 @@ public class YACLConfigScreen extends Screen {
                 buttonWidth,
                 buttonHeight,
                 Component.translatable("yacl3.config.better_client:config.category.cheating"),
-                Items.COMMAND_BLOCK.getDefaultInstance(),
+                Items.BARRIER,
                 (btn) -> {
                     if (this.cheatingConfigScreen == null) {
                         this.cheatingConfigScreen = CheatingConfigScreen.generateScreen(this);
@@ -113,7 +111,7 @@ public class YACLConfigScreen extends Screen {
                 buttonWidth,
                 buttonHeight,
                 Component.translatable("yacl3.config.better_client:config.category.merchant"),
-                Items.EMERALD.getDefaultInstance(),
+                Items.EMERALD,
                 (btn) -> {
                     if (this.merchantConfigScreen == null) {
                         this.merchantConfigScreen = MerchantConfigScreen.generateScreen(this);
@@ -127,7 +125,7 @@ public class YACLConfigScreen extends Screen {
                 buttonWidth,
                 buttonHeight,
                 Component.translatable("yacl3.config.better_client:config.category.optimization"),
-                Items.BLAZE_POWDER.getDefaultInstance(),
+                Items.BLAZE_POWDER,
                 (btn) -> {
                     if (this.optimizationConfigScreen == null) {
                         this.optimizationConfigScreen = OptimizationConfigScreen.generateScreen(this);
@@ -144,7 +142,7 @@ public class YACLConfigScreen extends Screen {
                 buttonWidth,
                 buttonHeight,
                 Component.translatable("yacl3.config.better_client:config.category.screen"),
-                Items.ITEM_FRAME.getDefaultInstance(),
+                Items.ITEM_FRAME,
                 (btn) -> {
                     if (this.screenConfigScreen == null) {
                         this.screenConfigScreen = ScreenConfigScreen.generateScreen(this);
@@ -158,7 +156,7 @@ public class YACLConfigScreen extends Screen {
                 buttonWidth,
                 buttonHeight,
                 Component.translatable("yacl3.config.better_client:config.category.tooltip"),
-                Items.BOOK.getDefaultInstance(),
+                Items.BOOK,
                 (btn) -> {
                     if (this.tooltipConfigScreen == null) {
                         this.tooltipConfigScreen = TooltipConfigScreen.generateScreen(this);
@@ -172,7 +170,7 @@ public class YACLConfigScreen extends Screen {
                 buttonWidth,
                 buttonHeight,
                 Component.translatable("yacl3.config.better_client:config.category.visuality"),
-                Items.ENDER_EYE.getDefaultInstance(),
+                Items.ENDER_EYE,
                 (btn) -> {
                     if (this.visualityConfigScreen == null) {
                         this.visualityConfigScreen = VisualityConfigScreen.generateScreen(this);
@@ -186,7 +184,7 @@ public class YACLConfigScreen extends Screen {
                 buttonWidth,
                 buttonHeight,
                 Component.translatable("yacl3.config.better_client:config.category.miscellaneities"),
-                Items.BUNDLE.getDefaultInstance(),
+                Items.BUNDLE,
                 (btn) -> {
                     if (this.miscellaneitiesConfigScreen == null) {
                         this.miscellaneitiesConfigScreen = MiscellaneitiesConfigScreen.generateScreen(this);

@@ -50,7 +50,7 @@
         "game_versions": ["26.1"],
         "mod_loaders": "${ loader }",
         "display_name": "[${ name } 26.1] ${ nextRelease.version }",
-        "glob": "${ loader }/build/libs/better_client-${ loader }-${ nextRelease.version }.jar",
+        "glob": "${ loader }/build/libs/better_client-${ nextRelease.version }.jar",
         "dependencies": [
           {
             "slug": "yacl",

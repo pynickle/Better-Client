@@ -70,8 +70,8 @@ public class TradingHudEvent {
      * @param player 玩家
      */
     private static void sendInteractionPacket(Entity entity, LocalPlayer player) {
-        ServerboundInteractPacket packet = ServerboundInteractPacket.createInteractionPacket(
-                entity, player.isShiftKeyDown(), InteractionHand.MAIN_HAND);
+        ServerboundInteractPacket packet = new ServerboundInteractPacket(
+                entity.getId(), InteractionHand.MAIN_HAND, entity.position(), player.isShiftKeyDown());
         player.connection.send(packet);
     }
 

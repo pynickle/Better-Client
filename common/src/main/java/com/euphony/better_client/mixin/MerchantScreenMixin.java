@@ -4,7 +4,7 @@ import com.euphony.better_client.screen.widget.FastTradingButton;
 import com.euphony.better_client.utils.mc.ItemUtils;
 import com.euphony.better_client.utils.mc.KeyUtils;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.MerchantScreen;
@@ -12,7 +12,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.protocol.game.ServerboundSelectTradePacket;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.inventory.MerchantMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.trading.MerchantOffer;
@@ -69,86 +69,82 @@ public abstract class MerchantScreenMixin extends AbstractContainerScreen<Mercha
         this.better_client$fastTradingButton.active = false;
 
         Inventory inventory;
-        if (this.minecraft != null) {
-            if (this.minecraft.player != null) {
-                inventory = this.minecraft.player.getInventory();
-                MerchantOffer merchantOffer = menu.getOffers().get(this.shopItem);
+        if (this.minecraft.player != null) {
+            inventory = this.minecraft.player.getInventory();
+            MerchantOffer merchantOffer = menu.getOffers().get(this.shopItem);
 
-                if (merchantOffer.getUses() == merchantOffer.getMaxUses()) {
-                    this.better_client$fastTradingButton.active = false;
-                } else {
-                    ItemStack costA = merchantOffer.getCostA();
-                    ItemStack costB = merchantOffer.getCostB();
+            if (merchantOffer.getUses() == merchantOffer.getMaxUses()) {
+                this.better_client$fastTradingButton.active = false;
+            } else {
+                ItemStack costA = merchantOffer.getCostA();
+                ItemStack costB = merchantOffer.getCostB();
 
-                    ItemStack sellItem = merchantOffer.getResult();
+                ItemStack sellItem = merchantOffer.getResult();
 
-                    ItemStack slotA = menu.slots.get(0).getItem();
-                    ItemStack slotB = menu.slots.get(1).getItem();
+                ItemStack slotA = menu.slots.get(0).getItem();
+                ItemStack slotB = menu.slots.get(1).getItem();
 
-                    int costACount = better_client$getItemTotalCountWithSlots(inventory, costA, slotA, slotB);
-                    boolean hasEnoughCostA = costACount >= costA.getCount() && costA.getCount() > 0;
+                int costACount = better_client$getItemTotalCountWithSlots(inventory, costA, slotA, slotB);
+                boolean hasEnoughCostA = costACount >= costA.getCount() && costA.getCount() > 0;
 
-                    if (!better_client$isInactiveAlt(sellItem)) {
-                        if (!merchantOffer.getCostB().isEmpty()) {
-                            int costBCount = better_client$getItemTotalCountWithSlots(inventory, costB, slotA, slotB);
-                            boolean hasEnoughCostB = costBCount >= costB.getCount() && costB.getCount() > 0;
+                if (!better_client$isInactiveAlt(sellItem)) {
+                    if (!merchantOffer.getCostB().isEmpty()) {
+                        int costBCount = better_client$getItemTotalCountWithSlots(inventory, costB, slotA, slotB);
+                        boolean hasEnoughCostB = costBCount >= costB.getCount() && costB.getCount() > 0;
 
-                            this.better_client$fastTradingButton.active = hasEnoughCostA && hasEnoughCostB;
-                        } else {
-                            this.better_client$fastTradingButton.active = hasEnoughCostA;
+                        this.better_client$fastTradingButton.active = hasEnoughCostA && hasEnoughCostB;
+                    } else {
+                        this.better_client$fastTradingButton.active = hasEnoughCostA;
+                    }
+                }
+            }
+
+            Component tradeDescription;
+            if (this.better_client$lastCachedShopItem == this.shopItem
+                    && this.better_client$tradeDescriptionCache.containsKey(this.shopItem)) {
+                tradeDescription = this.better_client$tradeDescriptionCache.get(this.shopItem);
+            } else {
+                tradeDescription = better_client$generateTradeDescription(merchantOffer);
+                this.better_client$tradeDescriptionCache.put(this.shopItem, tradeDescription);
+                this.better_client$lastCachedShopItem = this.shopItem;
+            }
+
+            this.better_client$fastTradingButton.setTooltip(Tooltip.create(tradeDescription));
+
+            if (better_client$tradeState > 0) {
+                MerchantOffer offer = menu.getOffers().get(this.shopItem);
+
+                switch (better_client$tradeState) {
+                    case 1:
+                        ItemStack item = offer.getItemCostA().itemStack();
+                        if (!item.isEmpty()) {
+                            better_client$fillSlots(item);
                         }
-                    }
-                }
+                        offer.getItemCostB().ifPresent(cost -> better_client$fillSlots(cost.itemStack()));
+                        better_client$tradeState = 2;
+                        break;
 
-                Component tradeDescription;
-                if (this.better_client$lastCachedShopItem == this.shopItem
-                        && this.better_client$tradeDescriptionCache.containsKey(this.shopItem)) {
-                    tradeDescription = this.better_client$tradeDescriptionCache.get(this.shopItem);
-                } else {
-                    tradeDescription = better_client$generateTradeDescription(merchantOffer);
-                    this.better_client$tradeDescriptionCache.put(this.shopItem, tradeDescription);
-                    this.better_client$lastCachedShopItem = this.shopItem;
-                }
+                    case 2:
+                        if (!this.menu.getSlot(2).getItem().isEmpty()) {
 
-                this.better_client$fastTradingButton.setTooltip(Tooltip.create(tradeDescription));
-
-                if (better_client$tradeState > 0) {
-                    MerchantOffer offer = menu.getOffers().get(this.shopItem);
-
-                    switch (better_client$tradeState) {
-                        case 1:
-                            ItemStack item = offer.getItemCostA().itemStack();
-                            if (!item.isEmpty()) {
-                                better_client$fillSlots(item);
-                            }
-                            offer.getItemCostB().ifPresent(cost -> {
-                                better_client$fillSlots(cost.itemStack());
-                            });
-                            better_client$tradeState = 2;
-                            break;
-
-                        case 2:
-                            if (!this.menu.getSlot(2).getItem().isEmpty()) {
-
-                                slotClicked(this.menu.getSlot(2), 2, 0, ClickType.QUICK_MOVE);
-                                better_client$tradeState = 3;
-                            } else {
-                                better_client$tradeState = 0;
-                            }
-                            break;
-
-                        case 3:
-                            if (offer.getUses() < offer.getMaxUses() && inventory.getFreeSlot() != -1) {
-                                better_client$tradeState = 1;
-                            } else {
-                                better_client$tradeState = 4;
-                            }
-                            break;
-                        case 4:
-                            slotClicked(this.menu.getSlot(0), 0, 0, ClickType.QUICK_MOVE);
-                            slotClicked(this.menu.getSlot(1), 1, 0, ClickType.QUICK_MOVE);
+                            slotClicked(this.menu.getSlot(2), 2, 0, ContainerInput.QUICK_MOVE);
+                            better_client$tradeState = 3;
+                        } else {
                             better_client$tradeState = 0;
-                    }
+                        }
+                        break;
+
+                    case 3:
+                        if (offer.getUses() < offer.getMaxUses() && inventory.getFreeSlot() != -1) {
+                            better_client$tradeState = 1;
+                        } else {
+                            better_client$tradeState = 4;
+                        }
+                        break;
+                    case 4:
+                        slotClicked(this.menu.getSlot(0), 0, 0, ContainerInput.QUICK_MOVE);
+                        slotClicked(this.menu.getSlot(1), 1, 0, ContainerInput.QUICK_MOVE);
+                        better_client$tradeState = 0;
                 }
             }
         }
@@ -165,11 +161,11 @@ public abstract class MerchantScreenMixin extends AbstractContainerScreen<Mercha
 
             count += invstack.getCount();
 
-            slotClicked(this.menu.getSlot(i), i, i, ClickType.PICKUP);
-            slotClicked(this.menu.getSlot(0), 0, 0, ClickType.PICKUP_ALL);
+            slotClicked(this.menu.getSlot(i), i, i, ContainerInput.PICKUP);
+            slotClicked(this.menu.getSlot(0), 0, 0, ContainerInput.PICKUP_ALL);
 
             if (count > this.menu.getSlot(i).getItem().getMaxStackSize()) { // items still on the cursor
-                slotClicked(this.menu.getSlot(i), i, i, ClickType.PICKUP);
+                slotClicked(this.menu.getSlot(i), i, i, ContainerInput.PICKUP);
                 break;
             } else if (count == this.menu.getSlot(i).getItem().getMaxStackSize()) {
                 break;
@@ -221,7 +217,8 @@ public abstract class MerchantScreenMixin extends AbstractContainerScreen<Mercha
     }
 
     @Shadow
-    protected abstract void renderButtonArrows(GuiGraphics guiGraphics, MerchantOffer merchantOffer, int i, int j);
+    protected abstract void extractButtonArrows(
+            GuiGraphicsExtractor graphics, MerchantOffer offer, int xo, int decorHeight);
 
     public MerchantScreenMixin(MerchantMenu abstractContainerMenu, Inventory inventory, Component component) {
         super(abstractContainerMenu, inventory, component);
@@ -229,24 +226,24 @@ public abstract class MerchantScreenMixin extends AbstractContainerScreen<Mercha
 
     @Inject(
             method =
-                    "renderButtonArrows(Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/world/item/trading/MerchantOffer;II)V",
+                    "extractButtonArrows(Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/world/item/trading/MerchantOffer;II)V",
             at = @At("TAIL"))
-    private void injectRenderButtonArrows(
-            GuiGraphics guiGraphics, MerchantOffer merchantOffer, int i, int j, CallbackInfo ci) {
+    private void injectExtractButtonArrows(
+            GuiGraphicsExtractor graphics, MerchantOffer offer, int xo, int decorHeight, CallbackInfo ci) {
         if (config.enableDisplayRemainingSales) {
             // 计算剩余交易次数
-            int remainingUses = merchantOffer.getMaxUses() - merchantOffer.getUses();
+            int remainingUses = offer.getMaxUses() - offer.getUses();
 
             // 保存当前的渲染状态
-            guiGraphics.pose().pushMatrix();
+            graphics.pose().pushMatrix();
             // 移动到指定位置（基于原代码的 k + 61, p + 11）
-            guiGraphics.pose().translate(i + 61, j + 11);
+            graphics.pose().translate(xo + 61, decorHeight + 11);
             // 缩放文本（与原代码一致）
-            guiGraphics.pose().scale(0.6F, 0.6F);
+            graphics.pose().scale(0.6F, 0.6F);
             // 绘制剩余次数文本，白色 (0xFFFFFFFF)，无阴影
-            guiGraphics.drawString(this.font, String.valueOf(remainingUses), 0, 0, 0xFFFFFFFF, false);
+            graphics.text(this.font, String.valueOf(remainingUses), 0, 0, 0xFFFFFFFF, false);
             // 恢复渲染状态
-            guiGraphics.pose().popMatrix();
+            graphics.pose().popMatrix();
         }
     }
 }

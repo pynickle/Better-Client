@@ -74,18 +74,18 @@ public class ClientPacketListenerMixin {
     }
 
     @ModifyVariable(method = "sendChat", at = @At("HEAD"), argsOnly = true)
-    public String sendPublicMessage(String message) {
-        if (!config.enableChatFormatter) return message;
+    public String sendPublicMessage(String content) {
+        if (!config.enableChatFormatter) return content;
 
         Player player = Minecraft.getInstance().player;
         if (player == null) {
-            return message;
+            return content;
         }
 
         BlockPos pos = player.getOnPos();
 
         return FormatUtils.format(
-                message,
+                content,
                 Map.of(
                         "pos",
                         FormatUtils.format(

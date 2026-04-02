@@ -13,32 +13,28 @@ Make a better server experience
 '''
 logoFile = "icon.png"
 
+[[accessTransformers]]
+file="META-INF/accesstransformer.cfg"
+
 [[dependencies.better_client]]
 modId = "neoforge"
 type = "required"
-versionRange = "[21.11,)"
+versionRange = "[26.1,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.better_client]]
 modId = "minecraft"
 type = "required"
-versionRange = "[1.21.11,1.22)"
+versionRange = "[26.1,27)"
 ordering = "NONE"
-side = "BOTH"
-
-[[dependencies.better_client]]
-modId = "architectury"
-type = "required"
-versionRange = "[18.0.3,)"
-ordering = "AFTER"
 side = "BOTH"
 
 [[dependencies.better_client]]
 modId = "yet_another_config_lib_v3"
 mandatory = true
 type = "optional"
-versionRange = "[3.6,)"
+versionRange = "[3.9,)"
 ordering = "NONE"
 side = "CLIENT"
 

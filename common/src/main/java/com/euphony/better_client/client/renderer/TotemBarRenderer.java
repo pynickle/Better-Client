@@ -1,11 +1,11 @@
 package com.euphony.better_client.client.renderer;
 
 import com.euphony.better_client.config.option.TotemBarRenderMode;
+import com.euphony.better_client.platform.Platform;
 import com.euphony.better_client.utils.Utils;
-import dev.architectury.platform.Platform;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Items;
@@ -16,7 +16,7 @@ public class TotemBarRenderer {
     private static final Identifier TEX_FULL = Utils.prefix("textures/gui/sprites/totem.png");
     private static final Identifier TEX_EMPTY = Utils.prefix("textures/gui/sprites/totem_empty.png");
 
-    public static void render(GuiGraphics ctx, DeltaTracker tickCounter) {
+    public static void render(GuiGraphicsExtractor ctx, DeltaTracker tickCounter) {
         if (!config.enableTotemBar) return;
 
         Minecraft client = Minecraft.getInstance();
@@ -31,7 +31,7 @@ public class TotemBarRenderer {
         drawIcons(ctx, totInventory, handTotems);
     }
 
-    private static void drawIcons(GuiGraphics ctx, int totInventory, int hand) {
+    private static void drawIcons(GuiGraphicsExtractor ctx, int totInventory, int hand) {
         int iconSize = 9;
         int xSpace = -1;
         int ySpace = 1;

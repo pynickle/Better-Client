@@ -7,11 +7,11 @@ architectury {
     fabric()
 }
 
+sourceSets.main.resources { srcDir project(':common').file('src/generated/resources').getAbsolutePath() }
+
 loom {
     accessWidenerPath = file("src/main/resources/${mod_id}.accesswidener")
 }
-
-sourceSets.main.resources { srcDir project(':common').file('src/generated/resources').getAbsolutePath() }
 
 configurations {
     common

@@ -2,6 +2,7 @@ package com.euphony.better_client.mixin;
 
 import com.euphony.better_client.api.IMultiLineEditBox;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import net.minecraft.client.gui.components.AbstractScrollArea;
 import net.minecraft.client.gui.components.AbstractTextAreaWidget;
 import net.minecraft.client.gui.components.MultiLineEditBox;
 import net.minecraft.network.chat.Component;
@@ -15,7 +16,7 @@ public abstract class MultiLineEditBoxMixin extends AbstractTextAreaWidget imple
     private static boolean better_client$isModified;
 
     public MultiLineEditBoxMixin(int i, int j, int k, int l, Component component) {
-        super(i, j, k, l, component);
+        super(i, j, k, l, component, AbstractScrollArea.defaultSettings(4));
     }
 
     @ModifyReturnValue(method = "charTyped", at = @At("RETURN"))

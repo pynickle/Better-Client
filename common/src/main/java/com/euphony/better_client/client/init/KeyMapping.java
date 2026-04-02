@@ -1,12 +1,7 @@
 package com.euphony.better_client.client.init;
 
-import com.euphony.better_client.keymapping.BCKeyMappings;
-import dev.architectury.registry.client.keymappings.KeyMappingRegistry;
+public final class KeyMapping {
+    private KeyMapping() {}
 
-public class KeyMapping {
-    public static void registerKeyMapping() {
-        KeyMappingRegistry.register(BCKeyMappings.BUNDLE_UP);
-        KeyMappingRegistry.register(BCKeyMappings.FULL_BRIGHTNESS_TOGGLE);
-        KeyMappingRegistry.register(BCKeyMappings.ITEM_FRAME_INVISIBILITY_TOGGLE);
-    }
+    public static void registerKeyMapping() {}
 }

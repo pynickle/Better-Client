@@ -1,7 +1,7 @@
 package com.euphony.better_client.screen.widget;
 
 import com.euphony.better_client.utils.Utils;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -18,7 +18,7 @@ public class FastTradingButton extends ImageButton {
     }
 
     @Override
-    public void renderContents(GuiGraphics guiGraphics, int i, int j, float f) {
+    public void extractContents(GuiGraphicsExtractor guiGraphics, int i, int j, float f) {
         Identifier Identifier = this.sprites.get(this.isActive(), this.isHovered());
         guiGraphics.blitSprite(
                 RenderPipelines.GUI_TEXTURED, Identifier, this.getX(), this.getY(), this.width, this.height);
