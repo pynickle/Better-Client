@@ -123,3 +123,7 @@ runs/
 
 node_modules/
 .trae/
+
+.project
+
+/.settings/

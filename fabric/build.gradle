@@ -1,5 +1,5 @@
 plugins {
-    id 'com.github.johnrengelman.shadow'
+    id "com.gradleup.shadow" version "9.4.0"
 }
 
 architectury {
@@ -8,30 +8,17 @@ architectury {
 }
 
 loom {
-    accessWidenerPath = project(":common").loom.accessWidenerPath
-}
-
-sourcesJar {
-    def commonSources = project(":common").sourcesJar
-    dependsOn commonSources
-    from commonSources.archiveFile.map { zipTree(it) }
+    accessWidenerPath = file("src/main/resources/${mod_id}.accesswidener")
 }
 
 sourceSets.main.resources { srcDir project(':common').file('src/generated/resources').getAbsolutePath() }
 
 configurations {
-    common {
-        canBeResolved = true
-        canBeConsumed = false
-    }
+    common
+    shadowCommon // Don't use shadow from the shadow plugin because we don't want IDEA to index this.
     compileClasspath.extendsFrom common
     runtimeClasspath.extendsFrom common
     developmentFabric.extendsFrom common
-
-    shadowBundle {
-        canBeResolved = true
-        canBeConsumed = false
-    }
 }
 
 repositories {
@@ -43,22 +30,22 @@ repositories {
 }
 
 dependencies {
-    modImplementation("net.fabricmc:fabric-loader:$rootProject.fabric_loader_version")
+    minecraft "com.mojang:minecraft:${rootProject.architectury.minecraft}"
 
-    modImplementation("net.fabricmc.fabric-api:fabric-api:$rootProject.fabric_api_version")
+    api "net.fabricmc:fabric-loader:$rootProject.fabric_loader_version"
 
-    modImplementation("dev.architectury:architectury-fabric:$rootProject.architectury_api_version")
+    api "net.fabricmc.fabric-api:fabric-api:$rootProject.fabric_api_version"
 
-    modImplementation("dev.isxander:yet-another-config-lib:${yacl_version}+1.21.11-fabric")
+    implementation "dev.isxander:yet-another-config-lib:${yacl_version}+26.1-fabric"
 
-    modImplementation("com.github.ramixin:mixson-fabric:${mixson_version}")
+    implementation "com.github.ramixin:mixson-fabric:${mixson_version}"
 
-    modImplementation("com.terraformersmc:modmenu:${rootProject.modmenu_version}")
+    implementation "com.terraformersmc:modmenu:${rootProject.modmenu_version}"
 
-    include("com.github.ramixin:mixson-fabric:${mixson_version}")
+    include "com.github.ramixin:mixson-fabric:${mixson_version}"
 
-    common(project(path: ':common', configuration: 'namedElements')) { transitive false }
-    shadowBundle project(path: ':common', configuration: 'transformProductionFabric')
+    common(project(path: ":common")) { transitive false }
+    shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
 }
 
 processResources {
@@ -69,12 +56,20 @@ processResources {
     }
 }
 
-shadowJar {
-    exclude "architectury.common.json"
-    configurations = [project.configurations.shadowBundle]
-    archiveClassifier = 'dev-shadow'
+jar {
+    archiveClassifier = "raw"
 }
 
-remapJar {
-    input.set shadowJar.archiveFile
+java {
+    withSourcesJar()
+}
+
+shadowJar {
+    dependsOn(jar)
+    mainSpec.sourcePaths.clear()
+    from(zipTree(jar.archiveFile))
+
+    configurations = [project.configurations.shadowCommon]
+    archiveClassifier = null
+    from rootProject.file("LICENSE.md")
 }

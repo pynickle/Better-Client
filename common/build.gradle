@@ -1,17 +1,54 @@
-architectury {
-    common rootProject.enabled_platforms.split(',')
+plugins {
+    id "com.gradleup.shadow" version "9.4.0"
 }
 
-loom {
-    accessWidenerPath.set(file("src/main/resources/${mod_id}.accesswidener"))
+configurations {
+    shadowCommon
 }
 
 dependencies {
-    modImplementation("net.fabricmc:fabric-loader:$rootProject.fabric_loader_version")
+    minecraft "com.mojang:minecraft:${rootProject.architectury.minecraft}"
 
-    modImplementation("dev.architectury:architectury:$rootProject.architectury_api_version")
+    implementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
 
-    modImplementation("dev.isxander:yet-another-config-lib:${yacl_version}+1.21.11-fabric")
+    implementation "dev.isxander:yet-another-config-lib:${yacl_version}+26.1-fabric"
 
-    modImplementation("com.github.ramixin:mixson-fabric:${mixson_version}")
+    implementation "com.github.ramixin:mixson-fabric:${mixson_version}"
+}
+
+architectury {
+    common("fabric", "neoforge")
+}
+
+loom {
+    accessWidenerPath = file("src/main/resources/${mod_id}.accesswidener")
+}
+
+jar {
+    archiveClassifier = "raw"
+}
+
+java {
+    withSourcesJar()
+}
+
+shadowJar {
+    dependsOn(jar)
+    mainSpec.sourcePaths.clear()
+    from(zipTree(jar.archiveFile))
+
+    configurations = [project.configurations.shadowCommon]
+    archiveClassifier = null
+    from rootProject.file("LICENSE")
+}
+
+configurations {
+    apiElements {
+        outgoing.artifacts.clear()
+        outgoing.artifact(shadowJar)
+    }
+    runtimeElements {
+        outgoing.artifacts.clear()
+        outgoing.artifact(shadowJar)
+    }
 }

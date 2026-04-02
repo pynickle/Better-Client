@@ -47,15 +47,11 @@
     [
       "semantic-release-minecraft",
       {
-        "game_versions": ["1.21.11"],
+        "game_versions": ["26.1"],
         "mod_loaders": "${ loader }",
-        "display_name": "[${ name } 1.21.11] ${ nextRelease.version }",
+        "display_name": "[${ name } 26.1] ${ nextRelease.version }",
         "glob": "${ loader }/build/libs/better_client-${ loader }-${ nextRelease.version }.jar",
         "dependencies": [
-          {
-            "slug": "architectury-api",
-            "type": "required"
-          },
           {
             "slug": "yacl",
             "type": "optional"

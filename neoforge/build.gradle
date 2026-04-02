@@ -1,11 +1,21 @@
 plugins {
-    id 'com.github.johnrengelman.shadow'
+    id "com.gradleup.shadow" version "9.4.0"
+}
+
+configurations {
+    shadowCommon
+    dev
+}
+
+artifacts {
+    dev(jar)
 }
 
 architectury {
     platformSetupLoomIde()
     neoForge()
 }
+
 
 loom {
     accessWidenerPath = project(":common").loom.accessWidenerPath
@@ -20,51 +30,31 @@ loom {
     }
 }
 
-sourcesJar {
-    def commonSources = project(":common").sourcesJar
-    dependsOn commonSources
-    from commonSources.archiveFile.map { zipTree(it) }
-}
-
 sourceSets.main.resources { srcDir project(':common').file('src/generated/resources').getAbsolutePath() }
 
 configurations {
-    common {
-        canBeResolved = true
-        canBeConsumed = false
-    }
+    common
+    shadowCommon // Don't use shadow from the shadow plugin because we don't want IDEA to index this.
     compileClasspath.extendsFrom common
     runtimeClasspath.extendsFrom common
     developmentNeoForge.extendsFrom common
-
-    shadowBundle {
-        canBeResolved = true
-        canBeConsumed = false
-    }
-}
-
-repositories {
-    maven {
-        name = 'NeoForged'
-        url = 'https://maven.neoforged.net/releases'
-    }
 }
 
 dependencies {
-    neoForge "net.neoforged:neoforge:$rootProject.neoforge_version"
+    minecraft "com.mojang:minecraft:${rootProject.architectury.minecraft}"
 
-    modImplementation("dev.architectury:architectury-neoforge:$rootProject.architectury_api_version")
+    neoForge "net.neoforged:neoforge:${rootProject.neoforge_version}"
 
-    implementation("dev.isxander:yet-another-config-lib:${yacl_version}+1.21.11-neoforge"){
+    implementation("dev.isxander:yet-another-config-lib:${yacl_version}+26.1-neoforge"){
         exclude group: "net.neoforged.fancymodloader", module: "loader"
     }
 
-    modImplementation("com.github.ramixin:mixson-neoforge:${mixson_version}")
+    implementation "com.github.ramixin:mixson-neoforge:${mixson_version}"
 
     include("com.github.ramixin:mixson-neoforge:${mixson_version}")
 
-    common(project(path: ':common', configuration: 'namedElements')) { transitive false }
-    shadowBundle project(path: ':common', configuration: 'transformProductionNeoForge')
+    common(project(path: ":common")) { transitive false }
+    shadowCommon(project(path: ":common", configuration: "transformProductionNeoForge")) { transitive false }
 }
 
 processResources {
@@ -75,13 +65,34 @@ processResources {
     }
 }
 
-shadowJar {
-    exclude "architectury.common.json"
-    configurations = [project.configurations.shadowBundle]
-    archiveClassifier = 'dev-shadow'
+jar {
+    archiveClassifier = 'raw'
 }
 
-remapJar {
-    input.set shadowJar.archiveFile
-    atAccessWideners.add("better_client.accesswidener")
+java {
+    withSourcesJar()
+}
+
+shadowJar {
+    dependsOn(jar)
+    mainSpec.sourcePaths.clear()
+    from(zipTree(jar.archiveFile))
+
+    exclude "fabric.mod.json"
+    exclude "${mod_id}.accesswidener"
+
+    configurations = [project.configurations.shadowCommon]
+    archiveClassifier = null
+    from rootProject.file("LICENSE")
+}
+
+configurations {
+    apiElements {
+        outgoing.artifacts.clear()
+        outgoing.artifact(shadowJar)
+    }
+    runtimeElements {
+        outgoing.artifacts.clear()
+        outgoing.artifact(shadowJar)
+    }
 }
