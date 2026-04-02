@@ -1,3 +1,18 @@
+## [9.0.0](https://github.com/pynickle/Better-Client/compare/v8.4.1...v9.0.0) (2026-04-02)
+
+### ⚠ BREAKING CHANGES
+
+* port to 26.1
+
+### ✨ Features
+
+* port to 26.1 and remove reliance on architectury api ([f8bcd10](https://github.com/pynickle/Better-Client/commit/f8bcd101111e2c1fb3549327cfb64d2a3dee116b))
+
+### 🔧 Miscellaneous Changes
+
+* prepare for 26.1 ([97a0f57](https://github.com/pynickle/Better-Client/commit/97a0f5712f85f781263f200da855bccaa0dca984))
+* update workflow ([ddbd74f](https://github.com/pynickle/Better-Client/commit/ddbd74f86caaf61a12027fd608799f78be5bef88))
+
 ## [8.4.1](https://github.com/pynickle/Better-Client/compare/v8.4.0...v8.4.1) (2026-03-13)
 
 ### 🐛 Bug Fixes
