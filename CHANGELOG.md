@@ -1,3 +1,13 @@
+## [9.1.0](https://github.com/pynickle/Better-Client/compare/v9.0.0...v9.1.0) (2026-04-04)
+
+### ✨ Features
+
+* add persistent chat history storage and restoration(each world apart), add chat separators ([d0213b3](https://github.com/pynickle/Better-Client/commit/d0213b33035d6da1307ff5e798ac4d1697fb69d5))
+
+### 🔧 Miscellaneous Changes
+
+* update release config ([86d87c4](https://github.com/pynickle/Better-Client/commit/86d87c44a81ebf230319ae55d922c78c99102d3d))
+
 ## [9.0.0](https://github.com/pynickle/Better-Client/compare/v8.4.1...v9.0.0) (2026-04-02)
 
 ### ⚠ BREAKING CHANGES
