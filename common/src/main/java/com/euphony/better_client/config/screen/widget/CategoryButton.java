@@ -38,11 +38,20 @@ public class CategoryButton extends Button {
                 this.getHeight());
 
         Minecraft mc = Minecraft.getInstance();
-        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, Identifier.withDefaultNamespace("textures/item/" + icon.toString().split(":")[1] + ".png"),
-                this.getX() + 5, this.getY() + 2, 0f, 0f , 16, 16, 16, 16);
+        guiGraphics.blit(
+                RenderPipelines.GUI_TEXTURED,
+                Identifier.withDefaultNamespace(
+                        "textures/item/" + icon.toString().split(":")[1] + ".png"),
+                this.getX() + 5,
+                this.getY() + 2,
+                0f,
+                0f,
+                16,
+                16,
+                16,
+                16);
         // guiGraphics.fakeItem(icon, getX() + 5, getY() + 2);
 
-        guiGraphics.centeredText(
-                mc.font, text, getX() + width / 2 + MARGIN, getY() + (height - 8) / 2, 0xffffffff);
+        guiGraphics.centeredText(mc.font, text, getX() + width / 2 + MARGIN, getY() + (height - 8) / 2, 0xffffffff);
     }
 }

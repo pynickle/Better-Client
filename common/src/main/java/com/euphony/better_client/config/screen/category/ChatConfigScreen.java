@@ -2,13 +2,12 @@ package com.euphony.better_client.config.screen.category;
 
 import com.euphony.better_client.config.Config;
 import com.euphony.better_client.config.ConfigUtils;
-import dev.isxander.yacl3.api.ConfigCategory;
-import dev.isxander.yacl3.api.Option;
-import dev.isxander.yacl3.api.OptionGroup;
-import dev.isxander.yacl3.api.YetAnotherConfigLib;
+import com.euphony.better_client.config.screen.ChatSeparatorTemplateScreen;
+import dev.isxander.yacl3.api.*;
 import dev.isxander.yacl3.api.controller.ColorControllerBuilder;
 import dev.isxander.yacl3.api.controller.IntegerFieldControllerBuilder;
 import dev.isxander.yacl3.api.controller.StringControllerBuilder;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
@@ -61,6 +60,22 @@ public class ChatConfigScreen {
                 () -> config.enableChatHistoryRetention,
                 newVal -> config.enableChatHistoryRetention = newVal);
 
+        Option<Boolean> enablePersistentChatStorageOpt = ConfigUtils.buildBooleanOption(
+                "enablePersistentChatStorage",
+                DEFAULTS.enablePersistentChatStorage,
+                () -> config.enablePersistentChatStorage,
+                newVal -> config.enablePersistentChatStorage = newVal);
+
+        Option<Boolean> cleanRestoredChatSeparatorsOnSaveOpt = ConfigUtils.buildBooleanOption(
+                "cleanRestoredChatSeparatorsOnSave",
+                DEFAULTS.cleanRestoredChatSeparatorsOnSave,
+                () -> config.cleanRestoredChatSeparatorsOnSave,
+                newVal -> config.cleanRestoredChatSeparatorsOnSave = newVal);
+
+        ButtonOption chatHistorySeparatorTemplateOpt = ConfigUtils.getButtonOption("chatHistorySeparatorTemplate")
+                .action((screen, opt) -> Minecraft.getInstance().setScreen(new ChatSeparatorTemplateScreen(screen)))
+                .build();
+
         // Chat Formatter
         Option<Boolean> enableChatFormatterOpt = ConfigUtils.buildBooleanOption(
                 "enableChatFormatter",
@@ -79,8 +94,12 @@ public class ChatConfigScreen {
                         .name(ConfigUtils.getCategoryName(CLIENT_CATEGORY))
                         .group(OptionGroup.createBuilder()
                                 .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, BETTER_CHAT_GROUP))
-                                .options(java.util.List.of(
-                                        enableLongerChatHistoryOpt, chatMaxMessagesOpt, enableChatHistoryRetentionOpt))
+                                .option(enableLongerChatHistoryOpt)
+                                .option(chatMaxMessagesOpt)
+                                .option(enableChatHistoryRetentionOpt)
+                                .option(enablePersistentChatStorageOpt)
+                                .option(cleanRestoredChatSeparatorsOnSaveOpt)
+                                .option(chatHistorySeparatorTemplateOpt)
                                 .build())
                         .group(OptionGroup.createBuilder()
                                 .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, TIMESTAMP_GROUP))

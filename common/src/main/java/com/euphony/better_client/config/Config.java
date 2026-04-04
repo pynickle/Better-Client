@@ -88,6 +88,12 @@ public class Config {
     public boolean enableAxolotlBucketFix = true;
 
     public boolean enableChatHistoryRetention = true;
+    public boolean enablePersistentChatStorage = true;
+    public boolean cleanRestoredChatSeparatorsOnSave = false;
+    public String chatHistorySeparatorTemplate = "&8&m--------------------------------------------------\n" +
+            " &6[&eRestored Chat History&6]\n" +
+            " &7Session: &f{session_name} &8| &7Disconnected: &f{disconnect_time}\n" +
+            "&8&m--------------------------------------------------";
 
     public boolean enableBookSaveConfirmation = true;
 

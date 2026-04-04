@@ -38,6 +38,10 @@
 
   "text.better_client.help.missing": "§c 无法打开配置界面",
   "text.better_client.desc.help.missing": "§7 安装 YACL 模组以在游戏内访问配置。",
+  "text.better_client.chat_separator.title": "编辑聊天历史分隔符",
+  "text.better_client.chat_separator.desc": "支持多行。可用占位符：{session_name}、{session_key}、{disconnect_time}、{disconnect_date}、{disconnect_datetime}。可使用 & 进行颜色格式化。",
+  "text.better_client.chat_separator.placeholder": "&8&m--------------------------------------------------\\n &6[&e已恢复聊天记录&6]\\n &7服务器: &f{session_name} &8| &7断开时间: &f{disconnect_time}\\n&8&m--------------------------------------------------",
+  "text.better_client.chat_separator.reset": "重置",
 
   "yacl3.config.better_client:config": "更好的客户端",
   "yacl3.config.better_client:config.category.client": "客户端",
@@ -79,6 +83,12 @@
   "yacl3.config.better_client:config.enableLongerChatHistory.desc": "将聊天历史记录从原版的 100 条消息扩展至 4096 条。",
   "yacl3.config.better_client:config.chatMaxMessages": "保留的历史消息最大数量",
   "yacl3.config.better_client:config.chatMaxMessages.desc": "聊天历史记录中保留的消息最大数量",
+  "yacl3.config.better_client:config.enablePersistentChatStorage": "启用聊天持久化存储",
+  "yacl3.config.better_client:config.enablePersistentChatStorage.desc": "将保留的聊天历史（包括格式化聊天组件与可用的消息元数据）写入本地压缩 JSON 文件，使其在重启游戏后仍可恢复。需要启用聊天历史保留。",
+  "yacl3.config.better_client:config.cleanRestoredChatSeparatorsOnSave": "保存时清理已恢复分隔符",
+  "yacl3.config.better_client:config.cleanRestoredChatSeparatorsOnSave.desc": "保存聊天历史时，移除之前插入的“已恢复历史”分隔符，避免它们在后续多次恢复中不断累积。",
+  "yacl3.config.better_client:config.chatHistorySeparatorTemplate.button": "编辑已恢复历史分隔符",
+  "yacl3.config.better_client:config.chatHistorySeparatorTemplate.desc": "自定义插入在已恢复聊天记录与新收到消息之间的分隔符。支持占位符和多行。需要启用聊天历史保留。",
 
   "yacl3.config.better_client:config.category.client.group.timestamp": "时间戳",
   "yacl3.config.better_client:config.enableTimeStamp": "启用时间戳",

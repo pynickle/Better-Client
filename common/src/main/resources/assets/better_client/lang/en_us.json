@@ -38,6 +38,10 @@
 
   "text.better_client.help.missing": "§cCannot open config screen",
   "text.better_client.desc.help.missing": "§7Install YACL to access the config in-game.",
+  "text.better_client.chat_separator.title": "Edit chat history separator",
+  "text.better_client.chat_separator.desc": "Supports multiple lines. Available placeholders: {session_name}, {session_key}, {disconnect_time}, {disconnect_date}, {disconnect_datetime}. Use & for color codes.",
+  "text.better_client.chat_separator.placeholder": "&8&m--------------------------------------------------\\n &6[&eRestored Chat History&6]\\n &7Session: &f{session_name} &8| &7Disconnected: &f{disconnect_time}\\n&8&m--------------------------------------------------",
+  "text.better_client.chat_separator.reset": "Reset",
 
   "yacl3.config.better_client:config": "Better Client",
   "yacl3.config.better_client:config.category.client": "Client",
@@ -79,6 +83,12 @@
   "yacl3.config.better_client:config.enableLongerChatHistory.desc": "Extends chat history from the vanilla 100 messages to 4096.",
   "yacl3.config.better_client:config.chatMaxMessages": "Maximum number of historical messages retained",
   "yacl3.config.better_client:config.chatMaxMessages.desc": "Maximum number of messages retained in chat history",
+  "yacl3.config.better_client:config.enablePersistentChatStorage": "Enable Persistent Chat Storage",
+  "yacl3.config.better_client:config.enablePersistentChatStorage.desc": "Save retained chat history, including formatted chat components and available message metadata, to a local compact JSON file so it survives game restarts. Requires Chat History Retention.",
+  "yacl3.config.better_client:config.cleanRestoredChatSeparatorsOnSave": "Clean Restored Chat Separators On Save",
+  "yacl3.config.better_client:config.cleanRestoredChatSeparatorsOnSave.desc": "When saving chat history, remove previously inserted restored-history separator lines so they do not accumulate across future restores.",
+  "yacl3.config.better_client:config.chatHistorySeparatorTemplate.button": "Edit Restored History Separator",
+  "yacl3.config.better_client:config.chatHistorySeparatorTemplate.desc": "Customize the separator inserted between restored chat history and newly received messages. Supports placeholders and multiple lines. Requires Chat History Retention.",
 
   "yacl3.config.better_client:config.category.client.group.timestamp": "Timestamp",
   "yacl3.config.better_client:config.enableTimeStamp": "Enable Time Stamp",

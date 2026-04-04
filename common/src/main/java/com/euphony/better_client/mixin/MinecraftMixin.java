@@ -1,8 +1,11 @@
 package com.euphony.better_client.mixin;
 
+import com.euphony.better_client.service.ChatHistoryManager;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
@@ -42,6 +45,16 @@ public abstract class MinecraftMixin {
                 this.soundManager.pauseAllExcept(SoundSource.UI);
             }
         }
+    }
+
+    @Inject(method = "setLevel(Lnet/minecraft/client/multiplayer/ClientLevel;)V", at = @At("HEAD"), remap = false)
+    private void better_client$saveChatBeforeLevelChange(ClientLevel level, CallbackInfo ci) {
+        ChatHistoryManager.saveCurrentSession();
+    }
+
+    @Inject(method = "disconnect(Lnet/minecraft/client/gui/screens/Screen;Z)V", at = @At("HEAD"))
+    private void better_client$saveChatBeforeDisconnect(Screen screen, boolean keepResourcePacks, CallbackInfo ci) {
+        ChatHistoryManager.saveCurrentSession();
     }
 
     @ModifyExpressionValue(

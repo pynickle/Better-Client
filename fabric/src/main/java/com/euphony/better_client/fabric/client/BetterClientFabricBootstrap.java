@@ -14,6 +14,7 @@ import com.euphony.better_client.client.property.AxolotlBucketVariant;
 import com.euphony.better_client.client.renderer.TotemBarRenderer;
 import com.euphony.better_client.client.renderer.TradingHudRenderer;
 import com.euphony.better_client.keymapping.BCKeyMappings;
+import com.euphony.better_client.service.ChatHistoryManager;
 import com.euphony.better_client.service.ItemFrameVisibilityManager;
 import com.euphony.better_client.utils.Utils;
 import com.euphony.better_client.event.CompoundEventResult;
@@ -108,6 +109,7 @@ public final class BetterClientFabricBootstrap {
             return;
         }
 
+        ChatHistoryManager.handleLevelTransition(knownLevel, currentLevel);
         knownLevel = currentLevel;
         if (currentLevel != null) {
             ItemFrameVisibilityManager.clientLevelLoad(currentLevel);

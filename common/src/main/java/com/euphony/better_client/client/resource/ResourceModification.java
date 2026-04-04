@@ -24,9 +24,9 @@ public class ResourceModification {
                     context -> {
                         if (context.getFile().getAsJsonObject().has("display")
                                 && context.getFile()
-                                .getAsJsonObject()
-                                .getAsJsonObject("display")
-                                .has("firstperson_lefthand")) {
+                                        .getAsJsonObject()
+                                        .getAsJsonObject("display")
+                                        .has("firstperson_lefthand")) {
                             context.getFile()
                                     .getAsJsonObject()
                                     .getAsJsonObject("display")
@@ -34,8 +34,7 @@ public class ResourceModification {
                                     .getAsJsonArray("translation")
                                     .set(1, new JsonPrimitive(config.shieldOffset));
                         }
-                    }
-            );
+                    });
         }
     }
 }
