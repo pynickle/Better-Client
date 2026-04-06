@@ -42,7 +42,7 @@
 ## COMMANDS
 
 ```powershell
-$env:JAVA_HOME = 'D:\Program Files\Eclipse Adoptium\graalvm-jdk-25.0.1+8.1'
+# 继承根 AGENTS 里的 Java 25 / root build 规则
 .\gradlew build
 .\gradlew :common:build
 ```
