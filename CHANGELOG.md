@@ -1,3 +1,9 @@
+## [8.5.0](https://github.com/pynickle/Better-Client/compare/v8.4.1...v8.5.0) (2026-04-06)
+
+### ✨ Features
+
+* add auto skip tutorials ([0c5fb4d](https://github.com/pynickle/Better-Client/commit/0c5fb4d42a8f2a90e05de5db783850fd715d5b05))
+
 ## [8.4.1](https://github.com/pynickle/Better-Client/compare/v8.4.0...v8.4.1) (2026-03-13)
 
 ### 🐛 Bug Fixes
