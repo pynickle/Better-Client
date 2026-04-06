@@ -2,6 +2,8 @@ package com.euphony.better_client;
 
 import com.euphony.better_client.client.BCClientEvents;
 import com.euphony.better_client.config.BetterClientConfig;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.tutorial.TutorialSteps;
 
 public final class BetterClient {
     public static final String MOD_ID = "better_client";
@@ -10,5 +12,9 @@ public final class BetterClient {
         BetterClientConfig.load();
 
         BCClientEvents.init();
+
+        Minecraft.getInstance().execute(() -> {
+            Minecraft.getInstance().getTutorial().setStep(TutorialSteps.NONE);
+        });
     }
 }
