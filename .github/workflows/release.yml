@@ -3,7 +3,7 @@ name: Release
 on:
   push:
     branches:
-      - "master"
+      - "mc-1.21.11"
 
 permissions:
   contents: write # to be able to publish a GitHub release

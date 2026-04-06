@@ -6,6 +6,8 @@ import com.euphony.better_client.client.init.KeyMapping;
 import com.euphony.better_client.client.resource.ResourceModification;
 import com.euphony.better_client.config.Config;
 import com.mojang.logging.LogUtils;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.tutorial.TutorialSteps;
 import org.slf4j.Logger;
 
 public final class BetterClient {
@@ -21,5 +23,9 @@ public final class BetterClient {
 
         BCClientEvents.init();
         BCClientCommands.init();
+
+        Minecraft.getInstance().execute(() -> {
+            Minecraft.getInstance().getTutorial().setStep(TutorialSteps.NONE);
+        });
     }
 }
