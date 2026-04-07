@@ -11,13 +11,19 @@ import static com.euphony.better_client.BetterClient.config;
 
 public class FullBrightnessEvent {
     private static boolean wasKeyPressed = false;
+    private static boolean fullBrightnessActive = false;
+    private static double previousGamma = 1.0D;
 
     public static void clientLevelPre(ClientLevel clientLevel) {
         boolean isKeyPressed = BCKeyMappings.FULL_BRIGHTNESS_TOGGLE.isDown();
 
-        if (!config.enableFullBrightnessToggle) return;
-
         Minecraft minecraft = Minecraft.getInstance();
+        if (!config.enableFullBrightnessToggle) {
+            restoreGamma(minecraft);
+            wasKeyPressed = isKeyPressed;
+            return;
+        }
+
         // 检查是否有输入框正在被使用（额外的安全检查）
         if (minecraft.screen != null && isInputFieldFocused(minecraft)) {
             wasKeyPressed = isKeyPressed;
@@ -33,11 +39,23 @@ public class FullBrightnessEvent {
 
     public static void fullBrightnessToggle(Minecraft minecraft) {
         Options options = minecraft.options;
-        if (options.gamma().get() > 1.0D) {
-            options.gamma().value = 1.0D;
+        if (fullBrightnessActive) {
+            options.gamma().value = previousGamma;
+            fullBrightnessActive = false;
         } else {
+            previousGamma = options.gamma().get();
             options.gamma().value = 15.0D;
+            fullBrightnessActive = true;
         }
+    }
+
+    private static void restoreGamma(Minecraft minecraft) {
+        if (!fullBrightnessActive) {
+            return;
+        }
+
+        minecraft.options.gamma().value = previousGamma;
+        fullBrightnessActive = false;
     }
 
     private static boolean isInputFieldFocused(Minecraft minecraft) {

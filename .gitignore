@@ -123,3 +123,11 @@ runs/
 
 node_modules/
 .trae/
+
+.project
+.classpath
+bin/
+.settings/
+
+.agents/
+skills-lock.json

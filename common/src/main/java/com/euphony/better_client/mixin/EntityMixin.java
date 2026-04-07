@@ -28,6 +28,10 @@ public class EntityMixin {
 
     @Inject(method = "isInvisible", at = @At("RETURN"), cancellable = true)
     private void isInvisible(CallbackInfoReturnable<Boolean> cir) {
+        if (!config.enableInvisibleItemFrame) {
+            return;
+        }
+
         // 只在客户端处理物品展示框
         if (this.better_client$TARGET instanceof ItemFrame && this.level.isClientSide()) {
             Minecraft client = Minecraft.getInstance();
