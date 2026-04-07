@@ -9,11 +9,17 @@ import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
+import static com.euphony.better_client.BetterClient.config;
+
 @Environment(EnvType.CLIENT)
 @Mixin(Level.class)
 public class LevelMixin {
     @ModifyReturnValue(method = "getRainLevel", at = @At("RETURN"))
     public float getRainLevel(float original) {
+        if (!config.enableClientWeather) {
+            return original;
+        }
+
         ClientWeather mode = ClientWeatherHandler.getMode();
 
         if (mode == ClientWeather.CLEAR) {
@@ -27,6 +33,10 @@ public class LevelMixin {
 
     @ModifyReturnValue(method = "getThunderLevel", at = @At("RETURN"))
     public float getThunderLevel(float original) {
+        if (!config.enableClientWeather) {
+            return original;
+        }
+
         ClientWeather mode = ClientWeatherHandler.getMode();
 
         if (mode == ClientWeather.CLEAR) {

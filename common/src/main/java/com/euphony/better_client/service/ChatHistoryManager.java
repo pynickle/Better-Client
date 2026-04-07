@@ -169,8 +169,7 @@ public final class ChatHistoryManager {
         displaySeparator(
                 chat,
                 formatSeparator(
-                        persistentState.sessionName,
-                        Instant.ofEpochMilli(persistentState.lastDisconnectEpochMillis)));
+                        persistentState.sessionName, Instant.ofEpochMilli(persistentState.lastDisconnectEpochMillis)));
     }
 
     private static String formatSeparator(String sessionName, Instant disconnectTime) {

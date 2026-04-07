@@ -24,26 +24,28 @@ public class BeautifiedChatEvent {
     }
 
     public static Component processMessage(Component message) {
+        if (!config.enableTimeStamp) {
+            return message;
+        }
+
         if (message.getString().matches(VANILLA_FORMAT)) {
             MutableComponent output = Component.empty();
-            if (config.enableTimeStamp) {
-                ZonedDateTime now = ZonedDateTime.now();
-                String shortTimestamp = now.format(DateTimeFormatter.ofPattern("'['HH:mm:ss']' "));
+            ZonedDateTime now = ZonedDateTime.now();
+            String shortTimestamp = now.format(DateTimeFormatter.ofPattern("'['HH:mm:ss']' "));
 
-                String fullDateTimeText =
-                        now.format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")) + "\nUTC" + now.getOffset();
+            String fullDateTimeText =
+                    now.format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")) + "\nUTC" + now.getOffset();
 
-                Component fullHoverText = Component.literal(fullDateTimeText);
+            Component fullHoverText = Component.literal(fullDateTimeText);
 
-                HoverEvent hoverEvent = new HoverEvent.ShowText(fullHoverText);
+            HoverEvent hoverEvent = new HoverEvent.ShowText(fullHoverText);
 
-                output.append(Component.literal(shortTimestamp)
-                        .withColor(config.timeStampColor)
-                        .withStyle(style -> style.withHoverEvent(hoverEvent)));
-            }
+            output.append(Component.literal(shortTimestamp)
+                    .withColor(config.timeStampColor)
+                    .withStyle(style -> style.withHoverEvent(hoverEvent)));
             output.append(message);
             return output;
         }
-        return message.copy();
+        return message;
     }
 }

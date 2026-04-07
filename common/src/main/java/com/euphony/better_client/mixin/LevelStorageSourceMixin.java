@@ -18,6 +18,8 @@ import java.io.FileReader;
 import java.io.Reader;
 import java.nio.file.Path;
 
+import static com.euphony.better_client.BetterClient.config;
+
 @Mixin(LevelStorageSource.class)
 public class LevelStorageSourceMixin {
     @Inject(at = @At("RETURN"), method = "makeLevelSummary")
@@ -27,6 +29,8 @@ public class LevelStorageSourceMixin {
             boolean locked,
             int dataVersion,
             CallbackInfoReturnable<LevelSummary> cir) {
+        if (!config.enableWorldPlayTime) return;
+
         LevelSummary summary = cir.getReturnValue();
         if (!(summary instanceof IHasPlayTime playTimeSummary)) return;
 

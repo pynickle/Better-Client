@@ -125,5 +125,8 @@ node_modules/
 .trae/
 
 .project
-
 /.settings/
+
+/.agents/
+
+skills-lock.json

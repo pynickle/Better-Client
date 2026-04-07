@@ -32,6 +32,10 @@ public abstract class PlayerTabOverlayMixin {
 
     @ModifyConstant(method = "extractRenderState", constant = @Constant(intValue = 13))
     private int modifySlotWidthConstant(int original) {
+        if (!config.enableBetterPingDisplay) {
+            return original;
+        }
+
         return original + PLAYER_SLOT_EXTRA_WIDTH;
     }
 
