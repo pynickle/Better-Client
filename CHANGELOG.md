@@ -1,3 +1,9 @@
+## [9.2.1](https://github.com/pynickle/Better-Client/compare/v9.2.0...v9.2.1) (2026-04-07)
+
+### 🐛 Bug Fixes
+
+* fix missing configuration constraints ([0266a78](https://github.com/pynickle/Better-Client/commit/0266a78be595d3d3ad87cbcfe9ff4451527f7a5d))
+
 ## [9.2.0](https://github.com/pynickle/Better-Client/compare/v9.1.0...v9.2.0) (2026-04-06)
 
 ### ✨ Features
