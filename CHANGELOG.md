@@ -1,3 +1,13 @@
+## [8.5.1](https://github.com/pynickle/Better-Client/compare/v8.5.0...v8.5.1) (2026-04-08)
+
+### 🐛 Bug Fixes
+
+* fix ([e4d45c7](https://github.com/pynickle/Better-Client/commit/e4d45c778572c5b88503fa44d5d549d9cff8d242))
+
+### 🚀 Improvements
+
+* add missing configuration constraints ([63b4397](https://github.com/pynickle/Better-Client/commit/63b4397d68ff7ff2efcfbd7c140d9d5c9a2b2abb))
+
 ## [8.5.0](https://github.com/pynickle/Better-Client/compare/v8.4.1...v8.5.0) (2026-04-06)
 
 ### ✨ Features
