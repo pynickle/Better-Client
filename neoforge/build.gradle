@@ -59,14 +59,8 @@ dependencies {
 
     modImplementation "dev.architectury:architectury-neoforge:$rootProject.architectury_api_version"
 
-    implementation 'thedarkcolour:kotlinforforge-neoforge:5.10.0'
-
     implementation("dev.isxander:yet-another-config-lib:${yacl_version}+${minecraft_version}-neoforge"){
         exclude group: "net.neoforged.fancymodloader", module: "loader"
-        exclude group: "thedarkcolour", module: "kotlinforforge-neoforge"
-        exclude group: "thedarkcolour", module: "kfflang-neoforge"
-        exclude group: "thedarkcolour", module: "kffmod-neoforge"
-        exclude group: "thedarkcolour", module: "kfflib-neoforge"
     }
 
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }

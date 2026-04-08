@@ -121,3 +121,9 @@ runs/
 /common/src/generated/resources/.cache/
 
 /node_modules/
+
+.agents/
+.settings/
+.project
+.classpath
+skills-lock.json
