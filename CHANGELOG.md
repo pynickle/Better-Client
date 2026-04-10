@@ -1,3 +1,14 @@
+## [9.3.1](https://github.com/pynickle/Better-Client/compare/v9.3.0...v9.3.1) (2026-04-10)
+
+### 🐛 Bug Fixes
+
+* fix world icon update performance issue and working strategy ([05011a8](https://github.com/pynickle/Better-Client/commit/05011a8689042738ccd2916a39627cb819bc4c31))
+* fix wrong chat fading ([9189243](https://github.com/pynickle/Better-Client/commit/91892434a87d008270405a403047ac7f562b402b))
+
+### ⚡ Performance Improvements
+
+* performance improvements ([75f6426](https://github.com/pynickle/Better-Client/commit/75f6426fe20211b4b64519a459e6997dd83122e4))
+
 ## [9.3.0](https://github.com/pynickle/Better-Client/compare/v9.2.1...v9.3.0) (2026-04-10)
 
 ### ✨ Features
