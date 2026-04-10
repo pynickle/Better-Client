@@ -13,7 +13,12 @@ subprojects {
     }
 
     repositories {
-        maven { url "https://maven.neoforged.net/releases/" }
+        maven {
+            url "https://maven.neoforged.net/releases/"
+            content {
+                includeGroup "net.neoforged"
+            }
+        }
         maven {
             // YACL
             name 'Xander Maven'
