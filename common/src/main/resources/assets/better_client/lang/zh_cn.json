@@ -98,6 +98,12 @@
   "yacl3.config.better_client:config.enableChatHistoryRetention": "启用聊天历史保留",
   "yacl3.config.better_client:config.enableChatHistoryRetention.desc": "离开世界将不再清除聊天历史。",
 
+  "yacl3.config.better_client:config.category.client.group.mentions": "提及补全",
+  "yacl3.config.better_client:config.enableChatMentionAutocomplete": "启用聊天提及补全",
+  "yacl3.config.better_client:config.enableChatMentionAutocomplete.desc": "在聊天输入框中键入 @ 时，复用原版补全面板显示在线玩家名。若消息以 / 开头，则不会触发。",
+  "yacl3.config.better_client:config.chatMentionColor": "提及颜色",
+  "yacl3.config.better_client:config.chatMentionColor.desc": "聊天输入框中 @name 文本的高亮颜色。补全插入后会自动追加一个空格。",
+
   "yacl3.config.better_client:config.category.client.group.chat_formatter": "聊天格式化",
   "yacl3.config.better_client:config.enableChatFormatter": "启用聊天格式化",
   "yacl3.config.better_client:config.enableChatFormatter.desc": "自动将 {pos} 等占位符替换为玩家实际坐标",

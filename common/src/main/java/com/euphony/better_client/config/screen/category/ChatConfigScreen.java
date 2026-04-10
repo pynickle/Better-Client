@@ -21,6 +21,7 @@ import static com.euphony.better_client.config.YACLConfig.CLIENT_CATEGORY;
 public class ChatConfigScreen {
     private static final String BETTER_CHAT_GROUP = "better_chat";
     private static final String TIMESTAMP_GROUP = "timestamp";
+    private static final String MENTION_GROUP = "mentions";
     private static final String CHAT_FORMATTER_GROUP = "chat_formatter";
 
     public static Screen generateScreen(Screen parent) {
@@ -51,6 +52,20 @@ public class ChatConfigScreen {
                         new Color(DEFAULTS.timeStampColor, false),
                         () -> new Color(config.timeStampColor, false),
                         newVal -> config.timeStampColor = newVal.getRGB())
+                .controller(opt -> ColorControllerBuilder.create(opt).allowAlpha(false))
+                .build();
+
+        Option<Boolean> enableChatMentionAutocompleteOpt = ConfigUtils.buildBooleanOption(
+                "enableChatMentionAutocomplete",
+                DEFAULTS.enableChatMentionAutocomplete,
+                () -> config.enableChatMentionAutocomplete,
+                newVal -> config.enableChatMentionAutocomplete = newVal);
+
+        Option<Color> chatMentionColorOpt = ConfigUtils.<Color>getGenericOption("chatMentionColor")
+                .binding(
+                        new Color(DEFAULTS.chatMentionColor, false),
+                        () -> new Color(config.chatMentionColor, false),
+                        newVal -> config.chatMentionColor = newVal.getRGB())
                 .controller(opt -> ColorControllerBuilder.create(opt).allowAlpha(false))
                 .build();
 
@@ -104,6 +119,10 @@ public class ChatConfigScreen {
                         .group(OptionGroup.createBuilder()
                                 .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, TIMESTAMP_GROUP))
                                 .options(List.of(enableTimeStampOpt, timeStampColorOpt))
+                                .build())
+                        .group(OptionGroup.createBuilder()
+                                .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, MENTION_GROUP))
+                                .options(List.of(enableChatMentionAutocompleteOpt, chatMentionColorOpt))
                                 .build())
                         .group(OptionGroup.createBuilder()
                                 .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, CHAT_FORMATTER_GROUP))

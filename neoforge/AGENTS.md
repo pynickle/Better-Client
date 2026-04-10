@@ -6,14 +6,14 @@
 
 ## WHERE TO LOOK
 
-| 任务 | 位置 | 备注 |
-|---|---|---|
-| 主入口 | `src/main/java/com/euphony/better_client/neoforge/BetterClientNeoForge.java` | `@Mod(BetterClient.MOD_ID)` |
-| 客户端事件接线 | `src/main/java/com/euphony/better_client/neoforge/client/BCClientNeoforge.java` | `@EventBusSubscriber` + `@SubscribeEvent` |
-| 平台实现 | `src/main/java/com/euphony/better_client/neoforge/platform` | NeoForge 平台 helper |
-| Datagen | `src/main/java/com/euphony/better_client/neoforge/datagen` | `GatherDataEvent.Client` 注册 provider |
-| 模组清单 | `src/main/resources/META-INF/neoforge.mods.toml` | 依赖、mixins、AT |
-| Access transformer | `src/main/resources/META-INF/accesstransformer.cfg` | NeoForge 访问控制 |
+| 任务                 | 位置                                                                              | 备注                                        |
+|--------------------|---------------------------------------------------------------------------------|-------------------------------------------|
+| 主入口                | `src/main/java/com/euphony/better_client/neoforge/BetterClientNeoForge.java`    | `@Mod(BetterClient.MOD_ID)`               |
+| 客户端事件接线            | `src/main/java/com/euphony/better_client/neoforge/client/BCClientNeoforge.java` | `@EventBusSubscriber` + `@SubscribeEvent` |
+| 平台实现               | `src/main/java/com/euphony/better_client/neoforge/platform`                     | NeoForge 平台 helper                        |
+| Datagen            | `src/main/java/com/euphony/better_client/neoforge/datagen`                      | `GatherDataEvent.Client` 注册 provider      |
+| 模组清单               | `src/main/resources/META-INF/neoforge.mods.toml`                                | 依赖、mixins、AT                              |
+| Access transformer | `src/main/resources/META-INF/accesstransformer.cfg`                             | NeoForge 访问控制                             |
 
 ## CONVENTIONS
 

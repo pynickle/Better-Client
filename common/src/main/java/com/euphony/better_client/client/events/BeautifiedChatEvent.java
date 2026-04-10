@@ -1,6 +1,7 @@
 package com.euphony.better_client.client.events;
 
 import com.euphony.better_client.event.CompoundEventResult;
+import com.euphony.better_client.utils.mc.ChatMentionUtils;
 import net.minecraft.network.chat.ChatType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.HoverEvent;
@@ -24,12 +25,10 @@ public class BeautifiedChatEvent {
     }
 
     public static Component processMessage(Component message) {
-        if (!config.enableTimeStamp) {
-            return message;
-        }
+        Component output = message;
 
-        if (message.getString().matches(VANILLA_FORMAT)) {
-            MutableComponent output = Component.empty();
+        if (config.enableTimeStamp && message.getString().matches(VANILLA_FORMAT)) {
+            MutableComponent timestampedOutput = Component.empty();
             ZonedDateTime now = ZonedDateTime.now();
             String shortTimestamp = now.format(DateTimeFormatter.ofPattern("'['HH:mm:ss']' "));
 
@@ -40,12 +39,19 @@ public class BeautifiedChatEvent {
 
             HoverEvent hoverEvent = new HoverEvent.ShowText(fullHoverText);
 
-            output.append(Component.literal(shortTimestamp)
+            timestampedOutput.append(Component.literal(shortTimestamp)
                     .withColor(config.timeStampColor)
                     .withStyle(style -> style.withHoverEvent(hoverEvent)));
-            output.append(message);
-            return output;
+            timestampedOutput.append(message);
+            message = timestampedOutput;
         }
-        return message;
+
+        if (config.enableChatMentionAutocomplete && ChatMentionUtils.isAvailableInCurrentSession()) {
+            output = ChatMentionUtils.colorMentions(message, config.chatMentionColor);
+        } else {
+            output = message;
+        }
+
+        return output;
     }
 }

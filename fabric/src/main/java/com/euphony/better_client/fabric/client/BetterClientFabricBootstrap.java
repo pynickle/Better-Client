@@ -1,5 +1,6 @@
 package com.euphony.better_client.fabric.client;
 
+import com.euphony.better_client.BetterClient;
 import com.euphony.better_client.client.command.ClientWeatherCommand;
 import com.euphony.better_client.client.events.BeautifiedChatEvent;
 import com.euphony.better_client.client.events.BiomeTitleEvent;
@@ -30,6 +31,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.item.properties.select.SelectItemModelProperties;
+import net.minecraft.network.chat.Component;
 
 public final class BetterClientFabricBootstrap {
     private static ClientLevel knownLevel;
@@ -86,7 +88,7 @@ public final class BetterClientFabricBootstrap {
         });
         ClientReceiveMessageEvents.ALLOW_CHAT.register(
                 (message, playerChatMessage, sender, boundChatType, timeStamp) -> {
-                    CompoundEventResult<net.minecraft.network.chat.Component> result =
+                    CompoundEventResult<Component> result =
                             BeautifiedChatEvent.chatReceived(boundChatType, message);
                     if (result.isInterrupted()) {
                         Minecraft.getInstance().gui.getChat().addClientSystemMessage(result.object());
