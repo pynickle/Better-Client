@@ -1,6 +1,5 @@
 package com.euphony.better_client.mixin;
 
-import com.euphony.better_client.client.events.WorldIconUpdateEvent;
 import com.euphony.better_client.service.ChatHistoryManager;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.client.Minecraft;
@@ -56,7 +55,6 @@ public abstract class MinecraftMixin {
     @Inject(method = "disconnect(Lnet/minecraft/client/gui/screens/Screen;Z)V", at = @At("HEAD"))
     private void better_client$saveChatBeforeDisconnect(Screen screen, boolean keepResourcePacks, CallbackInfo ci) {
         ChatHistoryManager.saveCurrentSession();
-        WorldIconUpdateEvent.captureOnWorldExit((Minecraft) (Object) this);
     }
 
     @ModifyExpressionValue(
