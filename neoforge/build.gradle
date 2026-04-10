@@ -37,6 +37,12 @@ configurations {
     developmentNeoForge.extendsFrom common
 }
 
+repositories {
+    maven {
+        url "https://maven.neoforged.net/releases/"
+    }
+}
+
 dependencies {
     minecraft "com.mojang:minecraft:${rootProject.architectury.minecraft}"
 
