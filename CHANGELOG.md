@@ -1,3 +1,14 @@
+## [9.3.0](https://github.com/pynickle/Better-Client/compare/v9.2.1...v9.3.0) (2026-04-10)
+
+### ✨ Features
+
+* add chat mention ([18e4d76](https://github.com/pynickle/Better-Client/commit/18e4d76993df9033837522db397e529cc1cc70e7))
+
+### 🔧 Miscellaneous Changes
+
+* fix ([f718433](https://github.com/pynickle/Better-Client/commit/f718433e0a54f6d47eb6eb5d2030a3121226f84d))
+* fix build ([54c15af](https://github.com/pynickle/Better-Client/commit/54c15af00f3de84ee6cc7d02b4929598eb53f7ea))
+
 ## [9.2.1](https://github.com/pynickle/Better-Client/compare/v9.2.0...v9.2.1) (2026-04-07)
 
 ### 🐛 Bug Fixes
