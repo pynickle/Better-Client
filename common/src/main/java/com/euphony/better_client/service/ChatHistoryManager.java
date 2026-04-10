@@ -163,8 +163,10 @@ public final class ChatHistoryManager {
 
         restoringChat = true;
         try {
+            List<GuiMessage> restoredMessages =
+                    rebasePersistedMessageTimes(deserializeMessages(persistentState.messages));
             ChatComponent.State restoredState = new ChatComponent.State(
-                    deserializeMessages(persistentState.messages),
+                    restoredMessages,
                     persistentState.recentChat == null ? List.of() : List.copyOf(persistentState.recentChat),
                     List.of());
             chat.restoreState(restoredState);
@@ -212,6 +214,29 @@ public final class ChatHistoryManager {
                 .filter(message -> !isSeparatorMessage(message))
                 .toList();
         return new ChatComponent.State(filteredMessages, List.copyOf(accessor.better_client$getHistory()), List.of());
+    }
+
+    private static List<GuiMessage> rebasePersistedMessageTimes(List<GuiMessage> messages) {
+        if (messages.isEmpty()) {
+            return List.of();
+        }
+
+        int currentGuiTicks = Minecraft.getInstance().gui.getGuiTicks();
+        int newestAddedTime = messages.stream().mapToInt(GuiMessage::addedTime).max().orElse(currentGuiTicks);
+        int tickOffset = currentGuiTicks - newestAddedTime;
+
+        List<GuiMessage> rebasedMessages = new ArrayList<>(messages.size());
+        for (GuiMessage message : messages) {
+            int rebasedAddedTime = Math.max(0, message.addedTime() + tickOffset);
+            rebasedMessages.add(new GuiMessage(
+                    rebasedAddedTime,
+                    message.content(),
+                    message.signature(),
+                    message.source(),
+                    message.tag()));
+        }
+
+        return rebasedMessages;
     }
 
     private static boolean isSeparatorMessage(GuiMessage message) {
