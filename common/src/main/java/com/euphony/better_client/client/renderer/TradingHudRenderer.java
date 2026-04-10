@@ -10,12 +10,9 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.util.CommonColors;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.item.trading.MerchantOffers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.euphony.better_client.BetterClient.config;
@@ -37,8 +34,10 @@ public class TradingHudRenderer {
 
         Font font = minecraft.font;
 
-        MerchantInfo.getInstance().getLastEntityId().ifPresent(lastId -> {
-            MerchantOffers merchantOffers = MerchantInfo.getInstance().getOffers();
+        MerchantInfo merchantInfo = MerchantInfo.getInstance();
+        merchantInfo.getLastEntityId().ifPresent(lastId -> {
+            MerchantOffers merchantOffers = merchantInfo.getOffers();
+            List<String> enchantmentTexts = merchantInfo.getOfferEnchantmentTexts();
             if (!merchantOffers.isEmpty()) {
                 // Get screen dimensions
                 int screenWidth = minecraft.getWindow().getGuiScaledWidth();
@@ -97,18 +96,12 @@ public class TradingHudRenderer {
                         guiGraphics.itemDecorations(font, itemStack4, i + 5 + 58 + extraSpace, n);
                         k += 20;
 
-                        List<String> enchantments = new ArrayList<>();
-
-                        var itemEnchantmentsComponent = EnchantmentHelper.getEnchantmentsForCrafting(itemStack4);
-                        if (EnchantmentHelper.hasAnyEnchantments(itemStack4)) {
-                            for (var entry : itemEnchantmentsComponent.entrySet()) {
-                                var level = entry.getIntValue();
-                                enchantments.add(Enchantment.getFullname(entry.getKey(), level)
-                                        .getString());
+                        if (m < enchantmentTexts.size()) {
+                            String enchantmentText = enchantmentTexts.get(m);
+                            if (!enchantmentText.isEmpty()) {
+                                guiGraphics.text(font, enchantmentText, (i + 85), (n + 3), CommonColors.WHITE);
                             }
                         }
-
-                        guiGraphics.text(font, String.join(", ", enchantments), (i + 85), (n + 3), CommonColors.WHITE);
                     }
                     ++m;
                 }

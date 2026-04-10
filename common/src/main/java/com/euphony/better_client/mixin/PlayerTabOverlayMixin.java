@@ -67,7 +67,7 @@ public abstract class PlayerTabOverlayMixin {
             int x,
             int y,
             PlayerInfo player) {
-        String pingString = String.format("%dms", player.getLatency());
+        String pingString = player.getLatency() + "ms";
         int pingStringWidth = mc.font.width(pingString);
         int pingTextColor = ColorUtils.getPingTextColor(player.getLatency());
 

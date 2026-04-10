@@ -6,6 +6,7 @@ import com.euphony.better_client.utils.Utils;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Items;
@@ -15,20 +16,36 @@ import static com.euphony.better_client.BetterClient.config;
 public class TotemBarRenderer {
     private static final Identifier TEX_FULL = Utils.prefix("textures/gui/sprites/totem.png");
     private static final Identifier TEX_EMPTY = Utils.prefix("textures/gui/sprites/totem_empty.png");
+    private static int better_client$cachedInventoryTotems;
+    private static int better_client$cachedHandTotems;
+    private static int better_client$lastPlayerId = Integer.MIN_VALUE;
+    private static int better_client$lastTick = Integer.MIN_VALUE;
 
     public static void render(GuiGraphicsExtractor ctx, DeltaTracker tickCounter) {
         if (!config.enableTotemBar) return;
 
         Minecraft client = Minecraft.getInstance();
-        if (client.player == null || client.options.hideGui) return;
-        if (client.player.isCreative() || client.player.isSpectator()) return;
+        LocalPlayer player = client.player;
+        if (player == null || client.options.hideGui) return;
+        if (player.isCreative() || player.isSpectator()) return;
 
-        int totInventory = client.player.getInventory().countItem(Items.TOTEM_OF_UNDYING);
+        better_client$refreshTotemCounts(player);
+        drawIcons(ctx, better_client$cachedInventoryTotems, better_client$cachedHandTotems);
+    }
+
+    private static void better_client$refreshTotemCounts(LocalPlayer player) {
+        if (player.getId() == better_client$lastPlayerId && player.tickCount == better_client$lastTick) {
+            return;
+        }
+
+        better_client$lastPlayerId = player.getId();
+        better_client$lastTick = player.tickCount;
+        better_client$cachedInventoryTotems = player.getInventory().countItem(Items.TOTEM_OF_UNDYING);
+
         int handTotems = 0;
-        if (client.player.getMainHandItem().is(Items.TOTEM_OF_UNDYING)) handTotems++;
-        if (client.player.getOffhandItem().is(Items.TOTEM_OF_UNDYING)) handTotems++;
-
-        drawIcons(ctx, totInventory, handTotems);
+        if (player.getMainHandItem().is(Items.TOTEM_OF_UNDYING)) handTotems++;
+        if (player.getOffhandItem().is(Items.TOTEM_OF_UNDYING)) handTotems++;
+        better_client$cachedHandTotems = handTotems;
     }
 
     private static void drawIcons(GuiGraphicsExtractor ctx, int totInventory, int hand) {

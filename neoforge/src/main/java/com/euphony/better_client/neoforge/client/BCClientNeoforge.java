@@ -100,8 +100,4 @@ public final class BCClientNeoforge {
         BundleUpEvent.bundleUp(Minecraft.getInstance(), event.getScreen(), event.getKeyEvent());
     }
 
-    @SubscribeEvent
-    private static void onRenderLevelStage(RenderLevelStageEvent.AfterLevel event) {
-        WorldIconUpdateEvent.onRenderLevelStage();
-    }
 }

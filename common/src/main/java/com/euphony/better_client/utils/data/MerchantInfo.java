@@ -1,9 +1,14 @@
 package com.euphony.better_client.utils.data;
 
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.trading.MerchantOffers;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -18,6 +23,9 @@ public class MerchantInfo {
     @NotNull
     private MerchantOffers offers = new MerchantOffers();
 
+    @NotNull
+    private List<String> offerEnchantmentTexts = List.of();
+
     private MerchantInfo() {}
 
     public static MerchantInfo getInstance() {
@@ -29,8 +37,14 @@ public class MerchantInfo {
         return this.offers;
     }
 
+    @NotNull
+    public List<String> getOfferEnchantmentTexts() {
+        return this.offerEnchantmentTexts;
+    }
+
     public void setOffers(@NotNull MerchantOffers offers) {
         this.offers = offers;
+        this.offerEnchantmentTexts = buildOfferEnchantmentTexts(offers);
     }
 
     public Optional<Integer> getLastEntityId() {
@@ -56,5 +70,36 @@ public class MerchantInfo {
     public void reset() {
         this.lastEntityId = null;
         this.offers = new MerchantOffers();
+        this.offerEnchantmentTexts = List.of();
+    }
+
+    private static List<String> buildOfferEnchantmentTexts(MerchantOffers offers) {
+        if (offers.isEmpty()) {
+            return List.of();
+        }
+
+        List<String> enchantmentTexts = new ArrayList<>(offers.size());
+        for (var offer : offers) {
+            ItemStack result = offer.getResult();
+            var enchantments = EnchantmentHelper.getEnchantmentsForCrafting(result);
+            if (enchantments.isEmpty()) {
+                enchantmentTexts.add("");
+                continue;
+            }
+
+            StringBuilder builder = new StringBuilder();
+            boolean first = true;
+            for (var entry : enchantments.entrySet()) {
+                if (!first) {
+                    builder.append(", ");
+                }
+
+                builder.append(Enchantment.getFullname(entry.getKey(), entry.getIntValue()).getString());
+                first = false;
+            }
+            enchantmentTexts.add(builder.toString());
+        }
+
+        return List.copyOf(enchantmentTexts);
     }
 }

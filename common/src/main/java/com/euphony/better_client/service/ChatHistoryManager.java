@@ -16,6 +16,7 @@ import net.minecraft.client.multiplayer.chat.GuiMessageTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentSerialization;
 import net.minecraft.network.chat.MessageSignature;
+import net.minecraft.util.Util;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -38,10 +39,13 @@ public final class ChatHistoryManager {
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 
     private static final Map<String, RuntimeChatState> RUNTIME_STATES = new HashMap<>();
+    private static final Object PERSISTENT_STORE_LOCK = new Object();
 
     private static boolean allowVanillaClear;
     private static boolean restoringChat;
     private static PersistentChatStore persistentChatStore;
+    private static boolean persistentStoreSaveScheduled;
+    private static boolean persistentStoreSaveDirty;
 
     private ChatHistoryManager() {}
 
@@ -130,8 +134,10 @@ public final class ChatHistoryManager {
         }
 
         PersistentChatStore store = getPersistentStore();
-        store.sessions.put(sessionKey, PersistentChatState.from(state, sessionName, disconnectTime));
-        savePersistentStore(store);
+        synchronized (PERSISTENT_STORE_LOCK) {
+            store.sessions.put(sessionKey, PersistentChatState.from(state, sessionName, disconnectTime));
+        }
+        savePersistentStoreAsync();
     }
 
     private static void restoreRuntimeState(ChatComponent chat, RuntimeChatState runtimeState) {
@@ -226,12 +232,14 @@ public final class ChatHistoryManager {
     }
 
     private static PersistentChatStore getPersistentStore() {
-        if (persistentChatStore != null) {
+        synchronized (PERSISTENT_STORE_LOCK) {
+            if (persistentChatStore != null) {
+                return persistentChatStore;
+            }
+
+            persistentChatStore = loadPersistentStore();
             return persistentChatStore;
         }
-
-        persistentChatStore = loadPersistentStore();
-        return persistentChatStore;
     }
 
     private static PersistentChatStore loadPersistentStore() {
@@ -248,7 +256,34 @@ public final class ChatHistoryManager {
         }
     }
 
-    private static void savePersistentStore(PersistentChatStore store) {
+    private static void savePersistentStoreAsync() {
+        synchronized (PERSISTENT_STORE_LOCK) {
+            persistentStoreSaveDirty = true;
+            if (persistentStoreSaveScheduled) {
+                return;
+            }
+            persistentStoreSaveScheduled = true;
+        }
+
+        Util.ioPool().execute(() -> {
+            while (true) {
+                PersistentChatStore snapshot;
+                synchronized (PERSISTENT_STORE_LOCK) {
+                    if (!persistentStoreSaveDirty) {
+                        persistentStoreSaveScheduled = false;
+                        return;
+                    }
+
+                    persistentStoreSaveDirty = false;
+                    snapshot = copyStore(persistentChatStore);
+                }
+
+                writePersistentStore(snapshot);
+            }
+        });
+    }
+
+    private static void writePersistentStore(PersistentChatStore store) {
         try {
             Path basePath = CHAT_HISTORY_PATH.getParent();
             if (basePath != null && Files.notExists(basePath)) {
@@ -259,6 +294,58 @@ public final class ChatHistoryManager {
         } catch (IOException e) {
             LOGGER.error("[BetterClient] Failed to save chat history data", e);
         }
+    }
+
+    private static PersistentChatStore copyStore(PersistentChatStore store) {
+        PersistentChatStore copy = new PersistentChatStore();
+        if (store == null) {
+            return copy;
+        }
+
+        for (Map.Entry<String, PersistentChatState> entry : store.sessions.entrySet()) {
+            copy.sessions.put(entry.getKey(), copyState(entry.getValue()));
+        }
+        return copy;
+    }
+
+    private static PersistentChatState copyState(PersistentChatState state) {
+        PersistentChatState copy = new PersistentChatState();
+        copy.sessionName = state.sessionName;
+        copy.lastDisconnectEpochMillis = state.lastDisconnectEpochMillis;
+        copy.messages = copyMessages(state.messages);
+        copy.recentChat = state.recentChat == null ? null : new ArrayList<>(state.recentChat);
+        return copy;
+    }
+
+    private static List<PersistentChatMessage> copyMessages(List<PersistentChatMessage> messages) {
+        if (messages == null) {
+            return null;
+        }
+
+        List<PersistentChatMessage> copy = new ArrayList<>(messages.size());
+        for (PersistentChatMessage message : messages) {
+            PersistentChatMessage copiedMessage = new PersistentChatMessage();
+            copiedMessage.addedTime = message.addedTime;
+            copiedMessage.content = message.content == null ? null : message.content.deepCopy();
+            copiedMessage.signature = message.signature == null ? null : message.signature.deepCopy();
+            copiedMessage.source = message.source;
+            copiedMessage.tag = copyTag(message.tag);
+            copy.add(copiedMessage);
+        }
+        return copy;
+    }
+
+    private static PersistentGuiMessageTag copyTag(PersistentGuiMessageTag tag) {
+        if (tag == null) {
+            return null;
+        }
+
+        PersistentGuiMessageTag copy = new PersistentGuiMessageTag();
+        copy.indicatorColor = tag.indicatorColor;
+        copy.icon = tag.icon;
+        copy.text = tag.text == null ? null : tag.text.deepCopy();
+        copy.logTag = tag.logTag;
+        return copy;
     }
 
     private record RuntimeChatState(ChatComponent.State state, String sessionName, Instant disconnectTime) {}

@@ -39,7 +39,8 @@ Better Client 是基于 Architectury 的多加载器客户端模组仓库。`com
 
 - 统一通过根 Gradle 构建；根 `build.gradle` 把 `JavaCompile.options.release` 固定为 `25`。
 - 本地编译使用 Java 25；路径固定为 `D:\Program Files\Eclipse Adoptium\graalvm-jdk-25.0.1+8.1`。
-- 处理 Minecraft 模组功能改动前，先读取并遵循 `.agents/skills/minecraft-source-cache/SKILL.md`；优先复用现有 source cache / Gradle 产物，再决定是否补缓存。
+- Windows 下不要只在当前 PowerShell 会话里单独设置 `JAVA_HOME` 后再期待 `gradlew` 自动继承；实测最稳的是用同一个 `cmd /c` 同时注入 `JAVA_HOME` 与 `PATH` 再启动 `gradlew.bat`，否则 Loom 仍可能以 Java 21 启动并报 `Minecraft 26.1.2 requires Java 25`。
+- 处理 Minecraft 模组功能改动前，先读取并遵循 skill: minecraft-source-cache；优先复用现有 source cache / Gradle 产物，再决定是否补缓存。
 - 修改共享逻辑时，优先留在 `common`；只有加载器 API / 清单 / 事件总线差异才放 `fabric` 或 `neoforge`。
 - `common` 通过 `ServiceLoader` + `BetterClientPlatform` 做平台分发；不要从共享代码直接依赖 Fabric / NeoForge API。
 - NeoForge datagen 输出到 `common/src/generated/resources`，Fabric / NeoForge 构建都会把该目录并入资源。
@@ -62,10 +63,9 @@ Better Client 是基于 Architectury 的多加载器客户端模组仓库。`com
 ## COMMANDS
 
 ```powershell
-$env:JAVA_HOME = 'D:\Program Files\Eclipse Adoptium\graalvm-jdk-25.0.1+8.1'
-.\gradlew --no-daemon build
-.\gradlew --no-daemon :fabric:build
-.\gradlew --no-daemon :neoforge:build
+cmd /c "set JAVA_HOME=D:\Program Files\Eclipse Adoptium\graalvm-jdk-25.0.1+8.1&& set PATH=D:\Program Files\Eclipse Adoptium\graalvm-jdk-25.0.1+8.1\bin;%PATH%&& gradlew.bat --no-daemon build"
+cmd /c "set JAVA_HOME=D:\Program Files\Eclipse Adoptium\graalvm-jdk-25.0.1+8.1&& set PATH=D:\Program Files\Eclipse Adoptium\graalvm-jdk-25.0.1+8.1\bin;%PATH%&& gradlew.bat --no-daemon :fabric:build"
+cmd /c "set JAVA_HOME=D:\Program Files\Eclipse Adoptium\graalvm-jdk-25.0.1+8.1&& set PATH=D:\Program Files\Eclipse Adoptium\graalvm-jdk-25.0.1+8.1\bin;%PATH%&& gradlew.bat --no-daemon :neoforge:build"
 pnpm install
 npx semantic-release
 ```
@@ -73,5 +73,5 @@ npx semantic-release
 ## NOTES
 
 - 当前 CI release workflow 也固定使用 Java 25。
-- 仓库未配置常规单元测试；默认验证是 `gradlew --no-daemon build`。
+- 仓库未配置常规单元测试；默认验证是上面的 Java 25 `cmd /c ... gradlew.bat --no-daemon build` 命令。
 - `fabric.mod.json` 里的 Java 依赖范围仍写 `>=21`，但实际编译目标已经提升到 Java 25；改动构建相关内容时以 Gradle 配置为准。

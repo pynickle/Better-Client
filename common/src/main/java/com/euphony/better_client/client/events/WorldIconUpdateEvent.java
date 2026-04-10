@@ -1,5 +1,6 @@
 package com.euphony.better_client.client.events;
 
+import com.euphony.better_client.BetterClient;
 import com.mojang.blaze3d.platform.NativeImage;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Screenshot;
@@ -8,21 +9,41 @@ import net.minecraft.util.Util;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.euphony.better_client.BetterClient.LOGGER;
 import static com.euphony.better_client.BetterClient.config;
 
 public class WorldIconUpdateEvent {
-    public static void onRenderLevelStage() {
-        if (!config.enableWorldIconUpdate) return;
+    private static final AtomicBoolean CAPTURE_IN_PROGRESS = new AtomicBoolean(false);
 
-        Minecraft minecraft = Minecraft.getInstance();
-        if (minecraft.isLocalServer()) {
-            IntegratedServer server = minecraft.getSingleplayerServer();
-            if (server != null && !server.isStopped()) {
-                server.getWorldScreenshotFile().ifPresent(WorldIconUpdateEvent::captureCleanScreenshot);
-            }
+    private WorldIconUpdateEvent() {}
+
+    public static void captureOnWorldExit(Minecraft minecraft) {
+        LOGGER.info("Capturing on world exit 1");
+        if (!config.enableWorldIconUpdate || !minecraft.isLocalServer()) {
+            return;
         }
+        LOGGER.info("Capturing on world exit 2");
+
+        if (!CAPTURE_IN_PROGRESS.compareAndSet(false, true)) {
+            return;
+        }
+
+        LOGGER.info("Capturing on world exit 3");
+
+        IntegratedServer server = minecraft.getSingleplayerServer();
+        if (server == null || server.isStopped()) {
+            LOGGER.info("Capturing on world exit 4");
+            CAPTURE_IN_PROGRESS.set(false);
+            return;
+        }
+
+        LOGGER.info("Capturing on world exit 5");
+
+        server.getWorldScreenshotFile().ifPresentOrElse(
+                WorldIconUpdateEvent::captureCleanScreenshot,
+                () -> CAPTURE_IN_PROGRESS.set(false));
     }
 
     private static void captureCleanScreenshot(Path path) {
@@ -62,6 +83,7 @@ public class WorldIconUpdateEvent {
                         LOGGER.warn("Couldn't save auto screenshot", iOException);
                     } finally {
                         nativeImage.close();
+                        CAPTURE_IN_PROGRESS.set(false);
                     }
                 }));
     }
