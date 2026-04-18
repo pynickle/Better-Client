@@ -130,3 +130,5 @@ node_modules/
 /.agents/
 
 skills-lock.json
+
+AGENTS.md
