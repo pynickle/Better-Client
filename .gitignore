@@ -127,3 +127,5 @@ runs/
 .project
 .classpath
 skills-lock.json
+
+AGENTS.md
