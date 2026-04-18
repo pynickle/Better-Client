@@ -10,7 +10,9 @@
     "ClientPacketListenerMixin",
     "GameRendererMixin",
     "MinecraftMixin",
-    "PlayerTabOverlayMixin"
+    "PlayerTabOverlayMixin",
+    "WorldListEntryMixin",
+    "WorldOpenFlowsMixin"
   ],
   "mixins": [
   ],

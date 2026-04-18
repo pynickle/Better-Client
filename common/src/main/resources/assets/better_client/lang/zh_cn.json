@@ -93,5 +93,11 @@
   "yacl3.config.better_client:config.enableChatFormatter": "启用聊天格式化",
   "yacl3.config.better_client:config.enableChatFormatter.desc": "自动将 {pos} 等占位符替换为玩家实际坐标",
   "yacl3.config.better_client:config.posFormat": "坐标格式",
-  "yacl3.config.better_client:config.posFormat.desc": "定义替换 {pos} 时坐标的格式化规则。支持 {x}、{y} 和 {z} 占位符。"
+  "yacl3.config.better_client:config.posFormat.desc": "定义替换 {pos} 时坐标的格式化规则。支持 {x}、{y} 和 {z} 占位符。",
+
+  "yacl3.config.better_client:config.category.client.group.no_experimental_warning": "不显示实验性警告",
+  "yacl3.config.better_client:config.enableNoExperimentalWarning": "启用不显示实验性警告",
+  "yacl3.config.better_client:config.enableNoExperimentalWarning.desc": "创建实验性世界和进入实验性世界的警告将不再会出现。",
+  "yacl3.config.better_client:config.enableExperimentalDisplay": "启用实验性文字显示",
+  "yacl3.config.better_client:config.enableExperimentalDisplay.desc": "世界选择列表中的实验性字样不会隐藏。"
 }

@@ -94,5 +94,11 @@
   "yacl3.config.better_client:config.enableChatFormatter": "Enable Chat Formatter",
   "yacl3.config.better_client:config.enableChatFormatter.desc": "Automatic replacement of placeholders like {pos} with actual player coordinates.",
   "yacl3.config.better_client:config.posFormat": "Pos Format",
-  "yacl3.config.better_client:config.posFormat.desc": "Defines how coordinates are formatted when replacing {pos}. Supports placeholders {x}, {y}, and {z}."
+  "yacl3.config.better_client:config.posFormat.desc": "Defines how coordinates are formatted when replacing {pos}. Supports placeholders {x}, {y}, and {z}.",
+
+  "yacl3.config.better_client:config.category.client.group.no_experimental_warning": "No Experimental Warning",
+  "yacl3.config.better_client:config.enableNoExperimentalWarning": "Enable No Experimental Warning",
+  "yacl3.config.better_client:config.enableNoExperimentalWarning.desc": "The warning about creating experimental worlds and entering experimental worlds will no longer appear.",
+  "yacl3.config.better_client:config.enableExperimentalDisplay": "Enable Experimental Display",
+  "yacl3.config.better_client:config.enableExperimentalDisplay.desc": "The experimental label in the world selection list will not be hidden."
 }

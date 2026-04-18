@@ -13,6 +13,9 @@ Make a better server experience
 '''
 logoFile = "icon.png"
 
+[[accessTransformers]]
+file="META-INF/accesstransformer.cfg"
+
 [[dependencies.better_client]]
 modId = "neoforge"
 type = "required"

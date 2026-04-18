@@ -25,8 +25,15 @@ public abstract class PlayerTabOverlayMixin {
     @Final
     private Minecraft minecraft;
 
+    @Shadow
+    public abstract void renderPingIcon(GuiGraphics guiGraphics, int width, int x, int y, PlayerInfo playerInfo);
+
     @ModifyConstant(method = "render", constant = @Constant(intValue = 13))
     private int modifySlotWidthConstant(int original) {
+        if (!BetterClientConfig.HANDLER.instance().enableBetterPingDisplay) {
+            return original;
+        }
+
         return original + PLAYER_SLOT_EXTRA_WIDTH;
     }
 
@@ -42,7 +49,7 @@ public abstract class PlayerTabOverlayMixin {
         if (BetterClientConfig.HANDLER.instance().enableBetterPingDisplay) {
             enc_vanilla$render(minecraft, overlay, graphics, width, x, y, player);
         } else {
-            overlay.renderPingIcon(graphics, width, x, y, player);
+            this.renderPingIcon(graphics, width, x, y, player);
         }
     }
 
@@ -65,7 +72,7 @@ public abstract class PlayerTabOverlayMixin {
         graphics.drawString(mc.font, pingString, textX, y, pingTextColor);
 
         if (BetterClientConfig.HANDLER.instance().enableDefaultPingBars) {
-            overlay.renderPingIcon(graphics, width, x, y, player);
+            ((PlayerTabOverlayMixin) (Object) overlay).renderPingIcon(graphics, width, x, y, player);
         }
     }
 }
