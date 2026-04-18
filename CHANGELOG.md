@@ -1,3 +1,15 @@
+## [1.8.0](https://github.com/pynickle/Better-Client/compare/v1.7.0...v1.8.0) (2026-04-18)
+
+### ✨ Features
+
+* backport no experimental warning ([b99fed3](https://github.com/pynickle/Better-Client/commit/b99fed39eccebdf5326f90800c519785bb546f8f))
+
+### 🔧 Miscellaneous Changes
+
+* fix build error ([1e03dea](https://github.com/pynickle/Better-Client/commit/1e03dea67e26de1b14c6ba4b92d2974a7fdbbe85))
+* update deps ([ef05152](https://github.com/pynickle/Better-Client/commit/ef051524e18b49f7ac1de1ad3edd2f26fb2e7ee3))
+* update deps [skip ci] ([313cb40](https://github.com/pynickle/Better-Client/commit/313cb40cfc6d2eafd9ab4c73201a3837421c98d0))
+
 ## [1.7.0](https://github.com/pynickle/Better-Client/compare/v1.6.0...v1.7.0) (2026-04-06)
 
 ### ✨ Features
