@@ -1,3 +1,9 @@
+## [1.9.0](https://github.com/pynickle/Better-Client/compare/v1.8.0...v1.9.0) (2026-04-22)
+
+### ✨ Features
+
+* backport merchant features to 1.21.1 ([a4246db](https://github.com/pynickle/Better-Client/commit/a4246db07077f81f8e3c2abe9eb2a1048076a1dc))
+
 ## [1.8.0](https://github.com/pynickle/Better-Client/compare/v1.7.0...v1.8.0) (2026-04-18)
 
 ### ✨ Features
