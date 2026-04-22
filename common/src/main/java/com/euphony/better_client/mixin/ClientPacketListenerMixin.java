@@ -1,14 +1,24 @@
 package com.euphony.better_client.mixin;
 
+import com.euphony.better_client.client.events.TradingHudEvent;
 import com.euphony.better_client.config.BetterClientConfig;
 import com.euphony.better_client.utils.FormatUtils;
+import com.euphony.better_client.utils.MerchantInfo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientPacketListener;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.protocol.game.ClientboundMerchantOffersPacket;
+import net.minecraft.network.protocol.game.ClientboundOpenScreenPacket;
+import net.minecraft.network.protocol.game.ServerboundContainerClosePacket;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.MenuType;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Map;
 
@@ -17,6 +27,50 @@ import java.util.Map;
  */
 @Mixin(ClientPacketListener.class)
 public class ClientPacketListenerMixin {
+
+    /**
+     * 处理商人交易报价数据包
+     * @param packet 商人交易报价数据包
+     * @param ci 回调信息
+     */
+    @Inject(at = @At("HEAD"), method = "handleMerchantOffers", cancellable = true)
+    public void better_client$onHandleMerchantOffers(ClientboundMerchantOffersPacket packet, CallbackInfo ci) {
+        if (!BetterClientConfig.HANDLER.instance().enableTradingHud) return;
+
+        MerchantInfo.INSTANCE.setOffers(packet.getOffers());
+
+        if (!TradingHudEvent.isWindowOpen()) {
+            ci.cancel();
+        }
+    }
+
+    /**
+     * 处理打开界面数据包
+     * @param packet 打开界面数据包
+     * @param ci 回调信息
+     */
+    @Inject(at = @At("HEAD"), method = "handleOpenScreen", cancellable = true)
+    public void better_client$onHandleOpenScreen(ClientboundOpenScreenPacket packet, CallbackInfo ci) {
+        if (!BetterClientConfig.HANDLER.instance().enableTradingHud) return;
+
+        if (!TradingHudEvent.isWindowOpen() && packet.getType() == MenuType.MERCHANT) {
+            ci.cancel();
+            better_client$closeContainer(packet.getContainerId());
+        }
+    }
+
+    /**
+     * 关闭容器
+     * @param containerId 容器 ID
+     */
+    @Unique
+    private void better_client$closeContainer(int containerId) {
+        LocalPlayer player = Minecraft.getInstance().player;
+        if (player != null) {
+            player.connection.send(new ServerboundContainerClosePacket(containerId));
+        }
+    }
+
     @ModifyVariable(method = "sendChat", at = @At("HEAD"), argsOnly = true)
     public String sendPublicMessage(String message) {
         if (!BetterClientConfig.HANDLER.instance().enableChatFormatter) return message;

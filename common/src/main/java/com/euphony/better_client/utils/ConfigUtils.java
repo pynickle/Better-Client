@@ -1,8 +1,10 @@
 package com.euphony.better_client.utils;
 
 import com.euphony.better_client.BetterClient;
+import com.euphony.better_client.config.option.TradingHudPos;
 import dev.isxander.yacl3.api.Option;
 import dev.isxander.yacl3.api.OptionDescription;
+import dev.isxander.yacl3.api.controller.ValueFormatter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -22,6 +24,9 @@ public class ConfigUtils {
     public static final int IMG_HEIGHT = 991;
 
     private static final Map<ResourceLocation, int[]> IMAGE_DIMENSIONS_CACHE = new HashMap<>();
+
+    public static final ValueFormatter<TradingHudPos> TRADING_HUD_POS_VALUE_FORMATTER =
+            value -> Component.translatable("yacl3.config.better_client:config.tradingHudPos." + value.name());
 
     public static <T> Option.Builder<T> getGenericOption(String name) {
         return getGenericOption(name, (DescComponent) null);

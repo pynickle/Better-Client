@@ -99,5 +99,34 @@
   "yacl3.config.better_client:config.enableNoExperimentalWarning": "启用不显示实验性警告",
   "yacl3.config.better_client:config.enableNoExperimentalWarning.desc": "创建实验性世界和进入实验性世界的警告将不再会出现。",
   "yacl3.config.better_client:config.enableExperimentalDisplay": "启用实验性文字显示",
-  "yacl3.config.better_client:config.enableExperimentalDisplay.desc": "世界选择列表中的实验性字样不会隐藏。"
+  "yacl3.config.better_client:config.enableExperimentalDisplay.desc": "世界选择列表中的实验性字样不会隐藏。",
+
+  "yacl3.config.better_client:config.category.merchant": "商人",
+  "yacl3.config.better_client:config.category.merchant.group.fast_trading": "快速交易",
+  "yacl3.config.better_client:config.category.merchant.group.trading_hud": "交易界面",
+  "yacl3.config.better_client:config.category.merchant.group.remaining_sales": "剩余销售次数",
+
+  "yacl3.config.better_client:config.enableFastTrading": "启用快速交易",
+  "yacl3.config.better_client:config.enableFastTrading.desc": "单击交易背包中所有适用物品。",
+  "yacl3.config.better_client:config.enableAltKey": "启用 Alt 键",
+  "yacl3.config.better_client:config.enableAltKey.desc": "当物品可损坏或不可堆叠时，需按住 Alt 键进行交易。",
+  "yacl3.config.better_client:config.enableDisplayRemainingSales": "启用显示剩余销售次数",
+  "yacl3.config.better_client:config.enableDisplayRemainingSales.desc": "在交易界面的每个箭头按钮下方显示剩余销售次数。",
+  "yacl3.config.better_client:config.enableTradingHud": "启用交易界面",
+  "yacl3.config.better_client:config.enableTradingHud.desc": "将鼠标悬停在村民上方，其交易列表将显示在左上角。",
+  "yacl3.config.better_client:config.tradingHudXOffset": "X 轴坐标偏移",
+  "yacl3.config.better_client:config.tradingHudXOffset.desc": "相对于屏幕左上角的 X 轴偏移量。",
+  "yacl3.config.better_client:config.tradingHudYOffset": "Y 轴坐标偏移",
+  "yacl3.config.better_client:config.tradingHudYOffset.desc": "相对于屏幕左上角的 Y 轴偏移量。",
+  "yacl3.config.better_client:config.tradingHudPos": "交易界面位置",
+  "yacl3.config.better_client:config.tradingHudPos.desc": "快速选择常用位置。",
+  "yacl3.config.better_client:config.tradingHudPos.CUSTOM": "自定义",
+  "yacl3.config.better_client:config.tradingHudPos.TOP_LEFT": "左上角",
+  "yacl3.config.better_client:config.tradingHudPos.TOP_RIGHT": "右上角",
+  "yacl3.config.better_client:config.tradingHudPos.BOTTOM_LEFT": "左下角",
+  "yacl3.config.better_client:config.tradingHudPos.BOTTOM_RIGHT": "右下角",
+  "yacl3.config.better_client:config.renderRealCostDirectly": "仅显示实际价格",
+  "yacl3.config.better_client:config.renderRealCostDirectly.desc": "仅显示实际价格而非基础与实际价格。",
+
+  "message.better_client.fast_trading.alt": "物品可能损坏或不可堆叠。按住 Alt 执行交易。\n"
 }

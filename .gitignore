@@ -123,9 +123,11 @@ runs/
 /node_modules/
 
 .agents/
+.omc/
 .settings/
 .project
 .classpath
 skills-lock.json
 
 AGENTS.md
+CLAUDE.md

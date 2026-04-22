@@ -100,5 +100,34 @@
   "yacl3.config.better_client:config.enableNoExperimentalWarning": "Enable No Experimental Warning",
   "yacl3.config.better_client:config.enableNoExperimentalWarning.desc": "The warning about creating experimental worlds and entering experimental worlds will no longer appear.",
   "yacl3.config.better_client:config.enableExperimentalDisplay": "Enable Experimental Display",
-  "yacl3.config.better_client:config.enableExperimentalDisplay.desc": "The experimental label in the world selection list will not be hidden."
+  "yacl3.config.better_client:config.enableExperimentalDisplay.desc": "The experimental label in the world selection list will not be hidden.",
+
+  "yacl3.config.better_client:config.category.merchant": "Merchant",
+  "yacl3.config.better_client:config.category.merchant.group.fast_trading": "Fast Trading",
+  "yacl3.config.better_client:config.category.merchant.group.trading_hud": "Trading HUD",
+  "yacl3.config.better_client:config.category.merchant.group.remaining_sales": "Remaining Sales",
+
+  "yacl3.config.better_client:config.enableFastTrading": "Enable Fast Trading",
+  "yacl3.config.better_client:config.enableFastTrading.desc": "Trade all applicable items in your inventory with a single click.",
+  "yacl3.config.better_client:config.enableAltKey": "Enable Alt Key",
+  "yacl3.config.better_client:config.enableAltKey.desc": "Require holding Alt to trade when items are damageable or non-stackable.",
+  "yacl3.config.better_client:config.enableDisplayRemainingSales": "Enable Display Remaining Sales",
+  "yacl3.config.better_client:config.enableDisplayRemainingSales.desc": "Show the remaining number of sales beneath each arrow button on the trading screen.",
+  "yacl3.config.better_client:config.enableTradingHud": "Enable Trading HUD",
+  "yacl3.config.better_client:config.enableTradingHud.desc": "Hover over a villager to display their trade offers in the upper-left corner.",
+  "yacl3.config.better_client:config.tradingHudXOffset": "X-coordinate Offset",
+  "yacl3.config.better_client:config.tradingHudXOffset.desc": "X-axis offset relative to the screen left-right corner.",
+  "yacl3.config.better_client:config.tradingHudYOffset": "Y-coordinate Offset",
+  "yacl3.config.better_client:config.tradingHudYOffset.desc": "Y-axis offset relative to the screen left-right corner.",
+  "yacl3.config.better_client:config.tradingHudPos": "Trading Hud Pos",
+  "yacl3.config.better_client:config.tradingHudPos.desc": "Quickly select common positions.",
+  "yacl3.config.better_client:config.tradingHudPos.CUSTOM": "Custom",
+  "yacl3.config.better_client:config.tradingHudPos.TOP_LEFT": "Top Left",
+  "yacl3.config.better_client:config.tradingHudPos.TOP_RIGHT": "Top Right",
+  "yacl3.config.better_client:config.tradingHudPos.BOTTOM_LEFT": "Bottom Left",
+  "yacl3.config.better_client:config.tradingHudPos.BOTTOM_RIGHT": "Bottom Right",
+  "yacl3.config.better_client:config.renderRealCostDirectly": "Show Only Real Prices",
+  "yacl3.config.better_client:config.renderRealCostDirectly.desc": "Show only real prices instead of both base and real prices.",
+
+  "message.better_client.fast_trading.alt": "Items may be damaged or non-stackable. Hold Alt to execute the trade.\n"
 }

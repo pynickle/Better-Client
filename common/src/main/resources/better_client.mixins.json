@@ -9,7 +9,10 @@
     "ChatComponentMixin",
     "ClientPacketListenerMixin",
     "GameRendererMixin",
+    "LocalPlayerMixin",
+    "MerchantScreenMixin",
     "MinecraftMixin",
+    "MultiPlayerGameModeMixin",
     "PlayerTabOverlayMixin",
     "WorldListEntryMixin",
     "WorldOpenFlowsMixin"

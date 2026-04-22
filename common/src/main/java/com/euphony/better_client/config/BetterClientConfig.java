@@ -1,6 +1,7 @@
 package com.euphony.better_client.config;
 
 import com.euphony.better_client.BetterClient;
+import com.euphony.better_client.config.option.TradingHudPos;
 import com.euphony.better_client.utils.ConfigUtils;
 import com.euphony.better_client.utils.DescComponent;
 import com.euphony.better_client.utils.Utils;
@@ -48,6 +49,11 @@ public class BetterClientConfig {
     private static final String NO_EXPERIMENTAL_WARNING_GROUP = "no_experimental_warning";
     private static final String OTHER_GROUP = "other";
 
+    private static final String MERCHANT_CATEGORY = "merchant";
+    private static final String FAST_TRADING_GROUP = "fast_trading";
+    private static final String TRADING_HUD_GROUP = "trading_hud";
+    private static final String REMAINING_SALES_GROUP = "remaining_sales";
+
     @SerialEntry public boolean enableFadingNightVision = true;
     @SerialEntry public double fadingOutDuration = 3.0D;
 
@@ -93,6 +99,15 @@ public class BetterClientConfig {
 
     @SerialEntry public boolean enableNoExperimentalWarning = true;
     @SerialEntry public boolean enableExperimentalDisplay = true;
+
+    @SerialEntry public boolean enableFastTrading = true;
+    @SerialEntry public boolean enableAltKey = true;
+    @SerialEntry public boolean enableDisplayRemainingSales = true;
+    @SerialEntry public boolean enableTradingHud = true;
+    @SerialEntry public int tradingHudXOffset = 0;
+    @SerialEntry public int tradingHudYOffset = 0;
+    @SerialEntry public TradingHudPos tradingHudPos = TradingHudPos.TOP_RIGHT;
+    @SerialEntry public boolean renderRealCostDirectly = false;
 
     public static YetAnotherConfigLib makeScreen() {
         return YetAnotherConfigLib.create(HANDLER, (defaults, config, builder) -> {
@@ -392,6 +407,74 @@ public class BetterClientConfig {
                     .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
                     .build();
 
+            // Merchant — Fast Trading
+            Option<Boolean> enableFastTradingOpt = ConfigUtils.<Boolean>getGenericOption("enableFastTrading")
+                    .binding(
+                            defaults.enableFastTrading,
+                            () -> config.enableFastTrading,
+                            newVal -> config.enableFastTrading = newVal)
+                    .controller(TickBoxControllerBuilder::create)
+                    .build();
+            Option<Boolean> enableAltKeyOpt = ConfigUtils.<Boolean>getGenericOption("enableAltKey")
+                    .binding(
+                            defaults.enableAltKey,
+                            () -> config.enableAltKey,
+                            newVal -> config.enableAltKey = newVal)
+                    .controller(TickBoxControllerBuilder::create)
+                    .build();
+
+            // Merchant — Trading HUD
+            Option<Boolean> enableTradingHudOpt = ConfigUtils.<Boolean>getGenericOption("enableTradingHud")
+                    .binding(
+                            defaults.enableTradingHud,
+                            () -> config.enableTradingHud,
+                            newVal -> config.enableTradingHud = newVal)
+                    .controller(TickBoxControllerBuilder::create)
+                    .build();
+            Option<Integer> tradingHudXOffsetOpt = ConfigUtils.<Integer>getGenericOption("tradingHudXOffset")
+                    .binding(
+                            defaults.tradingHudXOffset,
+                            () -> config.tradingHudXOffset,
+                            newVal -> config.tradingHudXOffset = newVal)
+                    .controller(opt -> IntegerSliderControllerBuilder.create(opt)
+                            .range(-400, 400)
+                            .step(1))
+                    .build();
+            Option<Integer> tradingHudYOffsetOpt = ConfigUtils.<Integer>getGenericOption("tradingHudYOffset")
+                    .binding(
+                            defaults.tradingHudYOffset,
+                            () -> config.tradingHudYOffset,
+                            newVal -> config.tradingHudYOffset = newVal)
+                    .controller(opt -> IntegerSliderControllerBuilder.create(opt)
+                            .range(-400, 400)
+                            .step(1))
+                    .build();
+            Option<TradingHudPos> tradingHudPosOpt = ConfigUtils.<TradingHudPos>getGenericOption("tradingHudPos")
+                    .binding(
+                            defaults.tradingHudPos,
+                            () -> config.tradingHudPos,
+                            newVal -> config.tradingHudPos = newVal)
+                    .controller(opt -> EnumControllerBuilder.create(opt)
+                            .enumClass(TradingHudPos.class)
+                            .formatValue(ConfigUtils.TRADING_HUD_POS_VALUE_FORMATTER))
+                    .build();
+            Option<Boolean> renderRealCostDirectlyOpt = ConfigUtils.<Boolean>getGenericOption("renderRealCostDirectly")
+                    .binding(
+                            defaults.renderRealCostDirectly,
+                            () -> config.renderRealCostDirectly,
+                            newVal -> config.renderRealCostDirectly = newVal)
+                    .controller(TickBoxControllerBuilder::create)
+                    .build();
+
+            // Merchant — Remaining Sales
+            Option<Boolean> enableDisplayRemainingSalesOpt = ConfigUtils.<Boolean>getGenericOption("enableDisplayRemainingSales")
+                    .binding(
+                            defaults.enableDisplayRemainingSales,
+                            () -> config.enableDisplayRemainingSales,
+                            newVal -> config.enableDisplayRemainingSales = newVal)
+                    .controller(TickBoxControllerBuilder::create)
+                    .build();
+
             return builder.title(Component.translatable("yacl3.config.better_client:config"))
                     .category(ConfigCategory.createBuilder()
                             .name(ConfigUtils.getCategoryName(CLIENT_CATEGORY))
@@ -460,6 +543,26 @@ public class BetterClientConfig {
                                             enableNoExperimentalWarningOpt,
                                             enableExperimentalDisplayOpt
                                     ))
+                                    .build())
+                            .build())
+                    .category(ConfigCategory.createBuilder()
+                            .name(ConfigUtils.getCategoryName(MERCHANT_CATEGORY))
+                            .group(OptionGroup.createBuilder()
+                                    .name(ConfigUtils.getGroupName(MERCHANT_CATEGORY, FAST_TRADING_GROUP))
+                                    .options(List.of(enableFastTradingOpt, enableAltKeyOpt))
+                                    .build())
+                            .group(OptionGroup.createBuilder()
+                                    .name(ConfigUtils.getGroupName(MERCHANT_CATEGORY, TRADING_HUD_GROUP))
+                                    .options(List.of(
+                                            enableTradingHudOpt,
+                                            tradingHudXOffsetOpt,
+                                            tradingHudYOffsetOpt,
+                                            tradingHudPosOpt,
+                                            renderRealCostDirectlyOpt))
+                                    .build())
+                            .group(OptionGroup.createBuilder()
+                                    .name(ConfigUtils.getGroupName(MERCHANT_CATEGORY, REMAINING_SALES_GROUP))
+                                    .options(List.of(enableDisplayRemainingSalesOpt))
                                     .build())
                             .build())
                     .save(BetterClientConfig::save);
