@@ -128,6 +128,7 @@ node_modules/
 /.settings/
 
 /.agents/
+/.claude/
 
 skills-lock.json
 
