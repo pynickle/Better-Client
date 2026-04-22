@@ -84,7 +84,7 @@ public class Config {
     public boolean enableTradingHud = true;
     public int tradingHudXOffset = 0;
     public int tradingHudYOffset = 0;
-    public TradingHudPos tradingHudPos = TradingHudPos.TOP_LEFT;
+    public TradingHudPos tradingHudPos = TradingHudPos.TOP_RIGHT;
     public boolean renderRealCostDirectly = true;
 
     public boolean enableAxolotlBucketFix = true;
