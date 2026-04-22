@@ -1,3 +1,22 @@
+## [9.3.2](https://github.com/pynickle/Better-Client/compare/v9.3.1...v9.3.2) (2026-04-22)
+
+### 🐛 Bug Fixes
+
+* render incorrectly when rendering only real cost option is disabled ([75cd01e](https://github.com/pynickle/Better-Client/commit/75cd01eca3ea11553ce1f522f76c9ee8bc273af6))
+
+### 📚 Documentation
+
+* remove agents md ([b3b5a83](https://github.com/pynickle/Better-Client/commit/b3b5a83c14bcdd6b5f21ceefce0f00f292e96478))
+
+### 🔧 Miscellaneous Changes
+
+* update deps ([f791a5a](https://github.com/pynickle/Better-Client/commit/f791a5a79d6e014ced2e2411c226651bd4229b44))
+* update deps ([17d1d7a](https://github.com/pynickle/Better-Client/commit/17d1d7a99a836d2afe46a55d54ca31e6bf2d6196))
+
+### 🚀 Improvements
+
+* change default config for trading hud pos ([4e40602](https://github.com/pynickle/Better-Client/commit/4e40602a400b985a43d5f079729be8f221df1c24))
+
 ## [9.3.1](https://github.com/pynickle/Better-Client/compare/v9.3.0...v9.3.1) (2026-04-10)
 
 ### 🐛 Bug Fixes
