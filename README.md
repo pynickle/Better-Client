@@ -1,5 +1,9 @@
 ## Description
 
+[CurseForge](https://www.curseforge.com/minecraft/mc-mods/better-client)
+
+[Modrinth](https://modrinth.com/mod/better-client-enc)
+
 **Better Client** is a mod making a better server experience for you.
 
 As its name suggests, this is a **_client-side_** only mod with all the features to optimize your gaming experience to the fullest!
