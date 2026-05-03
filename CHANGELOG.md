@@ -1,3 +1,9 @@
+## [9.3.3](https://github.com/pynickle/Better-Client/compare/v9.3.2...v9.3.3) (2026-05-03)
+
+### 🐛 Bug Fixes
+
+* fix [#12](https://github.com/pynickle/Better-Client/issues/12) ([033913f](https://github.com/pynickle/Better-Client/commit/033913f098e45b6b097ecebd3a242b0bb26d19aa))
+
 ## [9.3.2](https://github.com/pynickle/Better-Client/compare/v9.3.1...v9.3.2) (2026-04-22)
 
 ### 🐛 Bug Fixes
