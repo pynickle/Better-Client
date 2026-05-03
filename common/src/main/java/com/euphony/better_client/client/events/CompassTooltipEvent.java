@@ -92,10 +92,10 @@ public class CompassTooltipEvent {
     }
 
     public static Object[] getPositionComponent(BlockPos pos) {
-        return new Object[] {
-            Component.literal(String.valueOf(pos.getX())).withStyle(ChatFormatting.WHITE),
-            Component.literal(String.valueOf(pos.getY())).withStyle(ChatFormatting.WHITE),
-            Component.literal(String.valueOf(pos.getZ())).withStyle(ChatFormatting.WHITE)
+        return new Object[]{
+                Component.literal(String.valueOf(pos.getX())).withStyle(ChatFormatting.WHITE),
+                Component.literal(String.valueOf(pos.getY())).withStyle(ChatFormatting.WHITE),
+                Component.literal(String.valueOf(pos.getZ())).withStyle(ChatFormatting.WHITE)
         };
     }
 
@@ -106,11 +106,11 @@ public class CompassTooltipEvent {
             dimensionName = Component.translatable(
                     String.format("info.better_client.tooltip.dimension.%s", location.getPath()));
         }
-        return new Object[] {
-            dimensionName.withStyle(ChatFormatting.WHITE),
-            Component.literal(String.valueOf(pos.getX())).withStyle(ChatFormatting.WHITE),
-            Component.literal(String.valueOf(pos.getY())).withStyle(ChatFormatting.WHITE),
-            Component.literal(String.valueOf(pos.getZ())).withStyle(ChatFormatting.WHITE)
+        return new Object[]{
+                dimensionName.withStyle(ChatFormatting.WHITE),
+                Component.literal(String.valueOf(pos.getX())).withStyle(ChatFormatting.WHITE),
+                Component.literal(String.valueOf(pos.getY())).withStyle(ChatFormatting.WHITE),
+                Component.literal(String.valueOf(pos.getZ())).withStyle(ChatFormatting.WHITE)
         };
     }
 }

@@ -37,6 +37,11 @@ public class TradingHudEvent {
             return;
         }
 
+        if (!config.enableTradingHudWhileSneaking && player.isShiftKeyDown()) {
+            clearMerchantInfo();
+            return;
+        }
+
         Entity tradableEntity = TradingUtils.getCrosshairTradableEntity(minecraft, isWindowOpen);
         handleTradableEntity(tradableEntity, player);
     }
@@ -66,6 +71,12 @@ public class TradingHudEvent {
             // 清除最后的实体 ID
             merchantInfo.setLastEntityId(null);
         }
+    }
+
+    private static void clearMerchantInfo() {
+        MerchantInfo.getInstance().reset();
+        lastRequestedEntityId = Integer.MIN_VALUE;
+        lastRequestTick = Integer.MIN_VALUE;
     }
 
     private static boolean shouldRequestOffers(Entity entity, LocalPlayer player) {

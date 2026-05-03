@@ -64,7 +64,8 @@ public class BiomeTitleEvent {
     private static boolean biomeVisitSaveDirty;
     private static String currentWorldId = "";
 
-    private BiomeTitleEvent() {}
+    private BiomeTitleEvent() {
+    }
 
     /**
      * Saves visited biome data to a JSON file asynchronously.

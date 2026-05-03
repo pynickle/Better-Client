@@ -1,7 +1,9 @@
 package com.euphony.better_client.client.init;
 
 public final class KeyMapping {
-    private KeyMapping() {}
+    private KeyMapping() {
+    }
 
-    public static void registerKeyMapping() {}
+    public static void registerKeyMapping() {
+    }
 }

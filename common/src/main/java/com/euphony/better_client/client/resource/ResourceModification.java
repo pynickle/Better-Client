@@ -24,9 +24,9 @@ public class ResourceModification {
                     context -> {
                         if (context.getFile().getAsJsonObject().has("display")
                                 && context.getFile()
-                                        .getAsJsonObject()
-                                        .getAsJsonObject("display")
-                                        .has("firstperson_lefthand")) {
+                                .getAsJsonObject()
+                                .getAsJsonObject("display")
+                                .has("firstperson_lefthand")) {
                             context.getFile()
                                     .getAsJsonObject()
                                     .getAsJsonObject("display")

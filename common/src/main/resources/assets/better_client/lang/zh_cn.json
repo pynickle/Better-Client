@@ -177,6 +177,8 @@
   "yacl3.config.better_client:config.category.client.group.trading_hud": "交易界面",
   "yacl3.config.better_client:config.enableTradingHud": "启用交易界面",
   "yacl3.config.better_client:config.enableTradingHud.desc": "将鼠标悬停在村民上方，其交易列表将显示在左上角。",
+  "yacl3.config.better_client:config.enableTradingHudWhileSneaking": "潜行时启用交易界面",
+  "yacl3.config.better_client:config.enableTradingHudWhileSneaking.desc": "潜行时仍然发送交易界面请求并显示界面。关闭此项可避免触发其他模组的 Shift 交互行为。",
   "yacl3.config.better_client:config.tradingHudXOffset": "X 轴坐标偏移",
   "yacl3.config.better_client:config.tradingHudXOffset.desc": "相对于屏幕左上角的 X 轴偏移量。",
   "yacl3.config.better_client:config.tradingHudYOffset": "Y 轴坐标偏移",

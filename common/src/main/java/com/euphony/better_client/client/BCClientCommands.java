@@ -1,7 +1,9 @@
 package com.euphony.better_client.client;
 
 public final class BCClientCommands {
-    private BCClientCommands() {}
+    private BCClientCommands() {
+    }
 
-    public static void init() {}
+    public static void init() {
+    }
 }
