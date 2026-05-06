@@ -4,6 +4,7 @@ import com.euphony.better_client.platform.BetterClientPlatform;
 import com.euphony.better_client.platform.PlatformType;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.loading.FMLPaths;
+import net.neoforged.neoforgespi.language.IModInfo;
 
 import java.nio.file.Path;
 import java.util.Set;
@@ -22,7 +23,7 @@ public final class NeoForgePlatformHelper implements BetterClientPlatform {
 
     @Override
     public Set<String> getLoadedModIds() {
-        return ModList.get().getMods().stream().map(info -> info.getModId()).collect(Collectors.toUnmodifiableSet());
+        return ModList.get().getMods().stream().map(IModInfo::getModId).collect(Collectors.toUnmodifiableSet());
     }
 
     @Override

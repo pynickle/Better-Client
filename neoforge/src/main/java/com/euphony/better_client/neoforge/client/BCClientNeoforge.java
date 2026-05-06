@@ -12,15 +12,24 @@ import com.euphony.better_client.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.tutorial.TutorialSteps;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.*;
+import net.neoforged.neoforge.client.event.lifecycle.ClientStartedEvent;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 
 @EventBusSubscriber
 public final class BCClientNeoforge {
     private static ClientLevel knownLevel;
+
+    @SubscribeEvent
+    private static void onClientStarted(ClientStartedEvent event) {
+        event.getClient().execute(() -> {
+            Minecraft.getInstance().getTutorial().setStep(TutorialSteps.NONE);
+        });
+    }
 
     @SubscribeEvent
     private static void onRegisterGuiLayers(RegisterGuiLayersEvent event) {

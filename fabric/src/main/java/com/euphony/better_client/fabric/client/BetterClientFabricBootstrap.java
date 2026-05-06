@@ -1,24 +1,15 @@
 package com.euphony.better_client.fabric.client;
 
-import com.euphony.better_client.BetterClient;
 import com.euphony.better_client.client.command.ClientWeatherCommand;
-import com.euphony.better_client.client.events.BeautifiedChatEvent;
-import com.euphony.better_client.client.events.BiomeTitleEvent;
-import com.euphony.better_client.client.events.BundleUpEvent;
-import com.euphony.better_client.client.events.CompassTooltipEvent;
-import com.euphony.better_client.client.events.DurabilityTooltipEvent;
-import com.euphony.better_client.client.events.FasterClimbingEvent;
-import com.euphony.better_client.client.events.FullBrightnessEvent;
-import com.euphony.better_client.client.events.InvisibleItemFrameEvent;
-import com.euphony.better_client.client.events.TradingHudEvent;
+import com.euphony.better_client.client.events.*;
 import com.euphony.better_client.client.property.AxolotlBucketVariant;
 import com.euphony.better_client.client.renderer.TotemBarRenderer;
 import com.euphony.better_client.client.renderer.TradingHudRenderer;
+import com.euphony.better_client.event.CompoundEventResult;
 import com.euphony.better_client.keymapping.BCKeyMappings;
 import com.euphony.better_client.service.ChatHistoryManager;
 import com.euphony.better_client.service.ItemFrameVisibilityManager;
 import com.euphony.better_client.utils.Utils;
-import com.euphony.better_client.event.CompoundEventResult;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
@@ -31,14 +22,19 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.item.properties.select.SelectItemModelProperties;
+import net.minecraft.client.tutorial.TutorialSteps;
 import net.minecraft.network.chat.Component;
 
 public final class BetterClientFabricBootstrap {
     private static ClientLevel knownLevel;
 
-    private BetterClientFabricBootstrap() {}
+    private BetterClientFabricBootstrap() {
+    }
 
     public static void initClient() {
+        Minecraft.getInstance().execute(() -> {
+            Minecraft.getInstance().getTutorial().setStep(TutorialSteps.NONE);
+        });
         registerHud();
         registerItemProperties();
         registerKeyMappings();
