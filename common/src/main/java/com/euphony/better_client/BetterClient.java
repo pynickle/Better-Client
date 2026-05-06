@@ -15,9 +15,10 @@ public final class BetterClient {
 
     public static void init() {
         ResourceModification.init();
+    }
 
-        Minecraft.getInstance().execute(() -> {
-            Minecraft.getInstance().getTutorial().setStep(TutorialSteps.NONE);
-        });
+    public static void initClient() {
+        Minecraft minecraft = Minecraft.getInstance();
+        minecraft.execute(() -> minecraft.getTutorial().setStep(TutorialSteps.NONE));
     }
 }

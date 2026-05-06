@@ -39,6 +39,7 @@ public final class BetterClientFabricBootstrap {
     private BetterClientFabricBootstrap() {}
 
     public static void initClient() {
+        BetterClient.initClient();
         registerHud();
         registerItemProperties();
         registerKeyMappings();

@@ -1,6 +1,7 @@
 package com.euphony.better_client.neoforge.client;
 
 import com.euphony.better_client.client.command.ClientWeatherCommand;
+import com.euphony.better_client.BetterClient;
 import com.euphony.better_client.client.events.*;
 import com.euphony.better_client.client.property.AxolotlBucketVariant;
 import com.euphony.better_client.client.renderer.TotemBarRenderer;
@@ -21,6 +22,7 @@ import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 @EventBusSubscriber
 public final class BCClientNeoforge {
     private static ClientLevel knownLevel;
+    private static boolean clientInitialized = false;
 
     @SubscribeEvent
     private static void onRegisterGuiLayers(RegisterGuiLayersEvent event) {
@@ -49,6 +51,12 @@ public final class BCClientNeoforge {
     @SubscribeEvent
     private static void onClientTickPre(ClientTickEvent.Pre event) {
         Minecraft minecraft = Minecraft.getInstance();
+
+        if (!clientInitialized) {
+            clientInitialized = true;
+            BetterClient.initClient();
+        }
+
         BiomeTitleEvent.clientPre(minecraft);
 
         LocalPlayer player = minecraft.player;
