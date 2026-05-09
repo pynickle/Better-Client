@@ -5,6 +5,9 @@
   "yacl3.config.better_client:config": "更好的客户端",
   "yacl3.config.better_client:config.category.client": "客户端",
 
+  "key.categories.better_client": "更好的客户端",
+  "key.better_client.bundle_up": "一键收纳",
+
   "yacl3.config.better_client:description.tick_explanation": "1 秒 = 20 tick。",
 
   "yacl3.config.better_client:config.category.client.group.fading_night_vision": "淡出夜视",
@@ -100,6 +103,10 @@
   "yacl3.config.better_client:config.enableNoExperimentalWarning.desc": "创建实验性世界和进入实验性世界的警告将不再会出现。",
   "yacl3.config.better_client:config.enableExperimentalDisplay": "启用实验性文字显示",
   "yacl3.config.better_client:config.enableExperimentalDisplay.desc": "世界选择列表中的实验性字样不会隐藏。",
+
+  "yacl3.config.better_client:config.category.client.group.bundle_up": "一键收纳",
+  "yacl3.config.better_client:config.enableBundleUp": "启用一键收纳",
+  "yacl3.config.better_client:config.enableBundleUp.desc": "将鼠标悬停在收纳袋上并按 R 自动收纳物品，最大化利用背包空间。",
 
   "yacl3.config.better_client:config.category.merchant": "商人",
   "yacl3.config.better_client:config.category.merchant.group.fast_trading": "快速交易",

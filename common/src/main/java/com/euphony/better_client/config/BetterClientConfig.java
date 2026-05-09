@@ -47,6 +47,7 @@ public class BetterClientConfig {
     private static final String BOOK_SCROLL_GROUP = "book_scroll";
     private static final String CHAT_FORMATTER_GROUP = "chat_formatter";
     private static final String NO_EXPERIMENTAL_WARNING_GROUP = "no_experimental_warning";
+    private static final String BUNDLE_UP_GROUP = "bundle_up";
     private static final String OTHER_GROUP = "other";
 
     private static final String MERCHANT_CATEGORY = "merchant";
@@ -99,6 +100,7 @@ public class BetterClientConfig {
 
     @SerialEntry public boolean enableNoExperimentalWarning = true;
     @SerialEntry public boolean enableExperimentalDisplay = true;
+    @SerialEntry public boolean enableBundleUp = true;
 
     @SerialEntry public boolean enableFastTrading = true;
     @SerialEntry public boolean enableAltKey = true;
@@ -407,6 +409,12 @@ public class BetterClientConfig {
                     .controller(opt -> BooleanControllerBuilder.create(opt).trueFalseFormatter())
                     .build();
 
+            // Bundle Up
+            Option<Boolean> enableBundleUpOpt = ConfigUtils.<Boolean>getGenericOption("enableBundleUp")
+                    .binding(defaults.enableBundleUp, () -> config.enableBundleUp, newVal -> config.enableBundleUp = newVal)
+                    .controller(TickBoxControllerBuilder::create)
+                    .build();
+
             // Merchant — Fast Trading
             Option<Boolean> enableFastTradingOpt = ConfigUtils.<Boolean>getGenericOption("enableFastTrading")
                     .binding(
@@ -543,6 +551,10 @@ public class BetterClientConfig {
                                             enableNoExperimentalWarningOpt,
                                             enableExperimentalDisplayOpt
                                     ))
+                                    .build())
+                            .group(OptionGroup.createBuilder()
+                                    .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, BUNDLE_UP_GROUP))
+                                    .options(List.of(enableBundleUpOpt))
                                     .build())
                             .build())
                     .category(ConfigCategory.createBuilder()

@@ -5,6 +5,9 @@
   "message.better_client.book_save.title": "Save Book",
   "message.better_client.book_save.question": "Are you sure you want to close the book without saving?",
 
+  "key.categories.better_client": "Better Client",
+  "key.better_client.bundle_up": "Bundle Up",
+
   "yacl3.config.better_client:config": "Better Client",
   "yacl3.config.better_client:config.category.client": "Client",
 
@@ -101,6 +104,10 @@
   "yacl3.config.better_client:config.enableNoExperimentalWarning.desc": "The warning about creating experimental worlds and entering experimental worlds will no longer appear.",
   "yacl3.config.better_client:config.enableExperimentalDisplay": "Enable Experimental Display",
   "yacl3.config.better_client:config.enableExperimentalDisplay.desc": "The experimental label in the world selection list will not be hidden.",
+
+  "yacl3.config.better_client:config.category.client.group.bundle_up": "Bundle Up",
+  "yacl3.config.better_client:config.enableBundleUp": "Enable Bundle Up",
+  "yacl3.config.better_client:config.enableBundleUp.desc": "Hover over a bundle and press R to auto-store items, maximizing inventory space.",
 
   "yacl3.config.better_client:config.category.merchant": "Merchant",
   "yacl3.config.better_client:config.category.merchant.group.fast_trading": "Fast Trading",
