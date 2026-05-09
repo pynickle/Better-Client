@@ -1,3 +1,9 @@
+## [1.10.0](https://github.com/pynickle/Better-Client/compare/v1.9.0...v1.10.0) (2026-05-09)
+
+### ✨ Features
+
+* backport bundle up to 1.21.1 ([59d24f2](https://github.com/pynickle/Better-Client/commit/59d24f2b725161064b11a505df12e33f2c026a83))
+
 ## [1.9.0](https://github.com/pynickle/Better-Client/compare/v1.8.0...v1.9.0) (2026-04-22)
 
 ### ✨ Features
