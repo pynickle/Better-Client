@@ -124,6 +124,7 @@ runs/
 node_modules/
 .trae/
 .omc/
+.omx/
 
 .project
 /.settings/
