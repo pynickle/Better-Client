@@ -48,10 +48,10 @@ public abstract class BookEditScreenMixin extends Screen {
     @Inject(
             method = "appendPageToBook",
             at =
-                    @At(
-                            value = "INVOKE",
-                            target = "Lnet/minecraft/client/gui/screens/inventory/BookEditScreen;getNumPages()I",
-                            shift = At.Shift.AFTER))
+            @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/gui/screens/inventory/BookEditScreen;getNumPages()I",
+                    shift = At.Shift.AFTER))
     private void appendPageToBookInject(CallbackInfo ci) {
         this.better_client$isModified = true;
     }

@@ -2,8 +2,8 @@ package com.euphony.better_client.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.server.IntegratedServer;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.server.IntegratedServer;
 import net.minecraft.util.Util;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;

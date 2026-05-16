@@ -30,10 +30,10 @@ public class TrialSpawnerTimerRenderer {
     /**
      * 在给定的试炼刷怪笼上方绘制冷却计时器
      *
-     * @param level       方块所在的世界
-     * @param pos         试炼刷怪笼的位置
-     * @param poseStack   用于绘制文本的矩阵变换
-     * @param camera      摄像机
+     * @param level     方块所在的世界
+     * @param pos       试炼刷怪笼的位置
+     * @param poseStack 用于绘制文本的矩阵变换
+     * @param camera    摄像机
      */
     public static void drawTimer(
             Level level, BlockPos pos, PoseStack poseStack, SubmitNodeCollector nodeCollector, Camera camera) {
@@ -63,13 +63,13 @@ public class TrialSpawnerTimerRenderer {
 
     /**
      * 在方块上方绘制面向玩家的彩色文本
-     *
+     * <p>
      * 参考：<a href="https://github.com/Diamondgoobird/TrialSpawnerTimer/blob/1.21.9/fabric/src/main/java/com/diamondgoobird/trialspawnertimer/TimerRenderer.java">TimerRenderer.java</a>
      *
-     * @param text 要绘制的文本
-     * @param color ARGB 格式的颜色
+     * @param text      要绘制的文本
+     * @param color     ARGB 格式的颜色
      * @param poseStack 矩阵变换栈
-     * @param camera 摄像机
+     * @param camera    摄像机
      */
     private static void drawTextAboveBlock(
             Component text, int color, PoseStack poseStack, SubmitNodeCollector nodeCollector, Camera camera) {
@@ -146,5 +146,6 @@ public class TrialSpawnerTimerRenderer {
         return text;
     }
 
-    private record CachedTimerText(long remainingSeconds, Component text) {}
+    private record CachedTimerText(long remainingSeconds, Component text) {
+    }
 }

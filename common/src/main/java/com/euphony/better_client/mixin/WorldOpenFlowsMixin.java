@@ -23,10 +23,10 @@ public class WorldOpenFlowsMixin {
     @Redirect(
             method = "openWorldCheckWorldStemCompatibility",
             at =
-                    @At(
-                            value = "INVOKE",
-                            target =
-                                    "Lnet/minecraft/world/level/storage/WorldData;worldGenSettingsLifecycle()Lcom/mojang/serialization/Lifecycle;"))
+            @At(
+                    value = "INVOKE",
+                    target =
+                            "Lnet/minecraft/world/level/storage/WorldData;worldGenSettingsLifecycle()Lcom/mojang/serialization/Lifecycle;"))
     private Lifecycle alwaysReturnStableLifecycle(WorldData worldData) {
         if (config.enableNoExperimentalWarning) {
             return Lifecycle.stable();

@@ -23,10 +23,11 @@ public abstract class MultiPlayerGameModeMixin {
 
     /**
      * 当玩家与实体交互时调用
+     *
      * @param player 玩家
      * @param target 目标实体
-     * @param hand 交互手
-     * @param cir 回调信息
+     * @param hand   交互手
+     * @param cir    回调信息
      */
     @Inject(at = @At("HEAD"), method = "interact")
     public void onInteractWithEntity(
