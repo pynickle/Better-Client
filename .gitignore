@@ -130,4 +130,12 @@ bin/
 .settings/
 
 .agents/
+.codex/
+.claude/
+
+AGENTS.md
+CLAUDE.md
+
+opencode.jsonc
+
 skills-lock.json
