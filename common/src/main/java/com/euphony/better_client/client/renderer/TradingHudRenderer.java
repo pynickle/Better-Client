@@ -25,6 +25,8 @@ public class TradingHudRenderer {
     private static final Identifier DISCOUNT_STRIKETHRUOGH_SPRITE =
             Identifier.withDefaultNamespace("container/villager/discount_strikethrough");
 
+    private static final int REAL_COST_EXTRA_SPACE = 15;
+
     public static void renderHud(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
         if (!config.enableTradingHud) return;
 
@@ -76,7 +78,7 @@ public class TradingHudRenderer {
                 int l = i + 5 + 5;
                 int m = 0;
 
-                int extraSpace = config.renderRealCostDirectly ? 0 : 10;
+                int extraSpace = config.renderRealCostDirectly ? 0 : REAL_COST_EXTRA_SPACE;
 
                 for (MerchantOffer merchantOffer : merchantOffers) {
                     if (m < 7) {
@@ -99,7 +101,7 @@ public class TradingHudRenderer {
                         if (m < enchantmentTexts.size()) {
                             String enchantmentText = enchantmentTexts.get(m);
                             if (!enchantmentText.isEmpty()) {
-                                guiGraphics.text(font, enchantmentText, (i + 85), (n + 3), CommonColors.WHITE);
+                                guiGraphics.text(font, enchantmentText, (i + 85 + extraSpace), (n + 3), CommonColors.WHITE);
                             }
                         }
                     }
@@ -110,13 +112,9 @@ public class TradingHudRenderer {
     }
 
     private static void renderButtonArrows(GuiGraphics guiGraphics, MerchantOffer merchantOffers, int posX, int posY) {
-        if (merchantOffers.isOutOfStock()) {
-            guiGraphics.blitSprite(
-                    RenderPipelines.GUI_TEXTURED, TRADE_ARROW_OUT_OF_STOCK_SPRITE, posX + 5 + 25 + 20, posY + 3, 10, 9);
-        } else {
-            guiGraphics.blitSprite(
-                    RenderPipelines.GUI_TEXTURED, TRADE_ARROW_SPRITE, posX + 5 + 25 + 20, posY + 3, 10, 9);
-        }
+        int extraSpace = config.renderRealCostDirectly ? 0 : REAL_COST_EXTRA_SPACE;
+        Identifier sprite = merchantOffers.isOutOfStock() ? TRADE_ARROW_OUT_OF_STOCK_SPRITE : TRADE_ARROW_SPRITE;
+        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, sprite, posX + 5 + 25 + 20 + extraSpace, posY + 3, 10, 9);
     }
 
     private static void renderAndDecorateCostA(
