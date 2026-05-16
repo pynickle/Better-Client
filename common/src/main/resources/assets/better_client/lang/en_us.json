@@ -98,6 +98,12 @@
   "yacl3.config.better_client:config.enableChatHistoryRetention": "Enable Chat History Retention",
   "yacl3.config.better_client:config.enableChatHistoryRetention.desc": "Leaving the world no longer clears your chat history.",
 
+  "yacl3.config.better_client:config.category.client.group.mentions": "Mentions",
+  "yacl3.config.better_client:config.enableChatMentionAutocomplete": "Enable Chat Mention Autocomplete",
+  "yacl3.config.better_client:config.enableChatMentionAutocomplete.desc": "Reuse the vanilla suggestion popup to show online player names when typing @ in chat. Does not trigger if the message starts with /.",
+  "yacl3.config.better_client:config.chatMentionColor": "Mention Color",
+  "yacl3.config.better_client:config.chatMentionColor.desc": "Highlight color for @name text in the chat input box. Completing a mention automatically appends a trailing space.",
+
   "yacl3.config.better_client:config.category.client.group.chat_formatter": "Chat Formatter",
   "yacl3.config.better_client:config.enableChatFormatter": "Enable Chat Formatter",
   "yacl3.config.better_client:config.enableChatFormatter.desc": "Automatic replacement of placeholders like {pos} with actual player coordinates.",

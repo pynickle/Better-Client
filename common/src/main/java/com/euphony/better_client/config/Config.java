@@ -38,6 +38,8 @@ public class Config {
     public int chatMaxMessages = 4096;
     public boolean enableTimeStamp = true;
     public int timeStampColor = 0xEE46FF;
+    public boolean enableChatMentionAutocomplete = true;
+    public int chatMentionColor = 0x55FFFF;
 
     public boolean enableFasterClimbing = false;
     public boolean enableFasterUpward = true;

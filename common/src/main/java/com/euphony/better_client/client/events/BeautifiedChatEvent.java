@@ -1,5 +1,6 @@
 package com.euphony.better_client.client.events;
 
+import com.euphony.better_client.utils.mc.ChatMentionUtils;
 import dev.architectury.event.CompoundEventResult;
 import net.minecraft.network.chat.ChatType;
 import net.minecraft.network.chat.Component;
@@ -24,26 +25,33 @@ public class BeautifiedChatEvent {
     }
 
     public static Component processMessage(Component message) {
-        if (message.getString().matches(VANILLA_FORMAT)) {
-            MutableComponent output = Component.empty();
-            if (config.enableTimeStamp) {
-                ZonedDateTime now = ZonedDateTime.now();
-                String shortTimestamp = now.format(DateTimeFormatter.ofPattern("'['HH:mm:ss']' "));
+        Component output = message;
 
-                String fullDateTimeText =
-                        now.format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")) + "\nUTC" + now.getOffset();
+        if (config.enableTimeStamp && message.getString().matches(VANILLA_FORMAT)) {
+            MutableComponent timestampedOutput = Component.empty();
+            ZonedDateTime now = ZonedDateTime.now();
+            String shortTimestamp = now.format(DateTimeFormatter.ofPattern("'['HH:mm:ss']' "));
 
-                Component fullHoverText = Component.literal(fullDateTimeText);
+            String fullDateTimeText =
+                    now.format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")) + "\nUTC" + now.getOffset();
 
-                HoverEvent hoverEvent = new HoverEvent.ShowText(fullHoverText);
+            Component fullHoverText = Component.literal(fullDateTimeText);
 
-                output.append(Component.literal(shortTimestamp)
-                        .withColor(config.timeStampColor)
-                        .withStyle(style -> style.withHoverEvent(hoverEvent)));
-            }
-            output.append(message);
-            return output;
+            HoverEvent hoverEvent = new HoverEvent.ShowText(fullHoverText);
+
+            timestampedOutput.append(Component.literal(shortTimestamp)
+                    .withColor(config.timeStampColor)
+                    .withStyle(style -> style.withHoverEvent(hoverEvent)));
+            timestampedOutput.append(message);
+            message = timestampedOutput;
         }
-        return message.copy();
+
+        if (config.enableChatMentionAutocomplete && ChatMentionUtils.isAvailableInCurrentSession()) {
+            output = ChatMentionUtils.colorMentions(message, config.chatMentionColor);
+        } else {
+            output = message;
+        }
+
+        return output;
     }
 }
