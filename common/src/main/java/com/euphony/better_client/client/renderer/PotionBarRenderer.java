@@ -16,13 +16,7 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 import static com.euphony.better_client.BetterClient.config;
 
@@ -40,10 +34,10 @@ public class PotionBarRenderer {
     private static final int BORDER_COLOR = 0xAAFFFFFF;
     private static final int BAR_BACKGROUND_COLOR = 0x8F000000;
     private static final int[] AMP_COLORS = {
-        0xFF7FC7FF, 0xFF73D98A, 0xFFE6CF63, 0xFFFFA44D, 0xFFFF6B7A
+            0xFF7FC7FF, 0xFF73D98A, 0xFFE6CF63, 0xFFFFA44D, 0xFFFF6B7A
     };
     private static final String[] ROMAN_LEVELS = {
-        "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"
+            "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"
     };
     private static final int FALLBACK_BENEFICIAL_COLOR = 0xFF62D88B;
     private static final int FALLBACK_HARMFUL_COLOR = 0xFFE35B64;
@@ -96,7 +90,8 @@ public class PotionBarRenderer {
         VANILLA_EFFECT_COLORS.put(MobEffects.WITHER, 0xFF58505B);
     }
 
-    private PotionBarRenderer() {}
+    private PotionBarRenderer() {
+    }
 
     public static void render(GuiGraphicsExtractor graphics, DeltaTracker deltaTracker) {
         if (!config.enablePotionBar) return;

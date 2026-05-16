@@ -22,6 +22,7 @@ public class TradingHudEvent {
 
     /**
      * 客户端世界后处理事件
+     *
      * @param clientLevel 客户端世界
      */
     public static void clientLevelPost(ClientLevel clientLevel) {
@@ -48,6 +49,7 @@ public class TradingHudEvent {
 
     /**
      * 处理可交易实体
+     *
      * @param entity 实体
      * @param player 玩家
      */
@@ -93,6 +95,7 @@ public class TradingHudEvent {
 
     /**
      * 发送交互数据包
+     *
      * @param entity 实体
      * @param player 玩家
      */

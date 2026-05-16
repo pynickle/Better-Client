@@ -4,7 +4,8 @@ import java.nio.file.Path;
 import java.util.Set;
 
 public final class Platform {
-    private Platform() {}
+    private Platform() {
+    }
 
     public static Path getConfigFolder() {
         return PlatformServices.getPlatform().getConfigDirectory();

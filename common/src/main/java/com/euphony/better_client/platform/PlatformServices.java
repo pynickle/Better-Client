@@ -7,7 +7,8 @@ public final class PlatformServices {
             .findFirst()
             .orElseThrow(() -> new IllegalStateException("No Better Client platform service found"));
 
-    private PlatformServices() {}
+    private PlatformServices() {
+    }
 
     public static BetterClientPlatform getPlatform() {
         return PLATFORM;

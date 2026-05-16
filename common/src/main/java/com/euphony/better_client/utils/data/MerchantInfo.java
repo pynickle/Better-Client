@@ -26,7 +26,8 @@ public class MerchantInfo {
     @NotNull
     private List<String> offerEnchantmentTexts = List.of();
 
-    private MerchantInfo() {}
+    private MerchantInfo() {
+    }
 
     public static MerchantInfo getInstance() {
         return INSTANCE;
@@ -57,6 +58,7 @@ public class MerchantInfo {
 
     /**
      * 检查是否是同一个实体
+     *
      * @param entityId 实体 ID
      * @return 如果是同一个实体则返回 true
      */

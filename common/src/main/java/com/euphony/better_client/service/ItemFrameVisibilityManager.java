@@ -34,7 +34,8 @@ public class ItemFrameVisibilityManager {
     private static boolean saveDirty;
     private static String currentWorldId = "";
 
-    private ItemFrameVisibilityManager() {}
+    private ItemFrameVisibilityManager() {
+    }
 
     public static void clientLevelLoad(ClientLevel level) {
         loadForCurrentWorld(level);
