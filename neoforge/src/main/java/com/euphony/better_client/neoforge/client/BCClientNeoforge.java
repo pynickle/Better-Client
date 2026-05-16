@@ -3,7 +3,6 @@ package com.euphony.better_client.neoforge.client;
 import com.euphony.better_client.BetterClient;
 import com.euphony.better_client.client.events.BiomeTitleEvent;
 import com.euphony.better_client.client.events.BundleUpEvent;
-import com.euphony.better_client.client.events.WorldIconUpdateEvent;
 import com.euphony.better_client.client.property.AxolotlBucketVariant;
 import com.euphony.better_client.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -30,8 +29,4 @@ public class BCClientNeoforge {
         BundleUpEvent.bundleUp(Minecraft.getInstance(), event.getScreen(), event.getKeyEvent());
     }
 
-    @SubscribeEvent
-    public static void onRenderLevelStage(RenderLevelStageEvent.AfterLevel event) {
-        WorldIconUpdateEvent.onRenderLevelStage();
-    }
 }
