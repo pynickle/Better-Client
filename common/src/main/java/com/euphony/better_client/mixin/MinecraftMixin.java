@@ -32,11 +32,11 @@ public abstract class MinecraftMixin {
     @Inject(
             method = "pauseGame",
             at =
-                    @At(
-                            value = "INVOKE",
-                            target =
-                                    "Lnet/minecraft/client/Minecraft;setScreen(Lnet/minecraft/client/gui/screens/Screen;)V",
-                            ordinal = 0))
+            @At(
+                    value = "INVOKE",
+                    target =
+                            "Lnet/minecraft/client/Minecraft;setScreen(Lnet/minecraft/client/gui/screens/Screen;)V",
+                    ordinal = 0))
     private void onPauseGame(boolean suppressPauseMenuIfWeReallyArePausing, CallbackInfo ci) {
         if (config.enableMusicPause) {
             if (config.pauseUiSound) {

@@ -274,6 +274,18 @@
   "yacl3.config.better_client:config.totemBarYOffset": "Totem Bar Y Offset",
   "yacl3.config.better_client:config.totemBarYOffset.desc": "Y-axis offset for the totem bar.",
 
+  "yacl3.config.better_client:config.category.client.group.potion_bar": "Potion Bar",
+  "yacl3.config.better_client:config.enablePotionBar": "Enable Potion Bar",
+  "yacl3.config.better_client:config.enablePotionBar.desc": "Display active effect progress bars on the HUD.",
+  "yacl3.config.better_client:config.showVanillaEffectHud": "Show Vanilla Effect HUD",
+  "yacl3.config.better_client:config.showVanillaEffectHud.desc": "Keep Minecraft's right-side active effect HUD visible while Potion Bar is enabled.",
+  "yacl3.config.better_client:config.potionBarPos": "Potion Bar Position",
+  "yacl3.config.better_client:config.potionBarPos.desc": "Quickly select common positions.",
+  "yacl3.config.better_client:config.potionBarXOffset": "Potion Bar X Offset",
+  "yacl3.config.better_client:config.potionBarXOffset.desc": "X-axis offset for the potion bar.",
+  "yacl3.config.better_client:config.potionBarYOffset": "Potion Bar Y Offset",
+  "yacl3.config.better_client:config.potionBarYOffset.desc": "Y-axis offset for the potion bar.",
+
   "yacl3.config.better_client:config.category.client.group.client_weather": "Client Weather",
   "yacl3.config.better_client:config.enableClientWeather": "Enable Client Weather",
   "yacl3.config.better_client:config.enableClientWeather.desc": "Use the cweather command to adjust client-side weather without affecting the server."

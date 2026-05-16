@@ -3,6 +3,7 @@ package com.euphony.better_client.fabric.client;
 import com.euphony.better_client.client.command.ClientWeatherCommand;
 import com.euphony.better_client.client.events.*;
 import com.euphony.better_client.client.property.AxolotlBucketVariant;
+import com.euphony.better_client.client.renderer.PotionBarRenderer;
 import com.euphony.better_client.client.renderer.TotemBarRenderer;
 import com.euphony.better_client.client.renderer.TradingHudRenderer;
 import com.euphony.better_client.event.CompoundEventResult;
@@ -47,6 +48,7 @@ public final class BetterClientFabricBootstrap {
         HudElementRegistry.addFirst(Utils.prefix("biome_title"), BiomeTitleEvent::renderBiomeInfo);
         HudElementRegistry.addFirst(Utils.prefix("trading_hud"), TradingHudRenderer::renderHud);
         HudElementRegistry.addFirst(Utils.prefix("totem_bar"), TotemBarRenderer::render);
+        HudElementRegistry.addFirst(Utils.prefix("potion_bar"), PotionBarRenderer::render);
     }
 
     private static void registerItemProperties() {

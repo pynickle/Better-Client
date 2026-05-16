@@ -17,6 +17,7 @@ public class LocalPlayerMixin {
 
     /**
      * 当玩家关闭容器时调用
+     *
      * @param ci 回调信息
      */
     @Inject(at = @At("HEAD"), method = "closeContainer")

@@ -30,8 +30,9 @@ public class ClientPacketListenerMixin {
 
     /**
      * 处理商人交易报价数据包
+     *
      * @param packet 商人交易报价数据包
-     * @param ci 回调信息
+     * @param ci     回调信息
      */
     @Inject(at = @At("HEAD"), method = "handleMerchantOffers", cancellable = true)
     public void onHandleMerchantOffers(ClientboundMerchantOffersPacket packet, CallbackInfo ci) {
@@ -46,8 +47,9 @@ public class ClientPacketListenerMixin {
 
     /**
      * 处理打开界面数据包
+     *
      * @param packet 打开界面数据包
-     * @param ci 回调信息
+     * @param ci     回调信息
      */
     @Inject(at = @At("HEAD"), method = "handleOpenScreen", cancellable = true)
     public void onHandleOpenScreen(ClientboundOpenScreenPacket packet, CallbackInfo ci) {
@@ -61,6 +63,7 @@ public class ClientPacketListenerMixin {
 
     /**
      * 关闭容器
+     *
      * @param containerId 容器 ID
      */
     @Unique

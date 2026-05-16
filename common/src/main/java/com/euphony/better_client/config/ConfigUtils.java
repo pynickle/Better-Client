@@ -1,6 +1,7 @@
 package com.euphony.better_client.config;
 
 import com.euphony.better_client.BetterClient;
+import com.euphony.better_client.config.option.PotionBarPos;
 import com.euphony.better_client.config.option.TotemBarRenderMode;
 import com.euphony.better_client.config.option.TradingHudPos;
 import com.euphony.better_client.utils.Utils;
@@ -40,6 +41,8 @@ public class ConfigUtils {
     public static final ValueFormatter<DurabilityTooltipStyle> DURABILITY_TOOLTIP_STYLE_VALUE_FORMATTER =
             value -> Component.literal(toTitleCase(value.name()));
     public static final ValueFormatter<TotemBarRenderMode> TOTEM_BAR_RENDER_MODE_VALUE_FORMATTER =
+            value -> Component.literal(toTitleCase(value.name()));
+    public static final ValueFormatter<PotionBarPos> POTION_BAR_POS_VALUE_FORMATTER =
             value -> Component.literal(toTitleCase(value.name()));
 
     public static ButtonOption.Builder getButtonOption(String name) {
@@ -122,15 +125,15 @@ public class ConfigUtils {
             try (InputStream inputStream = resource.get().open()) {
                 BufferedImage image = ImageIO.read(inputStream);
                 if (image != null) {
-                    int[] dimensions = new int[] {image.getWidth(), image.getHeight()};
+                    int[] dimensions = new int[]{image.getWidth(), image.getHeight()};
                     IMAGE_DIMENSIONS_CACHE.put(location, dimensions);
                     return dimensions;
                 }
             } catch (IOException e) {
-                return new int[] {IMG_WIDTH, IMG_HEIGHT};
+                return new int[]{IMG_WIDTH, IMG_HEIGHT};
             }
         }
-        return new int[] {IMG_WIDTH, IMG_HEIGHT};
+        return new int[]{IMG_WIDTH, IMG_HEIGHT};
     }
 
     public static Component getCategoryName(String category) {

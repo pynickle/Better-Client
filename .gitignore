@@ -122,6 +122,7 @@ runs/
 /.architectury-transformer/
 
 node_modules/
+
 .trae/
 .omc/
 .omx/
@@ -131,8 +132,11 @@ node_modules/
 
 /.agents/
 /.claude/
+/.codex/
 
 skills-lock.json
+
+opencode.jsonc
 
 AGENTS.md
 CLAUDE.md

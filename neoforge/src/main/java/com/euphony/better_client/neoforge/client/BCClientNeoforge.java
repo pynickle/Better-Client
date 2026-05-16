@@ -3,6 +3,7 @@ package com.euphony.better_client.neoforge.client;
 import com.euphony.better_client.client.command.ClientWeatherCommand;
 import com.euphony.better_client.client.events.*;
 import com.euphony.better_client.client.property.AxolotlBucketVariant;
+import com.euphony.better_client.client.renderer.PotionBarRenderer;
 import com.euphony.better_client.client.renderer.TotemBarRenderer;
 import com.euphony.better_client.client.renderer.TradingHudRenderer;
 import com.euphony.better_client.keymapping.BCKeyMappings;
@@ -36,6 +37,7 @@ public final class BCClientNeoforge {
         event.registerAbove(VanillaGuiLayers.TITLE, Utils.prefix("biome_title"), BiomeTitleEvent::renderBiomeInfo);
         event.registerAbove(VanillaGuiLayers.HOTBAR, Utils.prefix("trading_hud"), TradingHudRenderer::renderHud);
         event.registerAbove(VanillaGuiLayers.HOTBAR, Utils.prefix("totem_bar"), TotemBarRenderer::render);
+        event.registerAbove(VanillaGuiLayers.HOTBAR, Utils.prefix("potion_bar"), PotionBarRenderer::render);
     }
 
     @SubscribeEvent

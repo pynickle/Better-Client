@@ -19,6 +19,7 @@
     "MultiLineEditBoxMixin",
     "MultiPlayerGameModeMixin",
     "PlayerTabOverlayMixin",
+    "PotionBarGuiMixin",
     "TrailSpawnerRendererMixin",
     "WorldListEntryMixin",
     "WorldOpenFlowsMixin"

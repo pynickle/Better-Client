@@ -274,6 +274,18 @@
   "yacl3.config.better_client:config.totemBarYOffset": "图腾条 Y 轴偏移",
   "yacl3.config.better_client:config.totemBarYOffset.desc": "图腾条的 Y 轴偏移量。",
 
+  "yacl3.config.better_client:config.category.client.group.potion_bar": "药水条",
+  "yacl3.config.better_client:config.enablePotionBar": "启用药水条",
+  "yacl3.config.better_client:config.enablePotionBar.desc": "在 HUD 上显示当前效果的进度条。",
+  "yacl3.config.better_client:config.showVanillaEffectHud": "显示原版效果 HUD",
+  "yacl3.config.better_client:config.showVanillaEffectHud.desc": "启用药水条时保留 Minecraft 右侧的当前效果 HUD。",
+  "yacl3.config.better_client:config.potionBarPos": "药水条位置",
+  "yacl3.config.better_client:config.potionBarPos.desc": "快速选择常用位置。",
+  "yacl3.config.better_client:config.potionBarXOffset": "药水条 X 轴偏移",
+  "yacl3.config.better_client:config.potionBarXOffset.desc": "药水条的 X 轴偏移量。",
+  "yacl3.config.better_client:config.potionBarYOffset": "药水条 Y 轴偏移",
+  "yacl3.config.better_client:config.potionBarYOffset.desc": "药水条的 Y 轴偏移量。",
+
   "yacl3.config.better_client:config.category.client.group.client_weather": "客户端天气",
   "yacl3.config.better_client:config.enableClientWeather": "启用客户端天气",
   "yacl3.config.better_client:config.enableClientWeather.desc": "使用 cweather 命令调整客户端天气，而不会影响服务器。"

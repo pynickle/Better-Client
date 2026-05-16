@@ -42,10 +42,10 @@ public abstract class PlayerTabOverlayMixin {
     @Redirect(
             method = "extractRenderState",
             at =
-                    @At(
-                            value = "INVOKE",
-                            target =
-                                    "Lnet/minecraft/client/gui/components/PlayerTabOverlay;extractPingIcon(Lnet/minecraft/client/gui/GuiGraphicsExtractor;IIILnet/minecraft/client/multiplayer/PlayerInfo;)V"))
+            @At(
+                    value = "INVOKE",
+                    target =
+                            "Lnet/minecraft/client/gui/components/PlayerTabOverlay;extractPingIcon(Lnet/minecraft/client/gui/GuiGraphicsExtractor;IIILnet/minecraft/client/multiplayer/PlayerInfo;)V"))
     private void redirectRenderPingIcon(
             PlayerTabOverlay overlay, GuiGraphicsExtractor graphics, int slotWidth, int xo, int yo, PlayerInfo info) {
         if (config.enableBetterPingDisplay) {

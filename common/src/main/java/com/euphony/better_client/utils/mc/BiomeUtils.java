@@ -16,10 +16,12 @@ import java.util.StringJoiner;
  */
 public class BiomeUtils {
 
-    private BiomeUtils() {}
+    private BiomeUtils() {
+    }
 
     /**
      * 将 snake_case 格式转换为英文标题格式
+     *
      * @param snakeCaseText snake_case 格式的文本
      * @return 转换后的英文标题
      */
@@ -36,6 +38,7 @@ public class BiomeUtils {
 
     /**
      * 获取模组显示名称
+     *
      * @param location 资源位置
      * @return 模组显示名称，如果获取不到则返回格式化的命名空间
      */
@@ -47,7 +50,8 @@ public class BiomeUtils {
 
     /**
      * 创建生物群系显示组件
-     * @param key 生物群系键
+     *
+     * @param key           生物群系键
      * @param enableModName 是否启用模组名称显示
      * @return 生物群系显示组件
      */
