@@ -6,14 +6,21 @@ import com.euphony.better_client.client.events.BundleUpEvent;
 import com.euphony.better_client.client.property.AxolotlBucketVariant;
 import com.euphony.better_client.utils.Utils;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.tutorial.TutorialSteps;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.*;
+import net.neoforged.neoforge.client.event.lifecycle.ClientStartedEvent;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 
 @EventBusSubscriber(modid = BetterClient.MOD_ID, value = Dist.CLIENT)
 public class BCClientNeoforge {
+    @SubscribeEvent
+    public static void onClientStarted(ClientStartedEvent event) {
+        event.getClient().execute(() -> Minecraft.getInstance().getTutorial().setStep(TutorialSteps.NONE));
+    }
+
     @SubscribeEvent
     public static void onRegisterGuiLayers(RegisterGuiLayersEvent event) {
         event.registerAbove(VanillaGuiLayers.TITLE, Utils.prefix("biome_title"), BiomeTitleEvent::renderBiomeInfo);
