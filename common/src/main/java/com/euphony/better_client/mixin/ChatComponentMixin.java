@@ -1,5 +1,6 @@
 package com.euphony.better_client.mixin;
 
+import com.euphony.better_client.service.ChatHistoryManager;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.ChatComponent;
@@ -36,8 +37,8 @@ public abstract class ChatComponentMixin {
             at = {@At("HEAD")},
             method = {"clearMessages(Z)V"},
             cancellable = true)
-    public void clear(boolean clearHistory, CallbackInfo ci) {
-        if (clearHistory && config.enableChatHistoryRetention) {
+    public void clear(boolean history, CallbackInfo ci) {
+        if (ChatHistoryManager.shouldCancelVanillaClear(history)) {
             ci.cancel();
         }
     }

@@ -7,6 +7,7 @@
     "BookEditScreenMixin",
     "BookViewScreenMixin",
     "ChatComponentMixin",
+    "accessor.ChatComponentStateAccessor",
     "CreateWorldScreenMixin",
     "GameRendererMixin",
     "LevelMixin",
