@@ -102,7 +102,8 @@ public class TradingHudRenderer {
                         if (m < enchantmentTexts.size()) {
                             String enchantmentText = enchantmentTexts.get(m);
                             if (!enchantmentText.isEmpty()) {
-                                guiGraphics.text(font, enchantmentText, (i + 85 + extraSpace), (n + 3), CommonColors.WHITE);
+                                guiGraphics.drawString(
+                                        font, enchantmentText, (i + 85 + extraSpace), (n + 3), CommonColors.WHITE);
                             }
                         }
                     }

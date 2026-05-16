@@ -8,11 +8,10 @@ import com.euphony.better_client.utils.mc.LevelUtils;
 import com.google.gson.*;
 import com.mojang.serialization.JsonOps;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.GuiMessage;
+import net.minecraft.client.GuiMessageTag;
 import net.minecraft.client.gui.components.ChatComponent;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.multiplayer.chat.GuiMessage;
-import net.minecraft.client.multiplayer.chat.GuiMessageSource;
-import net.minecraft.client.multiplayer.chat.GuiMessageTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentSerialization;
 import net.minecraft.network.chat.MessageSignature;
@@ -116,7 +115,7 @@ public final class ChatHistoryManager {
         restoringChat = true;
         try {
             for (String line : separator.split("\n", -1)) {
-                chat.addClientSystemMessage(Component.literal(SEPARATOR_MARKER + line));
+                chat.addMessage(Component.literal(SEPARATOR_MARKER + line));
             }
         } finally {
             restoringChat = false;
@@ -234,7 +233,6 @@ public final class ChatHistoryManager {
                     rebasedAddedTime,
                     message.content(),
                     message.signature(),
-                    message.source(),
                     message.tag()));
         }
 
@@ -598,7 +596,6 @@ public final class ChatHistoryManager {
 
         message.content = encodeComponent(content);
         message.signature = encodeSignature(guiMessage.signature());
-        message.source = guiMessage.source().name();
         message.tag = serializeTag(guiMessage.tag());
         return message;
     }
@@ -672,25 +669,7 @@ public final class ChatHistoryManager {
                 storedMessage.addedTime,
                 content,
                 decodeSignature(storedMessage.signature),
-                deserializeSource(storedMessage),
                 deserializeTag(storedMessage.tag));
-    }
-
-    private static GuiMessageSource deserializeSource(PersistentChatMessage storedMessage) {
-        String sourceName = storedMessage.source;
-        if (sourceName != null && !sourceName.isBlank()) {
-            try {
-                return GuiMessageSource.valueOf(sourceName);
-            } catch (IllegalArgumentException ignored) {
-                return fallbackSource(storedMessage.signature);
-            }
-        }
-
-        return fallbackSource(storedMessage.signature);
-    }
-
-    private static GuiMessageSource fallbackSource(JsonElement signature) {
-        return signature != null && !signature.isJsonNull() ? GuiMessageSource.PLAYER : GuiMessageSource.SYSTEM_CLIENT;
     }
 
     private static JsonElement encodeComponent(Component component) {

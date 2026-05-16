@@ -21,8 +21,8 @@ import static com.euphony.better_client.BetterClient.config;
 public abstract class ChatComponentMixin {
     @ModifyExpressionValue(
             method = {
-                    "addMessageToDisplayQueue(Lnet/minecraft/client/multiplayer/chat/GuiMessage;)V",
-                    "addMessageToQueue(Lnet/minecraft/client/multiplayer/chat/GuiMessage;)V",
+                    "addMessageToDisplayQueue(Lnet/minecraft/client/GuiMessage;)V",
+                    "addMessageToQueue(Lnet/minecraft/client/GuiMessage;)V",
                     "addRecentChat(Ljava/lang/String;)V"
             },
             at = @At(value = "CONSTANT", args = "intValue=100"))
