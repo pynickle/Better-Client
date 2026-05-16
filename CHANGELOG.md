@@ -1,3 +1,13 @@
+## [8.5.2](https://github.com/pynickle/Better-Client/compare/v8.5.1...v8.5.2) (2026-05-16)
+
+### 🐛 Bug Fixes
+
+* fix mixin ([4a5b887](https://github.com/pynickle/Better-Client/commit/4a5b887d188f5e390b984dd70a73d2cd7121c9bb))
+
+### 🔧 Miscellaneous Changes
+
+* update deps ([8eac69e](https://github.com/pynickle/Better-Client/commit/8eac69e33379f5d5ae1d0efa46bff3afdada45e0))
+
 ## [8.5.1](https://github.com/pynickle/Better-Client/compare/v8.5.0...v8.5.1) (2026-04-08)
 
 ### 🐛 Bug Fixes
