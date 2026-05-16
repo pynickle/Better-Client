@@ -1,3 +1,17 @@
+## [9.4.0](https://github.com/pynickle/Better-Client/compare/v9.3.4...v9.4.0) (2026-05-16)
+
+### ✨ Features
+
+* add potion bar ([192cac7](https://github.com/pynickle/Better-Client/commit/192cac7194b4a76eb7fefd7fc956fb5251e541de))
+
+### 💄 Style Improvements
+
+* improve code style ([c4efb35](https://github.com/pynickle/Better-Client/commit/c4efb35db1384909cd94781cee09e810f57c18c5))
+
+### 🔧 Miscellaneous Changes
+
+* update deps ([a91aad6](https://github.com/pynickle/Better-Client/commit/a91aad68413bc1fafb4618430afab8248b995907))
+
 ## [9.3.4](https://github.com/pynickle/Better-Client/compare/v9.3.3...v9.3.4) (2026-05-06)
 
 ### 🐛 Bug Fixes
