@@ -129,6 +129,8 @@ node_modules/
 bin/
 .settings/
 
+.omx/
+
 .agents/
 .codex/
 .claude/

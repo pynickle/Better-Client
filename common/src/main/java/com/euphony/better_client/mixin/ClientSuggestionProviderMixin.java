@@ -17,7 +17,7 @@ import static com.euphony.better_client.BetterClient.config;
 
 @Mixin(ClientSuggestionProvider.class)
 public abstract class ClientSuggestionProviderMixin {
-    @ModifyReturnValue(method = "getCustomTabSuggestions", at = @At("RETURN"))
+    @ModifyReturnValue(method = "getCustomTabSugggestions", at = @At("RETURN"))
     private Collection<String> better_client$appendMentionSuggestions(Collection<String> original) {
         if (!config.enableChatMentionAutocomplete) {
             return original;
