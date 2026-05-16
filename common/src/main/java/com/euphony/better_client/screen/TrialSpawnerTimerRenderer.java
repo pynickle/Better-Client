@@ -14,6 +14,10 @@ import net.minecraft.world.level.Level;
 import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 
+import java.util.Collections;
+import java.util.Map;
+import java.util.WeakHashMap;
+
 import static com.euphony.better_client.BetterClient.config;
 
 /**
@@ -21,6 +25,8 @@ import static com.euphony.better_client.BetterClient.config;
  * 这些方法从 Mixin 钩子中调用
  */
 public class TrialSpawnerTimerRenderer {
+    private static final Map<Timer, CachedTimerText> TEXT_CACHE = Collections.synchronizedMap(new WeakHashMap<>());
+
     /**
      * 在给定的试炼刷怪笼上方绘制冷却计时器
      *
@@ -47,8 +53,7 @@ public class TrialSpawnerTimerRenderer {
         }
 
         // 格式化剩余时间为 MM:SS
-        String timeText = TimeUtils.formatTicks(remainingTicks);
-        Component text = Component.literal(timeText);
+        Component text = better_client$getCachedTimerText(timer, remainingTicks);
 
         int color = calculateTimerColor(timer, currentTime);
 
@@ -128,4 +133,18 @@ public class TrialSpawnerTimerRenderer {
 
         return color;
     }
+
+    private static Component better_client$getCachedTimerText(Timer timer, long remainingTicks) {
+        long remainingSeconds = TimeUtils.ticksToSeconds(remainingTicks);
+        CachedTimerText cached = TEXT_CACHE.get(timer);
+        if (cached != null && cached.remainingSeconds() == remainingSeconds) {
+            return cached.text();
+        }
+
+        Component text = Component.literal(TimeUtils.formatTicks(remainingTicks));
+        TEXT_CACHE.put(timer, new CachedTimerText(remainingSeconds, text));
+        return text;
+    }
+
+    private record CachedTimerText(long remainingSeconds, Component text) {}
 }

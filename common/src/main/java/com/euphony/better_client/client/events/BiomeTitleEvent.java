@@ -20,6 +20,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.Util;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.biome.Biome;
 import org.joml.Matrix3x2fStack;
@@ -32,7 +33,6 @@ import java.nio.file.Path;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.CompletableFuture;
 
 import static com.euphony.better_client.BetterClient.LOGGER;
 import static com.euphony.better_client.BetterClient.config;
@@ -53,10 +53,16 @@ public class BiomeTitleEvent {
     private static boolean fadingIn = false;
 
     private static final Set<ResourceKey<Biome>> VISITED_BIOMES = Collections.synchronizedSet(new HashSet<>());
+    private static final Object BIOME_VISIT_LOCK = new Object();
 
     // File Paths
     private static final Path BASE_PATH = DataUtils.getDataDir();
     private static final Path BIOME_VISITS_PATH = BASE_PATH.resolve("biome_visits.json");
+    private static JsonObject persistedBiomeVisits = new JsonObject();
+    private static boolean persistedBiomeVisitsLoaded;
+    private static boolean biomeVisitSaveScheduled;
+    private static boolean biomeVisitSaveDirty;
+    private static String currentWorldId = "";
 
     private BiomeTitleEvent() {}
 
@@ -67,36 +73,38 @@ public class BiomeTitleEvent {
     private static void saveBiomeVisits() {
         if (!config.enableFirstEntryOnly) return;
 
-        // Run I/O in a separate thread
-        CompletableFuture.runAsync(() -> {
-            try {
-                if (Files.notExists(BASE_PATH)) {
-                    Files.createDirectories(BASE_PATH);
-                }
+        ensureBiomeVisitsLoaded();
+        synchronized (BIOME_VISIT_LOCK) {
+            updateCurrentWorldBiomeSnapshot(currentWorldId);
+            biomeVisitSaveDirty = true;
+            if (biomeVisitSaveScheduled) {
+                return;
+            }
+            biomeVisitSaveScheduled = true;
+        }
 
-                JsonObject root;
-                if (Files.exists(BIOME_VISITS_PATH)) {
-                    try (Reader reader = Files.newBufferedReader(BIOME_VISITS_PATH, StandardCharsets.UTF_8)) {
-                        root = JsonUtils.GSON.fromJson(reader, JsonObject.class);
+        Util.ioPool().execute(() -> {
+            while (true) {
+                JsonObject snapshot;
+                synchronized (BIOME_VISIT_LOCK) {
+                    if (!biomeVisitSaveDirty) {
+                        biomeVisitSaveScheduled = false;
+                        return;
                     }
-                    if (root == null) root = new JsonObject();
-                } else {
-                    root = new JsonObject();
+
+                    biomeVisitSaveDirty = false;
+                    snapshot = persistedBiomeVisits.deepCopy();
                 }
 
-                String worldId = LevelUtils.getCurrentWorldKey();
-
-                JsonArray biomeArray = new JsonArray();
-                synchronized (VISITED_BIOMES) {
-                    for (ResourceKey<Biome> biome : VISITED_BIOMES) {
-                        biomeArray.add(biome.identifier().toString());
+                try {
+                    if (Files.notExists(BASE_PATH)) {
+                        Files.createDirectories(BASE_PATH);
                     }
+                    Files.writeString(BIOME_VISITS_PATH, JsonUtils.GSON.toJson(snapshot), StandardCharsets.UTF_8);
+                } catch (IOException e) {
+                    LOGGER.error("Couldn't save biome visits: ", e);
+                    return;
                 }
-                root.add(worldId, biomeArray);
-
-                Files.writeString(BIOME_VISITS_PATH, JsonUtils.GSON.toJson(root), StandardCharsets.UTF_8);
-            } catch (IOException e) {
-                LOGGER.error("Couldn't save biome visits: ", e);
             }
         });
     }
@@ -107,18 +115,16 @@ public class BiomeTitleEvent {
     private static void loadBiomeVisits(ClientLevel level) {
         if (!config.enableFirstEntryOnly) return;
 
-        // Corrected logic: Return if file does NOT exist
-        if (Files.notExists(BIOME_VISITS_PATH)) return;
-
-        try (Reader reader = Files.newBufferedReader(BIOME_VISITS_PATH, StandardCharsets.UTF_8)) {
-            JsonObject root = JsonParser.parseReader(reader).getAsJsonObject();
-
+        ensureBiomeVisitsLoaded();
+        synchronized (VISITED_BIOMES) {
             VISITED_BIOMES.clear();
+        }
 
-            String worldId = LevelUtils.getCurrentWorldKey(level);
-
-            if (root.has(worldId)) {
-                JsonArray biomes = root.getAsJsonArray(worldId);
+        String worldId = LevelUtils.getCurrentWorldKey(level);
+        synchronized (BIOME_VISIT_LOCK) {
+            currentWorldId = worldId;
+            if (persistedBiomeVisits.has(worldId)) {
+                JsonArray biomes = persistedBiomeVisits.getAsJsonArray(worldId);
                 for (JsonElement elem : biomes) {
                     Identifier biomeLoc = Identifier.tryParse(elem.getAsString());
                     if (biomeLoc != null) {
@@ -127,8 +133,6 @@ public class BiomeTitleEvent {
                     }
                 }
             }
-        } catch (IOException e) {
-            LOGGER.error("Couldn't load biome visits: ", e);
         }
     }
 
@@ -291,5 +295,39 @@ public class BiomeTitleEvent {
 
     private static Component getBiomeName(ResourceKey<Biome> key) {
         return BiomeUtils.createBiomeDisplayComponent(key, config.enableModName);
+    }
+
+    private static void ensureBiomeVisitsLoaded() {
+        synchronized (BIOME_VISIT_LOCK) {
+            if (persistedBiomeVisitsLoaded) {
+                return;
+            }
+
+            if (Files.notExists(BIOME_VISITS_PATH)) {
+                persistedBiomeVisits = new JsonObject();
+                persistedBiomeVisitsLoaded = true;
+                return;
+            }
+
+            try (Reader reader = Files.newBufferedReader(BIOME_VISITS_PATH, StandardCharsets.UTF_8)) {
+                JsonObject root = JsonParser.parseReader(reader).getAsJsonObject();
+                persistedBiomeVisits = root == null ? new JsonObject() : root;
+            } catch (IOException e) {
+                persistedBiomeVisits = new JsonObject();
+                LOGGER.error("Couldn't load biome visits: ", e);
+            }
+
+            persistedBiomeVisitsLoaded = true;
+        }
+    }
+
+    private static void updateCurrentWorldBiomeSnapshot(String worldId) {
+        JsonArray biomeArray = new JsonArray();
+        synchronized (VISITED_BIOMES) {
+            for (ResourceKey<Biome> biome : VISITED_BIOMES) {
+                biomeArray.add(biome.identifier().toString());
+            }
+        }
+        persistedBiomeVisits.add(worldId, biomeArray);
     }
 }

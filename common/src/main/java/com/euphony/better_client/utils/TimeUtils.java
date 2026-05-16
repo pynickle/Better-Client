@@ -18,7 +18,7 @@ public class TimeUtils {
         long totalSeconds = ticks / TICKS_PER_SECOND;
         long minutes = totalSeconds / SECONDS_PER_MINUTE;
         long seconds = totalSeconds % SECONDS_PER_MINUTE;
-        return String.format("%02d:%02d", minutes, seconds);
+        return formatTwoPartTime(minutes, seconds);
     }
 
     /**
@@ -35,9 +35,15 @@ public class TimeUtils {
         long seconds = totalSeconds % SECONDS_PER_MINUTE;
 
         if (hours > 0) {
-            return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+            StringBuilder builder = new StringBuilder(8);
+            appendTwoDigits(builder, hours);
+            builder.append(':');
+            appendTwoDigits(builder, minutes);
+            builder.append(':');
+            appendTwoDigits(builder, seconds);
+            return builder.toString();
         } else {
-            return String.format("%02d:%02d", minutes, seconds);
+            return formatTwoPartTime(minutes, seconds);
         }
     }
 
@@ -86,5 +92,20 @@ public class TimeUtils {
      */
     public static long minutesToTicks(long minutes) {
         return minutes * SECONDS_PER_MINUTE * TICKS_PER_SECOND;
+    }
+
+    private static String formatTwoPartTime(long first, long second) {
+        StringBuilder builder = new StringBuilder(5);
+        appendTwoDigits(builder, first);
+        builder.append(':');
+        appendTwoDigits(builder, second);
+        return builder.toString();
+    }
+
+    private static void appendTwoDigits(StringBuilder builder, long value) {
+        if (value < 10) {
+            builder.append('0');
+        }
+        builder.append(value);
     }
 }

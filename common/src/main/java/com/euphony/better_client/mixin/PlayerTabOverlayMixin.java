@@ -53,7 +53,7 @@ public abstract class PlayerTabOverlayMixin {
     @Unique
     private static void better_client$render(
             Minecraft mc, PlayerTabOverlay overlay, GuiGraphics graphics, int width, int x, int y, PlayerInfo player) {
-        String pingString = String.format("%dms", player.getLatency());
+        String pingString = player.getLatency() + "ms";
         int pingStringWidth = mc.font.width(pingString);
         int pingTextColor = ColorUtils.getPingTextColor(player.getLatency());
 

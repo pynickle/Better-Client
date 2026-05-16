@@ -15,7 +15,10 @@ import static com.euphony.better_client.BetterClient.config;
  * 交易 HUD 事件处理类
  */
 public class TradingHudEvent {
+    private static final int REQUEST_COOLDOWN_TICKS = 5;
     private static boolean isWindowOpen = false;
+    private static int lastRequestedEntityId = Integer.MIN_VALUE;
+    private static int lastRequestTick = Integer.MIN_VALUE;
 
     /**
      * 客户端世界后处理事件
@@ -52,16 +55,29 @@ public class TradingHudEvent {
                 return;
             }
 
-            // 重置商人信息并设置新的实体 ID
-            merchantInfo.reset();
-            merchantInfo.setLastEntityId(entity.getId());
-
-            // 发送交互包
-            sendInteractionPacket(entity, player);
+            if (shouldRequestOffers(entity, player)) {
+                merchantInfo.reset();
+                merchantInfo.setLastEntityId(entity.getId());
+                sendInteractionPacket(entity, player);
+            } else if (entity.getId() == lastRequestedEntityId) {
+                merchantInfo.setLastEntityId(entity.getId());
+            }
         } else {
             // 清除最后的实体 ID
             merchantInfo.setLastEntityId(null);
         }
+    }
+
+    private static boolean shouldRequestOffers(Entity entity, LocalPlayer player) {
+        int currentTick = player.tickCount;
+        int entityId = entity.getId();
+        if (entityId == lastRequestedEntityId && currentTick - lastRequestTick < REQUEST_COOLDOWN_TICKS) {
+            return false;
+        }
+
+        lastRequestedEntityId = entityId;
+        lastRequestTick = currentTick;
+        return true;
     }
 
     /**
