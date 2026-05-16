@@ -177,6 +177,8 @@
   "yacl3.config.better_client:config.category.client.group.trading_hud": "Trading HUD",
   "yacl3.config.better_client:config.enableTradingHud": "Enable Trading HUD",
   "yacl3.config.better_client:config.enableTradingHud.desc": "Hover over a villager to display their trade offers in the upper-left corner.",
+  "yacl3.config.better_client:config.enableTradingHudWhileSneaking": "Enable Trading HUD While Sneaking",
+  "yacl3.config.better_client:config.enableTradingHudWhileSneaking.desc": "Continue sending Trading HUD requests and showing the HUD while sneaking. Disable this to avoid triggering shift-interact behavior from other mods.",
   "yacl3.config.better_client:config.tradingHudXOffset": "X-coordinate Offset",
   "yacl3.config.better_client:config.tradingHudXOffset.desc": "X-axis offset relative to the screen left-right corner.",
   "yacl3.config.better_client:config.tradingHudYOffset": "Y-coordinate Offset",

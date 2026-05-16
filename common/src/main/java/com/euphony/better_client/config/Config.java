@@ -82,6 +82,7 @@ public class Config {
     public boolean showDurabilityHint = true;
 
     public boolean enableTradingHud = true;
+    public boolean enableTradingHudWhileSneaking = true;
     public int tradingHudXOffset = 0;
     public int tradingHudYOffset = 0;
     public TradingHudPos tradingHudPos = TradingHudPos.TOP_RIGHT;

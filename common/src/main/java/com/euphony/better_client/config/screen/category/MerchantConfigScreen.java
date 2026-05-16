@@ -42,6 +42,11 @@ public class MerchantConfigScreen {
                 DEFAULTS.enableTradingHud,
                 () -> config.enableTradingHud,
                 newVal -> config.enableTradingHud = newVal);
+        Option<Boolean> enableTradingHudWhileSneakingOpt = ConfigUtils.buildBooleanOption(
+                "enableTradingHudWhileSneaking",
+                DEFAULTS.enableTradingHudWhileSneaking,
+                () -> config.enableTradingHudWhileSneaking,
+                newVal -> config.enableTradingHudWhileSneaking = newVal);
         Option<Integer> tradingHudXOffsetOpt = ConfigUtils.<Integer>getGenericOption("tradingHudXOffset")
                 .binding(
                         DEFAULTS.tradingHudXOffset,
@@ -86,6 +91,7 @@ public class MerchantConfigScreen {
                                 .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, TRADING_HUD_GROUP))
                                 .options(List.of(
                                         enableTradingHudOpt,
+                                        enableTradingHudWhileSneakingOpt,
                                         tradingHudXOffsetOpt,
                                         tradingHudYOffsetOpt,
                                         tradingHudPosOpt,

@@ -33,6 +33,7 @@ public class TradingHudRenderer {
         Minecraft minecraft = Minecraft.getInstance();
         Player player = minecraft.player;
         if (player == null) return;
+        if (!config.enableTradingHudWhileSneaking && player.isShiftKeyDown()) return;
 
         Font font = minecraft.font;
 
