@@ -16,7 +16,8 @@ public final class ChatMentionUtils {
     private static final Pattern MENTION_PATTERN = Pattern.compile("@[A-Za-z0-9_]{1,16}");
     private static final Style DEFAULT_STYLE = Style.EMPTY.withColor(EditBox.DEFAULT_TEXT_COLOR);
 
-    private ChatMentionUtils() {}
+    private ChatMentionUtils() {
+    }
 
     public static boolean isAvailableInCurrentSession() {
         Minecraft minecraft = Minecraft.getInstance();

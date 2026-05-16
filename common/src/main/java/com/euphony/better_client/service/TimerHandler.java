@@ -45,7 +45,7 @@ public class TimerHandler {
      * Checks if there's an active cooldown timer at the specified position
      *
      * @param level World/dimension
-     * @param pos Trial spawner position
+     * @param pos   Trial spawner position
      * @return true if an active timer exists
      */
     public static boolean hasTimer(Level level, BlockPos pos) {
@@ -55,9 +55,9 @@ public class TimerHandler {
     /**
      * Creates a timer for the trial spawner at the specified position
      *
-     * @param level World/dimension
-     * @param pos Trial spawner position
-     * @param startTime Timer start time (game ticks)
+     * @param level         World/dimension
+     * @param pos           Trial spawner position
+     * @param startTime     Timer start time (game ticks)
      * @param cooldownTicks Cooldown duration (ticks)
      */
     public static void insertTimer(Level level, BlockPos pos, long startTime, long cooldownTicks) {
@@ -79,7 +79,7 @@ public class TimerHandler {
      * Gets the timer at the specified position
      *
      * @param level World/dimension
-     * @param pos Trial spawner position
+     * @param pos   Trial spawner position
      * @return Timer object, or null if none exists
      */
     public static Timer getTimer(Level level, BlockPos pos) {
@@ -99,7 +99,7 @@ public class TimerHandler {
      * Deletes the timer at the specified position
      *
      * @param level World/dimension
-     * @param pos Trial spawner position
+     * @param pos   Trial spawner position
      */
     public static void deleteTimer(Level level, BlockPos pos) {
         if (level == null || pos == null) {
@@ -182,8 +182,8 @@ public class TimerHandler {
     /**
      * Handles trial spawner block updates, checking if timers need to be created/deleted
      *
-     * @param level World containing the trial spawner
-     * @param pos Trial spawner position
+     * @param level      World containing the trial spawner
+     * @param pos        Trial spawner position
      * @param blockState Trial spawner block state
      */
     public static void onSpawnerBlockUpdate(Level level, BlockPos pos, BlockState blockState) {
@@ -204,7 +204,7 @@ public class TimerHandler {
      * Handles trial spawner state updates, checking if timers need to be created/deleted
      *
      * @param level World containing the trial spawner
-     * @param pos Trial spawner position
+     * @param pos   Trial spawner position
      * @param state Trial spawner state
      */
     public static void onSpawnerStateUpdate(Level level, BlockPos pos, TrialSpawnerState state) {

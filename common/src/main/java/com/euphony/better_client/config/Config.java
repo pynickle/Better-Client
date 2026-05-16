@@ -1,6 +1,7 @@
 package com.euphony.better_client.config;
 
 import com.euphony.better_client.BetterClient;
+import com.euphony.better_client.config.option.PotionBarPos;
 import com.euphony.better_client.config.option.TotemBarRenderMode;
 import com.euphony.better_client.config.option.TradingHudPos;
 import com.euphony.better_client.utils.Utils;
@@ -139,9 +140,16 @@ public class Config {
     public TotemBarRenderMode totemBarRenderMode = TotemBarRenderMode.COMBINED;
     public int totemBarYOffset = 0;
 
+    public boolean enablePotionBar = true;
+    public boolean showVanillaEffectHud = false;
+    public PotionBarPos potionBarPos = PotionBarPos.CENTER;
+    public int potionBarXOffset = 0;
+    public int potionBarYOffset = 0;
+
     public boolean enableClientWeather = true;
 
-    public Config() {}
+    public Config() {
+    }
 
     public static Config create() {
         if (!Platform.isModLoaded("yet_another_config_lib_v3")) return DEFAULTS;

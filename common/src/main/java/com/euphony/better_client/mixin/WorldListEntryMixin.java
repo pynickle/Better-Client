@@ -47,10 +47,10 @@ public class WorldListEntryMixin {
     @Redirect(
             method = "<init>",
             at =
-                    @At(
-                            value = "INVOKE",
-                            target =
-                                    "Lnet/minecraft/world/level/storage/LevelSummary;getInfo()Lnet/minecraft/network/chat/Component;"))
+            @At(
+                    value = "INVOKE",
+                    target =
+                            "Lnet/minecraft/world/level/storage/LevelSummary;getInfo()Lnet/minecraft/network/chat/Component;"))
     private Component modifyInfo(LevelSummary levelSummary) {
         if (config.enableNoExperimentalWarning && !config.enableExperimentalDisplay) {
             if (levelSummary.info == null) {
@@ -74,9 +74,9 @@ public class WorldListEntryMixin {
         } else {
             MutableComponent mutableComponent = levelSummary.isHardcore()
                     ? Component.empty()
-                            .append(Component.translatable("gameMode.hardcore").withColor(-65536))
+                    .append(Component.translatable("gameMode.hardcore").withColor(-65536))
                     : Component.translatable(
-                            "gameMode." + levelSummary.getGameMode().getName());
+                    "gameMode." + levelSummary.getGameMode().getName());
             if (levelSummary.hasCommands()) {
                 mutableComponent.append(", ").append(Component.translatable("selectWorld.commands"));
             }

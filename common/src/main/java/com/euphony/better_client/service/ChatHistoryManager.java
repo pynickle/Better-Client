@@ -47,7 +47,8 @@ public final class ChatHistoryManager {
     private static boolean persistentStoreSaveScheduled;
     private static boolean persistentStoreSaveDirty;
 
-    private ChatHistoryManager() {}
+    private ChatHistoryManager() {
+    }
 
     public static boolean shouldCancelVanillaClear(boolean history) {
         return history && config.enableChatHistoryRetention && !allowVanillaClear;
@@ -192,11 +193,11 @@ public final class ChatHistoryManager {
                         "disconnect_time", TIME_FORMATTER.format(disconnectTime.atZone(ZoneId.systemDefault())),
                         "disconnect_date", DATE_FORMATTER.format(disconnectTime.atZone(ZoneId.systemDefault())),
                         "disconnect_datetime",
-                                DATE_TIME_FORMATTER.format(disconnectTime.atZone(ZoneId.systemDefault())),
+                        DATE_TIME_FORMATTER.format(disconnectTime.atZone(ZoneId.systemDefault())),
                         "last_disconnect_time", TIME_FORMATTER.format(disconnectTime.atZone(ZoneId.systemDefault())),
                         "last_disconnect_date", DATE_FORMATTER.format(disconnectTime.atZone(ZoneId.systemDefault())),
                         "last_disconnect_datetime",
-                                DATE_TIME_FORMATTER.format(disconnectTime.atZone(ZoneId.systemDefault()))));
+                        DATE_TIME_FORMATTER.format(disconnectTime.atZone(ZoneId.systemDefault()))));
     }
 
     private static boolean isStateEmpty(ChatComponent.State state) {
@@ -374,7 +375,8 @@ public final class ChatHistoryManager {
         return copy;
     }
 
-    private record RuntimeChatState(ChatComponent.State state, String sessionName, Instant disconnectTime) {}
+    private record RuntimeChatState(ChatComponent.State state, String sessionName, Instant disconnectTime) {
+    }
 
     private static final class PersistentChatStore {
         private final Map<String, PersistentChatState> sessions = new LinkedHashMap<>();

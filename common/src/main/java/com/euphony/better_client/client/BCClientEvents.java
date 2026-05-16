@@ -1,6 +1,7 @@
 package com.euphony.better_client.client;
 
 import com.euphony.better_client.client.events.*;
+import com.euphony.better_client.client.renderer.PotionBarRenderer;
 import com.euphony.better_client.client.renderer.TotemBarRenderer;
 import com.euphony.better_client.client.renderer.TradingHudRenderer;
 import com.euphony.better_client.service.ChatHistoryManager;
@@ -32,6 +33,7 @@ public class BCClientEvents {
 
         ClientGuiEvent.RENDER_HUD.register(TradingHudRenderer::renderHud);
         ClientGuiEvent.RENDER_HUD.register(TotemBarRenderer::render);
+        ClientGuiEvent.RENDER_HUD.register(PotionBarRenderer::render);
     }
 
     private static void clientPre(Minecraft minecraft) {

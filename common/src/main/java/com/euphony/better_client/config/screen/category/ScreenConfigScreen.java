@@ -2,6 +2,7 @@ package com.euphony.better_client.config.screen.category;
 
 import com.euphony.better_client.config.Config;
 import com.euphony.better_client.config.ConfigUtils;
+import com.euphony.better_client.config.option.PotionBarPos;
 import com.euphony.better_client.config.option.TotemBarRenderMode;
 import com.euphony.better_client.utils.enums.DescComponent;
 import dev.isxander.yacl3.api.ConfigCategory;
@@ -28,6 +29,7 @@ public class ScreenConfigScreen {
     private static final String WORLD_PLAY_TIME_GROUP = "world_play_time";
     private static final String LOWER_SHIELD_GROUP = "lower_shield";
     private static final String TOTEM_BAR_GROUP = "totem_bar";
+    private static final String POTION_BAR_GROUP = "potion_bar";
 
     public static Screen generateScreen(Screen parent) {
         // Better Ping Display
@@ -221,6 +223,38 @@ public class ScreenConfigScreen {
                 .controller(IntegerFieldControllerBuilder::create)
                 .build();
 
+        // Potion Bar
+        Option<Boolean> enablePotionBarOpt = ConfigUtils.buildBooleanOption(
+                "enablePotionBar",
+                DEFAULTS.enablePotionBar,
+                () -> config.enablePotionBar,
+                newVal -> config.enablePotionBar = newVal);
+        Option<Boolean> showVanillaEffectHudOpt = ConfigUtils.buildBooleanOption(
+                "showVanillaEffectHud",
+                DEFAULTS.showVanillaEffectHud,
+                () -> config.showVanillaEffectHud,
+                newVal -> config.showVanillaEffectHud = newVal);
+        Option<PotionBarPos> potionBarPosOpt = ConfigUtils.<PotionBarPos>getGenericOption("potionBarPos")
+                .binding(DEFAULTS.potionBarPos, () -> config.potionBarPos, newVal -> config.potionBarPos = newVal)
+                .controller(opt -> EnumControllerBuilder.create(opt)
+                        .enumClass(PotionBarPos.class)
+                        .formatValue(ConfigUtils.POTION_BAR_POS_VALUE_FORMATTER))
+                .build();
+        Option<Integer> potionBarXOffsetOpt = ConfigUtils.<Integer>getGenericOption("potionBarXOffset")
+                .binding(
+                        DEFAULTS.potionBarXOffset,
+                        () -> config.potionBarXOffset,
+                        newVal -> config.potionBarXOffset = newVal)
+                .controller(IntegerFieldControllerBuilder::create)
+                .build();
+        Option<Integer> potionBarYOffsetOpt = ConfigUtils.<Integer>getGenericOption("potionBarYOffset")
+                .binding(
+                        DEFAULTS.potionBarYOffset,
+                        () -> config.potionBarYOffset,
+                        newVal -> config.potionBarYOffset = newVal)
+                .controller(IntegerFieldControllerBuilder::create)
+                .build();
+
         return YetAnotherConfigLib.createBuilder()
                 .title(Component.translatable("yacl3.config.better_client:config"))
                 .category(ConfigCategory.createBuilder()
@@ -271,6 +305,15 @@ public class ScreenConfigScreen {
                         .group(OptionGroup.createBuilder()
                                 .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, TOTEM_BAR_GROUP))
                                 .options(List.of(enableTotemBarOpt, totemBarRenderModeOpt, totemBarYOffsetOpt))
+                                .build())
+                        .group(OptionGroup.createBuilder()
+                                .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, POTION_BAR_GROUP))
+                                .options(List.of(
+                                        enablePotionBarOpt,
+                                        showVanillaEffectHudOpt,
+                                        potionBarPosOpt,
+                                        potionBarXOffsetOpt,
+                                        potionBarYOffsetOpt))
                                 .build())
                         .build())
                 .save(Config::save)

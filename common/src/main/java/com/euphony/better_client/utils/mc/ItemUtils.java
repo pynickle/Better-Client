@@ -8,7 +8,8 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 
 public final class ItemUtils {
-    private ItemUtils() {}
+    private ItemUtils() {
+    }
 
     public static MutableComponent createTooltip(String key, Object... objects) {
         return Component.translatable(key, objects).withStyle(ChatFormatting.GRAY);

@@ -1,6 +1,6 @@
 package com.euphony.better_client.config.screen;
 
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.MultiLineEditBox;
 import net.minecraft.client.gui.screens.Screen;
@@ -69,9 +69,9 @@ public class ChatSeparatorTemplateScreen extends Screen {
     }
 
     @Override
-    public void extractRenderState(GuiGraphicsExtractor context, int mouseX, int mouseY, float delta) {
-        super.extractRenderState(context, mouseX, mouseY, delta);
+    public void render(GuiGraphics context, int mouseX, int mouseY, float delta) {
+        super.render(context, mouseX, mouseY, delta);
 
-        context.centeredText(this.font, this.title, this.width / 2, 18, 0xFFFFFFFF);
+        context.drawCenteredString(this.font, this.title, this.width / 2, 18, 0xFFFFFFFF);
     }
 }
