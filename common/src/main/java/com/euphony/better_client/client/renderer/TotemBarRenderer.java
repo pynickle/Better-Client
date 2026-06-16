@@ -26,7 +26,7 @@ public class TotemBarRenderer {
 
         Minecraft client = Minecraft.getInstance();
         LocalPlayer player = client.player;
-        if (player == null || client.options.hideGui) return;
+        if (player == null || client.gui.hud.isHidden()) return;
         if (player.isCreative() || player.isSpectator()) return;
 
         better_client$refreshTotemCounts(player);

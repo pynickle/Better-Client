@@ -29,7 +29,7 @@ public abstract class ChatScreenMixin extends Screen {
 
     @Inject(method = "init", at = @At("TAIL"))
     private void better_client$initMentionFormatter(CallbackInfo ci) {
-        this.input.addFormatter((text, firstCharacterIndex) -> {
+        this.input.addFormatter((text, _) -> {
             if (!config.enableChatMentionAutocomplete || !ChatMentionUtils.isAvailableInCurrentSession()) {
                 return null;
             }

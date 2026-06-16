@@ -19,7 +19,7 @@ public class FullBrightnessEvent {
 
         Minecraft minecraft = Minecraft.getInstance();
         // 检查是否有输入框正在被使用（额外的安全检查）
-        if (minecraft.screen != null && isInputFieldFocused(minecraft)) {
+        if (minecraft.gui.screen() != null && isInputFieldFocused(minecraft)) {
             wasKeyPressed = isKeyPressed;
             return;
         }
@@ -41,10 +41,10 @@ public class FullBrightnessEvent {
     }
 
     private static boolean isInputFieldFocused(Minecraft minecraft) {
-        if (minecraft.screen == null) return false;
+        if (minecraft.gui.screen() == null) return false;
 
         // 检查当前焦点组件是否为输入框
-        var focusedWidget = minecraft.screen.getFocused();
+        var focusedWidget = minecraft.gui.screen().getFocused();
         return focusedWidget instanceof EditBox || focusedWidget instanceof MultiLineEditBox;
     }
 }

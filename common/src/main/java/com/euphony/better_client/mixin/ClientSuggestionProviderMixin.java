@@ -24,7 +24,7 @@ public abstract class ClientSuggestionProviderMixin {
         }
 
         Minecraft minecraft = Minecraft.getInstance();
-        if (!(minecraft.screen instanceof ChatScreen)
+        if (!(minecraft.gui.screen() instanceof ChatScreen)
                 || !ChatMentionUtils.isAvailableInCurrentSession()
                 || minecraft.player == null) {
             return original;

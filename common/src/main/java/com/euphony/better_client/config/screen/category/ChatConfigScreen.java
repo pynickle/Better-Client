@@ -88,7 +88,7 @@ public class ChatConfigScreen {
                 newVal -> config.cleanRestoredChatSeparatorsOnSave = newVal);
 
         ButtonOption chatHistorySeparatorTemplateOpt = ConfigUtils.getButtonOption("chatHistorySeparatorTemplate")
-                .action((screen, opt) -> Minecraft.getInstance().setScreen(new ChatSeparatorTemplateScreen(screen)))
+                .action((screen, opt) -> Minecraft.getInstance().gui.setScreen(new ChatSeparatorTemplateScreen(screen)))
                 .build();
 
         // Chat Formatter

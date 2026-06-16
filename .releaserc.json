@@ -47,9 +47,9 @@
     [
       "semantic-release-minecraft",
       {
-        "game_versions": ["26.1", "26.1.1", "26.1.2"],
+        "game_versions": ["26.2"],
         "mod_loaders": "${ loader }",
-        "display_name": "[${ name } 26.1] ${ nextRelease.version }",
+        "display_name": "[${ name } 26.2] ${ nextRelease.version }",
         "glob": "${ loader }/build/libs/better_client-${ nextRelease.version }.jar",
         "dependencies": [
           {

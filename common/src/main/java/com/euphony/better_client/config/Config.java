@@ -208,7 +208,7 @@ public class Config {
         return new ConfirmScreen(
                 clicked -> {
                     if (clicked) ConfirmLinkScreen.confirmLinkNow(parent, link);
-                    else mc.setScreen(parent);
+                    else mc.gui.setScreen(parent);
                 },
                 Component.translatable("text.better_client.help.missing"),
                 Component.translatable("text.better_client.desc.help.missing"),

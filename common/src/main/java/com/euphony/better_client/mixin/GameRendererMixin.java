@@ -35,8 +35,8 @@ public abstract class GameRendererMixin {
     @Unique
     private long better_client$nextWorldIconRefreshAttemptAt;
 
-    @ModifyReturnValue(method = "getNightVisionScale", at = @At("RETURN"))
-    private static float getNightVisionScaleModify(float original, LivingEntity camera, float a) {
+    @ModifyReturnValue(method = "nightVisionScale", at = @At("RETURN"))
+    private static float nightVisionScaleModify(float original, LivingEntity camera, float a) {
         if (!config.enableFadingNightVision) return original;
 
         int fadingOutTicks = (int) (config.fadingOutDuration * 20);

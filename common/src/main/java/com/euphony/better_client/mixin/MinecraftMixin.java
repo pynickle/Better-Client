@@ -9,7 +9,7 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -35,7 +35,7 @@ public abstract class MinecraftMixin {
             @At(
                     value = "INVOKE",
                     target =
-                            "Lnet/minecraft/client/Minecraft;setScreen(Lnet/minecraft/client/gui/screens/Screen;)V",
+                            "Lnet/minecraft/client/gui/Gui;setPauseScreen(ZZ)V",
                     ordinal = 0))
     private void onPauseGame(boolean suppressPauseMenuIfWeReallyArePausing, CallbackInfo ci) {
         if (config.enableMusicPause) {
@@ -61,6 +61,6 @@ public abstract class MinecraftMixin {
             method = "shouldEntityAppearGlowing",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;isCurrentlyGlowing()Z"))
     private boolean seenByEyeOfTheForestThenGlow(boolean original, Entity entity) {
-        return config.enableGlowingEnderEye ? entity.getType() == EntityType.EYE_OF_ENDER || original : original;
+        return config.enableGlowingEnderEye ? entity.getType() == EntityTypes.EYE_OF_ENDER || original : original;
     }
 }

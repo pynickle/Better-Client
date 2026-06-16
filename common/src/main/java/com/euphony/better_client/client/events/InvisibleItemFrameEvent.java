@@ -19,7 +19,7 @@ public class InvisibleItemFrameEvent {
 
         Minecraft minecraft = Minecraft.getInstance();
         Player player = minecraft.player;
-        if (minecraft.screen != null
+        if (minecraft.gui.screen() != null
                 || minecraft.player == null
                 || player.isSpectator()
                 || player.isSpectator()

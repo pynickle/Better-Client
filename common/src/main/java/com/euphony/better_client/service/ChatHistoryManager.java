@@ -73,21 +73,20 @@ public final class ChatHistoryManager {
         Minecraft minecraft = Minecraft.getInstance();
         String previousSessionKey =
                 previousLevel == null ? null : LevelUtils.getCurrentSessionKey(minecraft, previousLevel);
-        String currentSessionKey =
+        String sessionKey =
                 currentLevel == null ? null : LevelUtils.getCurrentSessionKey(minecraft, currentLevel);
 
-        if (Objects.equals(previousSessionKey, currentSessionKey)) {
+        if (Objects.equals(previousSessionKey, sessionKey)) {
             return;
         }
 
-        ChatComponent chat = minecraft.gui.getChat();
+        ChatComponent chat = minecraft.gui.hud.getChat();
         clearChat(chat);
 
         if (currentLevel == null) {
             return;
         }
 
-        String sessionKey = currentSessionKey;
         RuntimeChatState runtimeState = RUNTIME_STATES.get(sessionKey);
         if (runtimeState != null) {
             restoreRuntimeState(chat, runtimeState);
@@ -124,7 +123,7 @@ public final class ChatHistoryManager {
     }
 
     private static void saveChatState(String sessionKey, String sessionName) {
-        ChatComponent chat = Minecraft.getInstance().gui.getChat();
+        ChatComponent chat = Minecraft.getInstance().gui.hud.getChat();
         ChatComponent.State state = sanitizeState(chat.storeState());
         Instant disconnectTime = Instant.now();
 
@@ -222,7 +221,7 @@ public final class ChatHistoryManager {
             return List.of();
         }
 
-        int currentGuiTicks = Minecraft.getInstance().gui.getGuiTicks();
+        int currentGuiTicks = Minecraft.getInstance().gui.hud.getGuiTicks();
         int newestAddedTime = messages.stream().mapToInt(GuiMessage::addedTime).max().orElse(currentGuiTicks);
         int tickOffset = currentGuiTicks - newestAddedTime;
 
@@ -241,7 +240,7 @@ public final class ChatHistoryManager {
     }
 
     private static boolean isSeparatorMessage(GuiMessage message) {
-        if (message == null || message.content() == null) {
+        if (message == null) {
             return false;
         }
 
@@ -591,9 +590,6 @@ public final class ChatHistoryManager {
         PersistentChatMessage message = new PersistentChatMessage();
         message.addedTime = guiMessage.addedTime();
         Component content = guiMessage.content();
-        if (content == null) {
-            return null;
-        }
 
         message.content = encodeComponent(content);
         message.signature = encodeSignature(guiMessage.signature());

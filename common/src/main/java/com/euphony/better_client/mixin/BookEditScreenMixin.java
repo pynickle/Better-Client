@@ -64,14 +64,14 @@ public abstract class BookEditScreenMixin extends Screen {
         }
 
         if (this.better_client$isModified || ((IMultiLineEditBox) this.page).better_client$getIsModified()) {
-            this.minecraft.setScreen(new ConfirmScreen(
+            this.minecraft.gui.setScreen(new ConfirmScreen(
                     (response) -> {
                         if (response) {
                             this.better_client$isModified = false;
                             ((IMultiLineEditBox) this.page).better_client$setIsModified(false);
-                            this.minecraft.setScreen(null);
+                            this.minecraft.gui.setScreen(null);
                         } else {
-                            this.minecraft.setScreen(this);
+                            this.minecraft.gui.setScreen(this);
                         }
                     },
                     Component.translatable("message.better_client.book_save.title"),

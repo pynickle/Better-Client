@@ -57,7 +57,7 @@ public class ChatSeparatorTemplateScreen extends Screen {
 
         this.addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, button -> {
                     config.chatHistorySeparatorTemplate = this.editor.getValue();
-                    this.minecraft.setScreen(this.parent);
+                    this.minecraft.gui.setScreen(this.parent);
                 })
                 .bounds(this.width / 2 + 2, buttonY, 100, 20)
                 .build());
@@ -65,7 +65,7 @@ public class ChatSeparatorTemplateScreen extends Screen {
 
     @Override
     public void onClose() {
-        this.minecraft.setScreen(this.parent);
+        this.minecraft.gui.setScreen(this.parent);
     }
 
     @Override

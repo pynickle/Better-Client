@@ -4,13 +4,14 @@ import com.euphony.better_client.config.option.PotionBarPos;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.Hud;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -98,8 +99,8 @@ public class PotionBarRenderer {
 
         Minecraft minecraft = Minecraft.getInstance();
         LocalPlayer player = minecraft.player;
-        if (player == null || minecraft.options.hideGui) return;
-        if (minecraft.screen != null && minecraft.screen.showsActiveEffects()) return;
+        if (player == null || minecraft.gui.hud.isHidden()) return;
+        if (minecraft.gui.screen() != null && minecraft.gui.screen().showsActiveEffects()) return;
 
         better_client$resetStateWhenContextChanges(minecraft, player);
 
@@ -178,7 +179,7 @@ public class PotionBarRenderer {
         graphics.outline(x, y, ROW_WIDTH, ROW_HEIGHT, BORDER_COLOR);
         graphics.blitSprite(
                 RenderPipelines.GUI_TEXTURED,
-                Gui.getMobEffectSprite(effect.getEffect()),
+                Hud.getMobEffectSprite(effect.getEffect()),
                 x + 3,
                 y + 3,
                 ICON_SIZE,
@@ -251,8 +252,8 @@ public class PotionBarRenderer {
     private static Identifier better_client$getEffectId(MobEffectInstance effect) {
         return effect.getEffect()
                 .unwrapKey()
-                .map(key -> key.identifier())
-                .orElseGet(() -> Gui.getMobEffectSprite(effect.getEffect()));
+                .map(ResourceKey::identifier)
+                .orElseGet(() -> Hud.getMobEffectSprite(effect.getEffect()));
     }
 
     private record EffectKey(Identifier id, int amplifier) {

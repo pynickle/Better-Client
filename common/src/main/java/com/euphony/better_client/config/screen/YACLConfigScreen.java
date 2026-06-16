@@ -44,7 +44,7 @@ public class YACLConfigScreen extends Screen {
 
     @Override
     public void onClose() {
-        this.minecraft.setScreen(this.parent);
+        this.minecraft.gui.setScreen(this.parent);
     }
 
     @Override
@@ -88,7 +88,7 @@ public class YACLConfigScreen extends Screen {
                     if (this.chatConfigScreen == null) {
                         this.chatConfigScreen = ChatConfigScreen.generateScreen(this);
                     }
-                    this.minecraft.setScreen(this.chatConfigScreen);
+                    this.minecraft.gui.setScreen(this.chatConfigScreen);
                 }));
 
         addRenderableWidget(new CategoryButton(
@@ -102,7 +102,7 @@ public class YACLConfigScreen extends Screen {
                     if (this.cheatingConfigScreen == null) {
                         this.cheatingConfigScreen = CheatingConfigScreen.generateScreen(this);
                     }
-                    this.minecraft.setScreen(this.cheatingConfigScreen);
+                    this.minecraft.gui.setScreen(this.cheatingConfigScreen);
                 }));
 
         addRenderableWidget(new CategoryButton(
@@ -116,7 +116,7 @@ public class YACLConfigScreen extends Screen {
                     if (this.merchantConfigScreen == null) {
                         this.merchantConfigScreen = MerchantConfigScreen.generateScreen(this);
                     }
-                    this.minecraft.setScreen(this.merchantConfigScreen);
+                    this.minecraft.gui.setScreen(this.merchantConfigScreen);
                 }));
 
         addRenderableWidget(new CategoryButton(
@@ -130,7 +130,7 @@ public class YACLConfigScreen extends Screen {
                     if (this.optimizationConfigScreen == null) {
                         this.optimizationConfigScreen = OptimizationConfigScreen.generateScreen(this);
                     }
-                    this.minecraft.setScreen(this.optimizationConfigScreen);
+                    this.minecraft.gui.setScreen(this.optimizationConfigScreen);
                 }));
 
         // 第二行按钮
@@ -147,7 +147,7 @@ public class YACLConfigScreen extends Screen {
                     if (this.screenConfigScreen == null) {
                         this.screenConfigScreen = ScreenConfigScreen.generateScreen(this);
                     }
-                    this.minecraft.setScreen(this.screenConfigScreen);
+                    this.minecraft.gui.setScreen(this.screenConfigScreen);
                 }));
 
         addRenderableWidget(new CategoryButton(
@@ -161,7 +161,7 @@ public class YACLConfigScreen extends Screen {
                     if (this.tooltipConfigScreen == null) {
                         this.tooltipConfigScreen = TooltipConfigScreen.generateScreen(this);
                     }
-                    this.minecraft.setScreen(this.tooltipConfigScreen);
+                    this.minecraft.gui.setScreen(this.tooltipConfigScreen);
                 }));
 
         addRenderableWidget(new CategoryButton(
@@ -175,7 +175,7 @@ public class YACLConfigScreen extends Screen {
                     if (this.visualityConfigScreen == null) {
                         this.visualityConfigScreen = VisualityConfigScreen.generateScreen(this);
                     }
-                    this.minecraft.setScreen(this.visualityConfigScreen);
+                    this.minecraft.gui.setScreen(this.visualityConfigScreen);
                 }));
 
         addRenderableWidget(new CategoryButton(
@@ -189,12 +189,12 @@ public class YACLConfigScreen extends Screen {
                     if (this.miscellaneitiesConfigScreen == null) {
                         this.miscellaneitiesConfigScreen = MiscellaneitiesConfigScreen.generateScreen(this);
                     }
-                    this.minecraft.setScreen(this.miscellaneitiesConfigScreen);
+                    this.minecraft.gui.setScreen(this.miscellaneitiesConfigScreen);
                 }));
 
         // Done 按钮
         int doneButtonWidth = this.width - 300;
-        var buttonWidget = Button.builder(CommonComponents.GUI_DONE, (btn) -> this.minecraft.setScreen(this.parent))
+        var buttonWidget = Button.builder(CommonComponents.GUI_DONE, (btn) -> this.minecraft.gui.setScreen(this.parent))
                 .bounds(this.width / 2 - doneButtonWidth / 2, this.height - 30, doneButtonWidth, 20)
                 .build();
 

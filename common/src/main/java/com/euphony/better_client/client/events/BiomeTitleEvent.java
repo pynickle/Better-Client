@@ -291,7 +291,7 @@ public class BiomeTitleEvent {
     }
 
     private static boolean shouldHideDisplay(Minecraft mc) {
-        return (mc.options.hideGui && config.hideInF1) || (mc.getDebugOverlay().showDebugScreen() && config.hideInF3);
+        return (mc.gui.hud.isHidden() && config.hideInF1) || (mc.getDebugOverlay().showDebugScreen() && config.hideInF3);
     }
 
     private static Component getBiomeName(ResourceKey<Biome> key) {

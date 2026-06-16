@@ -34,7 +34,7 @@ public class TradingHudEvent {
         LocalPlayer player = minecraft.player;
 
         // 如果有界面打开则不处理
-        if (minecraft.screen != null || player == null) {
+        if (minecraft.gui.screen() != null || player == null) {
             return;
         }
 

@@ -5,7 +5,7 @@ import net.minecraft.network.chat.Component;
 
 public class ChatUtils {
     public static void sendClientMsg(Component message) {
-        Minecraft.getInstance().gui.getChat().addClientSystemMessage(message);
+        Minecraft.getInstance().gui.hud.getChat().addClientSystemMessage(message);
     }
 
     public static void sendClientMsgTranslatable(String message) {
