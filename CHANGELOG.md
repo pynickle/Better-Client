@@ -1,3 +1,13 @@
+## [1.10.1](https://github.com/pynickle/Better-Client/compare/v1.10.0...v1.10.1) (2026-06-16)
+
+### 🐛 Bug Fixes
+
+* fix keybind resetting issue ([ddd2159](https://github.com/pynickle/Better-Client/commit/ddd2159eded38d6d372b8a529c5a97df48aa3653))
+
+### 🔧 Miscellaneous Changes
+
+* update deps [skip ci] ([333e3d4](https://github.com/pynickle/Better-Client/commit/333e3d4a985406067629e1163ee41ecc13d8af78))
+
 ## [1.10.0](https://github.com/pynickle/Better-Client/compare/v1.9.0...v1.10.0) (2026-05-09)
 
 ### ✨ Features
