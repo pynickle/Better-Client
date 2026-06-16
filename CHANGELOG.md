@@ -1,3 +1,21 @@
+## [10.0.0](https://github.com/pynickle/Better-Client/compare/v9.4.1...v10.0.0) (2026-06-16)
+
+### ⚠ BREAKING CHANGES
+
+* port to 26.2
+
+### ✨ Features
+
+* port to 26.2 ([15d2cdf](https://github.com/pynickle/Better-Client/commit/15d2cdffead7b985d8666e8fcb6a80e8deb45f97))
+
+### 🐛 Bug Fixes
+
+* fix fabric error ([15c4af6](https://github.com/pynickle/Better-Client/commit/15c4af652cd3c0bf5d953b4ab93c76ed513c1e72))
+
+### 🔧 Miscellaneous Changes
+
+* update dependencies ([b5e94a4](https://github.com/pynickle/Better-Client/commit/b5e94a45c54572ab19a09b6b0db81c85be7f7318))
+
 ## [9.4.1](https://github.com/pynickle/Better-Client/compare/v9.4.0...v9.4.1) (2026-06-16)
 
 ### 🐛 Bug Fixes
