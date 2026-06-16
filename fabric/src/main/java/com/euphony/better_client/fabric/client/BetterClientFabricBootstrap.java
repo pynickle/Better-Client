@@ -56,9 +56,9 @@ public final class BetterClientFabricBootstrap {
     }
 
     private static void registerKeyMappings() {
-        KeyMappingHelper.registerKeyMapping(BCKeyMappings.BUNDLE_UP);
-        KeyMappingHelper.registerKeyMapping(BCKeyMappings.FULL_BRIGHTNESS_TOGGLE);
-        KeyMappingHelper.registerKeyMapping(BCKeyMappings.ITEM_FRAME_INVISIBILITY_TOGGLE);
+        KeyMappingHelper.registerKeyMapping(BCKeyMappings.bundleUp());
+        KeyMappingHelper.registerKeyMapping(BCKeyMappings.fullBrightnessToggle());
+        KeyMappingHelper.registerKeyMapping(BCKeyMappings.itemFrameInvisibilityToggle());
     }
 
     private static void registerCommands() {

@@ -1,27 +1,22 @@
 package com.euphony.better_client.neoforge.client;
 
+import com.euphony.better_client.BetterClient;
 import com.euphony.better_client.client.command.ClientWeatherCommand;
 import com.euphony.better_client.client.events.*;
-import com.euphony.better_client.client.property.AxolotlBucketVariant;
-import com.euphony.better_client.client.renderer.PotionBarRenderer;
-import com.euphony.better_client.client.renderer.TotemBarRenderer;
-import com.euphony.better_client.client.renderer.TradingHudRenderer;
-import com.euphony.better_client.keymapping.BCKeyMappings;
 import com.euphony.better_client.service.ChatHistoryManager;
 import com.euphony.better_client.service.ItemFrameVisibilityManager;
-import com.euphony.better_client.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.tutorial.TutorialSteps;
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.event.lifecycle.ClientStartedEvent;
-import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 
-@EventBusSubscriber
+@EventBusSubscriber(modid = BetterClient.MOD_ID, value = Dist.CLIENT)
 public final class BCClientNeoforge {
     private static ClientLevel knownLevel;
 
@@ -30,26 +25,6 @@ public final class BCClientNeoforge {
         event.getClient().execute(() -> {
             Minecraft.getInstance().getTutorial().setStep(TutorialSteps.NONE);
         });
-    }
-
-    @SubscribeEvent
-    private static void onRegisterGuiLayers(RegisterGuiLayersEvent event) {
-        event.registerAbove(VanillaGuiLayers.TITLE, Utils.prefix("biome_title"), BiomeTitleEvent::renderBiomeInfo);
-        event.registerAbove(VanillaGuiLayers.HOTBAR, Utils.prefix("trading_hud"), TradingHudRenderer::renderHud);
-        event.registerAbove(VanillaGuiLayers.HOTBAR, Utils.prefix("totem_bar"), TotemBarRenderer::render);
-        event.registerAbove(VanillaGuiLayers.HOTBAR, Utils.prefix("potion_bar"), PotionBarRenderer::render);
-    }
-
-    @SubscribeEvent
-    private static void onRegisterSelectItemModelProperty(RegisterSelectItemModelPropertyEvent event) {
-        event.register(Utils.prefix("variant"), AxolotlBucketVariant.TYPE);
-    }
-
-    @SubscribeEvent
-    private static void onRegisterKeyMappings(RegisterKeyMappingsEvent event) {
-        event.register(BCKeyMappings.BUNDLE_UP);
-        event.register(BCKeyMappings.FULL_BRIGHTNESS_TOGGLE);
-        event.register(BCKeyMappings.ITEM_FRAME_INVISIBILITY_TOGGLE);
     }
 
     @SubscribeEvent

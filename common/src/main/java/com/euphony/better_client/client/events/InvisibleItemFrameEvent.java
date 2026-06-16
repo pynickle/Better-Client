@@ -13,7 +13,7 @@ public class InvisibleItemFrameEvent {
     private static boolean wasKeyPressed = false;
 
     public static void clientLevelPre(ClientLevel clientLevel) {
-        boolean isKeyPressed = BCKeyMappings.ITEM_FRAME_INVISIBILITY_TOGGLE.isDown();
+        boolean isKeyPressed = BCKeyMappings.itemFrameInvisibilityToggle().isDown();
 
         if (!config.enableInvisibleItemFrame) return;
 

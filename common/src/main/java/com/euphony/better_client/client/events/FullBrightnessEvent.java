@@ -13,7 +13,7 @@ public class FullBrightnessEvent {
     private static boolean wasKeyPressed = false;
 
     public static void clientLevelPre(ClientLevel clientLevel) {
-        boolean isKeyPressed = BCKeyMappings.FULL_BRIGHTNESS_TOGGLE.isDown();
+        boolean isKeyPressed = BCKeyMappings.fullBrightnessToggle().isDown();
 
         if (!config.enableFullBrightnessToggle) return;
 

@@ -24,7 +24,7 @@ import static com.euphony.better_client.BetterClient.config;
 
 public class BundleUpEvent {
     public static void bundleUp(Minecraft minecraft, Screen screen, KeyEvent keyEvent) {
-        if (!BCKeyMappings.BUNDLE_UP.matches(keyEvent) || !config.enableBundleUp) return;
+        if (!BCKeyMappings.bundleUp().matches(keyEvent) || !config.enableBundleUp) return;
 
         List<BundleCandidate> candidates = new ArrayList<>();
 
