@@ -89,7 +89,7 @@ public final class BetterClientFabricBootstrap {
                     CompoundEventResult<Component> result =
                             BeautifiedChatEvent.chatReceived(boundChatType, message);
                     if (result.isInterrupted()) {
-                        Minecraft.getInstance().gui.getChat().addClientSystemMessage(result.object());
+                        Minecraft.getInstance().gui.hud.getChat().addClientSystemMessage(result.object());
                         return false;
                     }
                     return true;
