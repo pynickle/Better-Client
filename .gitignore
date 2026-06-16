@@ -124,9 +124,12 @@ runs/
 
 .agents/
 .omc/
+.omx/
+
 .settings/
 .project
 .classpath
+
 skills-lock.json
 
 AGENTS.md

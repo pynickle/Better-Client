@@ -22,7 +22,7 @@ public final class BetterClientFabricClient implements ClientModInitializer {
         ResourceManagerHelper.get(PackType.CLIENT_RESOURCES).registerReloadListener(new BCResourceReloadListener());
         HudRenderCallback.EVENT.register(TradingHudRenderer::renderHud);
         ClientTickEvents.END_CLIENT_TICK.register(client -> TradingHudEvent.clientLevelPost(client.level));
-        KeyBindingHelper.registerKeyBinding(BCKeyMappings.BUNDLE_UP);
+        KeyBindingHelper.registerKeyBinding(BCKeyMappings.bundleUp());
         ScreenEvents.BEFORE_INIT.register((client, screen, width, height) ->
                 ScreenKeyboardEvents.afterKeyRelease(screen).register((registeredScreen, keyCode, scanCode, modifiers) ->
                         BundleUpEvent.bundleUp(Minecraft.getInstance(), registeredScreen, keyCode, scanCode)));

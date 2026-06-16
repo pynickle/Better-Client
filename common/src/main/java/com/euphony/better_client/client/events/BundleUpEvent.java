@@ -25,7 +25,7 @@ public final class BundleUpEvent {
     }
 
     public static void bundleUp(Minecraft minecraft, Screen screen, int keyCode, int scanCode) {
-        if (!BCKeyMappings.BUNDLE_UP.matches(keyCode, scanCode)
+        if (!BCKeyMappings.bundleUp().matches(keyCode, scanCode)
                 || !BetterClientConfig.HANDLER.instance().enableBundleUp) {
             return;
         }
