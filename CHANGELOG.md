@@ -1,3 +1,9 @@
+## [9.4.1](https://github.com/pynickle/Better-Client/compare/v9.4.0...v9.4.1) (2026-06-16)
+
+### 🐛 Bug Fixes
+
+* fix keybind resetting issue ([ace1e79](https://github.com/pynickle/Better-Client/commit/ace1e79e70ec8c06cd186c4e40e75efe76c34133))
+
 ## [9.4.0](https://github.com/pynickle/Better-Client/compare/v9.3.4...v9.4.0) (2026-05-16)
 
 ### ✨ Features
