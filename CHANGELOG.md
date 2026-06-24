@@ -1,3 +1,18 @@
+## [10.1.0](https://github.com/pynickle/Better-Client/compare/v10.0.0...v10.1.0) (2026-06-24)
+
+### ✨ Features
+
+* add potion bar max effects ([98b4e2b](https://github.com/pynickle/Better-Client/commit/98b4e2be710ed2c436d443e0da078f420b8368bf))
+
+### 🔧 Miscellaneous Changes
+
+* update ci ([ed74893](https://github.com/pynickle/Better-Client/commit/ed74893213d0036e4203948391a624effc758899))
+* update gradle & mc related versions ([3f67171](https://github.com/pynickle/Better-Client/commit/3f67171101e795d5d21ed323635ad3e4e9f38f51))
+
+### 🚀 Improvements
+
+* improve mod detection for config ([067fdc8](https://github.com/pynickle/Better-Client/commit/067fdc8a5f525ad85fd5539f694975dcacb95925))
+
 ## [10.0.0](https://github.com/pynickle/Better-Client/compare/v9.4.1...v10.0.0) (2026-06-16)
 
 ### ⚠ BREAKING CHANGES
