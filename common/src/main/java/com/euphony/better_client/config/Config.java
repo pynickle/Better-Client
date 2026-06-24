@@ -95,9 +95,11 @@ public class Config {
     public boolean enablePersistentChatStorage = true;
     public boolean cleanRestoredChatSeparatorsOnSave = false;
     public String chatHistorySeparatorTemplate =
-            "&8&m--------------------------------------------------\n" + " &6[&eRestored Chat History&6]\n"
-                    + " &7Session: &f{session_name} &8| &7Disconnected: &f{disconnect_time}\n"
-                    + "&8&m--------------------------------------------------";
+            """
+                    &8&m--------------------------------------------------
+                     &6[&eRestored Chat History&6]
+                     &7Session: &f{session_name} &8| &7Disconnected: &f{disconnect_time}
+                    &8&m--------------------------------------------------""";
 
     public boolean enableBookSaveConfirmation = true;
 
@@ -178,11 +180,14 @@ public class Config {
             }
         }
         if (Files.notExists(PATH)) {
-            if (Utils.isAnyModLoaded("durabilitytooltip", "rmes-durability-tooltips")) {
+            if (Utils.isAnyModLoaded("durabilitytooltip", "rmes-durability-tooltips", "durabilityviewer")) {
                 config.enableDurabilityTooltip = false;
             }
-            if (Utils.isAnyModLoaded("hideexperimentalwarning")) {
+            if (Utils.isAnyModLoaded("hideexperimentalwarning", "yeetusexperimentus", "experimentalist")) {
                 config.enableNoExperimentalWarning = false;
+            }
+            if (Utils.isAnyModLoaded("jade")) {
+                config.potionBarYOffset = 23;
             }
             save();
         } else
