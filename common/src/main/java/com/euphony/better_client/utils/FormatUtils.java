@@ -5,7 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class FormatUtils {
-    private static final Pattern pattern = Pattern.compile("\\{\\s*(\\w+)\\s*\\}");
+    private static final Pattern pattern = Pattern.compile("\\{\\s*(\\w+)\\s*}");
 
     public static String format(String template, Map<String, Object> values) {
         Matcher matcher = pattern.matcher(template);

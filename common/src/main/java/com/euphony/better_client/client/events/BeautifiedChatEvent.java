@@ -25,7 +25,7 @@ public class BeautifiedChatEvent {
     }
 
     public static Component processMessage(Component message) {
-        Component output = message;
+        Component output;
 
         if (config.enableTimeStamp && message.getString().matches(VANILLA_FORMAT)) {
             MutableComponent timestampedOutput = Component.empty();

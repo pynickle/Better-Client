@@ -234,6 +234,13 @@ public class ScreenConfigScreen {
                 DEFAULTS.showVanillaEffectHud,
                 () -> config.showVanillaEffectHud,
                 newVal -> config.showVanillaEffectHud = newVal);
+        Option<Integer> potionBarMaxEffectsOpt = ConfigUtils.<Integer>getGenericOption("potionBarMaxEffects")
+                .binding(
+                        DEFAULTS.potionBarMaxEffects,
+                        () -> config.potionBarMaxEffects,
+                        newVal -> config.potionBarMaxEffects = newVal)
+                .controller(opt -> IntegerFieldControllerBuilder.create(opt).range(0, Integer.MAX_VALUE))
+                .build();
         Option<PotionBarPos> potionBarPosOpt = ConfigUtils.<PotionBarPos>getGenericOption("potionBarPos")
                 .binding(DEFAULTS.potionBarPos, () -> config.potionBarPos, newVal -> config.potionBarPos = newVal)
                 .controller(opt -> EnumControllerBuilder.create(opt)
@@ -311,6 +318,7 @@ public class ScreenConfigScreen {
                                 .options(List.of(
                                         enablePotionBarOpt,
                                         showVanillaEffectHudOpt,
+                                        potionBarMaxEffectsOpt,
                                         potionBarPosOpt,
                                         potionBarXOffsetOpt,
                                         potionBarYOffsetOpt))

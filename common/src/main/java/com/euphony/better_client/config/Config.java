@@ -144,6 +144,7 @@ public class Config {
 
     public boolean enablePotionBar = true;
     public boolean showVanillaEffectHud = false;
+    public int potionBarMaxEffects = 3;
     public PotionBarPos potionBarPos = PotionBarPos.CENTER;
     public int potionBarXOffset = 0;
     public int potionBarYOffset = 0;

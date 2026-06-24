@@ -279,6 +279,8 @@
   "yacl3.config.better_client:config.enablePotionBar.desc": "Display active effect progress bars on the HUD.",
   "yacl3.config.better_client:config.showVanillaEffectHud": "Show Vanilla Effect HUD",
   "yacl3.config.better_client:config.showVanillaEffectHud.desc": "Keep Minecraft's right-side active effect HUD visible while Potion Bar is enabled.",
+  "yacl3.config.better_client:config.potionBarMaxEffects": "Potion Bar Max Effects",
+  "yacl3.config.better_client:config.potionBarMaxEffects.desc": "Hide the potion bar when the number of visible active effects is greater than this value.",
   "yacl3.config.better_client:config.potionBarPos": "Potion Bar Position",
   "yacl3.config.better_client:config.potionBarPos.desc": "Quickly select common positions.",
   "yacl3.config.better_client:config.potionBarXOffset": "Potion Bar X Offset",

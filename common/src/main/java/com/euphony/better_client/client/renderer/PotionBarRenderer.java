@@ -113,6 +113,10 @@ public class PotionBarRenderer {
             better_client$maxDurations.clear();
             return;
         }
+        if (effects.size() > Math.max(0, config.potionBarMaxEffects)) {
+            better_client$maxDurations.clear();
+            return;
+        }
 
         Set<EffectKey> currentKeys = new HashSet<>();
         for (MobEffectInstance effect : effects) {

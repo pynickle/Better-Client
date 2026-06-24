@@ -279,6 +279,8 @@
   "yacl3.config.better_client:config.enablePotionBar.desc": "在 HUD 上显示当前效果的进度条。",
   "yacl3.config.better_client:config.showVanillaEffectHud": "显示原版效果 HUD",
   "yacl3.config.better_client:config.showVanillaEffectHud.desc": "启用药水条时保留 Minecraft 右侧的当前效果 HUD。",
+  "yacl3.config.better_client:config.potionBarMaxEffects": "药水条最大效果数量",
+  "yacl3.config.better_client:config.potionBarMaxEffects.desc": "当可见的当前效果数量大于该值时，隐藏药水条。",
   "yacl3.config.better_client:config.potionBarPos": "药水条位置",
   "yacl3.config.better_client:config.potionBarPos.desc": "快速选择常用位置。",
   "yacl3.config.better_client:config.potionBarXOffset": "药水条 X 轴偏移",
