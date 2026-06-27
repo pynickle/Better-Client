@@ -1,3 +1,9 @@
+## [10.2.0](https://github.com/pynickle/Better-Client/compare/v10.1.0...v10.2.0) (2026-06-27)
+
+### ✨ Features
+
+* add new item marker ([325298f](https://github.com/pynickle/Better-Client/commit/325298f0a51d338f903fe80f63d3cabf567b52fc))
+
 ## [10.1.0](https://github.com/pynickle/Better-Client/compare/v10.0.0...v10.1.0) (2026-06-24)
 
 ### ✨ Features
