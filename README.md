@@ -1,8 +1,7 @@
-## Description
+## Better Client
 
-[CurseForge](https://www.curseforge.com/minecraft/mc-mods/better-client)
-
-[Modrinth](https://modrinth.com/mod/better-client-enc)
+[![CurseForge](https://img.shields.io/badge/CurseForge-f16436?style=for-the-badge&logo=curseforge&logoColor=white)](https://www.curseforge.com/minecraft/mc-mods/better-client)
+[![Modrinth](https://img.shields.io/badge/Modrinth-1bd96a?style=for-the-badge&logo=modrinth&logoColor=white)](https://modrinth.com/mod/better-client-enc)
 
 **Better Client** is a mod making a better server experience for you.
 
@@ -23,3 +22,9 @@ Configuration files are also available.
 This mod is actively being updated and more features will be added in the future!
 
 Add my [discord](https://discord.gg/J2TwHucyzk) and talk to me.
+
+We do not recommend using versions 1.21.2 through 1.21.10, as you may encounter some performance issues, and these versions will never be updated again.
+
+## Acknowledgements
+
+*New Item Marker is based on [GlowPick](https://github.com/choc422/GlowPick) by choco422, licensed under the MIT License. Copyright (c) 2026 Choco422.*
