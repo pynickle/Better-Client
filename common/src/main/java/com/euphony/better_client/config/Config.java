@@ -1,6 +1,7 @@
 package com.euphony.better_client.config;
 
 import com.euphony.better_client.BetterClient;
+import com.euphony.better_client.config.option.NewItemMarkerPosition;
 import com.euphony.better_client.config.option.PotionBarPos;
 import com.euphony.better_client.config.option.TotemBarRenderMode;
 import com.euphony.better_client.config.option.TradingHudPos;
@@ -150,6 +151,13 @@ public class Config {
     public int potionBarYOffset = 0;
 
     public boolean enableClientWeather = true;
+
+    public boolean enableNewItemMarker = true;
+    public boolean clearNewItemMarkerOnHover = true;
+    public boolean clearNewItemMarkerOnSelect = true;
+    public boolean clearNewItemMarkerOnInventoryClose = false;
+    public boolean showNewItemMarkerOnHotbar = true;
+    public NewItemMarkerPosition newItemMarkerPosition = NewItemMarkerPosition.UPPER_LEFT;
 
     public Config() {
     }

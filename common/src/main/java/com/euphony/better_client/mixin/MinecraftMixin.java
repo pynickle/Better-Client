@@ -1,6 +1,7 @@
 package com.euphony.better_client.mixin;
 
 import com.euphony.better_client.service.ChatHistoryManager;
+import com.euphony.better_client.service.NewItemMarker;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
@@ -50,11 +51,15 @@ public abstract class MinecraftMixin {
     @Inject(method = "setLevel(Lnet/minecraft/client/multiplayer/ClientLevel;)V", at = @At("HEAD"), remap = false)
     private void better_client$saveChatBeforeLevelChange(ClientLevel level, CallbackInfo ci) {
         ChatHistoryManager.saveCurrentSession();
+        if (level == null) {
+            NewItemMarker.clearAll();
+        }
     }
 
     @Inject(method = "disconnect(Lnet/minecraft/client/gui/screens/Screen;Z)V", at = @At("HEAD"))
     private void better_client$saveChatBeforeDisconnect(Screen screen, boolean keepResourcePacks, CallbackInfo ci) {
         ChatHistoryManager.saveCurrentSession();
+        NewItemMarker.clearAll();
     }
 
     @ModifyExpressionValue(

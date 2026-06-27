@@ -2,12 +2,14 @@ package com.euphony.better_client.config.screen.category;
 
 import com.euphony.better_client.config.Config;
 import com.euphony.better_client.config.ConfigUtils;
+import com.euphony.better_client.config.option.NewItemMarkerPosition;
 import dev.isxander.yacl3.api.ConfigCategory;
 import dev.isxander.yacl3.api.Option;
 import dev.isxander.yacl3.api.OptionGroup;
 import dev.isxander.yacl3.api.YetAnotherConfigLib;
 import dev.isxander.yacl3.api.controller.ColorControllerBuilder;
 import dev.isxander.yacl3.api.controller.DoubleSliderControllerBuilder;
+import dev.isxander.yacl3.api.controller.EnumControllerBuilder;
 import dev.isxander.yacl3.api.controller.LongFieldControllerBuilder;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -26,6 +28,7 @@ public class VisualityConfigScreen {
     private static final String TRAIL_SPAWNER_TIMER_GROUP = "trial_spawner_timer";
     private static final String INVISIBLE_ITEM_FRAME_GROUP = "invisible_item_frame";
     private static final String CLIENT_WEATHER_GROUP = "client_weather";
+    private static final String NEW_ITEM_MARKER_GROUP = "new_item_marker";
 
     public static Screen generateScreen(Screen parent) {
         // Fading Night Vision
@@ -126,6 +129,47 @@ public class VisualityConfigScreen {
                 () -> config.enableClientWeather,
                 newVal -> config.enableClientWeather = newVal);
 
+        Option<Boolean> enableNewItemMarkerOpt = ConfigUtils.buildBooleanOption(
+                "enableNewItemMarker",
+                DEFAULTS.enableNewItemMarker,
+                () -> config.enableNewItemMarker,
+                newVal -> config.enableNewItemMarker = newVal);
+
+        Option<Boolean> clearNewItemMarkerOnHoverOpt = ConfigUtils.buildBooleanOption(
+                "clearNewItemMarkerOnHover",
+                DEFAULTS.clearNewItemMarkerOnHover,
+                () -> config.clearNewItemMarkerOnHover,
+                newVal -> config.clearNewItemMarkerOnHover = newVal);
+
+        Option<Boolean> clearNewItemMarkerOnSelectOpt = ConfigUtils.buildBooleanOption(
+                "clearNewItemMarkerOnSelect",
+                DEFAULTS.clearNewItemMarkerOnSelect,
+                () -> config.clearNewItemMarkerOnSelect,
+                newVal -> config.clearNewItemMarkerOnSelect = newVal);
+
+        Option<Boolean> clearNewItemMarkerOnInventoryCloseOpt = ConfigUtils.buildBooleanOption(
+                "clearNewItemMarkerOnInventoryClose",
+                DEFAULTS.clearNewItemMarkerOnInventoryClose,
+                () -> config.clearNewItemMarkerOnInventoryClose,
+                newVal -> config.clearNewItemMarkerOnInventoryClose = newVal);
+
+        Option<Boolean> showNewItemMarkerOnHotbarOpt = ConfigUtils.buildBooleanOption(
+                "showNewItemMarkerOnHotbar",
+                DEFAULTS.showNewItemMarkerOnHotbar,
+                () -> config.showNewItemMarkerOnHotbar,
+                newVal -> config.showNewItemMarkerOnHotbar = newVal);
+
+        Option<NewItemMarkerPosition> newItemMarkerPositionOpt =
+                ConfigUtils.<NewItemMarkerPosition>getGenericOption("newItemMarkerPosition")
+                        .binding(
+                                DEFAULTS.newItemMarkerPosition,
+                                () -> config.newItemMarkerPosition,
+                                newVal -> config.newItemMarkerPosition = newVal)
+                        .controller(opt -> EnumControllerBuilder.create(opt)
+                                .enumClass(NewItemMarkerPosition.class)
+                                .formatValue(ConfigUtils.NEW_ITEM_MARKER_POSITION_VALUE_FORMATTER))
+                        .build();
+
         return YetAnotherConfigLib.createBuilder()
                 .title(Component.translatable("yacl3.config.better_client:config"))
                 .category(ConfigCategory.createBuilder()
@@ -160,6 +204,16 @@ public class VisualityConfigScreen {
                         .group(OptionGroup.createBuilder()
                                 .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, CLIENT_WEATHER_GROUP))
                                 .options(List.of(enableClientWeatherOpt))
+                                .build())
+                        .group(OptionGroup.createBuilder()
+                                .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, NEW_ITEM_MARKER_GROUP))
+                                .options(List.of(
+                                        enableNewItemMarkerOpt,
+                                        clearNewItemMarkerOnHoverOpt,
+                                        clearNewItemMarkerOnSelectOpt,
+                                        clearNewItemMarkerOnInventoryCloseOpt,
+                                        showNewItemMarkerOnHotbarOpt,
+                                        newItemMarkerPositionOpt))
                                 .build())
                         .build())
                 .save(Config::save)

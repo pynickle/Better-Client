@@ -290,5 +290,19 @@
 
   "yacl3.config.better_client:config.category.client.group.client_weather": "客户端天气",
   "yacl3.config.better_client:config.enableClientWeather": "启用客户端天气",
-  "yacl3.config.better_client:config.enableClientWeather.desc": "使用 cweather 命令调整客户端天气，而不会影响服务器。"
+  "yacl3.config.better_client:config.enableClientWeather.desc": "使用 cweather 命令调整客户端天气，而不会影响服务器。",
+
+  "yacl3.config.better_client:config.category.client.group.new_item_marker": "新物品标记",
+  "yacl3.config.better_client:config.enableNewItemMarker": "启用新物品标记",
+  "yacl3.config.better_client:config.enableNewItemMarker.desc": "使用一个按稀有度着色的小型脉冲点标记最近加入背包的物品。",
+  "yacl3.config.better_client:config.clearNewItemMarkerOnHover": "悬停时清除",
+  "yacl3.config.better_client:config.clearNewItemMarkerOnHover.desc": "鼠标悬停到已标记的背包槽位后移除标记。",
+  "yacl3.config.better_client:config.clearNewItemMarkerOnSelect": "选择快捷栏时清除",
+  "yacl3.config.better_client:config.clearNewItemMarkerOnSelect.desc": "选中对应快捷栏槽位后移除标记。",
+  "yacl3.config.better_client:config.clearNewItemMarkerOnInventoryClose": "关闭背包时清除",
+  "yacl3.config.better_client:config.clearNewItemMarkerOnInventoryClose.desc": "关闭背包界面时移除所有新物品标记。",
+  "yacl3.config.better_client:config.showNewItemMarkerOnHotbar": "在快捷栏显示",
+  "yacl3.config.better_client:config.showNewItemMarkerOnHotbar.desc": "在背包界面外也在快捷栏物品上显示标记。",
+  "yacl3.config.better_client:config.newItemMarkerPosition": "标记位置",
+  "yacl3.config.better_client:config.newItemMarkerPosition.desc": "选择新物品标记显示在哪个角落。"
 }

@@ -1,17 +1,20 @@
 package com.euphony.better_client.mixin;
 
 import com.euphony.better_client.client.events.TradingHudEvent;
+import com.euphony.better_client.service.NewItemMarker;
 import com.euphony.better_client.utils.data.MerchantInfo;
 import net.minecraft.client.multiplayer.MultiPlayerGameMode;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.trading.Merchant;
 import net.minecraft.world.phys.EntityHitResult;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import static com.euphony.better_client.BetterClient.config;
@@ -48,5 +51,12 @@ public abstract class MultiPlayerGameModeMixin {
                 TradingHudEvent.setWindowOpen(true);
             }
         });
+    }
+
+    @Inject(at = @At("HEAD"), method = "handleCreativeModeItemAdd")
+    private void better_client$markCreativeItemAddition(ItemStack clicked, int slot, CallbackInfo ci) {
+        if (!clicked.isEmpty()) {
+            NewItemMarker.markCreativeMenuSlot(slot);
+        }
     }
 }

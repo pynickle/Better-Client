@@ -1,6 +1,7 @@
 package com.euphony.better_client.config;
 
 import com.euphony.better_client.BetterClient;
+import com.euphony.better_client.config.option.NewItemMarkerPosition;
 import com.euphony.better_client.config.option.PotionBarPos;
 import com.euphony.better_client.config.option.TotemBarRenderMode;
 import com.euphony.better_client.config.option.TradingHudPos;
@@ -43,6 +44,8 @@ public class ConfigUtils {
     public static final ValueFormatter<TotemBarRenderMode> TOTEM_BAR_RENDER_MODE_VALUE_FORMATTER =
             value -> Component.literal(toTitleCase(value.name()));
     public static final ValueFormatter<PotionBarPos> POTION_BAR_POS_VALUE_FORMATTER =
+            value -> Component.literal(toTitleCase(value.name()));
+    public static final ValueFormatter<NewItemMarkerPosition> NEW_ITEM_MARKER_POSITION_VALUE_FORMATTER =
             value -> Component.literal(toTitleCase(value.name()));
 
     public static ButtonOption.Builder getButtonOption(String name) {

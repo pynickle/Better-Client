@@ -290,5 +290,19 @@
 
   "yacl3.config.better_client:config.category.client.group.client_weather": "Client Weather",
   "yacl3.config.better_client:config.enableClientWeather": "Enable Client Weather",
-  "yacl3.config.better_client:config.enableClientWeather.desc": "Use the cweather command to adjust client-side weather without affecting the server."
+  "yacl3.config.better_client:config.enableClientWeather.desc": "Use the cweather command to adjust client-side weather without affecting the server.",
+
+  "yacl3.config.better_client:config.category.client.group.new_item_marker": "New Item Marker",
+  "yacl3.config.better_client:config.enableNewItemMarker": "Enable New Item Marker",
+  "yacl3.config.better_client:config.enableNewItemMarker.desc": "Marks recently added inventory items with a small rarity-colored pulse.",
+  "yacl3.config.better_client:config.clearNewItemMarkerOnHover": "Clear On Hover",
+  "yacl3.config.better_client:config.clearNewItemMarkerOnHover.desc": "Remove a marker after hovering the marked inventory slot.",
+  "yacl3.config.better_client:config.clearNewItemMarkerOnSelect": "Clear On Hotbar Select",
+  "yacl3.config.better_client:config.clearNewItemMarkerOnSelect.desc": "Remove a marker after selecting its hotbar slot.",
+  "yacl3.config.better_client:config.clearNewItemMarkerOnInventoryClose": "Clear On Inventory Close",
+  "yacl3.config.better_client:config.clearNewItemMarkerOnInventoryClose.desc": "Remove all new item markers when an inventory screen closes.",
+  "yacl3.config.better_client:config.showNewItemMarkerOnHotbar": "Show On Hotbar",
+  "yacl3.config.better_client:config.showNewItemMarkerOnHotbar.desc": "Also show markers over hotbar items outside inventory screens.",
+  "yacl3.config.better_client:config.newItemMarkerPosition": "Marker Position",
+  "yacl3.config.better_client:config.newItemMarkerPosition.desc": "Select the corner used for the new item marker."
 }
