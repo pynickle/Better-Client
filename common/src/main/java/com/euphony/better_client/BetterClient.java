@@ -13,8 +13,10 @@ public final class BetterClient {
 
         BCClientEvents.init();
 
-        Minecraft.getInstance().execute(() -> {
-            Minecraft.getInstance().getTutorial().setStep(TutorialSteps.NONE);
+        Minecraft minecraft = Minecraft.getInstance();
+        minecraft.execute(() -> {
+            // Tutorial#setStep saves options before loader key mappings have finished registering.
+            minecraft.options.tutorialStep = TutorialSteps.NONE;
         });
     }
 }
