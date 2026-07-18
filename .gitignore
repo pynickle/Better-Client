@@ -123,6 +123,7 @@ runs/
 /node_modules/
 
 .agents/
+.codex/
 .omc/
 .omx/
 
@@ -131,6 +132,8 @@ runs/
 .classpath
 
 skills-lock.json
+
+.codegraph/
 
 AGENTS.md
 CLAUDE.md
