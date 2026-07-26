@@ -23,6 +23,10 @@ public final class Platform {
         return PlatformServices.getPlatform().getPlatformType() == PlatformType.NEOFORGE;
     }
 
+    public static void addRightStatusBarHeight(int height) {
+        PlatformServices.getPlatform().addRightStatusBarHeight(height);
+    }
+
     public static Set<String> getModIds() {
         return PlatformServices.getPlatform().getLoadedModIds();
     }

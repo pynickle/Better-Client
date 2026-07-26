@@ -2,6 +2,7 @@ package com.euphony.better_client.neoforge.platform;
 
 import com.euphony.better_client.platform.BetterClientPlatform;
 import com.euphony.better_client.platform.PlatformType;
+import net.minecraft.client.Minecraft;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.loading.FMLPaths;
 import net.neoforged.neoforgespi.language.IModInfo;
@@ -37,5 +38,13 @@ public final class NeoForgePlatformHelper implements BetterClientPlatform {
     @Override
     public PlatformType getPlatformType() {
         return PlatformType.NEOFORGE;
+    }
+
+    @Override
+    public void addRightStatusBarHeight(int height) {
+        Minecraft minecraft = Minecraft.getInstance();
+        if (minecraft.gui != null) {
+            minecraft.gui.hud.rightHeight += height;
+        }
     }
 }

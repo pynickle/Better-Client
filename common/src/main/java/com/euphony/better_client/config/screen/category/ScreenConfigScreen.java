@@ -30,6 +30,7 @@ public class ScreenConfigScreen {
     private static final String LOWER_SHIELD_GROUP = "lower_shield";
     private static final String TOTEM_BAR_GROUP = "totem_bar";
     private static final String POTION_BAR_GROUP = "potion_bar";
+    private static final String MOUNTED_BARS_GROUP = "mounted_bars";
 
     public static Screen generateScreen(Screen parent) {
         // Better Ping Display
@@ -262,6 +263,18 @@ public class ScreenConfigScreen {
                 .controller(IntegerFieldControllerBuilder::create)
                 .build();
 
+        // Mounted Bars
+        Option<Boolean> enableFoodBarWhileMountedOpt = ConfigUtils.buildBooleanOption(
+                "enableFoodBarWhileMounted",
+                DEFAULTS.enableFoodBarWhileMounted,
+                () -> config.enableFoodBarWhileMounted,
+                newVal -> config.enableFoodBarWhileMounted = newVal);
+        Option<Boolean> enableExperienceBarWhileMountedOpt = ConfigUtils.buildBooleanOption(
+                "enableExperienceBarWhileMounted",
+                DEFAULTS.enableExperienceBarWhileMounted,
+                () -> config.enableExperienceBarWhileMounted,
+                newVal -> config.enableExperienceBarWhileMounted = newVal);
+
         return YetAnotherConfigLib.createBuilder()
                 .title(Component.translatable("yacl3.config.better_client:config"))
                 .category(ConfigCategory.createBuilder()
@@ -322,6 +335,10 @@ public class ScreenConfigScreen {
                                         potionBarPosOpt,
                                         potionBarXOffsetOpt,
                                         potionBarYOffsetOpt))
+                                .build())
+                        .group(OptionGroup.createBuilder()
+                                .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, MOUNTED_BARS_GROUP))
+                                .options(List.of(enableFoodBarWhileMountedOpt, enableExperienceBarWhileMountedOpt))
                                 .build())
                         .build())
                 .save(Config::save)

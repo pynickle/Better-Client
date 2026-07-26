@@ -28,3 +28,5 @@ We do not recommend using versions 1.21.2 through 1.21.10, as you may encounter 
 ## Acknowledgements
 
 *New Item Marker is based on [GlowPick](https://github.com/choc422/GlowPick) by choco422, licensed under the MIT License. Copyright (c) 2026 Choco422.*
+
+*Mounted Bars is inspired by [Leave My Bars Alone](https://github.com/Fuzss/leave-my-bars-alone) by Fuzss, licensed under the Mozilla Public License 2.0.*

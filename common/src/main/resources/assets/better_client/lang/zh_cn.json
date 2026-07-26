@@ -301,6 +301,12 @@
   "yacl3.config.better_client:config.potionBarYOffset": "药水条 Y 轴偏移",
   "yacl3.config.better_client:config.potionBarYOffset.desc": "药水条的 Y 轴偏移量。",
 
+  "yacl3.config.better_client:config.category.client.group.mounted_bars": "骑乘状态栏",
+  "yacl3.config.better_client:config.enableFoodBarWhileMounted": "骑乘时显示饥饿条",
+  "yacl3.config.better_client:config.enableFoodBarWhileMounted.desc": "骑乘会显示血量的坐骑时保留饥饿条，将其显示在坐骑血量的正上方。",
+  "yacl3.config.better_client:config.enableExperienceBarWhileMounted": "骑乘时显示经验条",
+  "yacl3.config.better_client:config.enableExperienceBarWhileMounted.desc": "骑乘可跳跃的坐骑时保留经验条，仅在蓄力跳跃与跳跃冷却期间才切换为跳跃条。",
+
   "yacl3.config.better_client:config.category.client.group.client_weather": "客户端天气",
   "yacl3.config.better_client:config.enableClientWeather": "启用客户端天气",
   "yacl3.config.better_client:config.enableClientWeather.desc": "使用 cweather 命令调整客户端天气，而不会影响服务器。",

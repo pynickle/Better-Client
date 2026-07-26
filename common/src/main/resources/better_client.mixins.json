@@ -20,6 +20,7 @@
     "LocalPlayerMixin",
     "MerchantScreenMixin",
     "MinecraftMixin",
+    "MountedBarsHudMixin",
     "MultiLineEditBoxMixin",
     "MultiPlayerGameModeMixin",
     "PlayerMixin",

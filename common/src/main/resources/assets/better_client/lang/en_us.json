@@ -301,6 +301,12 @@
   "yacl3.config.better_client:config.potionBarYOffset": "Potion Bar Y Offset",
   "yacl3.config.better_client:config.potionBarYOffset.desc": "Y-axis offset for the potion bar.",
 
+  "yacl3.config.better_client:config.category.client.group.mounted_bars": "Mounted Bars",
+  "yacl3.config.better_client:config.enableFoodBarWhileMounted": "Food Bar While Mounted",
+  "yacl3.config.better_client:config.enableFoodBarWhileMounted.desc": "Keep the food bar visible while riding a mount that shows its health, stacking it right above the mount hearts.",
+  "yacl3.config.better_client:config.enableExperienceBarWhileMounted": "Experience Bar While Mounted",
+  "yacl3.config.better_client:config.enableExperienceBarWhileMounted.desc": "Keep the experience bar visible while riding a jumpable mount, only swapping to the jump bar while a jump is being charged or is cooling down.",
+
   "yacl3.config.better_client:config.category.client.group.client_weather": "Client Weather",
   "yacl3.config.better_client:config.enableClientWeather": "Enable Client Weather",
   "yacl3.config.better_client:config.enableClientWeather.desc": "Use the cweather command to adjust client-side weather without affecting the server.",

@@ -1,7 +1,6 @@
 package com.euphony.better_client.client.renderer;
 
 import com.euphony.better_client.config.option.TotemBarRenderMode;
-import com.euphony.better_client.platform.Platform;
 import com.euphony.better_client.utils.Utils;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
@@ -94,17 +93,25 @@ public class TotemBarRenderer {
 
         var vehicle = client.player.getVehicle();
         if (vehicle instanceof LivingEntity mount) {
-            float hp = mount.getMaxHealth();
-            if (hp > 0f) {
-                if (hp > 20f) {
-                    int extraLines = (int) Math.ceil((hp - 20f) / 20f);
-                    offset += extraLines * spacing;
-                }
-                if (Platform.isModLoaded("bettermounthud")) {
+            int hearts = getVehicleHearts(mount);
+            if (hearts > 0) {
+                // 坐骑血量超过一行时每多一行都要让位，行数算法与原版 Hud 保持一致
+                int extraRows = (int) Math.ceil(hearts / 10.0) - 1;
+                offset += extraRows * spacing;
+                // 骑乘时右侧会多出一行饥饿条：本模组的骑乘状态栏，或同类模组都会补画
+                if (config.enableFoodBarWhileMounted || Utils.isAnyModLoaded("bettermounthud", "leavemybarsalone")) {
                     offset += spacing;
                 }
             }
         }
         return offset;
+    }
+
+    /**
+     * 计算坐骑占用的血量格数，与原版 {@code Hud#getVehicleMaxHearts} 同算法
+     */
+    private static int getVehicleHearts(LivingEntity mount) {
+        if (!mount.showVehicleHealth()) return 0;
+        return Math.min((int) (mount.getMaxHealth() + 0.5f) / 2, 30);
     }
 }

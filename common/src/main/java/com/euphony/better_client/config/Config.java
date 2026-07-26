@@ -168,6 +168,9 @@ public class Config {
     public int potionBarXOffset = 0;
     public int potionBarYOffset = 0;
 
+    public boolean enableFoodBarWhileMounted = true;
+    public boolean enableExperienceBarWhileMounted = true;
+
     public boolean enableClientWeather = true;
 
     public boolean enableNewItemMarker = true;
@@ -215,6 +218,12 @@ public class Config {
             }
             if (Utils.isAnyModLoaded("jade")) {
                 config.potionBarYOffset = 23;
+            }
+            if (Utils.isAnyModLoaded("bettermounthud", "leavemybarsalone")) {
+                config.enableFoodBarWhileMounted = false;
+            }
+            if (Utils.isAnyModLoaded("leavemybarsalone")) {
+                config.enableExperienceBarWhileMounted = false;
             }
             save();
         } else
