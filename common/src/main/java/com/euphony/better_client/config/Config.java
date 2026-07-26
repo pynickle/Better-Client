@@ -143,7 +143,7 @@ public class Config {
     public TotemBarRenderMode totemBarRenderMode = TotemBarRenderMode.COMBINED;
     public int totemBarYOffset = 0;
 
-    public boolean enablePotionBar = true;
+    public boolean enablePotionBar = false;
     public boolean showVanillaEffectHud = false;
     public int potionBarMaxEffects = 3;
     public PotionBarPos potionBarPos = PotionBarPos.CENTER;
