@@ -135,6 +135,7 @@ node_modules/
 skills-lock.json
 
 opencode.jsonc
+.mcp.json
 
 AGENTS.md
 CLAUDE.md
