@@ -59,6 +59,7 @@ public final class BetterClientFabricBootstrap {
         KeyMappingHelper.registerKeyMapping(BCKeyMappings.bundleUp());
         KeyMappingHelper.registerKeyMapping(BCKeyMappings.fullBrightnessToggle());
         KeyMappingHelper.registerKeyMapping(BCKeyMappings.itemFrameInvisibilityToggle());
+        KeyMappingHelper.registerKeyMapping(BCKeyMappings.clickThroughToggle());
     }
 
     private static void registerCommands() {
@@ -78,6 +79,7 @@ public final class BetterClientFabricBootstrap {
         ClientTickEvents.START_LEVEL_TICK.register(level -> {
             FullBrightnessEvent.clientLevelPre(level);
             InvisibleItemFrameEvent.clientLevelPre(level);
+            ClickThroughEvent.clientLevelPre(level);
         });
         ClientTickEvents.END_LEVEL_TICK.register(TradingHudEvent::clientLevelPost);
         ItemTooltipCallback.EVENT.register((stack, context, type, lines) -> {

@@ -18,7 +18,9 @@ import net.minecraft.network.chat.Component;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import static com.euphony.better_client.BetterClient.LOGGER;
 import static com.euphony.better_client.BetterClient.config;
@@ -77,6 +79,22 @@ public class Config {
     public boolean enableExperimentalDisplay = true;
 
     public boolean enableBundleUp = true;
+
+    public boolean enableClickThrough = true;
+    public boolean clickThroughOnlyContainers = true;
+    public boolean clickThroughSneakToDye = false;
+    public List<String> clickThroughContainers = new ArrayList<>(List.of(
+            "minecraft:ender_chest",
+            "minecraft:vault",
+            "minecraft:composter",
+            "minecraft:respawn_anchor",
+            "minecraft:jukebox",
+            "minecraft:decorated_pot",
+            "minecraft:chiseled_bookshelf",
+            "minecraft:beacon",
+            "minecraft:stonecutter",
+            "minecraft:grindstone",
+            "minecraft:crafting_table"));
 
     public boolean enableDurabilityTooltip = true;
     public DurabilityTooltipStyle durabilityTooltipStyle = DurabilityTooltipStyle.NUMBER;

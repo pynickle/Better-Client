@@ -19,6 +19,7 @@
   "key.better_client.bundle_up": "Bundle Up",
   "key.better_client.full_brightness_toggle": "Full Brightness Toggle",
   "key.better_client.item_frame_invisibility_toggle": "Item Frame Invisibility Toggle",
+  "key.better_client.click_through_toggle": "Click Through Toggle",
 
   "info.better_client.durability_tooltip.durability_hint": "Durability: %s",
   "info.better_client.durability_tooltip.percentage": "%d",
@@ -42,6 +43,8 @@
   "text.better_client.chat_separator.desc": "Supports multiple lines. Available placeholders: {session_name}, {session_key}, {disconnect_time}, {disconnect_date}, {disconnect_datetime}. Use & for color codes.",
   "text.better_client.chat_separator.placeholder": "&8&m--------------------------------------------------\\n &6[&eRestored Chat History&6]\\n &7Session: &f{session_name} &8| &7Disconnected: &f{disconnect_time}\\n&8&m--------------------------------------------------",
   "text.better_client.chat_separator.reset": "Reset",
+  "text.better_client.click_through.active": "Click Through: §aEnabled",
+  "text.better_client.click_through.inactive": "Click Through: §cDisabled",
 
   "yacl3.config.better_client:config": "Better Client",
   "yacl3.config.better_client:config.category.client": "Client",
@@ -205,6 +208,16 @@
   "yacl3.config.better_client:config.category.client.group.bundle_up": "Bundle Up",
   "yacl3.config.better_client:config.enableBundleUp": "Enable Bundle Up",
   "yacl3.config.better_client:config.enableBundleUp.desc": "Hover over a bundle and press R to auto-store items, maximizing inventory space.",
+
+  "yacl3.config.better_client:config.category.client.group.click_through": "Click Through",
+  "yacl3.config.better_client:config.enableClickThrough": "Enable Click Through",
+  "yacl3.config.better_client:config.enableClickThrough.desc": "Right-click through wall signs, banners and item frames to interact with the container behind them. Sneak-click to interact with the sign or item frame itself. Press F9 to toggle in game.",
+  "yacl3.config.better_client:config.clickThroughOnlyContainers": "Only Containers",
+  "yacl3.config.better_client:config.clickThroughOnlyContainers.desc": "Only click through when the block behind is a container. When disabled, clicks pass through to any block.",
+  "yacl3.config.better_client:config.clickThroughSneakToDye": "Sneak to Dye",
+  "yacl3.config.better_client:config.clickThroughSneakToDye.desc": "When holding a dye, ink sac or honeycomb, clicking a sign passes through to the container, while sneak-clicking applies the item to the sign.",
+  "yacl3.config.better_client:config.clickThroughContainers": "Extra Click Through Containers",
+  "yacl3.config.better_client:config.clickThroughContainers.desc": "Additional block IDs treated as containers for click through.",
 
   "yacl3.config.better_client:config.category.client.group.durability_tooltip": "Durability Tooltip",
   "yacl3.config.better_client:config.enableDurabilityTooltip": "Enable Durability Tooltip",

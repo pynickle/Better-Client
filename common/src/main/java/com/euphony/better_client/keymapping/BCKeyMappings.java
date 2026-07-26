@@ -20,6 +20,10 @@ public final class BCKeyMappings {
         return Holder.ITEM_FRAME_INVISIBILITY_TOGGLE;
     }
 
+    public static KeyMapping clickThroughToggle() {
+        return Holder.CLICK_THROUGH_TOGGLE;
+    }
+
     private static final class Holder {
         private static final KeyMapping.Category KEYMAPPING_CATEGORY =
                 KeyMapping.Category.register(Utils.prefix("keymapping"));
@@ -37,6 +41,12 @@ public final class BCKeyMappings {
                 "key.better_client.item_frame_invisibility_toggle",
                 InputConstants.Type.KEYSYM,
                 InputConstants.KEY_T,
+                KEYMAPPING_CATEGORY);
+
+        private static final KeyMapping CLICK_THROUGH_TOGGLE = new KeyMapping(
+                "key.better_client.click_through_toggle",
+                InputConstants.Type.KEYSYM,
+                InputConstants.KEY_F9,
                 KEYMAPPING_CATEGORY);
     }
 }

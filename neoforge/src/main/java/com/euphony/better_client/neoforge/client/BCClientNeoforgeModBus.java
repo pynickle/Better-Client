@@ -31,5 +31,6 @@ public final class BCClientNeoforgeModBus {
         event.register(BCKeyMappings.bundleUp());
         event.register(BCKeyMappings.fullBrightnessToggle());
         event.register(BCKeyMappings.itemFrameInvisibilityToggle());
+        event.register(BCKeyMappings.clickThroughToggle());
     }
 }

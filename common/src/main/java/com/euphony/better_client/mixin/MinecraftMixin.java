@@ -1,5 +1,6 @@
 package com.euphony.better_client.mixin;
 
+import com.euphony.better_client.client.events.ClickThroughEvent;
 import com.euphony.better_client.service.ChatHistoryManager;
 import com.euphony.better_client.service.NewItemMarker;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
@@ -7,10 +8,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityTypes;
+import net.minecraft.world.phys.HitResult;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -29,6 +33,18 @@ public abstract class MinecraftMixin {
     @Shadow
     @Final
     public Options options;
+
+    @Shadow
+    @Nullable
+    public HitResult hitResult;
+
+    @Shadow
+    @Nullable
+    public LocalPlayer player;
+
+    @Shadow
+    @Nullable
+    public ClientLevel level;
 
     @Inject(
             method = "pauseGame",
@@ -61,6 +77,13 @@ public abstract class MinecraftMixin {
             Screen screen, boolean keepResourcePacks, boolean stopSound, CallbackInfo ci) {
         ChatHistoryManager.handleDisconnect();
         NewItemMarker.clearAll();
+    }
+
+    @Inject(method = "startUseItem", at = @At("HEAD"))
+    private void better_client$clickThroughRedirect(CallbackInfo ci) {
+        if (this.player != null && this.level != null) {
+            this.hitResult = ClickThroughEvent.redirectHitResult(this.hitResult, this.player, this.level);
+        }
     }
 
     @ModifyExpressionValue(

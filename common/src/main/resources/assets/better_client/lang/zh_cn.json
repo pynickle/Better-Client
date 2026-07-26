@@ -19,6 +19,7 @@
   "key.better_client.bundle_up": "一键收纳",
   "key.better_client.full_brightness_toggle": "全亮切换",
   "key.better_client.item_frame_invisibility_toggle": "物品展示框隐形切换",
+  "key.better_client.click_through_toggle": "点击穿透开关",
 
   "info.better_client.durability_tooltip.durability_hint": "耐久度：%s",
   "info.better_client.durability_tooltip.percentage": "%d",
@@ -42,6 +43,8 @@
   "text.better_client.chat_separator.desc": "支持多行。可用占位符：{session_name}、{session_key}、{disconnect_time}、{disconnect_date}、{disconnect_datetime}。可使用 & 进行颜色格式化。",
   "text.better_client.chat_separator.placeholder": "&8&m--------------------------------------------------\\n &6[&e已恢复聊天记录&6]\\n &7服务器: &f{session_name} &8| &7断开时间: &f{disconnect_time}\\n&8&m--------------------------------------------------",
   "text.better_client.chat_separator.reset": "重置",
+  "text.better_client.click_through.active": "点击穿透：§a已启用",
+  "text.better_client.click_through.inactive": "点击穿透：§c已禁用",
 
   "yacl3.config.better_client:config": "更好的客户端",
   "yacl3.config.better_client:config.category.client": "客户端",
@@ -205,6 +208,16 @@
   "yacl3.config.better_client:config.category.client.group.bundle_up": "一键收纳",
   "yacl3.config.better_client:config.enableBundleUp": "启用一键收纳",
   "yacl3.config.better_client:config.enableBundleUp.desc": "将鼠标悬停在收纳袋上并按下 R 键，即可自动收纳物品，最大化背包空间。",
+
+  "yacl3.config.better_client:config.category.client.group.click_through": "点击穿透",
+  "yacl3.config.better_client:config.enableClickThrough": "启用点击穿透",
+  "yacl3.config.better_client:config.enableClickThrough.desc": "右键穿过墙上的告示牌、旗帜和物品展示框，直接与其背后的容器交互。潜行点击仍可与告示牌或展示框本身交互。游戏内可按 F9 切换。",
+  "yacl3.config.better_client:config.clickThroughOnlyContainers": "仅限容器",
+  "yacl3.config.better_client:config.clickThroughOnlyContainers.desc": "仅当背后的方块是容器时才穿透点击。禁用后，点击会穿透到任意方块。",
+  "yacl3.config.better_client:config.clickThroughSneakToDye": "潜行染色",
+  "yacl3.config.better_client:config.clickThroughSneakToDye.desc": "手持染料、墨囊或蜜脾时，点击告示牌会穿透到背后的容器，潜行点击则将物品应用到告示牌上。",
+  "yacl3.config.better_client:config.clickThroughContainers": "额外穿透容器",
+  "yacl3.config.better_client:config.clickThroughContainers.desc": "额外视为容器的方块 ID 列表。",
 
   "yacl3.config.better_client:config.category.client.group.durability_tooltip": "耐久提示",
   "yacl3.config.better_client:config.enableDurabilityTooltip": "启用耐久提示",

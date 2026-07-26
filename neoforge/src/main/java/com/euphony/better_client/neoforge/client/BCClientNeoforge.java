@@ -64,6 +64,7 @@ public final class BCClientNeoforge {
 
         FullBrightnessEvent.clientLevelPre(level);
         InvisibleItemFrameEvent.clientLevelPre(level);
+        ClickThroughEvent.clientLevelPre(level);
         TradingHudEvent.clientLevelPost(level);
     }
 
