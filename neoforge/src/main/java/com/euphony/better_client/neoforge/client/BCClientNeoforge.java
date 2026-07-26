@@ -47,7 +47,7 @@ public final class BCClientNeoforge {
             return;
         }
 
-        ChatHistoryManager.handleLevelTransition(knownLevel, currentLevel);
+        ChatHistoryManager.handleLevelTransition(currentLevel);
         knownLevel = currentLevel;
         if (currentLevel != null) {
             ItemFrameVisibilityManager.clientLevelLoad(currentLevel);

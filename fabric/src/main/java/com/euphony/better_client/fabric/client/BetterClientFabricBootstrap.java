@@ -109,7 +109,7 @@ public final class BetterClientFabricBootstrap {
             return;
         }
 
-        ChatHistoryManager.handleLevelTransition(knownLevel, currentLevel);
+        ChatHistoryManager.handleLevelTransition(currentLevel);
         knownLevel = currentLevel;
         if (currentLevel != null) {
             ItemFrameVisibilityManager.clientLevelLoad(currentLevel);

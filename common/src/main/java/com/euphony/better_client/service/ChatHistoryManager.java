@@ -33,6 +33,7 @@ import static com.euphony.better_client.BetterClient.config;
 
 public final class ChatHistoryManager {
     private static final String SEPARATOR_MARKER = "\uE000";
+    private static final int STORE_FORMAT_VERSION = 2;
     private static final Path CHAT_HISTORY_PATH = DataUtils.getDataDir().resolve("chat_history.json");
     private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy/MM/dd");
@@ -43,6 +44,8 @@ public final class ChatHistoryManager {
 
     private static boolean allowVanillaClear;
     private static boolean restoringChat;
+    private static String activeSessionKey;
+    private static boolean sessionEnded = true;
     private static PersistentChatStore persistentChatStore;
     private static boolean persistentStoreSaveScheduled;
     private static boolean persistentStoreSaveDirty;
@@ -65,27 +68,35 @@ public final class ChatHistoryManager {
                 LevelUtils.getCurrentSessionName(minecraft, minecraft.level));
     }
 
-    public static void handleLevelTransition(ClientLevel previousLevel, ClientLevel currentLevel) {
+    public static void handleDisconnect() {
+        saveCurrentSession();
+        sessionEnded = true;
+    }
+
+    public static void handleLevelTransition(ClientLevel currentLevel) {
         if (!config.enableChatHistoryRetention) {
             return;
         }
 
-        Minecraft minecraft = Minecraft.getInstance();
-        String previousSessionKey =
-                previousLevel == null ? null : LevelUtils.getCurrentSessionKey(minecraft, previousLevel);
-        String sessionKey =
-                currentLevel == null ? null : LevelUtils.getCurrentSessionKey(minecraft, currentLevel);
-
-        if (Objects.equals(previousSessionKey, sessionKey)) {
-            return;
-        }
-
-        ChatComponent chat = minecraft.gui.hud.getChat();
-        clearChat(chat);
-
+        // Mirror vanilla's session separation: chat lifetime follows the connection, not
+        // the level. A level teardown alone (currentLevel == null) is not a session
+        // boundary — during an in-connection reconfiguration (e.g. a Velocity backend
+        // switch) vanilla stores the chat state and restores it on the next play phase.
         if (currentLevel == null) {
             return;
         }
+
+        Minecraft minecraft = Minecraft.getInstance();
+        String sessionKey = LevelUtils.getCurrentSessionKey(minecraft, currentLevel);
+        if (!sessionEnded && Objects.equals(sessionKey, activeSessionKey)) {
+            return;
+        }
+
+        activeSessionKey = sessionKey;
+        sessionEnded = false;
+
+        ChatComponent chat = minecraft.gui.hud.getChat();
+        clearChat(chat);
 
         RuntimeChatState runtimeState = RUNTIME_STATES.get(sessionKey);
         if (runtimeState != null) {
@@ -272,12 +283,29 @@ public final class ChatHistoryManager {
             return new PersistentChatStore();
         }
 
+        JsonObject root;
         try (Reader reader = Files.newBufferedReader(CHAT_HISTORY_PATH, StandardCharsets.UTF_8)) {
-            JsonObject root = JsonUtils.GSON.fromJson(reader, JsonObject.class);
-            return deserializeStore(root);
+            root = JsonUtils.GSON.fromJson(reader, JsonObject.class);
         } catch (IOException | JsonParseException e) {
-            LOGGER.error("[BetterClient] Failed to load chat history data", e);
+            LOGGER.error("[BetterClient] Failed to load chat history data, deleting it", e);
+            deleteUnreadableStore();
             return new PersistentChatStore();
+        }
+
+        if (root == null || getAsInt(root, "version", 0) != STORE_FORMAT_VERSION) {
+            LOGGER.warn("[BetterClient] Deleting chat history data with unsupported format");
+            deleteUnreadableStore();
+            return new PersistentChatStore();
+        }
+
+        return deserializeStore(root);
+    }
+
+    private static void deleteUnreadableStore() {
+        try {
+            Files.deleteIfExists(CHAT_HISTORY_PATH);
+        } catch (IOException e) {
+            LOGGER.error("[BetterClient] Failed to delete unreadable chat history file", e);
         }
     }
 
@@ -449,6 +477,7 @@ public final class ChatHistoryManager {
 
     private static JsonObject serializeStore(PersistentChatStore store) {
         JsonObject root = new JsonObject();
+        root.addProperty("version", STORE_FORMAT_VERSION);
         JsonObject sessions = new JsonObject();
         for (Map.Entry<String, PersistentChatState> entry : store.sessions.entrySet()) {
             sessions.add(entry.getKey(), serializeState(entry.getValue()));
@@ -494,15 +523,6 @@ public final class ChatHistoryManager {
         }
 
         for (JsonElement entry : element.getAsJsonArray()) {
-            if (entry.isJsonPrimitive() && entry.getAsJsonPrimitive().isString()) {
-                PersistentChatMessage migrated = new PersistentChatMessage();
-                migrated.content = encodeComponent(Component.literal(entry.getAsString()));
-                migrated.signature = JsonNull.INSTANCE;
-                migrated.tag = null;
-                messages.add(migrated);
-                continue;
-            }
-
             if (!entry.isJsonObject()) {
                 continue;
             }

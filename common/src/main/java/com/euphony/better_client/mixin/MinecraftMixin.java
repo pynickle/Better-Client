@@ -56,9 +56,10 @@ public abstract class MinecraftMixin {
         }
     }
 
-    @Inject(method = "disconnect(Lnet/minecraft/client/gui/screens/Screen;Z)V", at = @At("HEAD"))
-    private void better_client$saveChatBeforeDisconnect(Screen screen, boolean keepResourcePacks, CallbackInfo ci) {
-        ChatHistoryManager.saveCurrentSession();
+    @Inject(method = "disconnect(Lnet/minecraft/client/gui/screens/Screen;ZZ)V", at = @At("HEAD"))
+    private void better_client$saveChatBeforeDisconnect(
+            Screen screen, boolean keepResourcePacks, boolean stopSound, CallbackInfo ci) {
+        ChatHistoryManager.handleDisconnect();
         NewItemMarker.clearAll();
     }
 
