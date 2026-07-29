@@ -16,7 +16,7 @@ import static com.euphony.better_client.BetterClient.config;
 public class DurabilityTooltipEvent {
     public static void tooltip(
             ItemStack itemStack, List<Component> components, Item.TooltipContext context, TooltipFlag tooltipFlag) {
-        if (!config.enableDurabilityTooltip) return;
+        if (!config.isDurabilityTooltipEnabled()) return;
 
         if ((config.showDurabilityWhenNotDamaged || itemStack.isDamaged()) && itemStack.isDamageableItem()) {
             int maxDurability = itemStack.getMaxDamage();

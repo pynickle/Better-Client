@@ -1,6 +1,7 @@
 package com.euphony.better_client.config;
 
 import com.euphony.better_client.BetterClient;
+import com.euphony.better_client.config.option.AutoAdaptMode;
 import com.euphony.better_client.config.option.NewItemMarkerPosition;
 import com.euphony.better_client.config.option.PotionBarPos;
 import com.euphony.better_client.config.option.TotemBarRenderMode;
@@ -24,6 +25,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -47,6 +49,11 @@ public class ConfigUtils {
             value -> Component.literal(toTitleCase(value.name()));
     public static final ValueFormatter<NewItemMarkerPosition> NEW_ITEM_MARKER_POSITION_VALUE_FORMATTER =
             value -> Component.literal(toTitleCase(value.name()));
+    public static final ValueFormatter<AutoAdaptMode> AUTO_ADAPT_MODE_VALUE_FORMATTER = value -> Component.translatable(
+            String.format(
+                    "yacl3.config.%s:config.autoAdaptMode.%s",
+                    BetterClient.MOD_ID,
+                    value.name().toLowerCase(Locale.ROOT)));
 
     public static ButtonOption.Builder getButtonOption(String name) {
         return ButtonOption.createBuilder()

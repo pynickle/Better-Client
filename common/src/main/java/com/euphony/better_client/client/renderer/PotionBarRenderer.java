@@ -170,10 +170,10 @@ public class PotionBarRenderer {
         int y = switch (config.potionBarPos) {
             case BOTTOM_LEFT, BOTTOM_RIGHT -> screenHeight - hudHeight - MARGIN;
             case TOP_LEFT, TOP_RIGHT, CENTER -> MARGIN;
-            case CUSTOM -> config.potionBarYOffset;
+            case CUSTOM -> config.getPotionBarYOffset();
         };
         if (config.potionBarPos != PotionBarPos.CUSTOM) {
-            y += config.potionBarYOffset;
+            y += config.getPotionBarYOffset();
         }
         return Mth.clamp(y, 0, Math.max(0, screenHeight - hudHeight));
     }

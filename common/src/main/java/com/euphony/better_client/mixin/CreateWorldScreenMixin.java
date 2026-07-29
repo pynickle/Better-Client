@@ -11,7 +11,7 @@ import static com.euphony.better_client.BetterClient.config;
 public class CreateWorldScreenMixin {
     @ModifyVariable(method = "tryApplyNewDataPacks", at = @At("HEAD"), argsOnly = true)
     private boolean applyNewDataPacks(boolean isDataPackScreen) {
-        if (config.enableNoExperimentalWarning) {
+        if (config.isNoExperimentalWarningEnabled()) {
             return false;
         }
         return isDataPackScreen;

@@ -1,6 +1,7 @@
 package com.euphony.better_client.config;
 
 import com.euphony.better_client.BetterClient;
+import com.euphony.better_client.config.option.AutoAdaptMode;
 import com.euphony.better_client.config.option.NewItemMarkerPosition;
 import com.euphony.better_client.config.option.PotionBarPos;
 import com.euphony.better_client.config.option.TotemBarRenderMode;
@@ -10,6 +11,7 @@ import com.euphony.better_client.utils.Utils;
 import com.euphony.better_client.utils.enums.DurabilityTooltipStyle;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.ConfirmLinkScreen;
 import net.minecraft.client.gui.screens.ConfirmScreen;
@@ -26,7 +28,19 @@ import static com.euphony.better_client.BetterClient.LOGGER;
 import static com.euphony.better_client.BetterClient.config;
 
 public class Config {
-    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+    private static final Gson GSON = new GsonBuilder()
+            .registerTypeAdapter(
+                    AutoAdaptMode.class,
+                    (JsonDeserializer<AutoAdaptMode>) (json, type, context) -> {
+                        // Legacy booleans predate the automatic mode and migrate to its new default.
+                        if (json.isJsonNull()
+                                || (json.isJsonPrimitive() && json.getAsJsonPrimitive().isBoolean())) {
+                            return AutoAdaptMode.AUTO;
+                        }
+                        return AutoAdaptMode.valueOf(json.getAsString());
+                    })
+            .setPrettyPrinting()
+            .create();
     private static final Path BASE_PATH = Platform.getConfigFolder().resolve(BetterClient.MOD_ID);
     private static final Path PATH = BASE_PATH.resolve("client.json");
 
@@ -75,7 +89,7 @@ public class Config {
     public boolean enableFastTrading = true;
     public boolean enableAltKey = true;
 
-    public boolean enableNoExperimentalWarning = true;
+    public AutoAdaptMode enableNoExperimentalWarning = AutoAdaptMode.AUTO;
     public boolean enableExperimentalDisplay = true;
 
     public boolean enableBundleUp = true;
@@ -96,7 +110,7 @@ public class Config {
             "minecraft:grindstone",
             "minecraft:crafting_table"));
 
-    public boolean enableDurabilityTooltip = true;
+    public AutoAdaptMode enableDurabilityTooltip = AutoAdaptMode.AUTO;
     public DurabilityTooltipStyle durabilityTooltipStyle = DurabilityTooltipStyle.NUMBER;
     public boolean showDurabilityWhenNotDamaged = true;
     public boolean showDurabilityHint = true;
@@ -167,9 +181,10 @@ public class Config {
     public PotionBarPos potionBarPos = PotionBarPos.CENTER;
     public int potionBarXOffset = 0;
     public int potionBarYOffset = 0;
+    public boolean autoAdaptPotionBarYOffset = true;
 
-    public boolean enableFoodBarWhileMounted = true;
-    public boolean enableExperienceBarWhileMounted = true;
+    public AutoAdaptMode enableFoodBarWhileMounted = AutoAdaptMode.AUTO;
+    public AutoAdaptMode enableExperienceBarWhileMounted = AutoAdaptMode.AUTO;
 
     public boolean enableClientWeather = true;
 
@@ -210,28 +225,43 @@ public class Config {
             }
         }
         if (Files.notExists(PATH)) {
-            if (Utils.isAnyModLoaded("durabilitytooltip", "rmes-durability-tooltips", "durabilityviewer")) {
-                config.enableDurabilityTooltip = false;
-            }
-            if (Utils.isAnyModLoaded("hideexperimentalwarning", "yeetusexperimentus", "experimentalist")) {
-                config.enableNoExperimentalWarning = false;
-            }
-            if (Utils.isAnyModLoaded("jade")) {
-                config.potionBarYOffset = 23;
-            }
-            if (Utils.isAnyModLoaded("bettermounthud", "leavemybarsalone")) {
-                config.enableFoodBarWhileMounted = false;
-            }
-            if (Utils.isAnyModLoaded("leavemybarsalone")) {
-                config.enableExperienceBarWhileMounted = false;
-            }
             save();
         } else
             try {
                 config = GSON.fromJson(Files.readString(PATH), config.getClass());
+                config.normalizeAutoAdaptOptions();
             } catch (Exception e) {
                 LOGGER.error("Couldn't load config file: ", e);
             }
+    }
+
+    private void normalizeAutoAdaptOptions() {
+        if (enableDurabilityTooltip == null) enableDurabilityTooltip = AutoAdaptMode.AUTO;
+        if (enableNoExperimentalWarning == null) enableNoExperimentalWarning = AutoAdaptMode.AUTO;
+        if (enableFoodBarWhileMounted == null) enableFoodBarWhileMounted = AutoAdaptMode.AUTO;
+        if (enableExperienceBarWhileMounted == null) enableExperienceBarWhileMounted = AutoAdaptMode.AUTO;
+    }
+
+    public boolean isDurabilityTooltipEnabled() {
+        return enableDurabilityTooltip.resolve(
+                !Utils.isAnyModLoaded("durabilitytooltip", "rmes-durability-tooltips", "durabilityviewer"));
+    }
+
+    public boolean isNoExperimentalWarningEnabled() {
+        return enableNoExperimentalWarning.resolve(
+                !Utils.isAnyModLoaded("hideexperimentalwarning", "yeetusexperimentus", "experimentalist"));
+    }
+
+    public int getPotionBarYOffset() {
+        return autoAdaptPotionBarYOffset && Utils.isAnyModLoaded("jade") ? 23 : potionBarYOffset;
+    }
+
+    public boolean isFoodBarWhileMountedEnabled() {
+        return enableFoodBarWhileMounted.resolve(!Utils.isAnyModLoaded("bettermounthud", "leavemybarsalone"));
+    }
+
+    public boolean isExperienceBarWhileMountedEnabled() {
+        return enableExperienceBarWhileMounted.resolve(!Utils.isAnyModLoaded("leavemybarsalone"));
     }
 
     public static void save() {

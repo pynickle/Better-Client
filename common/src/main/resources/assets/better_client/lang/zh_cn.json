@@ -196,8 +196,11 @@
   "yacl3.config.better_client:config.enableDisplayRemainingSales.desc": "在交易界面的每个箭头按钮下方显示剩余销售次数。",
 
   "yacl3.config.better_client:config.category.client.group.no_experimental_warning": "不显示实验性警告",
-  "yacl3.config.better_client:config.enableNoExperimentalWarning": "启用无实验性警告",
-  "yacl3.config.better_client:config.enableNoExperimentalWarning.desc": "不显示创建/进入实验性世界的警告。",
+  "yacl3.config.better_client:config.autoAdaptMode.auto": "自动适配",
+  "yacl3.config.better_client:config.autoAdaptMode.enabled": "开启",
+  "yacl3.config.better_client:config.autoAdaptMode.disabled": "关闭",
+  "yacl3.config.better_client:config.enableNoExperimentalWarning": "不显示实验性警告",
+  "yacl3.config.better_client:config.enableNoExperimentalWarning.desc": "不显示创建/进入实验性世界的警告。自动适配时，若已加载 Hide Experimental Warning、Yeetus Experimentus 或 Experimentalist，则关闭此功能。",
   "yacl3.config.better_client:config.enableExperimentalDisplay": "启用实验性标签",
   "yacl3.config.better_client:config.enableExperimentalDisplay.desc": "世界列表保留实验性标签。",
 
@@ -220,8 +223,8 @@
   "yacl3.config.better_client:config.clickThroughContainers.desc": "额外视为容器的方块 ID 列表。",
 
   "yacl3.config.better_client:config.category.client.group.durability_tooltip": "耐久提示",
-  "yacl3.config.better_client:config.enableDurabilityTooltip": "启用耐久提示",
-  "yacl3.config.better_client:config.enableDurabilityTooltip.desc": "可损坏物品的提示将显示耐久信息。",
+  "yacl3.config.better_client:config.enableDurabilityTooltip": "耐久提示",
+  "yacl3.config.better_client:config.enableDurabilityTooltip.desc": "可损坏物品的提示将显示耐久信息。自动适配时，若已加载受支持的同类耐久提示模组，则关闭此功能。",
   "yacl3.config.better_client:config.durabilityTooltipStyle": "耐久提示样式",
   "yacl3.config.better_client:config.durabilityTooltipStyle.desc": "决定耐久信息在提示里的显示方式。",
   "yacl3.config.better_client:config.showDurabilityWhenNotDamaged": "未损坏时显示耐久",
@@ -299,13 +302,15 @@
   "yacl3.config.better_client:config.potionBarXOffset": "药水条 X 轴偏移",
   "yacl3.config.better_client:config.potionBarXOffset.desc": "药水条的 X 轴偏移量。",
   "yacl3.config.better_client:config.potionBarYOffset": "药水条 Y 轴偏移",
-  "yacl3.config.better_client:config.potionBarYOffset.desc": "药水条的 Y 轴偏移量。",
+  "yacl3.config.better_client:config.potionBarYOffset.desc": "关闭自动适配时使用的药水条 Y 轴偏移量。",
+  "yacl3.config.better_client:config.autoAdaptPotionBarYOffset": "自动适配药水条 Y 轴偏移",
+  "yacl3.config.better_client:config.autoAdaptPotionBarYOffset.desc": "加载 Jade 时使用 23 的 Y 轴偏移，否则使用配置的偏移量。",
 
   "yacl3.config.better_client:config.category.client.group.mounted_bars": "骑乘状态栏",
   "yacl3.config.better_client:config.enableFoodBarWhileMounted": "骑乘时显示饥饿条",
-  "yacl3.config.better_client:config.enableFoodBarWhileMounted.desc": "骑乘会显示血量的坐骑时保留饥饿条，将其显示在坐骑血量的正上方。",
+  "yacl3.config.better_client:config.enableFoodBarWhileMounted.desc": "骑乘会显示血量的坐骑时保留饥饿条。自动适配时，若已加载 Better Mount HUD 或 Leave My Bars Alone，则关闭此功能。",
   "yacl3.config.better_client:config.enableExperienceBarWhileMounted": "骑乘时显示经验条",
-  "yacl3.config.better_client:config.enableExperienceBarWhileMounted.desc": "骑乘可跳跃的坐骑时保留经验条，仅在蓄力跳跃与跳跃冷却期间才切换为跳跃条。",
+  "yacl3.config.better_client:config.enableExperienceBarWhileMounted.desc": "骑乘可跳跃的坐骑时保留经验条。自动适配时，若已加载 Leave My Bars Alone，则关闭此功能。",
 
   "yacl3.config.better_client:config.category.client.group.client_weather": "客户端天气",
   "yacl3.config.better_client:config.enableClientWeather": "启用客户端天气",

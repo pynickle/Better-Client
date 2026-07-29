@@ -196,8 +196,11 @@
   "yacl3.config.better_client:config.enableDisplayRemainingSales.desc": "Show the remaining number of sales beneath each arrow button on the trading screen.",
 
   "yacl3.config.better_client:config.category.client.group.no_experimental_warning": "No Experimental Warning",
-  "yacl3.config.better_client:config.enableNoExperimentalWarning": "Enable No Experimental Warning",
-  "yacl3.config.better_client:config.enableNoExperimentalWarning.desc": "Suppresses warnings about creating or entering experimental worlds.",
+  "yacl3.config.better_client:config.autoAdaptMode.auto": "Auto",
+  "yacl3.config.better_client:config.autoAdaptMode.enabled": "Enabled",
+  "yacl3.config.better_client:config.autoAdaptMode.disabled": "Disabled",
+  "yacl3.config.better_client:config.enableNoExperimentalWarning": "No Experimental Warning",
+  "yacl3.config.better_client:config.enableNoExperimentalWarning.desc": "Suppresses warnings about creating or entering experimental worlds. Auto disables this feature when Hide Experimental Warning, Yeetus Experimentus, or Experimentalist is loaded.",
   "yacl3.config.better_client:config.enableExperimentalDisplay": "Enable Experimental Display",
   "yacl3.config.better_client:config.enableExperimentalDisplay.desc": "Keeps the Experimental label visible in the world selection list.",
 
@@ -220,8 +223,8 @@
   "yacl3.config.better_client:config.clickThroughContainers.desc": "Additional block IDs treated as containers for click through.",
 
   "yacl3.config.better_client:config.category.client.group.durability_tooltip": "Durability Tooltip",
-  "yacl3.config.better_client:config.enableDurabilityTooltip": "Enable Durability Tooltip",
-  "yacl3.config.better_client:config.enableDurabilityTooltip.desc": "Adds durability information to tooltips for damageable items.",
+  "yacl3.config.better_client:config.enableDurabilityTooltip": "Durability Tooltip",
+  "yacl3.config.better_client:config.enableDurabilityTooltip.desc": "Adds durability information to tooltips for damageable items. Auto disables this feature when another supported durability tooltip mod is loaded.",
   "yacl3.config.better_client:config.durabilityTooltipStyle": "Durability Tooltip Style",
   "yacl3.config.better_client:config.durabilityTooltipStyle.desc": "Determines how durability information is displayed in tooltips.",
   "yacl3.config.better_client:config.showDurabilityWhenNotDamaged": "Show Durability When Not Damaged",
@@ -299,13 +302,15 @@
   "yacl3.config.better_client:config.potionBarXOffset": "Potion Bar X Offset",
   "yacl3.config.better_client:config.potionBarXOffset.desc": "X-axis offset for the potion bar.",
   "yacl3.config.better_client:config.potionBarYOffset": "Potion Bar Y Offset",
-  "yacl3.config.better_client:config.potionBarYOffset.desc": "Y-axis offset for the potion bar.",
+  "yacl3.config.better_client:config.potionBarYOffset.desc": "Y-axis offset used when automatic adaptation is disabled.",
+  "yacl3.config.better_client:config.autoAdaptPotionBarYOffset": "Auto-adapt Potion Bar Y Offset",
+  "yacl3.config.better_client:config.autoAdaptPotionBarYOffset.desc": "Uses a Y offset of 23 when Jade is loaded; otherwise uses the configured offset.",
 
   "yacl3.config.better_client:config.category.client.group.mounted_bars": "Mounted Bars",
   "yacl3.config.better_client:config.enableFoodBarWhileMounted": "Food Bar While Mounted",
-  "yacl3.config.better_client:config.enableFoodBarWhileMounted.desc": "Keep the food bar visible while riding a mount that shows its health, stacking it right above the mount hearts.",
+  "yacl3.config.better_client:config.enableFoodBarWhileMounted.desc": "Keep the food bar visible while riding a mount that shows its health. Auto disables this feature when Better Mount HUD or Leave My Bars Alone is loaded.",
   "yacl3.config.better_client:config.enableExperienceBarWhileMounted": "Experience Bar While Mounted",
-  "yacl3.config.better_client:config.enableExperienceBarWhileMounted.desc": "Keep the experience bar visible while riding a jumpable mount, only swapping to the jump bar while a jump is being charged or is cooling down.",
+  "yacl3.config.better_client:config.enableExperienceBarWhileMounted.desc": "Keep the experience bar visible while riding a jumpable mount. Auto disables this feature when Leave My Bars Alone is loaded.",
 
   "yacl3.config.better_client:config.category.client.group.client_weather": "Client Weather",
   "yacl3.config.better_client:config.enableClientWeather": "Enable Client Weather",

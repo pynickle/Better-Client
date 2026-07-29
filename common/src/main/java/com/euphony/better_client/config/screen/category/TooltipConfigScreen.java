@@ -2,6 +2,7 @@ package com.euphony.better_client.config.screen.category;
 
 import com.euphony.better_client.config.Config;
 import com.euphony.better_client.config.ConfigUtils;
+import com.euphony.better_client.config.option.AutoAdaptMode;
 import com.euphony.better_client.utils.enums.DurabilityTooltipStyle;
 import dev.isxander.yacl3.api.ConfigCategory;
 import dev.isxander.yacl3.api.Option;
@@ -24,11 +25,16 @@ public class TooltipConfigScreen {
 
     public static Screen generateScreen(Screen parent) {
         // Durability Tooltip
-        Option<Boolean> enableDurabilityTooltipOpt = ConfigUtils.buildBooleanOption(
-                "enableDurabilityTooltip",
-                DEFAULTS.enableDurabilityTooltip,
-                () -> config.enableDurabilityTooltip,
-                newVal -> config.enableDurabilityTooltip = newVal);
+        Option<AutoAdaptMode> enableDurabilityTooltipOpt = ConfigUtils.<AutoAdaptMode>getGenericOption(
+                        "enableDurabilityTooltip")
+                .binding(
+                        DEFAULTS.enableDurabilityTooltip,
+                        () -> config.enableDurabilityTooltip,
+                        newVal -> config.enableDurabilityTooltip = newVal)
+                .controller(opt -> EnumControllerBuilder.create(opt)
+                        .enumClass(AutoAdaptMode.class)
+                        .formatValue(ConfigUtils.AUTO_ADAPT_MODE_VALUE_FORMATTER))
+                .build();
         Option<DurabilityTooltipStyle> durabilityTooltipStyleOpt = ConfigUtils.<DurabilityTooltipStyle>getGenericOption(
                         "durabilityTooltipStyle")
                 .binding(

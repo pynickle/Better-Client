@@ -76,7 +76,7 @@ public class MountedBarsHudMixin {
             int yLineAir,
             int xRight,
             CallbackInfo ci) {
-        if (config.enableFoodBarWhileMounted && this.better_client$isRidingVehicleWithHealth()) {
+        if (config.isFoodBarWhileMountedEnabled() && this.better_client$isRidingVehicleWithHealth()) {
             this.extractFood(graphics, player, this.getAirBubbleYLine(vehicleHearts, yLineAir), xRight);
             // 告诉 NeoForge 的右侧状态栏累加器我们占了一行，手持物品名等元素才会正确让位
             Platform.addRightStatusBarHeight(10);
@@ -93,7 +93,7 @@ public class MountedBarsHudMixin {
             method = "extractAirBubbles",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/Hud;getAirBubbleYLine(II)I"))
     private int better_client$raiseAirBubblesWhileMounted(int yLineAir) {
-        if (config.enableFoodBarWhileMounted && this.better_client$isRidingVehicleWithHealth()) {
+        if (config.isFoodBarWhileMountedEnabled() && this.better_client$isRidingVehicleWithHealth()) {
             return yLineAir - 10;
         }
         return yLineAir;
@@ -113,7 +113,7 @@ public class MountedBarsHudMixin {
                             "Lnet/minecraft/client/player/LocalPlayer;jumpableVehicle()Lnet/minecraft/world/entity/PlayerRideableJumping;"))
     private @Nullable PlayerRideableJumping better_client$keepExperienceBarWhileMounted(
             @Nullable PlayerRideableJumping jumpableVehicle) {
-        if (config.enableExperienceBarWhileMounted && !this.willPrioritizeJumpInfo()) {
+        if (config.isExperienceBarWhileMountedEnabled() && !this.willPrioritizeJumpInfo()) {
             return null;
         }
         return jumpableVehicle;

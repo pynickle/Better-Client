@@ -38,7 +38,7 @@ public class WorldListEntryMixin {
             method = "getNarration",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/storage/LevelSummary;isExperimental()Z"))
     private boolean disableExperimentalWarning(LevelSummary instance) {
-        if (config.enableNoExperimentalWarning && !config.enableExperimentalDisplay) {
+        if (config.isNoExperimentalWarningEnabled() && !config.enableExperimentalDisplay) {
             return false;
         }
         return instance.isExperimental();
@@ -52,7 +52,7 @@ public class WorldListEntryMixin {
                     target =
                             "Lnet/minecraft/world/level/storage/LevelSummary;getInfo()Lnet/minecraft/network/chat/Component;"))
     private Component modifyInfo(LevelSummary levelSummary) {
-        if (config.enableNoExperimentalWarning && !config.enableExperimentalDisplay) {
+        if (config.isNoExperimentalWarningEnabled() && !config.enableExperimentalDisplay) {
             if (levelSummary.info == null) {
                 levelSummary.info = this.better_client$createInfo(levelSummary);
             }

@@ -2,6 +2,7 @@ package com.euphony.better_client.config.screen.category;
 
 import com.euphony.better_client.config.Config;
 import com.euphony.better_client.config.ConfigUtils;
+import com.euphony.better_client.config.option.AutoAdaptMode;
 import com.euphony.better_client.config.option.PotionBarPos;
 import com.euphony.better_client.config.option.TotemBarRenderMode;
 import com.euphony.better_client.utils.enums.DescComponent;
@@ -162,11 +163,16 @@ public class ScreenConfigScreen {
                 newVal -> config.enableBookSaveConfirmation = newVal);
 
         // No Experimental Warning
-        Option<Boolean> enableNoExperimentalWarningOpt = ConfigUtils.buildBooleanOption(
-                "enableNoExperimentalWarning",
-                DEFAULTS.enableNoExperimentalWarning,
-                () -> config.enableNoExperimentalWarning,
-                newVal -> config.enableNoExperimentalWarning = newVal);
+        Option<AutoAdaptMode> enableNoExperimentalWarningOpt = ConfigUtils.<AutoAdaptMode>getGenericOption(
+                        "enableNoExperimentalWarning")
+                .binding(
+                        DEFAULTS.enableNoExperimentalWarning,
+                        () -> config.enableNoExperimentalWarning,
+                        newVal -> config.enableNoExperimentalWarning = newVal)
+                .controller(opt -> EnumControllerBuilder.create(opt)
+                        .enumClass(AutoAdaptMode.class)
+                        .formatValue(ConfigUtils.AUTO_ADAPT_MODE_VALUE_FORMATTER))
+                .build();
         Option<Boolean> enableExperimentalDisplayOpt = ConfigUtils.buildBooleanOption(
                 "enableExperimentalDisplay",
                 DEFAULTS.enableExperimentalDisplay,
@@ -262,18 +268,33 @@ public class ScreenConfigScreen {
                         newVal -> config.potionBarYOffset = newVal)
                 .controller(IntegerFieldControllerBuilder::create)
                 .build();
+        Option<Boolean> autoAdaptPotionBarYOffsetOpt = ConfigUtils.buildBooleanOption(
+                "autoAdaptPotionBarYOffset",
+                DEFAULTS.autoAdaptPotionBarYOffset,
+                () -> config.autoAdaptPotionBarYOffset,
+                newVal -> config.autoAdaptPotionBarYOffset = newVal);
 
         // Mounted Bars
-        Option<Boolean> enableFoodBarWhileMountedOpt = ConfigUtils.buildBooleanOption(
-                "enableFoodBarWhileMounted",
-                DEFAULTS.enableFoodBarWhileMounted,
-                () -> config.enableFoodBarWhileMounted,
-                newVal -> config.enableFoodBarWhileMounted = newVal);
-        Option<Boolean> enableExperienceBarWhileMountedOpt = ConfigUtils.buildBooleanOption(
-                "enableExperienceBarWhileMounted",
-                DEFAULTS.enableExperienceBarWhileMounted,
-                () -> config.enableExperienceBarWhileMounted,
-                newVal -> config.enableExperienceBarWhileMounted = newVal);
+        Option<AutoAdaptMode> enableFoodBarWhileMountedOpt = ConfigUtils.<AutoAdaptMode>getGenericOption(
+                        "enableFoodBarWhileMounted")
+                .binding(
+                        DEFAULTS.enableFoodBarWhileMounted,
+                        () -> config.enableFoodBarWhileMounted,
+                        newVal -> config.enableFoodBarWhileMounted = newVal)
+                .controller(opt -> EnumControllerBuilder.create(opt)
+                        .enumClass(AutoAdaptMode.class)
+                        .formatValue(ConfigUtils.AUTO_ADAPT_MODE_VALUE_FORMATTER))
+                .build();
+        Option<AutoAdaptMode> enableExperienceBarWhileMountedOpt = ConfigUtils.<AutoAdaptMode>getGenericOption(
+                        "enableExperienceBarWhileMounted")
+                .binding(
+                        DEFAULTS.enableExperienceBarWhileMounted,
+                        () -> config.enableExperienceBarWhileMounted,
+                        newVal -> config.enableExperienceBarWhileMounted = newVal)
+                .controller(opt -> EnumControllerBuilder.create(opt)
+                        .enumClass(AutoAdaptMode.class)
+                        .formatValue(ConfigUtils.AUTO_ADAPT_MODE_VALUE_FORMATTER))
+                .build();
 
         return YetAnotherConfigLib.createBuilder()
                 .title(Component.translatable("yacl3.config.better_client:config"))
@@ -334,6 +355,7 @@ public class ScreenConfigScreen {
                                         potionBarMaxEffectsOpt,
                                         potionBarPosOpt,
                                         potionBarXOffsetOpt,
+                                        autoAdaptPotionBarYOffsetOpt,
                                         potionBarYOffsetOpt))
                                 .build())
                         .group(OptionGroup.createBuilder()

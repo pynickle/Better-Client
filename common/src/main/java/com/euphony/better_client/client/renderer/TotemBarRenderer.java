@@ -99,7 +99,8 @@ public class TotemBarRenderer {
                 int extraRows = (int) Math.ceil(hearts / 10.0) - 1;
                 offset += extraRows * spacing;
                 // 骑乘时右侧会多出一行饥饿条：本模组的骑乘状态栏，或同类模组都会补画
-                if (config.enableFoodBarWhileMounted || Utils.isAnyModLoaded("bettermounthud", "leavemybarsalone")) {
+                if (config.isFoodBarWhileMountedEnabled()
+                        || Utils.isAnyModLoaded("bettermounthud", "leavemybarsalone")) {
                     offset += spacing;
                 }
             }

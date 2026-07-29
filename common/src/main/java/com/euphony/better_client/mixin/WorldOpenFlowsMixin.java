@@ -14,7 +14,7 @@ import static com.euphony.better_client.BetterClient.config;
 public class WorldOpenFlowsMixin {
     @ModifyVariable(method = "confirmWorldCreation", at = @At("HEAD"), argsOnly = true)
     private static Lifecycle alwaysStable(Lifecycle lifecycle) {
-        if (config.enableNoExperimentalWarning) {
+        if (config.isNoExperimentalWarningEnabled()) {
             return Lifecycle.stable();
         }
         return lifecycle;
@@ -28,7 +28,7 @@ public class WorldOpenFlowsMixin {
                     target =
                             "Lnet/minecraft/world/level/storage/WorldData;worldGenSettingsLifecycle()Lcom/mojang/serialization/Lifecycle;"))
     private Lifecycle alwaysReturnStableLifecycle(WorldData worldData) {
-        if (config.enableNoExperimentalWarning) {
+        if (config.isNoExperimentalWarningEnabled()) {
             return Lifecycle.stable();
         }
         return worldData.worldGenSettingsLifecycle();
