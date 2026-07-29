@@ -21,8 +21,13 @@ public abstract class AbstractContainerScreenMixin extends Screen {
         super(title);
     }
 
-    @Inject(method = "extractContents", at = @At("TAIL"))
-    private void better_client$clearHoveredMarker(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a, CallbackInfo ci) {
+    @Inject(
+            method = "extractTooltip",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;setTooltipForNextFrame(Lnet/minecraft/client/gui/Font;Ljava/util/List;Ljava/util/Optional;IILnet/minecraft/resources/Identifier;)V"))
+    private void better_client$clearHoveredMarker(
+            GuiGraphicsExtractor graphics, int mouseX, int mouseY, CallbackInfo ci) {
         NewItemMarker.clearOnHover(this.hoveredSlot);
     }
 

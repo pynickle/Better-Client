@@ -1,6 +1,7 @@
 package com.euphony.better_client.mixin;
 
 import com.euphony.better_client.client.events.TradingHudEvent;
+import com.euphony.better_client.service.NewItemMarker;
 import com.euphony.better_client.utils.FormatUtils;
 import com.euphony.better_client.utils.data.MerchantInfo;
 import net.minecraft.client.Minecraft;
@@ -8,7 +9,10 @@ import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.game.ClientboundMerchantOffersPacket;
 import net.minecraft.network.protocol.game.ClientboundOpenScreenPacket;
+import net.minecraft.network.protocol.game.ClientboundTakeItemEntityPacket;
 import net.minecraft.network.protocol.game.ServerboundContainerClosePacket;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.MenuType;
 import org.spongepowered.asm.mixin.Mixin;
@@ -24,6 +28,26 @@ import static com.euphony.better_client.BetterClient.config;
 
 @Mixin(ClientPacketListener.class)
 public class ClientPacketListenerMixin {
+
+    @Inject(
+            method = "handleTakeItemEntity",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/multiplayer/ClientLevel;getEntity(I)Lnet/minecraft/world/entity/Entity;",
+                    ordinal = 0))
+    private void better_client$markPickedUpItem(ClientboundTakeItemEntityPacket packet, CallbackInfo ci) {
+        Minecraft minecraft = Minecraft.getInstance();
+        if (minecraft.player == null
+                || minecraft.level == null
+                || packet.getPlayerId() != minecraft.player.getId()) {
+            return;
+        }
+
+        Entity entity = minecraft.level.getEntity(packet.getItemId());
+        if (entity instanceof ItemEntity itemEntity) {
+            NewItemMarker.markPickup(minecraft.player.getInventory(), itemEntity.getItem());
+        }
+    }
 
     @Inject(at = @At("HEAD"), method = "handleMerchantOffers", cancellable = true)
     public void onHandleMerchantOffers(ClientboundMerchantOffersPacket packet, CallbackInfo ci) {

@@ -2,7 +2,6 @@ package com.euphony.better_client.mixin;
 
 import com.euphony.better_client.service.NewItemMarker;
 import net.minecraft.client.DeltaTracker;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.Hud;
 import net.minecraft.world.entity.player.Inventory;
@@ -16,14 +15,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Hud.class)
 public class HudMixin {
-    @Inject(method = "extractItemHotbar", at = @At("HEAD"))
-    private void better_client$clearEmptyHotbarMarkers(GuiGraphicsExtractor graphics, DeltaTracker deltaTracker, CallbackInfo ci) {
-        Player player = Minecraft.getInstance().player;
-        if (player != null) {
-            NewItemMarker.clearEmptySlots(player.getInventory());
-        }
-    }
-
     @Inject(
             method = "extractSlot",
             at = @At(
