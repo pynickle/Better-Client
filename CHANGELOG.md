@@ -1,3 +1,5 @@
+## [10.5.0](https://github.com/pynickle/Better-Client/compare/v10.4.0...v10.5.0) (2026-07-29)
+
 ## [10.4.0](https://github.com/pynickle/Better-Client/compare/v10.3.0...v10.4.0) (2026-07-26)
 
 ## [10.3.0](https://github.com/pynickle/Better-Client/compare/v10.2.1...v10.3.0) (2026-07-26)
