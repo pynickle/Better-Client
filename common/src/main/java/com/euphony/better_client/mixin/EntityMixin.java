@@ -32,7 +32,6 @@ public class EntityMixin {
             return;
         }
 
-        // 只在客户端处理物品展示框
         if (this.better_client$TARGET instanceof ItemFrame && this.level.isClientSide()) {
             Minecraft client = Minecraft.getInstance();
             LocalPlayer player = client.player;
@@ -40,9 +39,7 @@ public class EntityMixin {
             BlockPos entityId = ((ItemFrame) this.better_client$TARGET).getPos();
             boolean isHidden = ItemFrameVisibilityManager.isFrameHidden(entityId);
 
-            // 如果物品展示框被标记为隐形
             if (isHidden) {
-                // 但玩家持有物品展示框时显示
                 if (player != null && (player.isHolding(Items.ITEM_FRAME) || player.isHolding(Items.GLOW_ITEM_FRAME))) {
                     cir.setReturnValue(false);
                 } else {

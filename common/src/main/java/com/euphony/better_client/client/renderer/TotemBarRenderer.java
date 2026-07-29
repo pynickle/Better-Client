@@ -95,10 +95,10 @@ public class TotemBarRenderer {
         if (vehicle instanceof LivingEntity mount) {
             int hearts = getVehicleHearts(mount);
             if (hearts > 0) {
-                // 坐骑血量超过一行时每多一行都要让位，行数算法与原版 Hud 保持一致
+                // Match vanilla vehicle-health row wrapping when reserving vertical space.
                 int extraRows = (int) Math.ceil(hearts / 10.0) - 1;
                 offset += extraRows * spacing;
-                // 骑乘时右侧会多出一行饥饿条：本模组的骑乘状态栏，或同类模组都会补画
+                // Mounted food bars add a right-side row when supplied here or by compatible mods.
                 if (config.isFoodBarWhileMountedEnabled()
                         || Utils.isAnyModLoaded("bettermounthud", "leavemybarsalone")) {
                     offset += spacing;
@@ -108,9 +108,7 @@ public class TotemBarRenderer {
         return offset;
     }
 
-    /**
-     * 计算坐骑占用的血量格数，与原版 {@code Hud#getVehicleMaxHearts} 同算法
-     */
+    /** Mirrors {@code Hud#getVehicleMaxHearts} for HUD alignment. */
     private static int getVehicleHearts(LivingEntity mount) {
         if (!mount.showVehicleHealth()) return 0;
         return Math.min((int) (mount.getMaxHealth() + 0.5f) / 2, 30);

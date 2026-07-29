@@ -24,7 +24,6 @@ public class MerchantConfigScreen {
     private static final String REMAINING_SALES_GROUP = "remaining_sales";
 
     public static Screen generateScreen(Screen parent) {
-        // Fast Trading
         Option<Boolean> enableFastTradingOpt = ConfigUtils.buildBooleanOption(
                 "enableFastTrading",
                 DEFAULTS.enableFastTrading,
@@ -36,7 +35,6 @@ public class MerchantConfigScreen {
                 () -> config.enableAltKey,
                 newVal -> config.enableAltKey = newVal);
 
-        // Trading Hud
         Option<Boolean> enableTradingHudOpt = ConfigUtils.buildBooleanOption(
                 "enableTradingHud",
                 DEFAULTS.enableTradingHud,

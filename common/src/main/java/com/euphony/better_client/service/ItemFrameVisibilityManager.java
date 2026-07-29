@@ -22,7 +22,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import static com.euphony.better_client.BetterClient.LOGGER;
 
 public class ItemFrameVisibilityManager {
-    // Only holds data for the currently active world to save memory
     private static final Set<BlockPos> currentWorldHiddenFrames = ConcurrentHashMap.newKeySet();
     private static final Object SAVE_LOCK = new Object();
 

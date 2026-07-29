@@ -25,7 +25,6 @@ public class ChatConfigScreen {
     private static final String CHAT_FORMATTER_GROUP = "chat_formatter";
 
     public static Screen generateScreen(Screen parent) {
-        // Better Chat
         Option<Boolean> enableLongerChatHistoryOpt = ConfigUtils.buildBooleanOption(
                 "enableLongerChatHistory",
                 DEFAULTS.enableLongerChatHistory,
@@ -91,7 +90,6 @@ public class ChatConfigScreen {
                 .action((screen, opt) -> Minecraft.getInstance().gui.setScreen(new ChatSeparatorTemplateScreen(screen)))
                 .build();
 
-        // Chat Formatter
         Option<Boolean> enableChatFormatterOpt = ConfigUtils.buildBooleanOption(
                 "enableChatFormatter",
                 DEFAULTS.enableChatFormatter,

@@ -50,7 +50,6 @@ public class CategoryButton extends Button {
                 16,
                 16,
                 16);
-        // guiGraphics.fakeItem(icon, getX() + 5, getY() + 2);
 
         guiGraphics.centeredText(mc.font, text, getX() + width / 2 + MARGIN, getY() + (height - 8) / 2, 0xffffffff);
     }

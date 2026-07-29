@@ -38,11 +38,9 @@ import static com.euphony.better_client.BetterClient.LOGGER;
 import static com.euphony.better_client.BetterClient.config;
 
 public class BiomeTitleEvent {
-    // Constants
     private static final int MAX_ALPHA = 255;
     private static final int TICKS_PER_SECOND = 20;
 
-    // State Variables
     private static Biome previousBiome;
     private static ResourceKey<Biome> displayBiome;
     private static int displayTime = 0;
@@ -55,7 +53,6 @@ public class BiomeTitleEvent {
     private static final Set<ResourceKey<Biome>> VISITED_BIOMES = Collections.synchronizedSet(new HashSet<>());
     private static final Object BIOME_VISIT_LOCK = new Object();
 
-    // File Paths
     private static final Path BASE_PATH = DataUtils.getDataDir();
     private static final Path BIOME_VISITS_PATH = BASE_PATH.resolve("biome_visits.json");
     private static JsonObject persistedBiomeVisits = new JsonObject();
@@ -182,11 +179,9 @@ public class BiomeTitleEvent {
      */
     public static void clientLevelLoad(ClientLevel level) {
         complete = true;
-        // Clear runtime cache for fresh start if needed, or just load persistence
         loadBiomeVisits(level);
     }
 
-    // ================= Private Helper Methods =================
 
     private static void handleFadeIn() {
         if (fadeTimer < config.fadeInTime) {
@@ -230,7 +225,6 @@ public class BiomeTitleEvent {
         boolean isUnderground = mc.level.dimensionType().hasSkyLight() && !mc.level.canSeeSky(pos);
         if (!(config.enableUndergroundUpdate || !isUnderground)) return false;
 
-        // Check if we should only display on first entry
         if (config.enableFirstEntryOnly) {
             Holder<Biome> biomeHolder = mc.level.getBiome(pos);
             return biomeHolder
@@ -242,7 +236,6 @@ public class BiomeTitleEvent {
                             }
                             VISITED_BIOMES.add(key);
                         }
-                        // Save asynchronously
                         saveBiomeVisits();
                         return true;
                     })
@@ -272,11 +265,9 @@ public class BiomeTitleEvent {
         Font font = mc.font;
         float scale = (float) config.scale;
 
-        // Use PoseStack (standard MC mapping)
         Matrix3x2fStack pose = guiGraphics.pose();
         pose.pushMatrix();
 
-        // Center on screen
         pose.translate((float) (guiGraphics.guiWidth() / 2D), (float) (guiGraphics.guiHeight() / 2D));
         pose.scale(scale, scale);
 
@@ -284,7 +275,6 @@ public class BiomeTitleEvent {
         int textWidth = font.width(biomeName);
         int y = -font.wordWrapHeight(FormattedText.of(biomeName.getString()), 999) / 2 + config.biomeTitleYOffset;
 
-        // Render text centered
         guiGraphics.text(font, biomeName, (-textWidth / 2), y, config.biomeTitleColor | (alpha << 24), true);
 
         pose.popMatrix();

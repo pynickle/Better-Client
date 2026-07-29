@@ -20,21 +20,9 @@ import java.util.WeakHashMap;
 
 import static com.euphony.better_client.BetterClient.config;
 
-/**
- * 处理试炼刷怪笼计时器的渲染
- * 这些方法从 Mixin 钩子中调用
- */
 public class TrialSpawnerTimerRenderer {
     private static final Map<Timer, CachedTimerText> TEXT_CACHE = Collections.synchronizedMap(new WeakHashMap<>());
 
-    /**
-     * 在给定的试炼刷怪笼上方绘制冷却计时器
-     *
-     * @param level     方块所在的世界
-     * @param pos       试炼刷怪笼的位置
-     * @param poseStack 用于绘制文本的矩阵变换
-     * @param camera    摄像机
-     */
     public static void drawTimer(
             Level level, BlockPos pos, PoseStack poseStack, SubmitNodeCollector nodeCollector, Camera camera) {
         if (!config.enableTrialSpawnerTimer) return;
@@ -52,25 +40,14 @@ public class TrialSpawnerTimerRenderer {
             return;
         }
 
-        // 格式化剩余时间为 MM:SS
         Component text = better_client$getCachedTimerText(timer, remainingTicks);
 
         int color = calculateTimerColor(timer, currentTime);
 
-        // 绘制文本
         drawTextAboveBlock(text, color, poseStack, nodeCollector, camera);
     }
 
-    /**
-     * 在方块上方绘制面向玩家的彩色文本
-     * <p>
-     * 参考：<a href="https://github.com/Diamondgoobird/TrialSpawnerTimer/blob/1.21.9/fabric/src/main/java/com/diamondgoobird/trialspawnertimer/TimerRenderer.java">TimerRenderer.java</a>
-     *
-     * @param text      要绘制的文本
-     * @param color     ARGB 格式的颜色
-     * @param poseStack 矩阵变换栈
-     * @param camera    摄像机
-     */
+    // Based on https://github.com/Diamondgoobird/TrialSpawnerTimer/blob/1.21.9/fabric/src/main/java/com/diamondgoobird/trialspawnertimer/TimerRenderer.java
     private static void drawTextAboveBlock(
             Component text, int color, PoseStack poseStack, SubmitNodeCollector nodeCollector, Camera camera) {
         poseStack.pushPose();
@@ -90,7 +67,6 @@ public class TrialSpawnerTimerRenderer {
         matrix4f.translateLocal(0.5f, 1f, 0.5f);
         matrix4f.translate(1.0F - m / 2.0F, -9F, 0.0F);
 
-        // 绘制文本
         nodeCollector.submitText(
                 poseStack,
                 0.5F,
@@ -113,22 +89,18 @@ public class TrialSpawnerTimerRenderer {
     private static int calculateTimerColor(Timer timer, long currentTime) {
         if (!config.enableDynamicTimerColor) return config.timerColor;
 
-        double progress = timer.getProgress(currentTime); // 0.0 ~ 1.0
+        double progress = timer.getProgress(currentTime);
 
         int color;
 
         if (progress < 0.25) {
-            // 阶段 1：红色（紧急）
-            color = 0xFFFF0000; // 不透明红
+            color = 0xFFFF0000;
         } else if (progress < 0.5) {
-            // 阶段 2：橙色（注意）
-            color = 0xFFFF8000; // 不透明橙
+            color = 0xFFFF8000;
         } else if (progress < 0.75) {
-            // 阶段 3：黄色（中等）
-            color = 0xFFFFFF00; // 不透明黄
+            color = 0xFFFFFF00;
         } else {
-            // 阶段 4：绿色（安全）
-            color = 0xFF00FF00; // 不透明绿
+            color = 0xFF00FF00;
         }
 
         return color;

@@ -227,16 +227,12 @@ public abstract class MerchantScreenMixin extends AbstractContainerScreen<Mercha
     private void injectExtractButtonArrows(
             GuiGraphicsExtractor graphics, MerchantOffer offer, int xo, int decorHeight, CallbackInfo ci) {
         if (config.enableDisplayRemainingSales) {
-            // 计算剩余交易次数
             int remainingUses = offer.getMaxUses() - offer.getUses();
 
             graphics.pose().pushMatrix();
 
-            // 移动到指定位置（基于原代码的 k + 61, p + 11）
             graphics.pose().translate(xo + 61, decorHeight + 11);
-            // 缩放文本（与原代码一致）
             graphics.pose().scale(0.6F, 0.6F);
-            // 绘制剩余次数文本，白色 (0xFFFFFFFF)，无阴影
             graphics.text(this.font, String.valueOf(remainingUses), 0, 0, 0xFFFFFFFF, false);
 
             graphics.pose().popMatrix();

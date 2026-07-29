@@ -8,8 +8,7 @@ import net.ramixin.mixson.enums.Lifetime;
 
 import static com.euphony.better_client.BetterClient.config;
 
-// Copy From
-// https://github.com/pajicadvance/misctweaks/blob/multicutter/src/main/java/me/pajic/misctweaks/mixson/ClientResourceModifications.java
+    // Adapted from https://github.com/pajicadvance/misctweaks/blob/multicutter/src/main/java/me/pajic/misctweaks/mixson/ClientResourceModifications.java
 public class ResourceModification {
     public static void init() {
         if (config.enableLowerShield) {

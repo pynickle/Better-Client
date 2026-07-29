@@ -44,7 +44,6 @@ public class TrailSpawnerRendererMixin {
 
         BlockPos pos = state.blockPos;
 
-        // 绘制计时器（如果存在）
         TrialSpawnerTimerRenderer.drawTimer(level, pos, poseStack, submitNodeCollector, entityRenderer.camera);
 
         if (config.highSensitivityMode) {

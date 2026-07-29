@@ -14,14 +14,7 @@ public interface BetterClientPlatform {
 
     PlatformType getPlatformType();
 
-    /**
-     * 声明本模组在 HUD 右侧状态栏区域额外占用的高度
-     * <p>
-     * NeoForge 用一个累加器来排布右侧状态栏，其它元素（如手持物品名）会据此让位；
-     * 原版与 Fabric 没有这套机制，实现为空操作。
-     *
-     * @param height 占用的像素高度
-     */
+    /** Reserves right-side HUD height on NeoForge; Fabric and vanilla implementations are no-ops. */
     default void addRightStatusBarHeight(int height) {
     }
 }

@@ -34,7 +34,6 @@ public class OptimizationConfigScreen {
                 () -> config.enableWorldIconUpdate,
                 newVal -> config.enableWorldIconUpdate = newVal);
 
-        // Music Pause
         Option<Boolean> enableMusicPauseOpt = ConfigUtils.buildBooleanOption(
                 "enableMusicPause",
                 DEFAULTS.enableMusicPause,

@@ -44,7 +44,6 @@ public class DurabilityTooltipEvent {
                     components.add(number);
                 }
                 case BAR -> {
-                    // 经典耐久条风格：  [█████░░░░░]  73/100
                     double percent = (double) durability / maxDurability;
                     int barLength = 10;
                     int filled = (int) Math.round(percent * barLength);

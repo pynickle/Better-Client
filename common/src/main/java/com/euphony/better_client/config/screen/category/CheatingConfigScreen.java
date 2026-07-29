@@ -20,7 +20,6 @@ public class CheatingConfigScreen {
     private static final String FASTER_CLIMBING_GROUP = "faster_climbing";
 
     public static Screen generateScreen(Screen parent) {
-        // Faster Climbing
         Option<Boolean> enableFasterClimbingOpt = ConfigUtils.buildBooleanOption(
                 "enableFasterClimbing",
                 DEFAULTS.enableFasterClimbing,

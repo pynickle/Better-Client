@@ -31,7 +31,6 @@ public class VisualityConfigScreen {
     private static final String NEW_ITEM_MARKER_GROUP = "new_item_marker";
 
     public static Screen generateScreen(Screen parent) {
-        // Fading Night Vision
         Option<Boolean> enableFadingNightVisionOpt = ConfigUtils.buildBooleanOption(
                 "enableFadingNightVision",
                 DEFAULTS.enableFadingNightVision,
@@ -61,14 +60,12 @@ public class VisualityConfigScreen {
                 () -> config.enableDroppedGlowingEnderEye,
                 newVal -> config.enableDroppedGlowingEnderEye = newVal);
 
-        // Full Brightness Toggle
         Option<Boolean> enableFullBrightnessToggleOpt = ConfigUtils.buildBooleanOption(
                 "enableFullBrightnessToggle",
                 DEFAULTS.enableFullBrightnessToggle,
                 () -> config.enableFullBrightnessToggle,
                 newVal -> config.enableFullBrightnessToggle = newVal);
 
-        // Trail Spawner Timer
         Option<Boolean> enableTrialSpawnerTimerOpt = ConfigUtils.buildBooleanOption(
                 "enableTrialSpawnerTimer",
                 DEFAULTS.enableTrialSpawnerTimer,
@@ -115,14 +112,12 @@ public class VisualityConfigScreen {
                 () -> config.enableDropShadow,
                 newVal -> config.enableDropShadow = newVal);
 
-        // Invisible Item Frame
         Option<Boolean> enableInvisibleItemFrameOpt = ConfigUtils.buildBooleanOption(
                 "enableInvisibleItemFrame",
                 DEFAULTS.enableInvisibleItemFrame,
                 () -> config.enableInvisibleItemFrame,
                 newVal -> config.enableInvisibleItemFrame = newVal);
 
-        // Client Weather
         Option<Boolean> enableClientWeatherOpt = ConfigUtils.buildBooleanOption(
                 "enableClientWeather",
                 DEFAULTS.enableClientWeather,

@@ -24,14 +24,12 @@ public class MiscellaneitiesConfigScreen {
     private static final String CLICK_THROUGH_GROUP = "click_through";
 
     public static Screen generateScreen(Screen parent) {
-        // Bundle Up
         Option<Boolean> enableBundleUpOpt = ConfigUtils.buildBooleanOption(
                 "enableBundleUp",
                 DEFAULTS.enableBundleUp,
                 () -> config.enableBundleUp,
                 newVal -> config.enableBundleUp = newVal);
 
-        // Click Through
         Option<Boolean> enableClickThroughOpt = ConfigUtils.buildBooleanOption(
                 "enableClickThrough",
                 DEFAULTS.enableClickThrough,

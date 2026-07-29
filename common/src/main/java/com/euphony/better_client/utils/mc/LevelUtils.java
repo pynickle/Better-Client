@@ -71,15 +71,11 @@ public class LevelUtils {
         return getCurrentWorldKey(Minecraft.getInstance(), level);
     }
 
-    /**
-     * 获取当前世界的唯一标识符
-     */
     public static String getCurrentWorldKey(Minecraft client, ClientLevel level) {
         if (level == null) {
             return "unknown";
         }
 
-        // 组合维度和服务器信息作为唯一标识
         String dimension = level.dimension().registry().toString();
         return getCurrentSessionKey(client, level) + "_" + dimension;
     }

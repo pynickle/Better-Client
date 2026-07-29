@@ -67,10 +67,7 @@ public class ClickThroughEvent {
         }
     }
 
-    /**
-     * 在 {@code Minecraft#startUseItem} 前调用，若准星目标为墙上告示牌/旗帜/物品展示框
-     * 且其背后是可交互容器，则将目标重定向到背后的方块。
-     */
+    /** Redirects wall signs, banners, and item frames to an interactive container behind them. */
     public static HitResult redirectHitResult(HitResult hitResult, LocalPlayer player, ClientLevel level) {
         dyeOnSign = false;
         if (!config.enableClickThrough || hitResult == null) {
@@ -110,7 +107,7 @@ public class ClickThroughEvent {
                 player.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof SignApplicator;
         if (holdingSignApplicator && config.clickThroughSneakToDye) {
             if (player.isShiftKeyDown()) {
-                // 潜行时将染料等应用到告示牌上，标记以免潜行取消交互
+                // Let sign applicators use the sign while sneaking.
                 dyeOnSign = true;
                 return blockHit;
             }
@@ -122,10 +119,7 @@ public class ClickThroughEvent {
         return blockHit;
     }
 
-    /**
-     * 潜行染色时抑制 {@code Player#isSecondaryUseActive}，使告示牌接受染料。
-     * 读取后即复位。
-     */
+    /** Suppresses secondary use once so a sneaking player can apply a sign applicator. */
     public static boolean consumeDyeOnSign() {
         if (!dyeOnSign) {
             return false;

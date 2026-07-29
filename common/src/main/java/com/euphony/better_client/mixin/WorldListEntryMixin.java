@@ -106,8 +106,7 @@ public class WorldListEntryMixin {
         int ticks = hasPlayTime.better_client$getPlayTimeTicks();
         if (ticks <= 0) return;
 
-        // 将 tick 转换为小时（保留 1 位小数）
-        double hours = ticks / 72000.0; // 20 ticks * 3600 seconds
+        double hours = ticks / 72000.0;
         String hourText = hours >= 100.0 ? String.valueOf((int) hours) : String.format(Locale.US, "%.1f", hours);
         Component component = Component.translatable("message.world_play_time", Component.literal(hourText));
 
@@ -122,7 +121,6 @@ public class WorldListEntryMixin {
         int renderX = entry.getContentX() + entry.getContentWidth() - totalWidth - 4;
         int renderY = entry.getContentY();
 
-        // 绘制图标
         graphics.blit(
                 RenderPipelines.GUI_TEXTURED,
                 WORLD_PLAY_TIME_ICON,
@@ -135,7 +133,6 @@ public class WorldListEntryMixin {
                 iconSize,
                 iconSize,
                 config.worldPlayTimeColor);
-        // 绘制文字
         graphics.text(mc.font, component, renderX + iconSize + spacing, renderY + 1, config.worldPlayTimeColor, false);
     }
 }

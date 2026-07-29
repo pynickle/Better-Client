@@ -42,16 +42,13 @@ public class TradingHudRenderer {
             MerchantOffers merchantOffers = merchantInfo.getOffers();
             List<String> enchantmentTexts = merchantInfo.getOfferEnchantmentTexts();
             if (!merchantOffers.isEmpty()) {
-                // Get screen dimensions
                 int screenWidth = minecraft.getWindow().getGuiScaledWidth();
                 int screenHeight = minecraft.getWindow().getGuiScaledHeight();
 
-                // Calculate visible offers and HUD dimensions
                 int visibleOffers = Math.min(merchantOffers.size(), 7);
                 int hudHeight = visibleOffers * 20;
                 int hudWidth = 90;
 
-                // Calculate initial position based on config
                 int i, k;
                 switch (config.tradingHudPos) {
                     case TOP_LEFT -> {

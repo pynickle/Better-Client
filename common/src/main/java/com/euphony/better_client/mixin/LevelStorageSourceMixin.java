@@ -50,7 +50,7 @@ public class LevelStorageSourceMixin {
                     totalTicks += custom.get("minecraft:play_time").getAsInt();
                 }
             } catch (Exception ignored) {
-                // 忽略损坏的统计文件
+                // Ignore malformed statistics files.
             }
         }
 

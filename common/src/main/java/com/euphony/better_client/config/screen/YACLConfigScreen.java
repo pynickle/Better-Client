@@ -69,14 +69,12 @@ public class YACLConfigScreen extends Screen {
     protected void init() {
         super.init();
 
-        // 使用 4 列布局来适应 8 个按钮
         int buttonWidth = (this.width - 100) / 4;
         int buttonHeight = 20;
         int spacing = 18;
         int startX = 20;
         int startY = 50;
 
-        // 第一行按钮
         addRenderableWidget(new CategoryButton(
                 startX,
                 startY,
@@ -133,7 +131,6 @@ public class YACLConfigScreen extends Screen {
                     this.minecraft.gui.setScreen(this.optimizationConfigScreen);
                 }));
 
-        // 第二行按钮
         int secondRowY = startY + buttonHeight + spacing;
 
         addRenderableWidget(new CategoryButton(
@@ -192,7 +189,6 @@ public class YACLConfigScreen extends Screen {
                     this.minecraft.gui.setScreen(this.miscellaneitiesConfigScreen);
                 }));
 
-        // Done 按钮
         int doneButtonWidth = this.width - 300;
         var buttonWidget = Button.builder(CommonComponents.GUI_DONE, (btn) -> this.minecraft.gui.setScreen(this.parent))
                 .bounds(this.width / 2 - doneButtonWidth / 2, this.height - 30, doneButtonWidth, 20)

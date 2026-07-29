@@ -22,18 +22,9 @@ import java.util.Map;
 
 import static com.euphony.better_client.BetterClient.config;
 
-/**
- * 客户端数据包监听器混入类，用于处理交易相关的数据包
- */
 @Mixin(ClientPacketListener.class)
 public class ClientPacketListenerMixin {
 
-    /**
-     * 处理商人交易报价数据包
-     *
-     * @param packet 商人交易报价数据包
-     * @param ci     回调信息
-     */
     @Inject(at = @At("HEAD"), method = "handleMerchantOffers", cancellable = true)
     public void onHandleMerchantOffers(ClientboundMerchantOffersPacket packet, CallbackInfo ci) {
         if (!config.enableTradingHud) return;
@@ -45,12 +36,6 @@ public class ClientPacketListenerMixin {
         }
     }
 
-    /**
-     * 处理打开界面数据包
-     *
-     * @param packet 打开界面数据包
-     * @param ci     回调信息
-     */
     @Inject(at = @At("HEAD"), method = "handleOpenScreen", cancellable = true)
     public void onHandleOpenScreen(ClientboundOpenScreenPacket packet, CallbackInfo ci) {
         if (!config.enableTradingHud) return;
@@ -61,11 +46,6 @@ public class ClientPacketListenerMixin {
         }
     }
 
-    /**
-     * 关闭容器
-     *
-     * @param containerId 容器 ID
-     */
     @Unique
     private void better_client$closeContainer(int containerId) {
         if (!config.enableTradingHud) return;

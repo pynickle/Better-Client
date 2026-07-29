@@ -34,7 +34,6 @@ public class ScreenConfigScreen {
     private static final String MOUNTED_BARS_GROUP = "mounted_bars";
 
     public static Screen generateScreen(Screen parent) {
-        // Better Ping Display
         Option<Boolean> enableBetterPingDisplayOpt = ConfigUtils.buildBooleanOption(
                 "enableBetterPingDisplay",
                 "screen/better_ping_display",
@@ -48,7 +47,6 @@ public class ScreenConfigScreen {
                 () -> config.enableDefaultPingBars,
                 newVal -> config.enableDefaultPingBars = newVal);
 
-        // Biome Title
         Option<Boolean> enableBiomeTitleOpt = ConfigUtils.buildBooleanOption(
                 "enableBiomeTitle",
                 DEFAULTS.enableBiomeTitle,
@@ -135,7 +133,6 @@ public class ScreenConfigScreen {
                 () -> config.enableFirstEntryOnly,
                 newVal -> config.enableFirstEntryOnly = newVal);
 
-        // Book Scroll
         Option<Boolean> enableBookScrollOpt = ConfigUtils.buildBooleanOption(
                 "enableBookScroll",
                 DEFAULTS.enableBookScroll,
@@ -162,7 +159,6 @@ public class ScreenConfigScreen {
                 () -> config.enableBookSaveConfirmation,
                 newVal -> config.enableBookSaveConfirmation = newVal);
 
-        // No Experimental Warning
         Option<AutoAdaptMode> enableNoExperimentalWarningOpt = ConfigUtils.<AutoAdaptMode>getGenericOption(
                         "enableNoExperimentalWarning")
                 .binding(
@@ -179,7 +175,6 @@ public class ScreenConfigScreen {
                 () -> config.enableExperimentalDisplay,
                 newVal -> config.enableExperimentalDisplay = newVal);
 
-        // World Play Time
         Option<Boolean> enableWorldPlayTimeOpt = ConfigUtils.buildBooleanOption(
                 "enableWorldPlayTime",
                 DEFAULTS.enableWorldPlayTime,
@@ -193,7 +188,6 @@ public class ScreenConfigScreen {
                 .controller(opt -> ColorControllerBuilder.create(opt).allowAlpha(false))
                 .build();
 
-        // Lower Shield
         Option<Boolean> enableLowerShieldOpt = ConfigUtils.buildBooleanOption(
                 "enableLowerShield",
                 DEFAULTS.enableLowerShield,
@@ -206,7 +200,6 @@ public class ScreenConfigScreen {
                         .step(0.5))
                 .build();
 
-        // Totem Bar
         Option<Boolean> enableTotemBarOpt = ConfigUtils.buildBooleanOption(
                 "enableTotemBar",
                 DEFAULTS.enableTotemBar,
@@ -230,7 +223,6 @@ public class ScreenConfigScreen {
                 .controller(IntegerFieldControllerBuilder::create)
                 .build();
 
-        // Potion Bar
         Option<Boolean> enablePotionBarOpt = ConfigUtils.buildBooleanOption(
                 "enablePotionBar",
                 DEFAULTS.enablePotionBar,
@@ -274,7 +266,6 @@ public class ScreenConfigScreen {
                 () -> config.autoAdaptPotionBarYOffset,
                 newVal -> config.autoAdaptPotionBarYOffset = newVal);
 
-        // Mounted Bars
         Option<AutoAdaptMode> enableFoodBarWhileMountedOpt = ConfigUtils.<AutoAdaptMode>getGenericOption(
                         "enableFoodBarWhileMounted")
                 .binding(

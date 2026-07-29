@@ -24,7 +24,6 @@ public class TooltipConfigScreen {
     private static final String SUSPICIOUS_STEW_TOOLTIP_GROUP = "suspicious_stew_tooltip";
 
     public static Screen generateScreen(Screen parent) {
-        // Durability Tooltip
         Option<AutoAdaptMode> enableDurabilityTooltipOpt = ConfigUtils.<AutoAdaptMode>getGenericOption(
                         "enableDurabilityTooltip")
                 .binding(
@@ -56,7 +55,6 @@ public class TooltipConfigScreen {
                 () -> config.showDurabilityHint,
                 newVal -> config.showDurabilityHint = newVal);
 
-        // Compass Tooltip
         Option<Boolean> enableCompassTooltipOpt = ConfigUtils.buildBooleanOption(
                 "enableCompassTooltip",
                 DEFAULTS.enableCompassTooltip,
@@ -81,7 +79,6 @@ public class TooltipConfigScreen {
                 () -> config.enableRecoveryCompassTooltip,
                 newVal -> config.enableRecoveryCompassTooltip = newVal);
 
-        // Suspicious Stew Tooltip
         Option<Boolean> enableSuspiciousStewTooltipOpt = ConfigUtils.buildBooleanOption(
                 "enableSuspiciousStewTooltip",
                 DEFAULTS.enableSuspiciousStewTooltip,

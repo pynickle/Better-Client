@@ -11,9 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * 商人信息管理类，使用单例模式
- */
 public class MerchantInfo {
     private static final MerchantInfo INSTANCE = new MerchantInfo();
 
@@ -56,19 +53,10 @@ public class MerchantInfo {
         this.lastEntityId = entityId;
     }
 
-    /**
-     * 检查是否是同一个实体
-     *
-     * @param entityId 实体 ID
-     * @return 如果是同一个实体则返回 true
-     */
     public boolean isSameEntity(int entityId) {
         return getLastEntityId().map(id -> id == entityId).orElse(false);
     }
 
-    /**
-     * 重置商人信息
-     */
     public void reset() {
         this.lastEntityId = null;
         this.offers = new MerchantOffers();

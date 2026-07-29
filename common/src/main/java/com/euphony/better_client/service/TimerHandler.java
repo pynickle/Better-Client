@@ -27,7 +27,6 @@ public class TimerHandler {
      * @return true if switching to this state should delete the timer
      */
     public static boolean shouldReset(TrialSpawnerState state) {
-        // Remove timer when spawner enters non-cooldown state
         return state != TrialSpawnerState.COOLDOWN && state != TrialSpawnerState.EJECTING_REWARD;
     }
 
@@ -122,7 +121,6 @@ public class TimerHandler {
                     removedTimer.getRemainingTicks(level.getGameTime()));
         }
 
-        // If no timers remain in this dimension, clean up the entire Map
         if (levelTimers.isEmpty()) {
             timers.remove(dimension);
         }
@@ -153,7 +151,6 @@ public class TimerHandler {
             return expired;
         });
 
-        // If no timers remain in this dimension, clean up the entire Map
         if (levelTimers.isEmpty()) {
             timers.remove(level.dimension());
         }
@@ -177,7 +174,6 @@ public class TimerHandler {
         LOGGER.debug("Cleaned up all timers");
     }
 
-    // ==================== Spawner State Update Handling ====================
 
     /**
      * Handles trial spawner block updates, checking if timers need to be created/deleted
@@ -213,14 +209,12 @@ public class TimerHandler {
         }
 
         try {
-            // 如果应该创建计时器且当前没有计时器，则创建
             if (shouldCreate(state) && !hasTimer(level, pos)) {
                 long cooldownTicks = config.trialSpawnerCooldown * 20;
                 insertTimer(level, pos, level.getGameTime(), cooldownTicks);
                 return;
             }
 
-            // If timer should be reset, delete existing timer
             if (shouldReset(state)) {
                 deleteTimer(level, pos);
             }
