@@ -29,24 +29,27 @@ public final class BCKeyMappings {
                 KeyMapping.Category.register(Utils.prefix("keymapping"));
 
         private static final KeyMapping BUNDLE_UP = new KeyMapping(
-                "key.better_client.bundle_up", InputConstants.Type.KEYSYM, InputConstants.KEY_R, KEYMAPPING_CATEGORY);
+                "key.better_client.bundle_up",
+                InputConstants.Type.KEYSYM,
+                InputConstants.UNKNOWN.getValue(),
+                KEYMAPPING_CATEGORY);
 
         private static final KeyMapping FULL_BRIGHTNESS_TOGGLE = new KeyMapping(
                 "key.better_client.full_brightness_toggle",
                 InputConstants.Type.KEYSYM,
-                InputConstants.KEY_G,
+                InputConstants.UNKNOWN.getValue(),
                 KEYMAPPING_CATEGORY);
 
         private static final KeyMapping ITEM_FRAME_INVISIBILITY_TOGGLE = new KeyMapping(
                 "key.better_client.item_frame_invisibility_toggle",
                 InputConstants.Type.KEYSYM,
-                InputConstants.KEY_T,
+                InputConstants.UNKNOWN.getValue(),
                 KEYMAPPING_CATEGORY);
 
         private static final KeyMapping CLICK_THROUGH_TOGGLE = new KeyMapping(
                 "key.better_client.click_through_toggle",
                 InputConstants.Type.KEYSYM,
-                InputConstants.KEY_F9,
+                InputConstants.UNKNOWN.getValue(),
                 KEYMAPPING_CATEGORY);
     }
 }
