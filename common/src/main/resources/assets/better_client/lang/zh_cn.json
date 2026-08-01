@@ -115,7 +115,7 @@
 
   "yacl3.config.better_client:config.category.client.group.biome_title": "生物群系标题",
   "yacl3.config.better_client:config.enableBiomeTitle": "启用生物群系标题",
-  "yacl3.config.better_client:config.enableBiomeTitle.desc": "进入新生物群系时显示标题。",
+  "yacl3.config.better_client:config.enableBiomeTitle.desc": "进入新生物群系时显示标题。自动适配时，若已安装其他生物群系标题模组，将禁用此功能。",
   "yacl3.config.better_client:config.hideInF1": "在 F1 中隐藏",
   "yacl3.config.better_client:config.hideInF1.desc": "F1 屏幕不显示标题。",
   "yacl3.config.better_client:config.hideInF3": "在 F3 中隐藏",

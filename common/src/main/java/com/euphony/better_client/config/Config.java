@@ -65,7 +65,7 @@ public class Config {
     public boolean enableScaffolding = true;
     public double speedMultiplier = 2.0D;
 
-    public boolean enableBiomeTitle = true;
+    public AutoAdaptMode enableBiomeTitle = AutoAdaptMode.AUTO;
     public boolean hideInF3 = true;
     public boolean hideInF1 = true;
     public double displayDuration = 1.5;
@@ -240,6 +240,7 @@ public class Config {
         if (enableNoExperimentalWarning == null) enableNoExperimentalWarning = AutoAdaptMode.AUTO;
         if (enableFoodBarWhileMounted == null) enableFoodBarWhileMounted = AutoAdaptMode.AUTO;
         if (enableExperienceBarWhileMounted == null) enableExperienceBarWhileMounted = AutoAdaptMode.AUTO;
+        if (enableBiomeTitle == null) enableBiomeTitle = AutoAdaptMode.AUTO;
     }
 
     public boolean isDurabilityTooltipEnabled() {
@@ -262,6 +263,10 @@ public class Config {
 
     public boolean isExperienceBarWhileMountedEnabled() {
         return enableExperienceBarWhileMounted.resolve(!Utils.isAnyModLoaded("leavemybarsalone"));
+    }
+
+    public boolean isBiomeTitleEnabled() {
+        return enableBiomeTitle.resolve(!Utils.isAnyModLoaded("travelerstitles"));
     }
 
     public static void save() {

@@ -216,7 +216,7 @@ public class BiomeTitleEvent {
     }
 
     private static boolean shouldRender() {
-        return complete && config.enableBiomeTitle;
+        return complete && config.isBiomeTitleEnabled();
     }
 
     private static boolean shouldUpdateBiome(Biome currentBiome, BlockPos pos, Minecraft mc) {

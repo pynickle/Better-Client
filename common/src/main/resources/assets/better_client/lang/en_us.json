@@ -115,7 +115,7 @@
 
   "yacl3.config.better_client:config.category.client.group.biome_title": "Biome Title",
   "yacl3.config.better_client:config.enableBiomeTitle": "Enable Biome Title",
-  "yacl3.config.better_client:config.enableBiomeTitle.desc": "Displays a title when entering a new biome.",
+  "yacl3.config.better_client:config.enableBiomeTitle.desc": "Displays a title when entering a new biome. Auto disables this feature when another biome title mod is loaded.",
   "yacl3.config.better_client:config.hideInF1": "Hide In F1",
   "yacl3.config.better_client:config.hideInF1.desc": "The title will not be displayed in the F1 screen.",
   "yacl3.config.better_client:config.hideInF3": "Hide In F3",

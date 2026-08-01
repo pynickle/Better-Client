@@ -47,11 +47,15 @@ public class ScreenConfigScreen {
                 () -> config.enableDefaultPingBars,
                 newVal -> config.enableDefaultPingBars = newVal);
 
-        Option<Boolean> enableBiomeTitleOpt = ConfigUtils.buildBooleanOption(
-                "enableBiomeTitle",
-                DEFAULTS.enableBiomeTitle,
-                () -> config.enableBiomeTitle,
-                newVal -> config.enableBiomeTitle = newVal);
+        Option<AutoAdaptMode> enableBiomeTitleOpt = ConfigUtils.<AutoAdaptMode>getGenericOption("enableBiomeTitle")
+                .binding(
+                        DEFAULTS.enableBiomeTitle,
+                        () -> config.enableBiomeTitle,
+                        newVal -> config.enableBiomeTitle = newVal)
+                .controller(opt -> EnumControllerBuilder.create(opt)
+                        .enumClass(AutoAdaptMode.class)
+                        .formatValue(ConfigUtils.AUTO_ADAPT_MODE_VALUE_FORMATTER))
+                .build();
 
         Option<Boolean> hideInF1Opt = ConfigUtils.buildBooleanOption(
                 "hideInF1", DEFAULTS.hideInF1, () -> config.hideInF1, newVal -> config.hideInF1 = newVal);
