@@ -2,6 +2,8 @@ plugins {
     id "com.gradleup.shadow" version "9.4.0"
 }
 
+def commonAccessWidener = project(':common').file("src/main/resources/${mod_id}.accesswidener")
+
 architectury {
     platformSetupLoomIde()
     fabric()
@@ -10,7 +12,7 @@ architectury {
 sourceSets.main.resources { srcDir project(':common').file('src/generated/resources').getAbsolutePath() }
 
 loom {
-    accessWidenerPath = file("src/main/resources/${mod_id}.accesswidener")
+    accessWidenerPath = commonAccessWidener
 }
 
 configurations {
@@ -32,7 +34,7 @@ repositories {
 dependencies {
     minecraft "com.mojang:minecraft:${rootProject.architectury.minecraft}"
 
-    api "net.fabricmc:fabric-loader:$rootProject.fabric_loader_version"
+    api "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
 
     api "net.fabricmc.fabric-api:fabric-api:$rootProject.fabric_api_version"
 
@@ -51,6 +53,8 @@ dependencies {
 processResources {
     inputs.property 'version', project.version
 
+    from(commonAccessWidener)
+
     filesMatching('fabric.mod.json') {
         expand version: project.version
     }
@@ -68,8 +72,11 @@ shadowJar {
     dependsOn(jar)
     mainSpec.sourcePaths.clear()
     from(zipTree(jar.archiveFile))
+    exclude "${mod_id}.accesswidener"
 
     configurations = [project.configurations.shadowCommon]
     archiveClassifier = null
     from rootProject.file("LICENSE.md")
 }
+
+loom.injectAccessWidener(tasks.named('shadowJar'), commonAccessWidener)

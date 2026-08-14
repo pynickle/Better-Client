@@ -74,6 +74,7 @@
         },
         "modrinth": {
           "project_id": "uWsLN21d",
+          "environment": "client_only",
           "version_number": "${ nextRelease.version }+${ loader }"
         }
       }
