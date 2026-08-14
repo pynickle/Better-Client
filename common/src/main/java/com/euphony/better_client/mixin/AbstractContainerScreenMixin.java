@@ -25,7 +25,7 @@ public abstract class AbstractContainerScreenMixin extends Screen {
             method = "extractTooltip",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;setTooltipForNextFrame(Lnet/minecraft/client/gui/Font;Ljava/util/List;Ljava/util/Optional;IILnet/minecraft/resources/Identifier;)V"))
+                    target = "Lnet/minecraft/world/item/ItemStack;getTooltipImage()Ljava/util/Optional;"))
     private void better_client$clearHoveredMarker(
             GuiGraphicsExtractor graphics, int mouseX, int mouseY, CallbackInfo ci) {
         NewItemMarker.clearOnHover(this.hoveredSlot);
