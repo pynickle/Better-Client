@@ -1,3 +1,25 @@
+## [10.7.0](https://github.com/pynickle/Better-Client/compare/v10.6.0...v10.7.0) (2026-09-23)
+
+### ⚠ BREAKING CHANGES
+
+* port to 26.3
+
+### ✨ Features
+
+* port to 26.3 ([5bee5e9](https://github.com/pynickle/Better-Client/commit/5bee5e9e39c87f19a9e58b3ca50309d931c15a37))
+
+### 🐛 Bug Fixes
+
+* fix neoforge crashes ([6c7e122](https://github.com/pynickle/Better-Client/commit/6c7e122500dc395c5676e6deaca2c125c88ad428))
+
+### 🔧 Miscellaneous Changes
+
+* update deps ([b52911b](https://github.com/pynickle/Better-Client/commit/b52911b00b615bc18bc957a3dfe05d605826f5e1))
+
+### 🚀 Improvements
+
+* make new item marker default closed ([1c0849a](https://github.com/pynickle/Better-Client/commit/1c0849acc6c60a9acc3fe3c61b17efb2b69e433e))
+
 ## [10.6.0](https://github.com/pynickle/Better-Client/compare/v10.5.0...v10.6.0) (2026-08-01)
 
 ## [10.5.0](https://github.com/pynickle/Better-Client/compare/v10.4.0...v10.5.0) (2026-07-29)
