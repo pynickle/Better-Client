@@ -57,7 +57,7 @@ public class TrialSpawnerTimerRenderer {
 
         Quaternionf rotation = new Quaternionf();
         rotation.rotationYXZ((float) (-Math.PI) / 180 * (yRot - 180F), (float) Math.PI / 180 * -xRot, 0.0f);
-        poseStack.mulPose(rotation);
+        poseStack.rotate(rotation);
 
         Matrix4f matrix4f = poseStack.last().pose();
         matrix4f.rotate((float) Math.PI, 0.0F, 1.0F, 0.0F);

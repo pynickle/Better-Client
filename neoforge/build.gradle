@@ -52,7 +52,7 @@ dependencies {
 
     neoForge "net.neoforged:neoforge:${rootProject.neoforge_version}"
 
-    implementation("dev.isxander:yet-another-config-lib:${yacl_version}+26.2-neoforge"){
+    implementation("dev.isxander:yet-another-config-lib:${yacl_version}+26.3-neoforge"){
         exclude group: "net.neoforged.fancymodloader", module: "loader"
     }
 

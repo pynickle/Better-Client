@@ -1,21 +1,20 @@
 package com.euphony.better_client.utils.mc;
 
 import com.mojang.blaze3d.platform.InputConstants;
-import net.minecraft.client.Minecraft;
 
 public class KeyUtils {
     public static boolean hasControlDown() {
-        return InputConstants.isKeyDown(Minecraft.getInstance().getWindow(), 341)
-                || InputConstants.isKeyDown(Minecraft.getInstance().getWindow(), 345);
+        return InputConstants.isKeyDown(InputConstants.KEY_LCONTROL)
+                || InputConstants.isKeyDown(InputConstants.KEY_RCONTROL);
     }
 
     public static boolean hasShiftDown() {
-        return InputConstants.isKeyDown(Minecraft.getInstance().getWindow(), 340)
-                || InputConstants.isKeyDown(Minecraft.getInstance().getWindow(), 344);
+        return InputConstants.isKeyDown(InputConstants.KEY_LSHIFT)
+                || InputConstants.isKeyDown(InputConstants.KEY_RSHIFT);
     }
 
     public static boolean hasAltDown() {
-        return InputConstants.isKeyDown(Minecraft.getInstance().getWindow(), 342)
-                || InputConstants.isKeyDown(Minecraft.getInstance().getWindow(), 346);
+        return InputConstants.isKeyDown(InputConstants.KEY_LALT)
+                || InputConstants.isKeyDown(InputConstants.KEY_RALT);
     }
 }

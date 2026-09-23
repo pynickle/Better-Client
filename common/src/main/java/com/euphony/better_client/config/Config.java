@@ -18,6 +18,7 @@ import net.minecraft.client.gui.screens.ConfirmScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
+import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -283,7 +284,7 @@ public class Config {
 
         return new ConfirmScreen(
                 clicked -> {
-                    if (clicked) ConfirmLinkScreen.confirmLinkNow(parent, link);
+                    if (clicked) ConfirmLinkScreen.confirmLinkNow(parent, URI.create(link));
                     else mc.gui.setScreen(parent);
                 },
                 Component.translatable("text.better_client.help.missing"),
