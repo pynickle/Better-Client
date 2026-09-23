@@ -189,7 +189,7 @@ public class Config {
 
     public boolean enableClientWeather = true;
 
-    public boolean enableNewItemMarker = true;
+    public boolean enableNewItemMarker = false;
     public boolean clearNewItemMarkerOnHover = true;
     public boolean clearNewItemMarkerOnSelect = true;
     public boolean clearNewItemMarkerOnInventoryClose = false;
