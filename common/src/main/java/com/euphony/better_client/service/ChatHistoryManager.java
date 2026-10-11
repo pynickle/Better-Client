@@ -150,11 +150,9 @@ public final class ChatHistoryManager {
             return;
         }
 
-        if (separator.isBlank()) {
+        if (separator.isBlank() || endsWithSeparator(chat, separator)) {
             return;
         }
-
-        separator = separator.replace('&', '§');
 
         restoringChat = true;
         try {
@@ -227,7 +225,7 @@ public final class ChatHistoryManager {
 
     private static String formatSeparator(String sessionName, Instant disconnectTime) {
         String template = config.chatHistorySeparatorTemplate == null ? "" : config.chatHistorySeparatorTemplate;
-        String normalizedTemplate = template.replace("\\n", "\n");
+        String normalizedTemplate = template.replace("\\n", "\n").replace('&', '§');
         return FormatUtils.format(
                 normalizedTemplate,
                 Map.of(
@@ -241,6 +239,30 @@ public final class ChatHistoryManager {
                         "last_disconnect_date", DATE_FORMATTER.format(disconnectTime.atZone(ZoneId.systemDefault())),
                         "last_disconnect_datetime",
                         DATE_TIME_FORMATTER.format(disconnectTime.atZone(ZoneId.systemDefault()))));
+    }
+
+    // Messages are newest-first, so the last separator line is at the front of the list.
+    private static boolean endsWithSeparator(ChatComponent chat, String separator) {
+        String[] lines = separator.split("\n", -1);
+        ChatComponentStateAccessor accessor = (ChatComponentStateAccessor) chat.storeState();
+        List<GuiMessage> messages = accessor.better_client$getMessages();
+        if (messages.size() < lines.length) {
+            return false;
+        }
+
+        for (int i = 0; i < lines.length; i++) {
+            GuiMessage message = messages.get(i);
+            if (message == null || message.content() == null) {
+                return false;
+            }
+
+            String expected = SEPARATOR_MARKER + lines[lines.length - 1 - i];
+            if (!expected.equals(message.content().getString())) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     private static boolean isStateEmpty(ChatComponent.State state) {
