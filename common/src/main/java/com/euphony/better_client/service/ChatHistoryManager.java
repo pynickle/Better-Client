@@ -820,7 +820,7 @@ public final class ChatHistoryManager {
 
         try {
             return new MessageSignature(Base64.getDecoder().decode(bytes));
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | IllegalStateException e) {
             LOGGER.error("[BetterClient] Failed to decode chat signature", e);
             return null;
         }
