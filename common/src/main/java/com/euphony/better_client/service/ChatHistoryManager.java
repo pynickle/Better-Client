@@ -54,6 +54,11 @@ public final class ChatHistoryManager {
     private static boolean persistentStoreSaveScheduled;
     private static boolean persistentStoreSaveDirty;
 
+    static {
+        Runtime.getRuntime().addShutdownHook(
+                new Thread(ChatHistoryManager::flushPersistentStore, "better-client-chat-history"));
+    }
+
     private ChatHistoryManager() {
     }
 
@@ -74,6 +79,7 @@ public final class ChatHistoryManager {
 
     public static void handleDisconnect() {
         saveCurrentSession();
+        flushPersistentStore();
         sessionEnded = true;
     }
 
@@ -368,20 +374,29 @@ public final class ChatHistoryManager {
 
         Util.ioPool().execute(() -> {
             while (true) {
-                PersistentChatStore snapshot;
                 synchronized (PERSISTENT_STORE_LOCK) {
-                    if (!persistentStoreSaveDirty) {
+                    if (!persistentStoreSaveDirty || persistentChatStore == null) {
                         persistentStoreSaveScheduled = false;
                         return;
                     }
-
-                    persistentStoreSaveDirty = false;
-                    snapshot = copyStore(persistentChatStore);
                 }
 
-                writePersistentStore(snapshot);
+                flushPersistentStore();
             }
         });
+    }
+
+    // The snapshot is taken inside the write lock so an older async copy cannot replace a newer flush.
+    private static void flushPersistentStore() {
+        synchronized (PERSISTENT_STORE_LOCK) {
+            if (persistentChatStore == null) {
+                return;
+            }
+
+            PersistentChatStore snapshot = copyStore(persistentChatStore);
+            persistentStoreSaveDirty = false;
+            writePersistentStore(snapshot);
+        }
     }
 
     private static void writePersistentStore(PersistentChatStore store) {
