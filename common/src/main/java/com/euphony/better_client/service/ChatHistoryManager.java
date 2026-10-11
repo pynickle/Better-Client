@@ -21,8 +21,10 @@ import net.minecraft.util.Util;
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.AtomicMoveNotSupportedException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -35,6 +37,8 @@ public final class ChatHistoryManager {
     private static final String SEPARATOR_MARKER = "\uE000";
     private static final int STORE_FORMAT_VERSION = 2;
     private static final Path CHAT_HISTORY_PATH = DataUtils.getDataDir().resolve("chat_history.json");
+    private static final Path CHAT_HISTORY_TEMP_PATH = CHAT_HISTORY_PATH.resolveSibling("chat_history.json.tmp");
+    private static final Path CHAT_HISTORY_BACKUP_PATH = CHAT_HISTORY_PATH.resolveSibling("chat_history.json.bak");
     private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy/MM/dd");
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
@@ -279,6 +283,11 @@ public final class ChatHistoryManager {
     }
 
     private static PersistentChatStore loadPersistentStore() {
+        restoreBackupIfLiveMissing();
+        return readPersistentStore(true);
+    }
+
+    private static PersistentChatStore readPersistentStore(boolean restoreBackupOnFailure) {
         if (Files.notExists(CHAT_HISTORY_PATH)) {
             return new PersistentChatStore();
         }
@@ -287,26 +296,65 @@ public final class ChatHistoryManager {
         try (Reader reader = Files.newBufferedReader(CHAT_HISTORY_PATH, StandardCharsets.UTF_8)) {
             root = JsonUtils.GSON.fromJson(reader, JsonObject.class);
         } catch (IOException | JsonParseException e) {
-            LOGGER.error("[BetterClient] Failed to load chat history data, deleting it", e);
-            deleteUnreadableStore();
-            return new PersistentChatStore();
+            LOGGER.error("[BetterClient] Failed to load chat history data, quarantining it", e);
+            return recoverUnreadableStore(restoreBackupOnFailure);
         }
 
         if (root == null || getAsInt(root, "version", 0) != STORE_FORMAT_VERSION) {
-            LOGGER.warn("[BetterClient] Deleting chat history data with unsupported format");
-            deleteUnreadableStore();
-            return new PersistentChatStore();
+            LOGGER.warn("[BetterClient] Quarantining chat history data with unsupported format");
+            return recoverUnreadableStore(restoreBackupOnFailure);
         }
 
         return deserializeStore(root);
     }
 
-    private static void deleteUnreadableStore() {
-        try {
-            Files.deleteIfExists(CHAT_HISTORY_PATH);
-        } catch (IOException e) {
-            LOGGER.error("[BetterClient] Failed to delete unreadable chat history file", e);
+    private static PersistentChatStore recoverUnreadableStore(boolean restoreBackupOnFailure) {
+        quarantineUnreadableStore(restoreBackupOnFailure);
+        if (!restoreBackupOnFailure || Files.notExists(CHAT_HISTORY_PATH)) {
+            return new PersistentChatStore();
         }
+
+        return readPersistentStore(false);
+    }
+
+    private static void restoreBackupIfLiveMissing() {
+        if (Files.exists(CHAT_HISTORY_PATH) || Files.notExists(CHAT_HISTORY_BACKUP_PATH)) {
+            return;
+        }
+
+        try {
+            moveSameDirectory(CHAT_HISTORY_BACKUP_PATH, CHAT_HISTORY_PATH);
+            LOGGER.warn("[BetterClient] Restored chat history from backup");
+        } catch (IOException e) {
+            LOGGER.error("[BetterClient] Failed to restore chat history backup", e);
+        }
+    }
+
+    private static void quarantineUnreadableStore(boolean restoreBackup) {
+        try {
+            if (Files.exists(CHAT_HISTORY_PATH)) {
+                Path corruptPath = corruptStorePath();
+                moveSameDirectory(CHAT_HISTORY_PATH, corruptPath);
+                LOGGER.warn("[BetterClient] Moved unreadable chat history to {}", corruptPath.getFileName());
+            }
+
+            if (restoreBackup && Files.exists(CHAT_HISTORY_BACKUP_PATH) && Files.notExists(CHAT_HISTORY_PATH)) {
+                moveSameDirectory(CHAT_HISTORY_BACKUP_PATH, CHAT_HISTORY_PATH);
+            }
+        } catch (IOException e) {
+            LOGGER.error("[BetterClient] Failed to quarantine unreadable chat history file", e);
+        }
+    }
+
+    private static Path corruptStorePath() {
+        long millis = System.currentTimeMillis();
+        Path candidate = CHAT_HISTORY_PATH.resolveSibling("chat_history.corrupt-" + millis + ".json");
+        int extra = 1;
+        while (Files.exists(candidate)) {
+            candidate = CHAT_HISTORY_PATH.resolveSibling("chat_history.corrupt-" + millis + "-" + extra + ".json");
+            extra++;
+        }
+        return candidate;
     }
 
     private static void savePersistentStoreAsync() {
@@ -343,9 +391,28 @@ public final class ChatHistoryManager {
                 Files.createDirectories(basePath);
             }
 
-            Files.writeString(CHAT_HISTORY_PATH, JsonUtils.GSON.toJson(serializeStore(store)), StandardCharsets.UTF_8);
+            Files.writeString(
+                    CHAT_HISTORY_TEMP_PATH,
+                    JsonUtils.GSON.toJson(serializeStore(store)),
+                    StandardCharsets.UTF_8);
+            if (Files.exists(CHAT_HISTORY_PATH)) {
+                Files.deleteIfExists(CHAT_HISTORY_BACKUP_PATH);
+                moveSameDirectory(CHAT_HISTORY_PATH, CHAT_HISTORY_BACKUP_PATH);
+            }
+
+            moveSameDirectory(CHAT_HISTORY_TEMP_PATH, CHAT_HISTORY_PATH);
+            Files.deleteIfExists(CHAT_HISTORY_BACKUP_PATH);
         } catch (IOException e) {
             LOGGER.error("[BetterClient] Failed to save chat history data", e);
+        }
+    }
+
+    // Same-directory rename is the atomic step. ATOMIC_MOVE is not implemented on every file system.
+    private static void moveSameDirectory(Path source, Path target) throws IOException {
+        try {
+            Files.move(source, target, StandardCopyOption.ATOMIC_MOVE);
+        } catch (AtomicMoveNotSupportedException e) {
+            Files.move(source, target);
         }
     }
 
