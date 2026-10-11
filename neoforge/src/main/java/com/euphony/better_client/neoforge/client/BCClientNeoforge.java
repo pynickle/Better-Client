@@ -42,6 +42,8 @@ public final class BCClientNeoforge {
             FasterClimbingEvent.playerPre(player);
         }
 
+        ChatHistoryManager.preloadPersistentStore();
+
         ClientLevel currentLevel = minecraft.level;
         if (currentLevel == knownLevel) {
             return;

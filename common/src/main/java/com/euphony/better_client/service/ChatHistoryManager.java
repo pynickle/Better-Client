@@ -52,6 +52,7 @@ public final class ChatHistoryManager {
     private static String activeSessionKey;
     private static boolean sessionEnded = true;
     private static PersistentChatStore persistentChatStore;
+    private static boolean persistentStoreLoadStarted;
     private static boolean persistentStoreSaveScheduled;
     private static boolean persistentStoreSaveDirty;
 
@@ -82,6 +83,27 @@ public final class ChatHistoryManager {
         saveCurrentSession();
         flushPersistentStore();
         sessionEnded = true;
+    }
+
+    public static void preloadPersistentStore() {
+        if (!config.enablePersistentChatStorage) {
+            return;
+        }
+
+        synchronized (PERSISTENT_STORE_LOCK) {
+            if (persistentStoreLoadStarted || persistentChatStore != null) {
+                return;
+            }
+            persistentStoreLoadStarted = true;
+        }
+
+        Util.ioPool().execute(() -> {
+            synchronized (PERSISTENT_STORE_LOCK) {
+                if (persistentChatStore == null) {
+                    persistentChatStore = loadPersistentStore();
+                }
+            }
+        });
     }
 
     public static void handleLevelTransition(ClientLevel currentLevel) {
@@ -286,6 +308,7 @@ public final class ChatHistoryManager {
             }
 
             persistentChatStore = loadPersistentStore();
+            persistentStoreLoadStarted = true;
             return persistentChatStore;
         }
     }

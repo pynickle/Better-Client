@@ -93,6 +93,8 @@ public final class BetterClientFabricBootstrap {
             FasterClimbingEvent.playerPre(player);
         }
 
+        ChatHistoryManager.preloadPersistentStore();
+
         ClientLevel currentLevel = minecraft.level;
         if (currentLevel == knownLevel) {
             return;
