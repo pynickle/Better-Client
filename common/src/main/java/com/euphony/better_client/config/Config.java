@@ -130,7 +130,7 @@ public class Config {
 
     public boolean enableChatHistoryRetention = true;
     public boolean enablePersistentChatStorage = true;
-    public boolean cleanRestoredChatSeparatorsOnSave = false;
+    public boolean cleanRestoredChatSeparatorsOnSave = true;
     public String chatHistorySeparatorTemplate =
             """
                     &8&m--------------------------------------------------
