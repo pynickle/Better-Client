@@ -131,6 +131,8 @@ node_modules/
 /.agents/
 /.claude/
 /.codex/
+/.grok/
+/.stepcode/
 
 skills-lock.json
 
