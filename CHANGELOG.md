@@ -1,3 +1,45 @@
+## [11.0.0](https://github.com/pynickle/Better-Client/compare/v10.7.0...v11.0.0) (2026-10-11)
+
+### ⚠ BREAKING CHANGES
+
+* port to 26.3
+
+### ✨ Features
+
+* **chat:** draw the history boundary above the restored span ([87405a4](https://github.com/pynickle/Better-Client/commit/87405a4a67146018cb9aa283068ebdda6c018ade)), closes [#16](https://github.com/pynickle/Better-Client/issues/16)
+* port to 26.3 ([08fe161](https://github.com/pynickle/Better-Client/commit/08fe161e9e03244d867bd7740d96e1515407b971))
+
+### 🐛 Bug Fixes
+
+* **chat:** cap the number of stored chat sessions ([d5435cd](https://github.com/pynickle/Better-Client/commit/d5435cd772a86a39aadc206470fe9bbec986dc18))
+* **chat:** cast delayed deletions through the mixin accessor ([61f0e5c](https://github.com/pynickle/Better-Client/commit/61f0e5c82fd1cd41b7effe39ae778a20d2be9068))
+* **chat:** clamp the configured chat history limit ([e81996c](https://github.com/pynickle/Better-Client/commit/e81996c602c921ddff77b1be4db17fe37427b666))
+* **chat:** clean restored chat separators on save by default ([d6801e3](https://github.com/pynickle/Better-Client/commit/d6801e32b2332b1e2acd1df4f8e2e31714f521c9))
+* **chat:** flush chat history before shutdown ([14dd21d](https://github.com/pynickle/Better-Client/commit/14dd21de57f89ab19aa1f60d33bd5b60aca05bcb))
+* **chat:** ignore a malformed chat signature ([3022865](https://github.com/pynickle/Better-Client/commit/3022865b783bc10fb87d3722d02ae4bc20f3d2d1))
+* **chat:** keep command suggestions while typing ([d186b18](https://github.com/pynickle/Better-Client/commit/d186b18a12ea22c519b300c5e70d2ee205538ee8))
+* **chat:** keep pending chat deletions ([4e2304c](https://github.com/pynickle/Better-Client/commit/4e2304c50b408ba94d0e393ef04bb13a94008d1e))
+* **chat:** keep separator colors out of session names ([bba3522](https://github.com/pynickle/Better-Client/commit/bba35229c384b2afa5bb3b1d93df7f85f71f5932))
+* **chat:** load chat history off the client thread ([7ffc2ed](https://github.com/pynickle/Better-Client/commit/7ffc2edd9b76306c82511959db6236764f19fe34))
+* **chat:** recolor mentions without flattening components ([d7be71c](https://github.com/pynickle/Better-Client/commit/d7be71c5a2af02a6283250019149c16a7f063a51))
+* **chat:** save chat history atomically ([3710305](https://github.com/pynickle/Better-Client/commit/37103055fade29901fd70404eec05e8a5890700b))
+* decorate player chat without replacing it as a system message ([6d1d964](https://github.com/pynickle/Better-Client/commit/6d1d96451edfdfb1e7d88ca26ecc90bbab81f8dd))
+
+### 📚 Documentation
+
+* add glossary, history-boundary adr, and agent guides ([b9ef1a9](https://github.com/pynickle/Better-Client/commit/b9ef1a9c1e8557e60928786859dced885a0b0aa5))
+* drop NeoForge-only note from world icon update option ([d04e96d](https://github.com/pynickle/Better-Client/commit/d04e96dfebd47281f566a81c1ea17d0da8b913ba))
+
+### 📦 Build System
+
+* update gradle wrapper to 9.8.0 ([43abba7](https://github.com/pynickle/Better-Client/commit/43abba7b552e5befaa900b4a1ef092fb8c718bec))
+
+### 🔧 Miscellaneous Changes
+
+* ignore agent tool directories in gitignore ([7c5a027](https://github.com/pynickle/Better-Client/commit/7c5a0275bff304166308ac26244451e433c7e674))
+* update fabric api, neoforge and modmenu versions ([181f998](https://github.com/pynickle/Better-Client/commit/181f99855a8fc67667aa69014405d67170203b39))
+* use conventionalcommits preset for release commit analyzer ([0417298](https://github.com/pynickle/Better-Client/commit/04172986928d7f0cedd4d4b3b91b41bc04a4145f))
+
 ## [10.7.0](https://github.com/pynickle/Better-Client/compare/v10.6.0...v10.7.0) (2026-09-23)
 
 ### ⚠ BREAKING CHANGES
