@@ -658,7 +658,7 @@ public final class ChatHistoryManager {
                         continue;
                     }
 
-                    DelayedMessageDeletionAccessor delayed = (DelayedMessageDeletionAccessor) deletion;
+                    DelayedMessageDeletionAccessor delayed = (DelayedMessageDeletionAccessor) (Object) deletion;
                     PersistentDelayedDeletion stored = new PersistentDelayedDeletion();
                     stored.signature = encodeSignature(delayed.better_client$getSignature());
                     stored.deletableAfter = delayed.better_client$getDeletableAfter();
