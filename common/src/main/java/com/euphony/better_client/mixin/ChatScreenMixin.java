@@ -45,7 +45,6 @@ public abstract class ChatScreenMixin extends Screen {
         }
 
         if (!ChatMentionUtils.isAvailableInCurrentSession()) {
-            this.commandSuggestions.hide();
             return;
         }
 
@@ -53,6 +52,12 @@ public abstract class ChatScreenMixin extends Screen {
             this.commandSuggestions.setAllowSuggestions(true);
             this.commandSuggestions.updateCommandInfo();
             this.commandSuggestions.showSuggestions(false);
+            return;
+        }
+
+        // Slash commands own this list. Hiding it here deletes the popup ChatScreen.onEdited
+        // just built, and Tab does not reopen it while allowHiding is set.
+        if (value != null && value.startsWith("/")) {
             return;
         }
 
