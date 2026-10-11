@@ -36,6 +36,7 @@ import static com.euphony.better_client.BetterClient.config;
 public final class ChatHistoryManager {
     private static final String SEPARATOR_MARKER = "\uE000";
     private static final int STORE_FORMAT_VERSION = 2;
+    private static final int MAX_PERSISTED_SESSIONS = 64;
     private static final Path CHAT_HISTORY_PATH = DataUtils.getDataDir().resolve("chat_history.json");
     private static final Path CHAT_HISTORY_TEMP_PATH = CHAT_HISTORY_PATH.resolveSibling("chat_history.json.tmp");
     private static final Path CHAT_HISTORY_BACKUP_PATH = CHAT_HISTORY_PATH.resolveSibling("chat_history.json.bak");
@@ -157,6 +158,7 @@ public final class ChatHistoryManager {
         PersistentChatStore store = getPersistentStore();
         synchronized (PERSISTENT_STORE_LOCK) {
             store.sessions.put(sessionKey, PersistentChatState.from(state, sessionName, disconnectTime));
+            evictExcessSessions(store, sessionKey);
         }
         savePersistentStoreAsync();
     }
@@ -311,7 +313,38 @@ public final class ChatHistoryManager {
             return recoverUnreadableStore(restoreBackupOnFailure);
         }
 
-        return deserializeStore(root);
+        PersistentChatStore store = deserializeStore(root);
+        evictExcessSessions(store, null);
+        return store;
+    }
+
+    private static void evictExcessSessions(PersistentChatStore store, String protectedSessionKey) {
+        if (store == null) {
+            return;
+        }
+
+        while (store.sessions.size() > MAX_PERSISTED_SESSIONS) {
+            String oldestKey = null;
+            long oldestDisconnect = Long.MAX_VALUE;
+            for (Map.Entry<String, PersistentChatState> entry : store.sessions.entrySet()) {
+                if (entry.getKey().equals(protectedSessionKey)) {
+                    continue;
+                }
+
+                PersistentChatState state = entry.getValue();
+                long disconnectTime = state == null ? Long.MIN_VALUE : state.lastDisconnectEpochMillis;
+                if (oldestKey == null || disconnectTime < oldestDisconnect) {
+                    oldestDisconnect = disconnectTime;
+                    oldestKey = entry.getKey();
+                }
+            }
+
+            if (oldestKey == null) {
+                return;
+            }
+
+            store.sessions.remove(oldestKey);
+        }
     }
 
     private static PersistentChatStore recoverUnreadableStore(boolean restoreBackupOnFailure) {
