@@ -1,8 +1,6 @@
 package com.euphony.better_client.client.events;
 
-import com.euphony.better_client.event.CompoundEventResult;
 import com.euphony.better_client.utils.mc.ChatMentionUtils;
-import net.minecraft.network.chat.ChatType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.network.chat.MutableComponent;
@@ -14,15 +12,6 @@ import static com.euphony.better_client.BetterClient.config;
 
 public class BeautifiedChatEvent {
     public static final String VANILLA_FORMAT = "(?i)^<[a-z0-9_]{3,16}>\\s.+$";
-
-    public static CompoundEventResult<Component> chatReceived(ChatType.Bound bound, Component component) {
-        Component newMessage = processMessage(component);
-
-        if (component != newMessage) {
-            return CompoundEventResult.interruptTrue(newMessage);
-        }
-        return CompoundEventResult.pass();
-    }
 
     public static Component processMessage(Component message) {
         Component output;

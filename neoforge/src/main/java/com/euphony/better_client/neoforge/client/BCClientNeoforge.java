@@ -69,14 +69,6 @@ public final class BCClientNeoforge {
     }
 
     @SubscribeEvent
-    private static void onChatReceived(ClientChatReceivedEvent.Player event) {
-        var result = BeautifiedChatEvent.chatReceived(event.getBoundChatType(), event.getMessage());
-        if (result.isInterrupted()) {
-            event.setMessage(result.object());
-        }
-    }
-
-    @SubscribeEvent
     private static void onItemTooltip(ItemTooltipEvent event) {
         DurabilityTooltipEvent.tooltip(event.getItemStack(), event.getToolTip(), event.getContext(), event.getFlags());
         CompassTooltipEvent.tooltip(event.getItemStack(), event.getToolTip(), event.getContext(), event.getFlags());

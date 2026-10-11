@@ -8,6 +8,7 @@
     "BookEditScreenMixin",
     "BookViewScreenMixin",
     "ChatComponentMixin",
+    "ChatListenerMixin",
     "ChatScreenMixin",
     "ClientSuggestionProviderMixin",
     "accessor.ChatComponentStateAccessor",
