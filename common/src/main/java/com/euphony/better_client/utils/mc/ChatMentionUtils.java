@@ -3,12 +3,19 @@ package com.euphony.better_client.utils.mc;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.ComponentContents;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.contents.NbtContents;
+import net.minecraft.network.chat.contents.ObjectContents;
+import net.minecraft.network.chat.contents.PlainTextContents;
+import net.minecraft.network.chat.contents.SelectorContents;
+import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.util.FormattedCharSequence;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -54,36 +61,135 @@ public final class ChatMentionUtils {
     }
 
     public static Component colorMentions(Component message, int mentionColor) {
-        MutableComponent output = Component.empty();
-        boolean modified = false;
+        Component colored = colorComponent(message, mentionColor);
+        return colored == null ? message : colored;
+    }
 
-        for (Component part : message.toFlatList()) {
-            String text = part.getString();
-            Matcher matcher = MENTION_PATTERN.matcher(text);
-            int lastEnd = 0;
+    /**
+     * @return a rewritten copy when a plain-text mention was recolored, otherwise null
+     */
+    private static Component colorComponent(Component component, int mentionColor) {
+        MutableComponent rebuilt = colorContents(component, mentionColor);
+        boolean changed = rebuilt != null;
 
-            while (matcher.find()) {
-                modified = true;
-                if (matcher.start() > lastEnd) {
-                    output.append(Component.literal(text.substring(lastEnd, matcher.start()))
-                            .withStyle(part.getStyle()));
-                }
-
-                output.append(Component.literal(text.substring(matcher.start(), matcher.end()))
-                        .withStyle(part.getStyle().withColor(mentionColor)));
-                lastEnd = matcher.end();
-            }
-
-            if (lastEnd == 0) {
-                output.append(part.copy());
+        List<Component> siblings = component.getSiblings();
+        List<Component> rewrittenSiblings = null;
+        for (int index = 0; index < siblings.size(); index++) {
+            Component rewrittenSibling = colorComponent(siblings.get(index), mentionColor);
+            if (rewrittenSibling == null) {
                 continue;
             }
-
-            if (lastEnd < text.length()) {
-                output.append(Component.literal(text.substring(lastEnd)).withStyle(part.getStyle()));
+            if (rewrittenSiblings == null) {
+                rewrittenSiblings = new ArrayList<>(siblings);
             }
+            rewrittenSiblings.set(index, rewrittenSibling);
+            changed = true;
         }
 
-        return modified ? output : message;
+        if (!changed) {
+            return null;
+        }
+
+        if (rebuilt == null) {
+            rebuilt = component.plainCopy().withStyle(component.getStyle());
+        }
+        for (Component sibling : rewrittenSiblings != null ? rewrittenSiblings : siblings) {
+            rebuilt.append(sibling);
+        }
+        return rebuilt;
+    }
+
+    private static MutableComponent colorContents(Component component, int mentionColor) {
+        ComponentContents contents = component.getContents();
+        Style style = component.getStyle();
+        if (contents instanceof PlainTextContents plain) {
+            return colorPlainText(plain.text(), style, mentionColor);
+        }
+        if (contents instanceof TranslatableContents translatable) {
+            Object[] rewrittenArgs = colorTranslatableArgs(translatable.getArgs(), mentionColor);
+            if (rewrittenArgs == null) {
+                return null;
+            }
+            return Component.translatableWithFallback(translatable.getKey(), translatable.getFallback(), rewrittenArgs)
+                    .withStyle(style);
+        }
+        if (contents instanceof ObjectContents object && object.fallback().isPresent()) {
+            Component rewrittenFallback = colorComponent(object.fallback().get(), mentionColor);
+            if (rewrittenFallback == null) {
+                return null;
+            }
+            return Component.object(object.contents(), rewrittenFallback).withStyle(style);
+        }
+        if (contents instanceof SelectorContents selector && selector.separator().isPresent()) {
+            Component rewrittenSeparator = colorComponent(selector.separator().get(), mentionColor);
+            if (rewrittenSeparator == null) {
+                return null;
+            }
+            return Component.selector(selector.selector(), Optional.of(rewrittenSeparator)).withStyle(style);
+        }
+        if (contents instanceof NbtContents nbt && nbt.separator().isPresent()) {
+            Component rewrittenSeparator = colorComponent(nbt.separator().get(), mentionColor);
+            if (rewrittenSeparator == null) {
+                return null;
+            }
+            return Component.nbt(
+                            nbt.nbtPath(),
+                            nbt.interpreting(),
+                            nbt.plain(),
+                            Optional.of(rewrittenSeparator),
+                            nbt.dataSource())
+                    .withStyle(style);
+        }
+        return null;
+    }
+
+    private static Object[] colorTranslatableArgs(Object[] args, int mentionColor) {
+        Object[] rewritten = null;
+        for (int index = 0; index < args.length; index++) {
+            if (!(args[index] instanceof Component arg)) {
+                continue;
+            }
+            Component colored = colorComponent(arg, mentionColor);
+            if (colored == null) {
+                continue;
+            }
+            if (rewritten == null) {
+                rewritten = args.clone();
+            }
+            rewritten[index] = colored;
+        }
+        return rewritten;
+    }
+
+    private static MutableComponent colorPlainText(String text, Style style, int mentionColor) {
+        Matcher matcher = MENTION_PATTERN.matcher(text);
+        if (!matcher.find()) {
+            return null;
+        }
+
+        matcher.reset();
+        MutableComponent root = null;
+        int lastEnd = 0;
+        while (matcher.find()) {
+            if (matcher.start() > lastEnd) {
+                root = appendLiteral(root, text.substring(lastEnd, matcher.start()), style);
+            }
+            root = appendLiteral(
+                    root, text.substring(matcher.start(), matcher.end()), style.withColor(mentionColor));
+            lastEnd = matcher.end();
+        }
+        if (lastEnd < text.length()) {
+            root = appendLiteral(root, text.substring(lastEnd), style);
+        }
+        return root;
+    }
+
+    private static MutableComponent appendLiteral(MutableComponent root, String text, Style style) {
+        MutableComponent part = Component.literal(text).withStyle(style);
+        if (root == null) {
+            return part;
+        }
+        root.append(part);
+        return root;
     }
 }
