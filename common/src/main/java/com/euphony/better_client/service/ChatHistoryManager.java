@@ -2,7 +2,6 @@ package com.euphony.better_client.service;
 
 import com.euphony.better_client.mixin.accessor.ChatComponentStateAccessor;
 import com.euphony.better_client.mixin.accessor.DelayedMessageDeletionAccessor;
-import com.euphony.better_client.utils.FormatUtils;
 import com.euphony.better_client.utils.JsonUtils;
 import com.euphony.better_client.utils.mc.DataUtils;
 import com.euphony.better_client.utils.mc.LevelUtils;
@@ -27,30 +26,24 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.time.Instant;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import static com.euphony.better_client.BetterClient.LOGGER;
 import static com.euphony.better_client.BetterClient.config;
 
 public final class ChatHistoryManager {
-    private static final String SEPARATOR_MARKER = "\uE000";
     private static final int STORE_FORMAT_VERSION = 2;
     private static final int MAX_PERSISTED_SESSIONS = 64;
     private static final Path CHAT_HISTORY_PATH = DataUtils.getDataDir().resolve("chat_history.json");
     private static final Path CHAT_HISTORY_TEMP_PATH = CHAT_HISTORY_PATH.resolveSibling("chat_history.json.tmp");
     private static final Path CHAT_HISTORY_BACKUP_PATH = CHAT_HISTORY_PATH.resolveSibling("chat_history.json.bak");
-    private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
-    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 
     private static final Map<String, RuntimeChatState> RUNTIME_STATES = new HashMap<>();
     private static final Object PERSISTENT_STORE_LOCK = new Object();
 
     private static boolean allowVanillaClear;
-    private static boolean restoringChat;
     private static String activeSessionKey;
+    private static HistoryBoundary<GuiMessage> historyBoundary = HistoryBoundary.none();
     private static boolean sessionEnded = true;
     private static PersistentChatStore persistentChatStore;
     private static boolean persistentStoreLoadStarted;
@@ -67,6 +60,11 @@ public final class ChatHistoryManager {
 
     public static boolean shouldCancelVanillaClear(boolean history) {
         return history && config.enableChatHistoryRetention && !allowVanillaClear;
+    }
+
+    public static HistoryBoundary<GuiMessage> syncHistoryBoundary(List<GuiMessage> presentMessages) {
+        historyBoundary = historyBoundary.retainPresent(presentMessages);
+        return historyBoundary;
     }
 
     public static void saveCurrentSession() {
@@ -131,6 +129,7 @@ public final class ChatHistoryManager {
 
         ChatComponent chat = minecraft.gui.hud.getChat();
         clearChat(chat);
+        historyBoundary = HistoryBoundary.none();
 
         RuntimeChatState runtimeState = RUNTIME_STATES.get(sessionKey);
         if (runtimeState != null) {
@@ -143,25 +142,6 @@ public final class ChatHistoryManager {
             if (persistentState != null) {
                 restorePersistentState(chat, persistentState);
             }
-        }
-    }
-
-    private static void displaySeparator(ChatComponent chat, String separator) {
-        if (restoringChat) {
-            return;
-        }
-
-        if (separator.isBlank() || endsWithSeparator(chat, separator)) {
-            return;
-        }
-
-        restoringChat = true;
-        try {
-            for (String line : separator.split("\n", -1)) {
-                chat.addClientSystemMessage(Component.literal(SEPARATOR_MARKER + line));
-            }
-        } finally {
-            restoringChat = false;
         }
     }
 
@@ -185,89 +165,40 @@ public final class ChatHistoryManager {
     }
 
     private static void restoreRuntimeState(ChatComponent chat, RuntimeChatState runtimeState) {
-        if (isStateEmpty(runtimeState.state())) {
+        ChatComponent.State state = withoutLegacyLines(runtimeState.state());
+        if (isStateEmpty(state)) {
             return;
         }
 
-        restoringChat = true;
-        try {
-            chat.restoreState(runtimeState.state());
-        } finally {
-            restoringChat = false;
-        }
-
-        displaySeparator(chat, formatSeparator(runtimeState.sessionName(), runtimeState.disconnectTime()));
+        chat.restoreState(state);
+        captureBoundary(
+                ((ChatComponentStateAccessor) state).better_client$getMessages(), runtimeState.disconnectTime());
     }
 
     private static void restorePersistentState(ChatComponent chat, PersistentChatState persistentState) {
-        boolean noMessages = persistentState.messages == null || persistentState.messages.isEmpty();
+        List<GuiMessage> deserializedMessages = deserializeMessages(persistentState.messages);
+        int tickOffset = persistedMessageTickOffset(deserializedMessages);
+        List<GuiMessage> restoredMessages = rebasePersistedMessageTimes(deserializedMessages, tickOffset);
         boolean noHistory = persistentState.recentChat == null || persistentState.recentChat.isEmpty();
         boolean noDeletions =
                 persistentState.delayedMessageDeletions == null || persistentState.delayedMessageDeletions.isEmpty();
-        if (noMessages && noHistory && noDeletions) {
+        if (restoredMessages.isEmpty() && noHistory && noDeletions) {
             return;
         }
 
-        restoringChat = true;
-        try {
-            List<GuiMessage> deserializedMessages = deserializeMessages(persistentState.messages);
-            int tickOffset = persistedMessageTickOffset(deserializedMessages);
-            List<GuiMessage> restoredMessages = rebasePersistedMessageTimes(deserializedMessages, tickOffset);
-            ChatComponent.State restoredState = new ChatComponent.State(
-                    restoredMessages,
-                    persistentState.recentChat == null ? List.of() : List.copyOf(persistentState.recentChat),
-                    rebaseDelayedDeletions(persistentState.delayedMessageDeletions, tickOffset));
-            chat.restoreState(restoredState);
-        } finally {
-            restoringChat = false;
-        }
-
-        displaySeparator(
-                chat,
-                formatSeparator(
-                        persistentState.sessionName, Instant.ofEpochMilli(persistentState.lastDisconnectEpochMillis)));
+        chat.restoreState(new ChatComponent.State(
+                restoredMessages,
+                persistentState.recentChat == null ? List.of() : List.copyOf(persistentState.recentChat),
+                rebaseDelayedDeletions(persistentState.delayedMessageDeletions, tickOffset)));
+        captureBoundary(restoredMessages, Instant.ofEpochMilli(persistentState.lastDisconnectEpochMillis));
     }
 
-    private static String formatSeparator(String sessionName, Instant disconnectTime) {
-        String template = config.chatHistorySeparatorTemplate == null ? "" : config.chatHistorySeparatorTemplate;
-        String normalizedTemplate = template.replace("\\n", "\n").replace('&', '§');
-        return FormatUtils.format(
-                normalizedTemplate,
-                Map.of(
-                        "session_name", sessionName,
-                        "session_key", LevelUtils.getCurrentSessionKey(),
-                        "disconnect_time", TIME_FORMATTER.format(disconnectTime.atZone(ZoneId.systemDefault())),
-                        "disconnect_date", DATE_FORMATTER.format(disconnectTime.atZone(ZoneId.systemDefault())),
-                        "disconnect_datetime",
-                        DATE_TIME_FORMATTER.format(disconnectTime.atZone(ZoneId.systemDefault())),
-                        "last_disconnect_time", TIME_FORMATTER.format(disconnectTime.atZone(ZoneId.systemDefault())),
-                        "last_disconnect_date", DATE_FORMATTER.format(disconnectTime.atZone(ZoneId.systemDefault())),
-                        "last_disconnect_datetime",
-                        DATE_TIME_FORMATTER.format(disconnectTime.atZone(ZoneId.systemDefault()))));
-    }
-
-    // Messages are newest-first, so the last separator line is at the front of the list.
-    private static boolean endsWithSeparator(ChatComponent chat, String separator) {
-        String[] lines = separator.split("\n", -1);
-        ChatComponentStateAccessor accessor = (ChatComponentStateAccessor) chat.storeState();
-        List<GuiMessage> messages = accessor.better_client$getMessages();
-        if (messages.size() < lines.length) {
-            return false;
+    private static void captureBoundary(List<GuiMessage> realMessages, Instant disconnectTime) {
+        if (realMessages == null || realMessages.isEmpty()) {
+            historyBoundary = HistoryBoundary.none();
+            return;
         }
-
-        for (int i = 0; i < lines.length; i++) {
-            GuiMessage message = messages.get(i);
-            if (message == null || message.content() == null) {
-                return false;
-            }
-
-            String expected = SEPARATOR_MARKER + lines[lines.length - 1 - i];
-            if (!expected.equals(message.content().getString())) {
-                return false;
-            }
-        }
-
-        return true;
+        historyBoundary = HistoryBoundary.restore(realMessages, disconnectTime);
     }
 
     private static boolean isStateEmpty(ChatComponent.State state) {
@@ -279,19 +210,25 @@ public final class ChatHistoryManager {
     }
 
     private static ChatComponent.State sanitizeState(ChatComponent.State state) {
-        if (!config.cleanRestoredChatSeparatorsOnSave) {
-            return state;
-        }
+        return withoutLegacyLines(state);
+    }
 
+    private static ChatComponent.State withoutLegacyLines(ChatComponent.State state) {
         ChatComponentStateAccessor accessor = (ChatComponentStateAccessor) state;
-        List<GuiMessage> filteredMessages = accessor.better_client$getMessages().stream()
-                .filter(message -> !isSeparatorMessage(message))
-                .toList();
+        List<GuiMessage> filteredMessages =
+                HistoryBoundary.omitLegacyLines(accessor.better_client$getMessages(), ChatHistoryManager::plainText);
         List<ChatComponent.DelayedMessageDeletion> deletions = accessor.better_client$getDelayedMessageDeletions();
         return new ChatComponent.State(
                 filteredMessages,
                 List.copyOf(accessor.better_client$getHistory()),
                 deletions == null ? List.of() : List.copyOf(deletions));
+    }
+
+    private static String plainText(GuiMessage message) {
+        if (message == null || message.content() == null) {
+            return null;
+        }
+        return message.content().getString();
     }
 
     private static int persistedMessageTickOffset(List<GuiMessage> messages) {
@@ -345,14 +282,6 @@ public final class ChatHistoryManager {
         }
 
         return List.copyOf(restored);
-    }
-
-    private static boolean isSeparatorMessage(GuiMessage message) {
-        if (message == null) {
-            return false;
-        }
-
-        return message.content().getString().startsWith(SEPARATOR_MARKER);
     }
 
     private static void clearChat(ChatComponent chat) {
@@ -888,7 +817,7 @@ public final class ChatHistoryManager {
             return null;
         }
 
-        if (config.cleanRestoredChatSeparatorsOnSave && isSeparatorMessage(guiMessage)) {
+        if (HistoryBoundary.isLegacyLine(plainText(guiMessage))) {
             return null;
         }
 
@@ -959,7 +888,7 @@ public final class ChatHistoryManager {
             }
         }
 
-        return messages;
+        return HistoryBoundary.omitLegacyLines(messages, ChatHistoryManager::plainText);
     }
 
     private static GuiMessage deserializeMessage(PersistentChatMessage storedMessage) {

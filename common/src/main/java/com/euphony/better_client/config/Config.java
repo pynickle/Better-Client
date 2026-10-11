@@ -7,6 +7,7 @@ import com.euphony.better_client.config.option.PotionBarPos;
 import com.euphony.better_client.config.option.TotemBarRenderMode;
 import com.euphony.better_client.config.option.TradingHudPos;
 import com.euphony.better_client.platform.Platform;
+import com.euphony.better_client.service.HistoryBoundary;
 import com.euphony.better_client.utils.Utils;
 import com.euphony.better_client.utils.enums.DurabilityTooltipStyle;
 import com.google.gson.Gson;
@@ -24,6 +25,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import static com.euphony.better_client.BetterClient.LOGGER;
 import static com.euphony.better_client.BetterClient.config;
@@ -130,13 +132,7 @@ public class Config {
 
     public boolean enableChatHistoryRetention = true;
     public boolean enablePersistentChatStorage = true;
-    public boolean cleanRestoredChatSeparatorsOnSave = true;
-    public String chatHistorySeparatorTemplate =
-            """
-                    &8&m--------------------------------------------------
-                     &6[&eRestored Chat History&6]
-                     &7Session: &f{session_name} &8| &7Disconnected: &f{disconnect_time}
-                    &8&m--------------------------------------------------""";
+    public String chatHistorySeparatorTemplate = HistoryBoundary.DEFAULT_TEMPLATE;
 
     public boolean enableBookSaveConfirmation = true;
 
@@ -235,6 +231,11 @@ public class Config {
                 config = GSON.fromJson(Files.readString(PATH), config.getClass());
                 config.normalizeAutoAdaptOptions();
                 config.chatMaxMessages = clampChatMaxMessages(config.chatMaxMessages);
+                String migratedTemplate = HistoryBoundary.migrateTemplate(config.chatHistorySeparatorTemplate);
+                if (!Objects.equals(migratedTemplate, config.chatHistorySeparatorTemplate)) {
+                    config.chatHistorySeparatorTemplate = migratedTemplate;
+                    save();
+                }
             } catch (Exception e) {
                 LOGGER.error("Couldn't load config file: ", e);
             }

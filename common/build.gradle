@@ -14,6 +14,9 @@ dependencies {
     implementation "dev.isxander:yet-another-config-lib:${yacl_version}+26.3-fabric"
 
     implementation "com.github.ramixin:mixson-fabric:${mixson_version}"
+
+    testImplementation "org.junit.jupiter:junit-jupiter:5.11.4"
+    testRuntimeOnly "org.junit.platform:junit-platform-launcher:1.11.4"
 }
 
 architectury {
@@ -51,4 +54,8 @@ configurations {
         outgoing.artifacts.clear()
         outgoing.artifact(shadowJar)
     }
+}
+
+test {
+    useJUnitPlatform()
 }

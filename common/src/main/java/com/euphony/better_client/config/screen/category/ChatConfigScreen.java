@@ -81,12 +81,6 @@ public class ChatConfigScreen {
                 () -> config.enablePersistentChatStorage,
                 newVal -> config.enablePersistentChatStorage = newVal);
 
-        Option<Boolean> cleanRestoredChatSeparatorsOnSaveOpt = ConfigUtils.buildBooleanOption(
-                "cleanRestoredChatSeparatorsOnSave",
-                DEFAULTS.cleanRestoredChatSeparatorsOnSave,
-                () -> config.cleanRestoredChatSeparatorsOnSave,
-                newVal -> config.cleanRestoredChatSeparatorsOnSave = newVal);
-
         ButtonOption chatHistorySeparatorTemplateOpt = ConfigUtils.getButtonOption("chatHistorySeparatorTemplate")
                 .action((screen, opt) -> Minecraft.getInstance().gui.setScreen(new ChatSeparatorTemplateScreen(screen)))
                 .build();
@@ -112,7 +106,6 @@ public class ChatConfigScreen {
                                 .option(chatMaxMessagesOpt)
                                 .option(enableChatHistoryRetentionOpt)
                                 .option(enablePersistentChatStorageOpt)
-                                .option(cleanRestoredChatSeparatorsOnSaveOpt)
                                 .option(chatHistorySeparatorTemplateOpt)
                                 .build())
                         .group(OptionGroup.createBuilder()

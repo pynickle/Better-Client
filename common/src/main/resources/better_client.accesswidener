@@ -10,3 +10,4 @@ mutable field net/minecraft/client/Options gamma Lnet/minecraft/client/OptionIns
 accessible field net/minecraft/client/OptionInstance value Ljava/lang/Object;
 mutable field net/minecraft/client/OptionInstance value Ljava/lang/Object;
 accessible class net/minecraft/client/gui/components/ChatComponent$DelayedMessageDeletion
+accessible class net/minecraft/client/gui/components/ChatComponent$LineConsumer
