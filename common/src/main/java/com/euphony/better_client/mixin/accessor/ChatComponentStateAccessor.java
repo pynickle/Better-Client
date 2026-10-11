@@ -14,4 +14,7 @@ public interface ChatComponentStateAccessor {
 
     @Accessor("history")
     List<String> better_client$getHistory();
+
+    @Accessor("delayedMessageDeletions")
+    List<ChatComponent.DelayedMessageDeletion> better_client$getDelayedMessageDeletions();
 }

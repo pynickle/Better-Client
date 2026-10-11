@@ -1,6 +1,7 @@
 package com.euphony.better_client.service;
 
 import com.euphony.better_client.mixin.accessor.ChatComponentStateAccessor;
+import com.euphony.better_client.mixin.accessor.DelayedMessageDeletionAccessor;
 import com.euphony.better_client.utils.FormatUtils;
 import com.euphony.better_client.utils.JsonUtils;
 import com.euphony.better_client.utils.mc.DataUtils;
@@ -199,19 +200,23 @@ public final class ChatHistoryManager {
     }
 
     private static void restorePersistentState(ChatComponent chat, PersistentChatState persistentState) {
-        if ((persistentState.messages == null || persistentState.messages.isEmpty())
-                && (persistentState.recentChat == null || persistentState.recentChat.isEmpty())) {
+        boolean noMessages = persistentState.messages == null || persistentState.messages.isEmpty();
+        boolean noHistory = persistentState.recentChat == null || persistentState.recentChat.isEmpty();
+        boolean noDeletions =
+                persistentState.delayedMessageDeletions == null || persistentState.delayedMessageDeletions.isEmpty();
+        if (noMessages && noHistory && noDeletions) {
             return;
         }
 
         restoringChat = true;
         try {
-            List<GuiMessage> restoredMessages =
-                    rebasePersistedMessageTimes(deserializeMessages(persistentState.messages));
+            List<GuiMessage> deserializedMessages = deserializeMessages(persistentState.messages);
+            int tickOffset = persistedMessageTickOffset(deserializedMessages);
+            List<GuiMessage> restoredMessages = rebasePersistedMessageTimes(deserializedMessages, tickOffset);
             ChatComponent.State restoredState = new ChatComponent.State(
                     restoredMessages,
                     persistentState.recentChat == null ? List.of() : List.copyOf(persistentState.recentChat),
-                    List.of());
+                    rebaseDelayedDeletions(persistentState.delayedMessageDeletions, tickOffset));
             chat.restoreState(restoredState);
         } finally {
             restoringChat = false;
@@ -267,8 +272,10 @@ public final class ChatHistoryManager {
 
     private static boolean isStateEmpty(ChatComponent.State state) {
         ChatComponentStateAccessor accessor = (ChatComponentStateAccessor) state;
+        List<ChatComponent.DelayedMessageDeletion> deletions = accessor.better_client$getDelayedMessageDeletions();
         return accessor.better_client$getMessages().isEmpty()
-                && accessor.better_client$getHistory().isEmpty();
+                && accessor.better_client$getHistory().isEmpty()
+                && (deletions == null || deletions.isEmpty());
     }
 
     private static ChatComponent.State sanitizeState(ChatComponent.State state) {
@@ -280,17 +287,27 @@ public final class ChatHistoryManager {
         List<GuiMessage> filteredMessages = accessor.better_client$getMessages().stream()
                 .filter(message -> !isSeparatorMessage(message))
                 .toList();
-        return new ChatComponent.State(filteredMessages, List.copyOf(accessor.better_client$getHistory()), List.of());
+        List<ChatComponent.DelayedMessageDeletion> deletions = accessor.better_client$getDelayedMessageDeletions();
+        return new ChatComponent.State(
+                filteredMessages,
+                List.copyOf(accessor.better_client$getHistory()),
+                deletions == null ? List.of() : List.copyOf(deletions));
     }
 
-    private static List<GuiMessage> rebasePersistedMessageTimes(List<GuiMessage> messages) {
+    private static int persistedMessageTickOffset(List<GuiMessage> messages) {
+        int currentGuiTicks = Minecraft.getInstance().gui.hud.getGuiTicks();
+        if (messages == null || messages.isEmpty()) {
+            return 0;
+        }
+
+        int newestAddedTime = messages.stream().mapToInt(GuiMessage::addedTime).max().orElse(currentGuiTicks);
+        return currentGuiTicks - newestAddedTime;
+    }
+
+    private static List<GuiMessage> rebasePersistedMessageTimes(List<GuiMessage> messages, int tickOffset) {
         if (messages.isEmpty()) {
             return List.of();
         }
-
-        int currentGuiTicks = Minecraft.getInstance().gui.hud.getGuiTicks();
-        int newestAddedTime = messages.stream().mapToInt(GuiMessage::addedTime).max().orElse(currentGuiTicks);
-        int tickOffset = currentGuiTicks - newestAddedTime;
 
         List<GuiMessage> rebasedMessages = new ArrayList<>(messages.size());
         for (GuiMessage message : messages) {
@@ -304,6 +321,30 @@ public final class ChatHistoryManager {
         }
 
         return rebasedMessages;
+    }
+
+    private static List<ChatComponent.DelayedMessageDeletion> rebaseDelayedDeletions(
+            List<PersistentDelayedDeletion> storedDeletions, int tickOffset) {
+        if (storedDeletions == null || storedDeletions.isEmpty()) {
+            return List.of();
+        }
+
+        List<ChatComponent.DelayedMessageDeletion> restored = new ArrayList<>();
+        for (PersistentDelayedDeletion storedDeletion : storedDeletions) {
+            if (storedDeletion == null) {
+                continue;
+            }
+
+            MessageSignature signature = decodeSignature(storedDeletion.signature);
+            if (signature == null) {
+                continue;
+            }
+
+            restored.add(DelayedMessageDeletionAccessor.better_client$create(
+                    signature, Math.max(0, storedDeletion.deletableAfter + tickOffset)));
+        }
+
+        return List.copyOf(restored);
     }
 
     private static boolean isSeparatorMessage(GuiMessage message) {
@@ -527,6 +568,26 @@ public final class ChatHistoryManager {
         copy.lastDisconnectEpochMillis = state.lastDisconnectEpochMillis;
         copy.messages = copyMessages(state.messages);
         copy.recentChat = state.recentChat == null ? null : new ArrayList<>(state.recentChat);
+        copy.delayedMessageDeletions = copyDelayedDeletions(state.delayedMessageDeletions);
+        return copy;
+    }
+
+    private static List<PersistentDelayedDeletion> copyDelayedDeletions(List<PersistentDelayedDeletion> deletions) {
+        if (deletions == null) {
+            return null;
+        }
+
+        List<PersistentDelayedDeletion> copy = new ArrayList<>(deletions.size());
+        for (PersistentDelayedDeletion deletion : deletions) {
+            if (deletion == null) {
+                continue;
+            }
+
+            PersistentDelayedDeletion copied = new PersistentDelayedDeletion();
+            copied.signature = deletion.signature == null ? null : deletion.signature.deepCopy();
+            copied.deletableAfter = deletion.deletableAfter;
+            copy.add(copied);
+        }
         return copy;
     }
 
@@ -573,6 +634,7 @@ public final class ChatHistoryManager {
         private long lastDisconnectEpochMillis;
         private List<PersistentChatMessage> messages;
         private List<String> recentChat;
+        private List<PersistentDelayedDeletion> delayedMessageDeletions;
 
         private static PersistentChatState from(ChatComponent.State state, String sessionName, Instant disconnectTime) {
             ChatComponentStateAccessor accessor = (ChatComponentStateAccessor) state;
@@ -588,8 +650,28 @@ public final class ChatHistoryManager {
                 }
             }
             persistentState.recentChat = new ArrayList<>(accessor.better_client$getHistory());
+            persistentState.delayedMessageDeletions = new ArrayList<>();
+            List<ChatComponent.DelayedMessageDeletion> deletions = accessor.better_client$getDelayedMessageDeletions();
+            if (deletions != null) {
+                for (ChatComponent.DelayedMessageDeletion deletion : deletions) {
+                    if (deletion == null) {
+                        continue;
+                    }
+
+                    DelayedMessageDeletionAccessor delayed = (DelayedMessageDeletionAccessor) deletion;
+                    PersistentDelayedDeletion stored = new PersistentDelayedDeletion();
+                    stored.signature = encodeSignature(delayed.better_client$getSignature());
+                    stored.deletableAfter = delayed.better_client$getDeletableAfter();
+                    persistentState.delayedMessageDeletions.add(stored);
+                }
+            }
             return persistentState;
         }
+    }
+
+    private static final class PersistentDelayedDeletion {
+        private JsonElement signature;
+        private int deletableAfter;
     }
 
     private static final class PersistentChatMessage {
@@ -632,6 +714,7 @@ public final class ChatHistoryManager {
         state.lastDisconnectEpochMillis = getAsLong(json, "lastDisconnectEpochMillis", 0L);
         state.messages = deserializeMessages(json.get("messages"));
         state.recentChat = deserializeStringList(json.get("recentChat"));
+        state.delayedMessageDeletions = deserializeDelayedDeletions(json.get("delayedMessageDeletions"));
         return state;
     }
 
@@ -652,7 +735,49 @@ public final class ChatHistoryManager {
         json.addProperty("lastDisconnectEpochMillis", state.lastDisconnectEpochMillis);
         json.add("messages", serializeMessages(state.messages));
         json.add("recentChat", serializeStringList(state.recentChat));
+        if (state.delayedMessageDeletions != null && !state.delayedMessageDeletions.isEmpty()) {
+            json.add("delayedMessageDeletions", serializeDelayedDeletions(state.delayedMessageDeletions));
+        }
         return json;
+    }
+
+    private static JsonArray serializeDelayedDeletions(List<PersistentDelayedDeletion> deletions) {
+        JsonArray array = new JsonArray();
+        if (deletions == null) {
+            return array;
+        }
+
+        for (PersistentDelayedDeletion deletion : deletions) {
+            if (deletion == null) {
+                continue;
+            }
+
+            JsonObject json = new JsonObject();
+            json.add("signature", deletion.signature == null ? JsonNull.INSTANCE : deletion.signature);
+            json.addProperty("deletableAfter", deletion.deletableAfter);
+            array.add(json);
+        }
+        return array;
+    }
+
+    private static List<PersistentDelayedDeletion> deserializeDelayedDeletions(JsonElement element) {
+        List<PersistentDelayedDeletion> deletions = new ArrayList<>();
+        if (element == null || element.isJsonNull() || !element.isJsonArray()) {
+            return deletions;
+        }
+
+        for (JsonElement entry : element.getAsJsonArray()) {
+            if (!entry.isJsonObject()) {
+                continue;
+            }
+
+            JsonObject json = entry.getAsJsonObject();
+            PersistentDelayedDeletion deletion = new PersistentDelayedDeletion();
+            deletion.signature = json.has("signature") ? json.get("signature") : JsonNull.INSTANCE;
+            deletion.deletableAfter = getAsInt(json, "deletableAfter", 0);
+            deletions.add(deletion);
+        }
+        return deletions;
     }
 
     private static JsonArray serializeMessages(List<PersistentChatMessage> messages) {

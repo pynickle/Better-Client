@@ -12,6 +12,7 @@
     "ChatScreenMixin",
     "ClientSuggestionProviderMixin",
     "accessor.ChatComponentStateAccessor",
+    "accessor.DelayedMessageDeletionAccessor",
     "CreateWorldScreenMixin",
     "GameRendererMixin",
     "HudMixin",
