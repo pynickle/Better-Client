@@ -36,7 +36,8 @@ public class ChatConfigScreen {
                         DEFAULTS.chatMaxMessages,
                         () -> config.chatMaxMessages,
                         newVal -> config.chatMaxMessages = newVal)
-                .controller(opt -> IntegerFieldControllerBuilder.create(opt).range(100, 32768))
+                .controller(opt -> IntegerFieldControllerBuilder.create(opt)
+                        .range(100, Config.MAX_CHAT_MAX_MESSAGES))
                 .build();
 
         Option<Boolean> enableTimeStampOpt = ConfigUtils.buildBooleanOption(

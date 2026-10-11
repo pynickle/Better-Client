@@ -1,5 +1,6 @@
 package com.euphony.better_client.mixin;
 
+import com.euphony.better_client.config.Config;
 import com.euphony.better_client.service.ChatHistoryManager;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.client.Minecraft;
@@ -28,7 +29,7 @@ public abstract class ChatComponentMixin {
             at = @At(value = "CONSTANT", args = "intValue=100"))
     private int moreMessages(int chatMaxMessages) {
         if (config.enableLongerChatHistory) {
-            return config.chatMaxMessages;
+            return Config.clampChatMaxMessages(config.chatMaxMessages);
         }
         return chatMaxMessages;
     }

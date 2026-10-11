@@ -53,6 +53,9 @@ public class Config {
     public boolean enableBetterPingDisplay = true;
     public boolean enableDefaultPingBars = false;
 
+    public static final int MIN_CHAT_MAX_MESSAGES = 1;
+    public static final int MAX_CHAT_MAX_MESSAGES = 32768;
+
     public boolean enableLongerChatHistory = true;
     public int chatMaxMessages = 4096;
     public boolean enableTimeStamp = true;
@@ -231,9 +234,14 @@ public class Config {
             try {
                 config = GSON.fromJson(Files.readString(PATH), config.getClass());
                 config.normalizeAutoAdaptOptions();
+                config.chatMaxMessages = clampChatMaxMessages(config.chatMaxMessages);
             } catch (Exception e) {
                 LOGGER.error("Couldn't load config file: ", e);
             }
+    }
+
+    public static int clampChatMaxMessages(int chatMaxMessages) {
+        return Math.clamp(chatMaxMessages, MIN_CHAT_MAX_MESSAGES, MAX_CHAT_MAX_MESSAGES);
     }
 
     private void normalizeAutoAdaptOptions() {
