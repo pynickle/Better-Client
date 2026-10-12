@@ -28,3 +28,13 @@ _Avoid_: Inventory, backpack
 **Equipment slots**:
 The armor slots and the offhand slot.
 _Avoid_: Armor slots
+
+## Trading HUD
+
+**Trading HUD anchor**:
+The screen corner the trading HUD is pinned to.
+_Avoid_: Alignment, right alignment, anchor
+
+**Enchantment caption**:
+The enchantment names of one offer's result, shown with that offer.
+_Avoid_: Enchantment text, label

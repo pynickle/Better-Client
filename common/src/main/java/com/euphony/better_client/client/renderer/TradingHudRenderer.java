@@ -1,5 +1,8 @@
 package com.euphony.better_client.client.renderer;
 
+import com.euphony.better_client.service.TradingHudLayout;
+import com.euphony.better_client.service.TradingHudLayout.Frame;
+import com.euphony.better_client.service.TradingHudLayout.PlacedCaption;
 import com.euphony.better_client.utils.data.MerchantInfo;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
@@ -13,6 +16,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.item.trading.MerchantOffers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.euphony.better_client.BetterClient.config;
@@ -24,8 +28,6 @@ public class TradingHudRenderer {
             Identifier.withDefaultNamespace("container/villager/trade_arrow");
     private static final Identifier DISCOUNT_STRIKETHRUOGH_SPRITE =
             Identifier.withDefaultNamespace("container/villager/discount_strikethrough");
-
-    private static final int REAL_COST_EXTRA_SPACE = 15;
 
     public static void renderHud(GuiGraphicsExtractor guiGraphics, DeltaTracker deltaTracker) {
         if (!config.enableTradingHud) return;
@@ -44,76 +46,50 @@ public class TradingHudRenderer {
             if (!merchantOffers.isEmpty()) {
                 int screenWidth = minecraft.getWindow().getGuiScaledWidth();
                 int screenHeight = minecraft.getWindow().getGuiScaledHeight();
-
-                int visibleOffers = Math.min(merchantOffers.size(), 7);
-                int hudHeight = visibleOffers * 20;
-                int hudWidth = 90;
-
-                int i, k;
-                switch (config.tradingHudPos) {
-                    case TOP_LEFT -> {
-                        i = 0;
-                        k = 5;
-                    }
-                    case TOP_RIGHT -> {
-                        i = screenWidth - hudWidth;
-                        k = 5;
-                    }
-                    case BOTTOM_LEFT -> {
-                        i = 0;
-                        k = screenHeight - hudHeight - 5;
-                    }
-                    case BOTTOM_RIGHT -> {
-                        i = screenWidth - hudWidth;
-                        k = screenHeight - hudHeight - 5;
-                    }
-                    default -> {
-                        i = config.tradingHudXOffset;
-                        k = 5 + config.tradingHudYOffset;
-                    }
+                List<String> captions = new ArrayList<>(merchantOffers.size());
+                for (int index = 0; index < merchantOffers.size(); index++) {
+                    captions.add(index < enchantmentTexts.size() ? enchantmentTexts.get(index) : "");
                 }
+                Frame frame = TradingHudLayout.layout(new TradingHudLayout.Request(
+                        screenWidth,
+                        screenHeight,
+                        config.tradingHudPos,
+                        config.tradingHudXOffset,
+                        config.tradingHudYOffset,
+                        !config.renderRealCostDirectly,
+                        captions,
+                        font::width));
 
-                int l = i + 5 + 5;
-                int m = 0;
-
-                int extraSpace = config.renderRealCostDirectly ? 0 : REAL_COST_EXTRA_SPACE;
-
-                for (MerchantOffer merchantOffer : merchantOffers) {
-                    if (m < 7) {
-                        ItemStack itemStack = merchantOffer.getBaseCostA();
-                        ItemStack itemStack2 = merchantOffer.getCostA();
-                        ItemStack itemStack3 = merchantOffer.getCostB();
-                        ItemStack itemStack4 = merchantOffer.getResult();
-                        int n = k + 2;
-                        extractAndDecorateCostA(guiGraphics, font, itemStack2, itemStack, l, n);
-                        if (!itemStack3.isEmpty()) {
-                            guiGraphics.fakeItem(itemStack3, i + 5 + 25 + extraSpace, n);
-                            guiGraphics.itemDecorations(font, itemStack3, i + 5 + 25 + extraSpace, n);
-                        }
-
-                        extractButtonArrows(guiGraphics, merchantOffer, i, n);
-                        guiGraphics.fakeItem(itemStack4, i + 5 + 58 + extraSpace, n);
-                        guiGraphics.itemDecorations(font, itemStack4, i + 5 + 58 + extraSpace, n);
-                        k += 20;
-
-                        if (m < enchantmentTexts.size()) {
-                            String enchantmentText = enchantmentTexts.get(m);
-                            if (!enchantmentText.isEmpty()) {
-                                guiGraphics.text(font, enchantmentText, (i + 85 + extraSpace), (n + 3), CommonColors.WHITE);
-                            }
-                        }
+                for (int row = 0; row < frame.captions().size(); row++) {
+                    MerchantOffer merchantOffer = merchantOffers.get(row);
+                    ItemStack baseCost = merchantOffer.getBaseCostA();
+                    ItemStack realCost = merchantOffer.getCostA();
+                    ItemStack costB = merchantOffer.getCostB();
+                    ItemStack result = merchantOffer.getResult();
+                    int y = frame.rowY() + row * TradingHudLayout.ROW_STRIDE;
+                    extractAndDecorateCostA(guiGraphics, font, realCost, baseCost, frame.costX(), y);
+                    if (!costB.isEmpty()) {
+                        guiGraphics.fakeItem(costB, frame.secondCostX(), y);
+                        guiGraphics.itemDecorations(font, costB, frame.secondCostX(), y);
                     }
-                    ++m;
+
+                    extractButtonArrows(guiGraphics, merchantOffer, frame.arrowX(), y);
+                    guiGraphics.fakeItem(result, frame.resultX(), y);
+                    guiGraphics.itemDecorations(font, result, frame.resultX(), y);
+
+                    PlacedCaption caption = frame.captions().get(row);
+                    if (!caption.text().isEmpty()) {
+                        guiGraphics.text(font, caption.text(), caption.x(), caption.y(), CommonColors.WHITE);
+                    }
                 }
             }
         });
     }
 
     private static void extractButtonArrows(
-            GuiGraphicsExtractor guiGraphics, MerchantOffer merchantOffers, int posX, int posY) {
-        int extraSpace = config.renderRealCostDirectly ? 0 : REAL_COST_EXTRA_SPACE;
-        Identifier sprite = merchantOffers.isOutOfStock() ? TRADE_ARROW_OUT_OF_STOCK_SPRITE : TRADE_ARROW_SPRITE;
-        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, sprite, posX + 5 + 25 + 20 + extraSpace, posY + 3, 10, 9);
+            GuiGraphicsExtractor guiGraphics, MerchantOffer offer, int arrowX, int itemY) {
+        Identifier sprite = offer.isOutOfStock() ? TRADE_ARROW_OUT_OF_STOCK_SPRITE : TRADE_ARROW_SPRITE;
+        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, sprite, arrowX, itemY + 3, 10, 9);
     }
 
     private static void extractAndDecorateCostA(
