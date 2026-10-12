@@ -208,7 +208,7 @@
 
   "yacl3.config.better_client:config.category.client.group.bundle_up": "Bundle Up",
   "yacl3.config.better_client:config.enableBundleUp": "Enable Bundle Up",
-  "yacl3.config.better_client:config.enableBundleUp.desc": "Hover over a bundle and press R to auto-store items, maximizing inventory space.",
+  "yacl3.config.better_client:config.enableBundleUp.desc": "With the Bundle Up key bound in Controls, hover a bundle and press it to store main-inventory items into that bundle.",
 
   "yacl3.config.better_client:config.category.client.group.click_through": "Click Through",
   "yacl3.config.better_client:config.enableClickThrough": "Enable Click Through",

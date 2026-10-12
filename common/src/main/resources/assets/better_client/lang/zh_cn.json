@@ -208,7 +208,7 @@
 
   "yacl3.config.better_client:config.category.client.group.bundle_up": "一键收纳",
   "yacl3.config.better_client:config.enableBundleUp": "启用一键收纳",
-  "yacl3.config.better_client:config.enableBundleUp.desc": "将鼠标悬停在收纳袋上并按下 R 键，即可自动收纳物品，最大化背包空间。",
+  "yacl3.config.better_client:config.enableBundleUp.desc": "在控制设置中绑定「一键收纳」后，悬停收纳袋并按下该键，把主背包中的物品收进这只收纳袋。",
 
   "yacl3.config.better_client:config.category.client.group.click_through": "点击穿透",
   "yacl3.config.better_client:config.enableClickThrough": "启用点击穿透",
