@@ -14,3 +14,17 @@ The newest real message still in the restored span.
 **Restored span**:
 The real chat messages loaded by the current restore.
 _Avoid_: Restored history, old chat
+
+## Bundle up
+
+**Bundle up**:
+Filling the bundle under the pointer with items from the main inventory.
+_Avoid_: Sort, deposit, loot, quick-store
+
+**Main inventory**:
+The player's storage slots, excluding the hotbar and the equipment slots.
+_Avoid_: Inventory, backpack
+
+**Equipment slots**:
+The armor slots and the offhand slot.
+_Avoid_: Armor slots
