@@ -1,3 +1,13 @@
+## [11.0.1](https://github.com/pynickle/Better-Client/compare/v11.0.0...v11.0.1) (2026-10-12)
+
+### 🐛 Bug Fixes
+
+* **bundle-up:** fill the hovered bundle from the Main inventory ([e8b8a22](https://github.com/pynickle/Better-Client/commit/e8b8a225c46a4d2e225dd010fc456fd09a89b296)), closes [#17](https://github.com/pynickle/Better-Client/issues/17)
+
+### 📚 Documentation
+
+* **bundle-up:** record the Main inventory terms and decision ([c9a1c7e](https://github.com/pynickle/Better-Client/commit/c9a1c7ee8ee2d068191fb4cbd06133df8fb4ee8d))
+
 ## [11.0.0](https://github.com/pynickle/Better-Client/compare/v10.7.0...v11.0.0) (2026-10-11)
 
 ### ⚠ BREAKING CHANGES
