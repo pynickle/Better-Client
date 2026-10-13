@@ -1,3 +1,9 @@
+## [11.0.2](https://github.com/pynickle/Better-Client/compare/v11.0.1...v11.0.2) (2026-10-13)
+
+### 🐛 Bug Fixes
+
+* **trading-hud:** keep enchantment captions on screen ([14346ba](https://github.com/pynickle/Better-Client/commit/14346ba62d50fa8f6d8484543d9b803703ef9505))
+
 ## [11.0.1](https://github.com/pynickle/Better-Client/compare/v11.0.0...v11.0.1) (2026-10-12)
 
 ### 🐛 Bug Fixes
