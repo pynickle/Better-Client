@@ -41,8 +41,12 @@ import static com.euphony.better_client.service.BundlePanelSession.*;
 /** Native inventory textures and virtual cells beside the survival inventory. */
 public final class BundlePanelScreen {
     private static final int ROW_HEIGHT = 18;
+    /** Side inset shared by the title, search field, grid, and footer so their edges line up. */
+    private static final int PADDING = 7;
     /** How far a vanilla-aligned count and its drop shadow reach past the bottom of its cell. */
     private static final int COUNT_OVERHANG = 2;
+    /** Vertical space reserved below the grid for the footer line and its padding. */
+    private static final int FOOTER_BAND = 14;
     private static final Identifier INVENTORY = Identifier.withDefaultNamespace("textures/gui/container/inventory.png");
     private static final Identifier BUTTON = Identifier.withDefaultNamespace("widget/button");
     private static final Identifier BUTTON_HOVER = Identifier.withDefaultNamespace("widget/button_highlighted");
@@ -130,11 +134,11 @@ public final class BundlePanelScreen {
         layout = session.layout(new LayoutInput(screen.width, screen.height, left, geometry().better_client$topPos(),
                 geometry().better_client$imageWidth(), book().isVisible(), effectsWidth(left)));
         if (layout.placement() != Placement.SWITCH || book().isVisible()) replacement = false;
-        int nextColumns = Math.max(1, (layout.width() - 14) / ROW_HEIGHT);
+        int nextColumns = Math.max(1, contentWidth() / ROW_HEIGHT);
         if (columns != nextColumns) { columns = nextColumns; rows = List.of(); offset = 0; }
-        search.setX(layout.x() + 7);
+        search.setX(layout.x() + PADDING);
         search.setY(layout.y() + 20);
-        search.setWidth(Math.max(1, layout.width() - 14));
+        search.setWidth(contentWidth());
         search.visible = available() && shown.expanded() && (layout.placement() != Placement.SWITCH || replacement);
         if (!search.visible) focusSearch(false);
     }
@@ -156,7 +160,7 @@ public final class BundlePanelScreen {
             return;
         }
         inventoryFrame(graphics);
-        graphics.text(minecraft.font, text("title"), layout.x() + 7, layout.y() + 6, 0xFF404040, false);
+        graphics.text(minecraft.font, text("title"), layout.x() + PADDING, layout.y() + 6, 0xFF404040, false);
         button(graphics, collapseButton(), Component.literal("×"), mouseX, mouseY);
         if (collapseButton().contains(mouseX, mouseY)) graphics.setTooltipForNextFrame(text(replacement ? "back" : "collapse_hint"), mouseX, mouseY);
         search.extractWidgetRenderState(graphics, mouseX, mouseY, delta);
@@ -180,17 +184,19 @@ public final class BundlePanelScreen {
             if (row != null && row.entry() != null) renderItem(graphics, row.entry(), x, y, mouseX, mouseY);
         }
         graphics.disableScissor();
-        int footer = layout.y() + layout.height() - 12;
+        // Centre the footer in the band between the grid and the panel's bottom edge.
+        int footer = grid.y() + grid.height()
+                + Math.max(0, (layout.y() + layout.height() - grid.y() - grid.height() - minecraft.font.lineHeight) / 2);
         Outcome outcome = session.outcome();
         if (outcome != lastOutcome) {
             lastOutcome = outcome;
             failureUntil = outcome.failure() == Failure.NONE ? 0 : System.nanoTime() + 4_000_000_000L;
         }
-        if (session.busy()) graphics.text(minecraft.font, text("working"), layout.x() + 7, footer, 0xFF404040, false);
+        if (session.busy()) graphics.text(minecraft.font, text("working"), layout.x() + PADDING, footer, 0xFF404040, false);
         else if (System.nanoTime() < failureUntil) graphics.text(minecraft.font,
-                clip(failure(outcome.failure()).getString(), layout.width() - 14), layout.x() + 7, footer, 0xFF8B2020, false);
-        else if (shown.entries().isEmpty()) graphics.text(minecraft.font, text(search.getValue().isEmpty() ? "empty" : "no_results"), layout.x() + 7, footer, 0xFF404040, false);
-        else if (rowCount > visibleRows) graphics.text(minecraft.font, text("scroll", offset + 1, rowCount), layout.x() + 7, footer, 0xFF404040, false);
+                clip(failure(outcome.failure()).getString(), contentWidth()), layout.x() + PADDING, footer, 0xFF8B2020, false);
+        else if (shown.entries().isEmpty()) graphics.text(minecraft.font, text(search.getValue().isEmpty() ? "empty" : "no_results"), layout.x() + PADDING, footer, 0xFF404040, false);
+        else if (rowCount > visibleRows) graphics.text(minecraft.font, text("scroll", offset + 1, rowCount), layout.x() + PADDING, footer, 0xFF404040, false);
     }
 
     private void renderItem(GuiGraphicsExtractor graphics, Entry entry, int x, int y, int mx, int my) {
@@ -340,17 +346,26 @@ public final class BundlePanelScreen {
         return row.header() ? rows.get(r * columns) : row;
     }
     private Layout grid() {
+        // Header holds the title and search field; the footer band holds one line plus its padding.
         int header = 40;
-        int height = Math.max(ROW_HEIGHT, (layout.height() - header - 14) / ROW_HEIGHT * ROW_HEIGHT);
-        return new Layout(layout.placement(), layout.x() + (layout.width() - columns * ROW_HEIGHT) / 2,
+        int height = Math.max(ROW_HEIGHT, (layout.height() - header - FOOTER_BAND) / ROW_HEIGHT * ROW_HEIGHT);
+        // Left-aligned inside the same padded content width the search field uses, so the grid's
+        // outer columns line up with the field and the whole columns absorb the remainder.
+        return new Layout(layout.placement(), layout.x() + PADDING,
                 layout.y() + header, columns * ROW_HEIGHT, height);
     }
+    /** Width shared by the search field and the width the grid's columns fill. */
+    private int contentWidth() { return Math.max(ROW_HEIGHT, layout.width() - PADDING * 2); }
     private Layout toggleButton() { return new Layout(layout.placement(), geometry().better_client$leftPos() + geometry().better_client$imageWidth() - 23, geometry().better_client$topPos() + 5, 18, 18); }
-    private Layout collapseButton() { return new Layout(layout.placement(), layout.x() + layout.width() - 20, layout.y() + 4, 13, 13); }
+    private Layout collapseButton() { return new Layout(layout.placement(), layout.x() + layout.width() - PADDING - 14, layout.y() + 4, 14, 14); }
     private void button(GuiGraphicsExtractor graphics, Layout rect, Component label, int mx, int my) {
         graphics.blitSprite(RenderPipelines.GUI_TEXTURED, rect.contains(mx, my) ? BUTTON_HOVER : BUTTON,
                 rect.x(), rect.y(), rect.width(), rect.height());
-        graphics.centeredText(minecraft.font, label, rect.x() + rect.width() / 2, rect.y() + (rect.height() - 8) / 2, 0xFFFFFFFF);
+        // Buttons are sized so this centre is an exact integer: centeredText divides the label's
+        // width by two, so an odd-sized button would bias the label half a pixel off the sprite.
+        graphics.centeredText(minecraft.font, label,
+                rect.x() + rect.width() / 2,
+                rect.y() + (rect.height() - minecraft.font.lineHeight) / 2, 0xFFFFFFFF);
     }
     private void slotBackground(GuiGraphicsExtractor graphics, int x, int y) {
         graphics.blit(RenderPipelines.GUI_TEXTURED, INVENTORY, x, y, 7, 83, ROW_HEIGHT, ROW_HEIGHT, 256, 256);
