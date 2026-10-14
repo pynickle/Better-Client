@@ -1,3 +1,26 @@
+## [11.1.0](https://github.com/pynickle/Better-Client/compare/v11.0.2...v11.1.0) (2026-10-14)
+
+### ✨ Features
+
+* **bundle-panel:** add vanilla-styled bundle inventory panel ([ad7e7d9](https://github.com/pynickle/Better-Client/commit/ad7e7d99244ad25281194de0044307f3a34302ed)), closes [#18](https://github.com/pynickle/Better-Client/issues/18) [#18](https://github.com/pynickle/Better-Client/issues/18)
+
+### 🐛 Bug Fixes
+
+* **bundle-panel:** align panel elements to one shared padding ([4a8413d](https://github.com/pynickle/Better-Client/commit/4a8413dc82d4e72b063b538db97cfc47b259c6da))
+* **bundle-panel:** pin count labels to one bottom-right corner ([ea21581](https://github.com/pynickle/Better-Client/commit/ea21581834b3d11e2ac322939b91b9874abed72e))
+* **bundle-panel:** place button labels where vanilla places them ([e474b17](https://github.com/pynickle/Better-Client/commit/e474b1751e1ffe8b30b0fd9c3f92deacc30b8d3e))
+* **bundle-panel:** restore native input and live inventory updates ([5638f69](https://github.com/pynickle/Better-Client/commit/5638f69bf0b62f16ef4a61ddeacb0b467884d3eb))
+* **bundle-panel:** stop exhausting the sound pool on transfers ([8f3cdbc](https://github.com/pynickle/Better-Client/commit/8f3cdbcfcf29544da433f1f220acdea5a4b7634f)), closes [ClientLevel#playSeededSound](https://github.com/pynickle/ClientLevel/issues/playSeededSound)
+* **sound:** suppress synthetic bundle click sounds in both loaders ([8c7ca86](https://github.com/pynickle/Better-Client/commit/8c7ca8665f496f890219d663273bd21d90038715)), closes [LocalPlayer#playSound](https://github.com/pynickle/LocalPlayer/issues/playSound) [ClientLevel#playLocalSound](https://github.com/pynickle/ClientLevel/issues/playLocalSound) [QuietClicks#run](https://github.com/pynickle/QuietClicks/issues/run)
+
+### 📚 Documentation
+
+* define the bundle panel in the glossary ([8f748eb](https://github.com/pynickle/Better-Client/commit/8f748eb1ee1e18e1d9ba4f3be3abe598a85d15dc))
+
+### 🔧 Miscellaneous Changes
+
+* ignore the .dsh tooling directory ([fe62039](https://github.com/pynickle/Better-Client/commit/fe62039ebddf9aab3d25279a7b4d2fe10fa3d23f))
+
 ## [11.0.2](https://github.com/pynickle/Better-Client/compare/v11.0.1...v11.0.2) (2026-10-13)
 
 ### 🐛 Bug Fixes
