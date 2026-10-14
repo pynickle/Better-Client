@@ -8,6 +8,7 @@ import com.euphony.better_client.service.MinecraftBundlePanelMenu;
 import com.euphony.better_client.utils.mc.KeyUtils;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.ImageButton;
@@ -40,6 +41,8 @@ import static com.euphony.better_client.service.BundlePanelSession.*;
 /** Native inventory textures and virtual cells beside the survival inventory. */
 public final class BundlePanelScreen {
     private static final int ROW_HEIGHT = 18;
+    /** How far a vanilla-aligned count and its drop shadow reach past the bottom of its cell. */
+    private static final int COUNT_OVERHANG = 2;
     private static final Identifier INVENTORY = Identifier.withDefaultNamespace("textures/gui/container/inventory.png");
     private static final Identifier BUTTON = Identifier.withDefaultNamespace("widget/button");
     private static final Identifier BUTTON_HOVER = Identifier.withDefaultNamespace("widget/button_highlighted");
@@ -162,7 +165,9 @@ public final class BundlePanelScreen {
         int visibleRows = Math.max(1, grid.height() / ROW_HEIGHT);
         int rowCount = (rows.size() + columns - 1) / columns;
         offset = Math.clamp(offset, 0, Math.max(0, rowCount - visibleRows));
-        graphics.enableScissor(grid.x(), grid.y(), grid.x() + grid.width(), grid.y() + grid.height());
+        // A count matches vanilla's baseline, so its shadow can hang COUNT_OVERHANG below the cell.
+        // Extend the scissor to keep the last visible row from clipping it.
+        graphics.enableScissor(grid.x(), grid.y(), grid.x() + grid.width(), grid.y() + grid.height() + COUNT_OVERHANG);
         for (int r = 0; r < visibleRows; r++) for (int c = 0; c < columns; c++) {
             int index = (offset + r) * columns + c;
             Cell row = index < rows.size() ? rows.get(index) : null;
@@ -192,11 +197,31 @@ public final class BundlePanelScreen {
         if (entry.count() == 0) return;
         ItemStack item = MinecraftBundlePanelMenu.sample(entry.item());
         graphics.item(item, x + 1, y + 1);
-        graphics.itemDecorations(minecraft.font, item, x + 1, y + 1, Integer.toString(entry.count()));
+        graphics.itemDecorations(minecraft.font, item, x + 1, y + 1, "");
+        renderCount(graphics, entry.count(), x, y);
         if (new Layout(layout.placement(), x, y, ROW_HEIGHT, ROW_HEIGHT).contains(mx, my)) {
             graphics.fill(x + 1, y + 1, x + 17, y + 17, 0x80FFFFFF);
             itemTooltip(graphics, item, mx, my);
         }
+    }
+
+    private void renderCount(GuiGraphicsExtractor graphics, int count, int x, int y) {
+        String label = Integer.toString(count);
+        Font font = minecraft.font;
+        int width = font.width(label);
+        // Pin the bottom-right corner to the box vanilla itemCount produces, which draws at
+        // (iconX + 19 - 2 - width, iconY + 6 + 3) with the cell's icon origin at (x + 1, y + 1).
+        // At full scale that is the right edge x + 18 and the bottom edge y + 19, so one- and
+        // two-digit counts stay pixel-identical to the survival inventory. Longer totals shrink
+        // away from that same corner instead of drifting to the top.
+        float scale = Math.min(1.0F, (float) (ROW_HEIGHT - 4) / (width + 1));
+        float right = x + 1 + 17;
+        float bottom = y + 1 + 6 + 3 + font.lineHeight;
+        graphics.pose().pushMatrix();
+        graphics.pose().translate(right - (float) width * scale, bottom - font.lineHeight * scale);
+        graphics.pose().scale(scale, scale);
+        graphics.text(font, label, 0, 0, 0xFFFFFFFF, true);
+        graphics.pose().popMatrix();
     }
 
     private void renderBag(GuiGraphicsExtractor graphics, Slot bag, int x, int y, int mx, int my) {
