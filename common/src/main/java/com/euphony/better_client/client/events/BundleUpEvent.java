@@ -14,6 +14,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.input.KeyEvent;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.ItemTags;
@@ -69,7 +70,8 @@ public class BundleUpEvent {
             QuietClicks.run(() -> insertIntoBundle(containerScreen, hoveredSlot, insertion.identity()));
         }
         if (result.playFailureSound()) {
-            minecraft.player.playSound(SoundEvents.BUNDLE_INSERT_FAIL, 1.0F, 1.0F);
+            // Keep the single failure cue audible even while synthetic clicks are being suppressed.
+            minecraft.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.BUNDLE_INSERT_FAIL, 1.0F, 1.0F));
         }
     }
 

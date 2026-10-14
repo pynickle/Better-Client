@@ -11,7 +11,7 @@ authors = "ENC_Euphony"
 description = '''
 Make a better server experience
 '''
-logoFile = "icon.png"
+iconFile = "icon.png"
 
 [[accessTransformers]]
 file="META-INF/accesstransformer.cfg"

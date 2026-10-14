@@ -30,6 +30,14 @@ Mouse event buttons and container-click buttons have different values in Minecra
 
 Before retrieval, the menu adapter clears bundle selection on both client and server and then selects the current full-content index. This is intentional: selection is a toggle, and its index is not serialized with the contents. A locally matching index alone cannot establish server selection after reconciliation.
 
+## Sound suppression regression
+
+Bundle item sounds call `LocalPlayer.playSound`, which forwards to `ClientLevel.playLocalSound` and bypasses both `playSeededSound` hooks. `LocalPlayerMixin` now cancels that call only while `QuietClicks.run` is executing a synthetic menu click. This covers both loaders, including NeoForge's additional sound event inside that override. Manual local clicks resume immediately after the scope ends, and Bundle up's single failure cue remains audible.
+
+The existing short window for server-sent bundle sounds stays in `ClientLevelMixin`. Vanilla normally excludes the acting player from those broadcasts, so this window is a fallback for servers that echo sounds. Sound identifiers are compared through the holder's value: `Holder.Direct.is(identifier)` always returns false. `QuietClicksTest` failed on a direct `minecraft:item.bundle.insert` holder before the fix and passes afterward. It also checks repeated clicks, nested/throwing actions, registered holders, and unrelated sounds.
+
+These are offline policy tests; they do not apply mixins in a running client or reproduce OpenAL pool exhaustion. No DebugBridge or game runtime tools were used for this validation after the user excluded them. Both loader builds pass, but the reason the reported exhaustion appears only in NeoForge is not established. In each loader, repeatedly transfer items through the panel and Bundle up, then close the inventory and check ordinary sounds and manual bundle clicks. Confirm that the log no longer reports `Maximum sound pool size 247 reached` / `Failed to create new sound handle`. If the warnings persist, record whether they also occur without panel transfers; the missed local suppression is confirmed, but a separate channel-reclamation problem has not been ruled out.
+
 ## Live checks still required
 
 Fabric and NeoForge development clients were launched to check startup and resource loading on 2026-10-14. Neither development instance has DebugBridge installed, and the inspected published bridge releases do not provide a Minecraft 26.3 build. No in-world/server transfer, visual-layout, translation, or mouse-mod compatibility result is claimed from those startup checks.

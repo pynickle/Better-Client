@@ -12,17 +12,10 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * Keeps the bundle panel's synthetic clicks out of the sound engine.
+ * Filters server-sent bundle sounds following synthetic menu clicks.
  *
- * <p>A panel transfer is one vanilla menu click per item, and each bundle click plays a real
- * {@code BUNDLE_INSERT}, {@code BUNDLE_REMOVE_ONE} or {@code BUNDLE_INSERT_FAIL}. Requesting a
- * sound per item in a burst filled the 247-channel static pool faster than OpenAL could reclaim
- * the finished sources, so the session then logged "Maximum sound pool size 247 reached" and
- * "Failed to create new sound handle" for every later sound.
- *
- * <p>{@code ClientLevel#playSeededSound} is the single funnel every world sound passes through,
- * which covers the {@code Player#playSound} and positional ({@code BUNDLE_DROP_CONTENTS}) routes
- * alike.
+ * <p>The two sound packet handlers use the positional and entity-bound playSeededSound overloads.
+ * Locally predicted bundle clicks bypass both; LocalPlayerMixin handles those separately.
  */
 @Mixin(ClientLevel.class)
 public abstract class ClientLevelMixin {
@@ -33,7 +26,19 @@ public abstract class ClientLevelMixin {
     private void better_client$silencePanelClicks(
             Entity except, double x, double y, double z, Holder<SoundEvent> sound, SoundSource source,
             float volume, float pitch, long seed, CallbackInfo ci) {
-        if (QuietClicks.active()) {
+        if (QuietClicks.suppress(sound)) {
+            ci.cancel();
+        }
+    }
+
+    @Inject(
+            method = "playSeededSound(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/core/Holder;Lnet/minecraft/sounds/SoundSource;FFJ)V",
+            at = @At("HEAD"),
+            cancellable = true)
+    private void better_client$silencePanelEntityClicks(
+            Entity except, Entity sourceEntity, Holder<SoundEvent> sound, SoundSource source,
+            float volume, float pitch, long seed, CallbackInfo ci) {
+        if (QuietClicks.suppress(sound)) {
             ci.cancel();
         }
     }
