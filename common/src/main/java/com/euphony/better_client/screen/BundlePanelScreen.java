@@ -47,6 +47,8 @@ public final class BundlePanelScreen {
     private static final int COUNT_OVERHANG = 2;
     /** Vertical space reserved below the grid for the footer line and its padding. */
     private static final int FOOTER_BAND = 14;
+    /** Vanilla's AbstractWidget.TEXT_MARGIN, kept so our button labels sit where vanilla's do. */
+    private static final int TEXT_MARGIN = 2;
     private static final Identifier INVENTORY = Identifier.withDefaultNamespace("textures/gui/container/inventory.png");
     private static final Identifier BUTTON = Identifier.withDefaultNamespace("widget/button");
     private static final Identifier BUTTON_HOVER = Identifier.withDefaultNamespace("widget/button_highlighted");
@@ -361,11 +363,12 @@ public final class BundlePanelScreen {
     private void button(GuiGraphicsExtractor graphics, Layout rect, Component label, int mx, int my) {
         graphics.blitSprite(RenderPipelines.GUI_TEXTURED, rect.contains(mx, my) ? BUTTON_HOVER : BUTTON,
                 rect.x(), rect.y(), rect.width(), rect.height());
-        // Buttons are sized so this centre is an exact integer: centeredText divides the label's
-        // width by two, so an odd-sized button would bias the label half a pixel off the sprite.
-        graphics.centeredText(minecraft.font, label,
-                rect.x() + rect.width() / 2,
-                rect.y() + (rect.height() - minecraft.font.lineHeight) / 2, 0xFFFFFFFF);
+        // Match AbstractWidget's label placement: the midpoint of the TEXT_MARGIN-inset inner area,
+        // then a one-pixel nudge down. The margins cancel for a centred label, but the nudge does
+        // not, so skipping it leaves the label sitting a pixel above the sprite's middle.
+        int centerX = (rect.x() + TEXT_MARGIN + rect.x() + rect.width() - TEXT_MARGIN) / 2;
+        int textTop = rect.y() + (rect.height() - minecraft.font.lineHeight) / 2 + 1;
+        graphics.centeredText(minecraft.font, label, centerX, textTop, 0xFFFFFFFF);
     }
     private void slotBackground(GuiGraphicsExtractor graphics, int x, int y) {
         graphics.blit(RenderPipelines.GUI_TEXTURED, INVENTORY, x, y, 7, 83, ROW_HEIGHT, ROW_HEIGHT, 256, 256);
