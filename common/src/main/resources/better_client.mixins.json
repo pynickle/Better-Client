@@ -5,6 +5,11 @@
   "minVersion": "0.8",
   "client": [
     "AbstractContainerScreenMixin",
+    "BundlePanelContainerScreenMixin",
+    "BundlePanelInventoryScreenMixin",
+    "BundlePanelRecipeBookScreenMixin",
+    "accessor.BundlePanelContainerScreenAccessor",
+    "accessor.BundlePanelRecipeBookAccessor",
     "BookEditScreenMixin",
     "BookViewScreenMixin",
     "ChatComponentMixin",

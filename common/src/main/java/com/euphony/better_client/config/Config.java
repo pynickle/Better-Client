@@ -8,6 +8,7 @@ import com.euphony.better_client.config.option.TotemBarRenderMode;
 import com.euphony.better_client.config.option.TradingHudPos;
 import com.euphony.better_client.platform.Platform;
 import com.euphony.better_client.service.HistoryBoundary;
+import com.euphony.better_client.service.BundlePanelSession;
 import com.euphony.better_client.utils.Utils;
 import com.euphony.better_client.utils.enums.DurabilityTooltipStyle;
 import com.google.gson.Gson;
@@ -99,6 +100,9 @@ public class Config {
     public boolean enableExperimentalDisplay = true;
 
     public boolean enableBundleUp = true;
+    public boolean enableBundlePanel = true;
+    public boolean bundlePanelExpanded = true;
+    public BundlePanelSession.View bundlePanelView = BundlePanelSession.View.MERGED;
 
     public boolean enableClickThrough = true;
     public boolean clickThroughOnlyContainers = true;
@@ -199,8 +203,6 @@ public class Config {
     }
 
     public static Config create() {
-        if (!Platform.isModLoaded("yet_another_config_lib_v3")) return DEFAULTS;
-
         boolean accessibleInGame = false;
         if (Platform.isFabric()) {
             accessibleInGame = Platform.isModLoaded("modmenu")
@@ -208,7 +210,7 @@ public class Config {
         } else if (Platform.isNeoForge()) {
             accessibleInGame = true;
         }
-        config = accessibleInGame ? new YACLConfig() : DEFAULTS;
+        config = accessibleInGame && Platform.isModLoaded("yet_another_config_lib_v3") ? new YACLConfig() : new Config();
 
         load();
 
@@ -246,6 +248,7 @@ public class Config {
     }
 
     private void normalizeAutoAdaptOptions() {
+        if (bundlePanelView == null) bundlePanelView = BundlePanelSession.View.MERGED;
         if (enableDurabilityTooltip == null) enableDurabilityTooltip = AutoAdaptMode.AUTO;
         if (enableNoExperimentalWarning == null) enableNoExperimentalWarning = AutoAdaptMode.AUTO;
         if (enableFoodBarWhileMounted == null) enableFoodBarWhileMounted = AutoAdaptMode.AUTO;

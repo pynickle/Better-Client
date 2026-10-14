@@ -3,6 +3,8 @@ package com.euphony.better_client.config.screen.category;
 import com.euphony.better_client.BetterClient;
 import com.euphony.better_client.config.Config;
 import com.euphony.better_client.config.ConfigUtils;
+import com.euphony.better_client.service.BundlePanelSession;
+import dev.isxander.yacl3.api.controller.EnumControllerBuilder;
 import dev.isxander.yacl3.api.ConfigCategory;
 import dev.isxander.yacl3.api.ListOption;
 import dev.isxander.yacl3.api.Option;
@@ -29,6 +31,18 @@ public class MiscellaneitiesConfigScreen {
                 DEFAULTS.enableBundleUp,
                 () -> config.enableBundleUp,
                 newVal -> config.enableBundleUp = newVal);
+
+        Option<Boolean> enableBundlePanelOpt = ConfigUtils.buildBooleanOption(
+                "enableBundlePanel", DEFAULTS.enableBundlePanel,
+                () -> config.enableBundlePanel, value -> config.enableBundlePanel = value);
+        Option<Boolean> bundlePanelExpandedOpt = ConfigUtils.buildBooleanOption(
+                "bundlePanelExpanded", DEFAULTS.bundlePanelExpanded,
+                () -> config.bundlePanelExpanded, value -> config.bundlePanelExpanded = value);
+        Option<BundlePanelSession.View> bundlePanelViewOpt = ConfigUtils.<BundlePanelSession.View>getGenericOption("bundlePanelView")
+                .binding(DEFAULTS.bundlePanelView, () -> config.bundlePanelView, value -> config.bundlePanelView = value)
+                .controller(opt -> EnumControllerBuilder.create(opt).enumClass(BundlePanelSession.View.class)
+                        .formatValue(value -> Component.translatable("text.better_client.bundle_panel.view." + value.name().toLowerCase(java.util.Locale.ROOT))))
+                .build();
 
         Option<Boolean> enableClickThroughOpt = ConfigUtils.buildBooleanOption(
                 "enableClickThrough",
@@ -65,6 +79,10 @@ public class MiscellaneitiesConfigScreen {
                 .title(Component.translatable("yacl3.config.better_client:config"))
                 .category(ConfigCategory.createBuilder()
                         .name(ConfigUtils.getCategoryName(CLIENT_CATEGORY))
+                        .group(OptionGroup.createBuilder()
+                                .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, "bundle_panel"))
+                                .options(List.of(enableBundlePanelOpt, bundlePanelViewOpt, bundlePanelExpandedOpt))
+                                .build())
                         .group(OptionGroup.createBuilder()
                                 .name(ConfigUtils.getGroupName(CLIENT_CATEGORY, BUNDLE_UP_GROUP))
                                 .options(List.of(enableBundleUpOpt))
