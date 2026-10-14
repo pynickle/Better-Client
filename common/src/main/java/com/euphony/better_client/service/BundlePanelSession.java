@@ -8,6 +8,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 /** The common boundary for the panel's projection and vanilla menu transactions. */
 public final class BundlePanelSession {
@@ -37,6 +39,8 @@ public final class BundlePanelSession {
     }
     public record EntryId(Object key, int bag, int occurrence) {}
     public record Entry(EntryId id, Item item, int count, int bag) {}
+    /** A virtual slot or a full-width group heading, including temporary empty positions. */
+    public record Cell(Entry entry, Slot bag, int owner, boolean header) {}
     public record State(Snapshot inventory, List<Slot> bags, List<Entry> entries, View view, boolean expanded) {}
     public interface MenuAdapter {
         Snapshot read();
@@ -49,9 +53,12 @@ public final class BundlePanelSession {
     private View view;
     private boolean expanded;
     private String search = "";
-    private boolean pointerInGrid;
+    private boolean inputHeld;
     private List<Entry> visible = List.of();
+    private List<Cell> visibleCells = List.of();
+    private int cellColumns;
     private final Deque<Runnable> steps = new ArrayDeque<>();
+    private final Set<Integer> guardedSlots = new LinkedHashSet<>();
     private Snapshot expected;
     private Item transferItem;
     private EntryId transferEntry;
@@ -76,10 +83,10 @@ public final class BundlePanelSession {
         this.expanded = expanded;
     }
 
-    public void view(View value) { view = value; visible = List.of(); }
+    public void view(View value) { view = value; visible = List.of(); visibleCells = List.of(); }
     public void expanded(boolean value) { expanded = value; }
-    public void search(String value) { search = value.toLowerCase(Locale.ROOT); visible = List.of(); }
-    public void pointerInGrid(boolean value) { pointerInGrid = value; }
+    public void search(String value) { search = value.toLowerCase(Locale.ROOT); visible = List.of(); visibleCells = List.of(); }
+    public void inputHeld(boolean value) { inputHeld = value; }
     public boolean busy() { return active || !pending.isEmpty(); }
     public Outcome outcome() { return outcome; }
     public int inventoryLeft(LayoutInput input, boolean expanded) {
@@ -100,13 +107,14 @@ public final class BundlePanelSession {
     }
 
     public void interact(EntryId entryId, int targetBag, Gesture gesture, boolean control, boolean shift) {
-        if (active) {
-            if (shift && (gesture == Gesture.WHEEL_UP || gesture == Gesture.WHEEL_DOWN)
-                    && (mode == Mode.DEPOSIT_MAIN || mode == Mode.EXTRACT && intoMain)) {
-                pending.addLast(new Intent(entryId, targetBag, gesture, control, shift));
-            }
+        if (busy()) {
+            pending.addLast(new Intent(entryId, targetBag, gesture, control, shift));
             return;
         }
+        startInteraction(entryId, targetBag, gesture, control, shift);
+    }
+
+    private void startInteraction(EntryId entryId, int targetBag, Gesture gesture, boolean control, boolean shift) {
         outcome = new Outcome(0, Failure.NONE);
         boolean wheel = gesture == Gesture.WHEEL_UP || gesture == Gesture.WHEEL_DOWN;
         if (wheel && !shift) return;
@@ -171,6 +179,7 @@ public final class BundlePanelSession {
         moved = 0;
         remaining = amount;
         expected = snapshot;
+        guardedSlots.clear();
         sourceBag = -1;
         nestingTarget = -1;
         depositSource = -1;
@@ -182,11 +191,12 @@ public final class BundlePanelSession {
     public void tick() {
         if (!active && !pending.isEmpty()) {
             Intent intent = pending.removeFirst();
-            interact(intent.entry(), intent.target(), intent.gesture(), intent.control(), intent.shift());
+            startInteraction(intent.entry(), intent.target(), intent.gesture(), intent.control(), intent.shift());
         }
         if (!active) return;
         Snapshot current = menu.read();
-        if (!current.valid() || !current.equals(expected)) { complete(Failure.CHANGED); return; }
+        if (steps.isEmpty()) guardedSlots.clear();
+        if (!matchesExpected(current)) { complete(Failure.CHANGED); return; }
         if (steps.isEmpty()) {
             if (remaining == 0) {
                 if (temporary >= 0 && !slot(current, temporary).stack().empty()) {
@@ -203,6 +213,21 @@ public final class BundlePanelSession {
         }
     }
 
+    private boolean matchesExpected(Snapshot current) {
+        if (!current.valid() || current.menu() != expected.menu() || current.revision() != expected.revision()
+                || !current.cursor().equals(expected.cursor())) return false;
+        if (temporary >= 0 && !sameSlotContents(slot(current, temporary), slot(expected, temporary))) return false;
+        if (target >= 0 && !sameSlotContents(slot(current, target), slot(expected, target))) return false;
+        for (int id : guardedSlots) if (!sameSlotContents(slot(current, id), slot(expected, id))) return false;
+        return true;
+    }
+
+    private static boolean sameSlotContents(Slot a, Slot b) {
+        // Hover changes selection without changing ownership or contents; extraction reselects explicitly.
+        return a.region() == b.region() && a.position() == b.position() && a.limit() == b.limit()
+                && a.stack().equals(b.stack()) && a.contents().equals(b.contents());
+    }
+
     private void planDeposit(Snapshot snapshot) {
         Slot source = mode == Mode.DEPOSIT_MAIN ? snapshot.slots().stream()
                 .filter(s -> s.region() == Region.MAIN && !s.stack().empty()
@@ -216,6 +241,8 @@ public final class BundlePanelSession {
                         .thenComparing(Slot::region).thenComparingInt(Slot::position))
                 .findFirst().orElse(null);
         if (bag == null) { complete(Failure.NO_SPACE); return; }
+        guardedSlots.add(bag.id());
+        if (source != null) guardedSlots.add(source.id());
         Stack carried = mode == Mode.DEPOSIT_MAIN ? source.stack() : snapshot.cursor();
         int amount = Math.min(remaining, Math.min(carried.count(), menu.capacity(bag.id(), transferItem)));
         if (amount <= 0) { complete(Failure.UNAVAILABLE); return; }
@@ -266,6 +293,8 @@ public final class BundlePanelSession {
         sourceBag = source.bag();
         Slot destination = intoMain ? destination(snapshot, transferItem) : null;
         if (intoMain && destination == null) { remaining = 0; return; }
+        guardedSlots.add(source.bag());
+        if (destination != null) guardedSlots.add(destination.id());
         if (intoMain) amount = Math.min(amount, room(destination, transferItem));
         int delivered = amount;
         steps.add(() -> {
@@ -344,7 +373,7 @@ public final class BundlePanelSession {
         if (expected == null || !current.valid() || current.menu() != expected.menu()) return;
         if (mode == Mode.EXTRACT && intoMain && sourceBag >= 0 && !current.cursor().empty()
                 && !current.cursor().item().bundle() && current.cursor().equals(expected.cursor())
-                && slot(current, sourceBag).equals(slot(expected, sourceBag)) && slot(current, sourceBag).bag()
+                && sameSlotContents(slot(current, sourceBag), slot(expected, sourceBag)) && slot(current, sourceBag).bag()
                 && menu.capacity(sourceBag, current.cursor().item()) >= current.cursor().count()) {
             click(sourceBag, 0);
         } else if (mode == Mode.DEPOSIT_MAIN && depositSource >= 0 && !current.cursor().empty()
@@ -362,7 +391,7 @@ public final class BundlePanelSession {
             click(nestingTarget, 0);
         } else if (sourceBag >= 0 && !current.cursor().empty() && !current.cursor().item().bundle()
                 && current.cursor().equals(expected.cursor()) && slot(current, sourceBag).bag()
-                && slot(current, sourceBag).equals(slot(expected, sourceBag))
+                && sameSlotContents(slot(current, sourceBag), slot(expected, sourceBag))
                 && menu.capacity(sourceBag, current.cursor().item()) >= current.cursor().count() && !temp.stack().empty()) {
             click(sourceBag, 0);
         }
@@ -395,16 +424,58 @@ public final class BundlePanelSession {
         if (view == View.MERGED) fresh.sort(Comparator.comparing((Entry e) -> e.item().name())
                 .thenComparing(e -> e.item().key().toString()).thenComparingInt(e -> e.id().bag())
                 .thenComparingInt(e -> e.id().occurrence()));
-        if (pointerInGrid && !visible.isEmpty()) {
+        if (!visible.isEmpty()) {
             List<Entry> stable = new ArrayList<>();
             for (Entry old : visible) {
                 Entry current = entries.remove(old.id());
-                stable.add(current == null ? new Entry(old.id(), old.item(), 0, old.bag()) : current);
+                if (current != null) stable.add(current);
+                else if (inputHeld || busy()) stable.add(new Entry(old.id(), old.item(), 0, old.bag()));
             }
             for (Entry entry : fresh) if (entries.containsKey(entry.id())) stable.add(entry);
             visible = List.copyOf(stable);
         } else visible = List.copyOf(fresh);
         return new State(snapshot, bags, visible, view, expanded);
+    }
+
+    /** Keep occupied cells in place during input; append discoveries and compact only when idle. */
+    public List<Cell> cells(int columns) {
+        if (columns < 1) throw new IllegalArgumentException("columns must be positive");
+        if (cellColumns != columns) { visibleCells = List.of(); cellColumns = columns; }
+        State state = state();
+        List<Cell> next = new ArrayList<>();
+        if (view == View.MERGED) {
+            for (Entry entry : state.entries()) next.add(new Cell(entry, null, -1, false));
+        } else {
+            Map<Integer, Slot> bags = new LinkedHashMap<>();
+            for (Slot bag : state.bags()) bags.put(bag.id(), bag);
+            Map<EntryId, Entry> entries = new LinkedHashMap<>();
+            for (Entry entry : state.entries()) entries.put(entry.id(), entry);
+            Set<Integer> order = new LinkedHashSet<>();
+            for (Cell old : visibleCells) if (bags.containsKey(old.owner())) order.add(old.owner());
+            order.addAll(bags.keySet());
+            Set<Integer> shownBags = new LinkedHashSet<>();
+            if (inputHeld || busy()) {
+                for (int index = 0; index < visibleCells.size(); index++) {
+                    Cell old = visibleCells.get(index);
+                    Slot bag = bags.get(old.owner());
+                    Entry entry = old.entry() == null ? null : entries.remove(old.entry().id());
+                    next.add(new Cell(entry, old.header() && index % columns == 0 ? bag : null, old.owner(), old.header()));
+                    shownBags.add(old.owner());
+                }
+            }
+            for (int owner : order) {
+                List<Entry> additions = entries.values().stream().filter(e -> e.bag() == owner && e.count() > 0).toList();
+                if (shownBags.contains(owner) && additions.isEmpty()) continue;
+                // A growing group gets an appended continuation while input is held, so later groups stay put.
+                next.add(new Cell(null, bags.get(owner), owner, true));
+                while (next.size() % columns != 0) next.add(new Cell(null, null, owner, true));
+                for (Entry entry : additions) next.add(new Cell(entry, null, owner, false));
+                if (additions.isEmpty()) next.add(new Cell(null, null, owner, false));
+                while (next.size() % columns != 0) next.add(new Cell(null, null, owner, false));
+            }
+        }
+        visibleCells = List.copyOf(next);
+        return visibleCells;
     }
 
     private static List<Slot> bags(Snapshot snapshot) {

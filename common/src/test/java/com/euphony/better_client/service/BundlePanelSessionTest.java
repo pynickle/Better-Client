@@ -172,6 +172,23 @@ class BundlePanelSessionTest {
     }
 
     @Test
+    void unrelatedInventoryAndSelectionChangesDoNotInterruptTransfer() {
+        Item dirt = new Item("dirt", "Dirt", 64, true, false);
+        Menu menu = new Menu(List.of(bag(36, Region.HOTBAR, 0, List.of(new Stack(STONE, 11))), empty(9), empty(10)));
+        BundlePanelSession session = new BundlePanelSession(menu, View.MERGED, true);
+        session.interact(session.state().entries().getFirst().id(), -1, Gesture.RIGHT, false, false);
+        session.tick();
+        menu.replace(new Slot(10, Region.MAIN, 10, new Stack(dirt, 5), List.of(), 64, -1), menu.read().cursor());
+        menu.select(36, 0);
+        finish(session);
+        assertEquals(Failure.NONE, session.outcome().failure());
+        assertEquals(new Stack(STONE, 6), menu.read().cursor());
+        assertEquals(new Stack(dirt, 5), menu.slot(10).stack());
+        assertEquals(List.of(new Stack(STONE, 5)), menu.slot(36).contents());
+        assertTrue(menu.slot(9).stack().empty());
+    }
+
+    @Test
     void correctionsStopPendingClicksAndRetainOwnershipOfTransientItems() {
         Menu menu = new Menu(List.of(bag(36, Region.HOTBAR, 0, List.of(new Stack(STONE, 11))), empty(9)));
         BundlePanelSession session = new BundlePanelSession(menu, View.MERGED, true);
@@ -193,7 +210,7 @@ class BundlePanelSessionTest {
                 List.of(new Stack(STONE, 1), new Stack(variant, 1), new Stack(tool, 1), new Stack(tool, 1))), empty(9)));
         BundlePanelSession session = new BundlePanelSession(menu, View.MERGED, true);
         assertEquals(4, session.state().entries().size());
-        session.pointerInGrid(true);
+        session.inputHeld(true);
         Entry selected = session.state().entries().getFirst();
         session.interact(selected.id(), -1, Gesture.LEFT, false, false);
         finish(session);
@@ -201,7 +218,7 @@ class BundlePanelSessionTest {
         assertEquals(0, session.state().entries().getFirst().count());
         session.interact(selected.id(), -1, Gesture.LEFT, true, false);
         assertEquals(Failure.UNAVAILABLE, session.outcome().failure());
-        session.pointerInGrid(false);
+        session.inputHeld(false);
         assertEquals(3, session.state().entries().size());
         session.search("Tool");
         assertEquals(2, session.state().entries().size());
@@ -213,12 +230,92 @@ class BundlePanelSessionTest {
     }
 
     @Test
+    void compactionPreservesOrderAndNewItemsAppearWhileInputIsHeld() {
+        Item apple = new Item("apple", "Apple", 64, true, false);
+        Item wood = new Item("wood", "Wood", 64, true, false);
+        Menu menu = new Menu(List.of(bag(36, Region.HOTBAR, 0,
+                List.of(new Stack(STONE, 1), new Stack(wood, 2)))));
+        BundlePanelSession session = new BundlePanelSession(menu, View.MERGED, true);
+        EntryId stone = session.state().entries().getFirst().id();
+        session.inputHeld(true);
+        session.interact(stone, -1, Gesture.LEFT, false, false);
+        finish(session);
+        menu.replace(bag(36, Region.HOTBAR, 0, List.of(new Stack(apple, 3), new Stack(wood, 2))), menu.read().cursor());
+        assertEquals(List.of(0, 2, 3), session.state().entries().stream().map(Entry::count).toList());
+
+        session.inputHeld(false);
+        assertEquals(List.of(wood, apple), session.state().entries().stream().map(Entry::item).toList());
+        assertEquals(new Stack(STONE, 1), session.state().inventory().cursor());
+        session.search("");
+        assertEquals(List.of(apple, wood), session.state().entries().stream().map(Entry::item).toList());
+    }
+
+    @Test
+    void groupedCellsRefreshWhileHeldWithoutMovingOtherBagsAndCompactOnRelease() {
+        Item apple = new Item("apple", "Apple", 64, true, false);
+        Menu menu = new Menu(List.of(bag(36, Region.HOTBAR, 0, List.of(new Stack(STONE, 2))),
+                bag(37, Region.HOTBAR, 1, List.of()), empty(9)));
+        BundlePanelSession session = new BundlePanelSession(menu, View.GROUPED, true);
+        assertEquals(8, session.cells(2).size());
+        session.inputHeld(true);
+        menu.replace(bag(36, Region.HOTBAR, 0, List.of(new Stack(STONE, 1), new Stack(apple, 3))), Stack.EMPTY);
+        List<Cell> changed = session.cells(2);
+        assertEquals(1, changed.get(2).entry().count());
+        assertEquals(37, changed.get(4).bag().id());
+        assertTrue(changed.stream().skip(8).anyMatch(c -> c.entry() != null && c.entry().item().equals(apple)));
+
+        menu.replace(new Slot(36, Region.HOTBAR, 0, Stack.EMPTY, List.of(), 64, -1), Stack.EMPTY);
+        menu.replace(bag(9, Region.MAIN, 9, List.of(new Stack(STONE, 1))), Stack.EMPTY);
+        changed = session.cells(2);
+        assertNull(changed.getFirst().bag());
+        assertEquals(0, changed.get(2).entry().count());
+        assertEquals(37, changed.get(4).bag().id());
+        assertTrue(changed.stream().anyMatch(c -> c.bag() != null && c.bag().id() == 9));
+
+        session.inputHeld(false);
+        List<Cell> compact = session.cells(2);
+        assertEquals(8, compact.size());
+        assertEquals(37, compact.getFirst().bag().id());
+        assertEquals(9, compact.get(4).bag().id());
+        assertEquals(37, compact.get(2).owner()); // Empty bags still have a deposit row.
+        assertFalse(compact.get(2).header());
+    }
+
+    @Test
+    void groupedHeadingReturnsWhenABagIsPlacedBackBeforeRelease() {
+        Slot bag = bag(36, Region.HOTBAR, 0, List.of(new Stack(STONE, 2)));
+        Menu menu = new Menu(List.of(bag));
+        BundlePanelSession session = new BundlePanelSession(menu, View.GROUPED, true);
+        session.inputHeld(true);
+        assertEquals(bag, session.cells(2).getFirst().bag());
+        menu.replace(new Slot(36, Region.HOTBAR, 0, Stack.EMPTY, List.of(), 64, -1), bag.stack());
+        assertNull(session.cells(2).getFirst().bag());
+        menu.replace(bag, Stack.EMPTY);
+        assertEquals(bag, session.cells(2).getFirst().bag());
+        assertEquals(4, session.cells(2).size());
+    }
+
+    @Test
+    void repeatedClicksAreQueuedAndResolveAgainstTheUpdatedCursor() {
+        Menu menu = new Menu(List.of(bag(36, Region.HOTBAR, 0, List.of(new Stack(STONE, 11))), empty(9)));
+        BundlePanelSession session = new BundlePanelSession(menu, View.MERGED, true);
+        EntryId entry = session.state().entries().getFirst().id();
+        session.interact(entry, -1, Gesture.LEFT, true, false);
+        session.interact(entry, -1, Gesture.LEFT, true, false);
+        session.interact(entry, -1, Gesture.LEFT, true, false);
+        finish(session);
+        assertEquals(new Stack(STONE, 3), menu.read().cursor());
+        assertEquals(List.of(new Stack(STONE, 8)), menu.slot(36).contents());
+        assertTrue(menu.slot(9).stack().empty());
+    }
+
+    @Test
     void queuedWheelTransfersRefreshSelectedIndicesAfterReturningRemainders() {
         Item dirt = new Item("dirt", "Dirt", 64, true, false);
         Menu menu = new Menu(List.of(bag(36, Region.HOTBAR, 0, List.of(new Stack(dirt, 5), new Stack(STONE, 11))), empty(9)));
         BundlePanelSession session = new BundlePanelSession(menu, View.MERGED, true);
         EntryId entry = session.state().entries().stream().filter(e -> e.item().equals(STONE)).findFirst().orElseThrow().id();
-        session.pointerInGrid(true);
+        session.inputHeld(true);
         session.interact(entry, -1, Gesture.WHEEL_DOWN, false, true);
         session.interact(entry, -1, Gesture.WHEEL_DOWN, false, true);
         session.interact(entry, -1, Gesture.WHEEL_DOWN, false, true);

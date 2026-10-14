@@ -19,12 +19,18 @@ import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.input.CharacterEvent;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffectUtil;
 import net.minecraft.world.item.BundleItem;
 import net.minecraft.world.item.ItemStack;
 
-import java.util.ArrayList;
+import org.lwjgl.sdl.SDLKeyboard;
+import org.lwjgl.sdl.SDLMouse;
+
+import java.nio.ByteBuffer;
+import java.nio.FloatBuffer;
 import java.util.List;
 import java.util.Locale;
 
@@ -41,18 +47,16 @@ public final class BundlePanelScreen {
     private final InventoryScreen screen;
     private final BundlePanelSession session;
     private final EditBox search;
-    private List<Row> rows = List.of();
+    private List<Cell> rows = List.of();
     private Layout layout;
     private boolean replacement;
     private boolean shieldRelease;
-    private boolean inGrid;
     private int offset;
     private int columns;
     private double wheel;
     private State shown;
-
-    private record Row(Object id, Entry entry, Slot bag, int owner, boolean header) {}
-    private record Padding(int owner, int position) {}
+    private Outcome lastOutcome;
+    private long failureUntil;
 
     public BundlePanelScreen(InventoryScreen screen) {
         this.screen = screen;
@@ -64,8 +68,25 @@ public final class BundlePanelScreen {
         shown = session.state();
     }
 
-    public void tick() { session.tick(); }
-    public void close() { session.cancel(); }
+    public EditBox searchField() { return search; }
+    public void tick() { session.inputHeld(anyInputHeld()); session.tick(); }
+    public void close() { focusSearch(false); session.cancel(); }
+
+    private boolean anyInputHeld() {
+        if (SDLMouse.SDL_GetMouseState((FloatBuffer) null, (FloatBuffer) null) != 0) return true;
+        ByteBuffer keys = SDLKeyboard.SDL_GetKeyboardState();
+        if (keys != null) for (int key = 0; key < keys.limit(); key++) if (keys.get(key) != 0) return true;
+        return false;
+    }
+
+    private void focusSearch(boolean focused) {
+        if (focused) screen.setFocused(search);
+        else {
+            if (screen.getFocused() == search) screen.setFocused(null);
+            else if (search.isFocused()) search.setFocused(false);
+            search.preeditUpdated(null);
+        }
+    }
 
     private BundlePanelContainerScreenAccessor geometry() { return (BundlePanelContainerScreenAccessor) screen; }
     private net.minecraft.client.gui.screens.recipebook.RecipeBookComponent<?> book() {
@@ -91,6 +112,7 @@ public final class BundlePanelScreen {
     }
 
     private void updateLayout() {
+        session.inputHeld(anyInputHeld());
         shown = session.state();
         int base = book().updateScreenPosition(screen.width, geometry().better_client$imageWidth());
         int left = session.inventoryLeft(new LayoutInput(screen.width, screen.height, base, geometry().better_client$topPos(),
@@ -108,8 +130,10 @@ public final class BundlePanelScreen {
         int nextColumns = Math.max(1, (layout.width() - 14) / ROW_HEIGHT);
         if (columns != nextColumns) { columns = nextColumns; rows = List.of(); offset = 0; }
         search.setX(layout.x() + 7);
-        search.setY(layout.y() + 39);
+        search.setY(layout.y() + 20);
         search.setWidth(Math.max(1, layout.width() - 14));
+        search.visible = available() && shown.expanded() && (layout.placement() != Placement.SWITCH || replacement);
+        if (!search.visible) focusSearch(false);
     }
 
     public boolean replacesInventory() {
@@ -119,7 +143,7 @@ public final class BundlePanelScreen {
 
     public void render(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float delta) {
         updateLayout();
-        if (!available()) { search.setFocused(false); return; }
+        if (!available()) return;
         graphics.nextStratum();
         if (!shown.expanded() || layout.placement() == Placement.SWITCH && !replacement) {
             Layout toggle = toggleButton();
@@ -132,21 +156,16 @@ public final class BundlePanelScreen {
         graphics.text(minecraft.font, text("title"), layout.x() + 7, layout.y() + 6, 0xFF404040, false);
         button(graphics, collapseButton(), Component.literal("×"), mouseX, mouseY);
         if (collapseButton().contains(mouseX, mouseY)) graphics.setTooltipForNextFrame(text(replacement ? "back" : "collapse_hint"), mouseX, mouseY);
-        button(graphics, viewButton(), viewLabel(shown.view()), mouseX, mouseY);
         search.extractWidgetRenderState(graphics, mouseX, mouseY, delta);
-        if (shown.view() == View.MERGED) button(graphics, depositButton(), text("deposit"), mouseX, mouseY);
         Layout grid = grid();
-        inGrid = grid.contains(mouseX, mouseY);
-        session.pointerInGrid(inGrid);
-        shown = session.state();
-        updateRows(shown);
+        rows = session.cells(columns);
         int visibleRows = Math.max(1, grid.height() / ROW_HEIGHT);
         int rowCount = (rows.size() + columns - 1) / columns;
         offset = Math.clamp(offset, 0, Math.max(0, rowCount - visibleRows));
         graphics.enableScissor(grid.x(), grid.y(), grid.x() + grid.width(), grid.y() + grid.height());
         for (int r = 0; r < visibleRows; r++) for (int c = 0; c < columns; c++) {
             int index = (offset + r) * columns + c;
-            Row row = index < rows.size() ? rows.get(index) : null;
+            Cell row = index < rows.size() ? rows.get(index) : null;
             int x = grid.x() + c * ROW_HEIGHT, y = grid.y() + r * ROW_HEIGHT;
             if (row != null && row.header()) {
                 if (row.bag() != null) renderBag(graphics, row.bag(), grid.x(), y, mouseX, mouseY);
@@ -157,82 +176,52 @@ public final class BundlePanelScreen {
         }
         graphics.disableScissor();
         int footer = layout.y() + layout.height() - 12;
+        Outcome outcome = session.outcome();
+        if (outcome != lastOutcome) {
+            lastOutcome = outcome;
+            failureUntil = outcome.failure() == Failure.NONE ? 0 : System.nanoTime() + 4_000_000_000L;
+        }
         if (session.busy()) graphics.text(minecraft.font, text("working"), layout.x() + 7, footer, 0xFF404040, false);
-        else if (session.outcome().failure() != Failure.NONE) graphics.text(minecraft.font,
-                clip(failure(session.outcome().failure()).getString(), layout.width() - 14), layout.x() + 7, footer, 0xFF8B2020, false);
+        else if (System.nanoTime() < failureUntil) graphics.text(minecraft.font,
+                clip(failure(outcome.failure()).getString(), layout.width() - 14), layout.x() + 7, footer, 0xFF8B2020, false);
         else if (shown.entries().isEmpty()) graphics.text(minecraft.font, text(search.getValue().isEmpty() ? "empty" : "no_results"), layout.x() + 7, footer, 0xFF404040, false);
         else if (rowCount > visibleRows) graphics.text(minecraft.font, text("scroll", offset + 1, rowCount), layout.x() + 7, footer, 0xFF404040, false);
-        if (layout.contains(mouseX, mouseY) && mouseY >= footer && session.outcome().failure() != Failure.NONE)
-            graphics.setTooltipForNextFrame(failure(session.outcome().failure()), mouseX, mouseY);
     }
 
     private void renderItem(GuiGraphicsExtractor graphics, Entry entry, int x, int y, int mx, int my) {
+        if (entry.count() == 0) return;
         ItemStack item = MinecraftBundlePanelMenu.sample(entry.item());
         graphics.item(item, x + 1, y + 1);
-        if (entry.count() == 0) {
-            graphics.fill(x + 1, y + 1, x + 17, y + 17, 0xA0808080);
-            graphics.text(minecraft.font, "0", x + 17 - minecraft.font.width("0"), y + 9, 0xFFA0A0A0);
-        } else graphics.itemDecorations(minecraft.font, item, x + 1, y + 1, Integer.toString(entry.count()));
+        graphics.itemDecorations(minecraft.font, item, x + 1, y + 1, Integer.toString(entry.count()));
         if (new Layout(layout.placement(), x, y, ROW_HEIGHT, ROW_HEIGHT).contains(mx, my)) {
             graphics.fill(x + 1, y + 1, x + 17, y + 17, 0x80FFFFFF);
-            List<Component> tooltip = new ArrayList<>(Screen.getTooltipFromItem(minecraft, item));
-            tooltip.add(text("extract_hint")); tooltip.add(text("main_hint"));
-            tooltip.add(text("wheel_hint")); tooltip.add(text("deposit_hint"));
-            if (session.outcome().failure() != Failure.NONE) tooltip.add(failure(session.outcome().failure()));
-            graphics.setComponentTooltipForNextFrame(minecraft.font, tooltip, mx, my);
+            itemTooltip(graphics, item, mx, my);
         }
     }
 
     private void renderBag(GuiGraphicsExtractor graphics, Slot bag, int x, int y, int mx, int my) {
         ItemStack item = MinecraftBundlePanelMenu.sample(bag.stack().item());
-        slotBackground(graphics, x, y);
         graphics.item(item, x + 1, y + 1);
         graphics.itemDecorations(minecraft.font, item, x + 1, y + 1);
-        String capacity = Math.round(BundleItem.getFullnessDisplay(item) * 100) + "%";
-        Layout target = new Layout(layout.placement(), x + ROW_HEIGHT, y, grid().width() - ROW_HEIGHT, ROW_HEIGHT);
-        button(graphics, target, Component.literal(clip(bag.stack().item().name(), target.width() - 34) + " " + capacity), mx, my);
+        float fullness = BundleItem.getFullnessDisplay(item);
+        String capacity = Math.round(fullness * 100) + "%";
+        int capacityX = x + grid().width() - minecraft.font.width(capacity) - 2;
+        int capacityColor = fullness >= 1 ? 0xFFAA2020 : fullness >= 0.75f ? 0xFF985000 : 0xFF606060;
+        graphics.text(minecraft.font, Language.getInstance().getVisualOrder(minecraft.font.substrByWidth(
+                item.getHoverName(), Math.max(1, capacityX - x - ROW_HEIGHT - 5))), x + ROW_HEIGHT + 2, y + 5, 0xFF303030, false);
+        graphics.text(minecraft.font, capacity, capacityX, y + 5, capacityColor, false);
         if (new Layout(layout.placement(), x, y, grid().width(), ROW_HEIGHT).contains(mx, my))
-            graphics.setComponentTooltipForNextFrame(minecraft.font,
-                    List.of(item.getHoverName(), text("capacity", capacity), text("deposit_hint"), text("nesting_hint")), mx, my);
+            itemTooltip(graphics, item, mx, my);
     }
 
-    private void updateRows(State state) {
-        if (inGrid && !rows.isEmpty()) {
-            List<Row> stable = new ArrayList<>();
-            for (Row old : rows) {
-                Entry entry = old.entry() == null ? null : state.entries().stream().filter(e -> e.id().equals(old.entry().id()))
-                        .findFirst().orElse(new Entry(old.entry().id(), old.entry().item(), 0, old.owner()));
-                Slot bag = old.bag() == null ? null : state.bags().stream().filter(s -> s.id() == old.owner()).findFirst().orElse(old.bag());
-                stable.add(new Row(old.id(), entry, bag, old.owner(), old.header()));
-            }
-            rows = List.copyOf(stable);
-            return;
-        }
-        List<Row> fresh = new ArrayList<>();
-        if (state.view() == View.MERGED) {
-            for (Entry entry : state.entries()) fresh.add(new Row(entry.id(), entry, null, -1, false));
-        } else for (Slot bag : state.bags()) {
-            fresh.add(new Row(bag.id(), null, bag, bag.id(), true));
-            for (int i = 1; i < columns; i++) fresh.add(new Row(new Padding(bag.id(), fresh.size()), null, null, bag.id(), true));
-            int start = fresh.size();
-            for (Entry entry : state.entries()) if (entry.bag() == bag.id()) fresh.add(new Row(entry.id(), entry, null, bag.id(), false));
-            if (fresh.size() == start) for (int i = 0; i < columns; i++) fresh.add(new Row(new Padding(bag.id(), fresh.size()), null, null, bag.id(), false));
-            while (fresh.size() % columns != 0) fresh.add(new Row(new Padding(bag.id(), fresh.size()), null, null, bag.id(), false));
-        }
-        rows = List.copyOf(fresh);
+    private void itemTooltip(GuiGraphicsExtractor graphics, ItemStack item, int x, int y) {
+        graphics.setTooltipForNextFrame(minecraft.font, Screen.getTooltipFromItem(minecraft, item),
+                item.getTooltipImage(), x, y, item.get(DataComponents.TOOLTIP_STYLE), true);
     }
 
     public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
         updateLayout();
         if (!available()) return false;
-        if (session.busy()) {
-            if (replacement || shown.expanded() && layout.placement() != Placement.SWITCH && layout.contains(event.x(), event.y())) {
-                shieldRelease = true; return true;
-            }
-            session.cancel();
-            search.setFocused(false);
-            return false;
-        }
         State state = shown;
         if (!state.expanded() || layout.placement() == Placement.SWITCH && !replacement) {
             if (!toggleButton().contains(event.x(), event.y())) return false;
@@ -247,27 +236,29 @@ public final class BundlePanelScreen {
             }
             return true;
         }
-        if (!replacement && !layout.contains(event.x(), event.y())) { search.setFocused(false); return false; }
+        if (!replacement && !layout.contains(event.x(), event.y())) {
+            session.cancel(); focusSearch(false); return false;
+        }
         if (replacement && !layout.contains(event.x(), event.y())) return true;
         shieldRelease = true;
         if (collapseButton().contains(event.x(), event.y()) && event.button() == InputConstants.MOUSE_BUTTON_LEFT) {
+            session.cancel();
             replacement = false;
             session.expanded(false); config.bundlePanelExpanded = false; Config.save();
-            search.setFocused(false);
-        } else if (viewButton().contains(event.x(), event.y()) && event.button() == InputConstants.MOUSE_BUTTON_LEFT) {
-            View view = state.view() == View.MERGED ? View.GROUPED : View.MERGED;
-            session.view(view); config.bundlePanelView = view; Config.save(); rows = List.of(); offset = 0;
+            focusSearch(false);
         } else if (search.isMouseOver(event.x(), event.y())) {
-            search.setFocused(true); search.mouseClicked(event, doubleClick);
+            focusSearch(true); search.mouseClicked(event, doubleClick);
         } else {
-            search.setFocused(false);
+            focusSearch(false);
             Gesture gesture = event.button() == InputConstants.MOUSE_BUTTON_LEFT ? Gesture.LEFT
                     : event.button() == InputConstants.MOUSE_BUTTON_RIGHT ? Gesture.RIGHT : null;
             if (gesture != null) {
-                Row row = rowAt(event.x(), event.y());
-                if (row != null) session.interact(row.entry() == null ? null : row.entry().id(),
+                Cell row = rowAt(event.x(), event.y());
+                if (row != null && !row.header() && (state.view() == View.MERGED
+                        || state.bags().stream().anyMatch(b -> b.id() == row.owner())))
+                    session.interact(row.entry() == null || row.entry().count() == 0 ? null : row.entry().id(),
                         row.owner(), gesture, event.hasControlDown(), event.hasShiftDown());
-                else if (state.view() == View.MERGED && (grid().contains(event.x(), event.y()) || depositButton().contains(event.x(), event.y())))
+                else if (row == null && state.view() == View.MERGED && grid().contains(event.x(), event.y()))
                     session.interact(null, -1, gesture, event.hasControlDown(), event.hasShiftDown());
             }
         }
@@ -291,11 +282,11 @@ public final class BundlePanelScreen {
         if (!KeyUtils.hasShiftDown()) { offset -= (int) Math.signum(amount); wheel = 0; return true; }
         if (wheel * amount < 0) wheel = 0;
         wheel += amount;
-        Row row = rowAt(x, y);
+        Cell row = rowAt(x, y);
         while (Math.abs(wheel) >= 1) {
             int direction = wheel > 0 ? 1 : -1;
             wheel -= direction;
-            if (row != null && row.entry() != null) session.interact(row.entry().id(), row.owner(),
+            if (row != null && row.entry() != null && row.entry().count() > 0) session.interact(row.entry().id(), row.owner(),
                     direction > 0 ? Gesture.WHEEL_UP : Gesture.WHEEL_DOWN, KeyUtils.hasControlDown(), true);
         }
         return true;
@@ -303,41 +294,38 @@ public final class BundlePanelScreen {
 
     public boolean keyPressed(KeyEvent event) {
         if (event.isEscape()) {
-            if (search.isFocused()) { search.setFocused(false); return true; }
+            if (search.isFocused()) { focusSearch(false); return true; }
             if (replacement) { session.cancel(); replacement = false; return true; }
             session.cancel(); return false;
         }
-        if (session.busy() && !replacement) session.cancel();
+        if (search.isFocused() && event.shortcutKey() == 9) return false;
         if (search.isFocused()) { search.keyPressed(event); return true; }
         return replacement;
     }
     public boolean charTyped(CharacterEvent event) { return search.isFocused() && search.charTyped(event) || replacement; }
-    public boolean capturesInput() { return search.isFocused() || replacement || session.busy(); }
+    public boolean capturesInput() { return search.isFocused() || replacement; }
 
-    private Row rowAt(double x, double y) {
+    private Cell rowAt(double x, double y) {
         Layout grid = grid();
         if (!grid.contains(x, y)) return null;
         int r = offset + (int) (y - grid.y()) / ROW_HEIGHT;
         int index = r * columns + (int) (x - grid.x()) / ROW_HEIGHT;
         if (index >= rows.size()) return null;
-        Row row = rows.get(index);
+        Cell row = rows.get(index);
         return row.header() ? rows.get(r * columns) : row;
     }
     private Layout grid() {
-        int header = shown.view() == View.MERGED ? 80 : 58;
+        int header = 40;
         int height = Math.max(ROW_HEIGHT, (layout.height() - header - 14) / ROW_HEIGHT * ROW_HEIGHT);
         return new Layout(layout.placement(), layout.x() + (layout.width() - columns * ROW_HEIGHT) / 2,
                 layout.y() + header, columns * ROW_HEIGHT, height);
     }
     private Layout toggleButton() { return new Layout(layout.placement(), geometry().better_client$leftPos() + geometry().better_client$imageWidth() - 23, geometry().better_client$topPos() + 5, 18, 18); }
     private Layout collapseButton() { return new Layout(layout.placement(), layout.x() + layout.width() - 20, layout.y() + 4, 13, 13); }
-    private Layout viewButton() { return new Layout(layout.placement(), layout.x() + 7, layout.y() + 20, layout.width() - 14, 16); }
-    private Layout depositButton() { return new Layout(layout.placement(), layout.x() + 7, layout.y() + 58, layout.width() - 14, 18); }
     private void button(GuiGraphicsExtractor graphics, Layout rect, Component label, int mx, int my) {
         graphics.blitSprite(RenderPipelines.GUI_TEXTURED, rect.contains(mx, my) ? BUTTON_HOVER : BUTTON,
                 rect.x(), rect.y(), rect.width(), rect.height());
         graphics.centeredText(minecraft.font, label, rect.x() + rect.width() / 2, rect.y() + (rect.height() - 8) / 2, 0xFFFFFFFF);
-        if (rect.equals(depositButton()) && rect.contains(mx, my)) graphics.setTooltipForNextFrame(text("deposit_hint"), mx, my);
     }
     private void slotBackground(GuiGraphicsExtractor graphics, int x, int y) {
         graphics.blit(RenderPipelines.GUI_TEXTURED, INVENTORY, x, y, 7, 83, ROW_HEIGHT, ROW_HEIGHT, 256, 256);
@@ -357,6 +345,5 @@ public final class BundlePanelScreen {
 
     private String clip(String value, int width) { return minecraft.font.plainSubstrByWidth(value, Math.max(1, width)); }
     private static Component text(String key, Object... args) { return Component.translatable("text.better_client.bundle_panel." + key, args); }
-    private static Component viewLabel(View view) { return text("view." + view.name().toLowerCase(Locale.ROOT)); }
     private static Component failure(Failure failure) { return text("failure." + failure.name().toLowerCase(Locale.ROOT)); }
 }
