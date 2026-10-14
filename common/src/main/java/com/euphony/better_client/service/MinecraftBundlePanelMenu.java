@@ -64,7 +64,9 @@ public final class MinecraftBundlePanelMenu implements MenuAdapter {
     public void click(int id, int button) {
         if (!read().valid()) return;
         net.minecraft.world.inventory.Slot slot = screen.getMenu().getSlot(id);
-        ((AbstractContainerScreen<?>) screen).slotClicked(slot, id, button, ContainerInput.PICKUP);
+        // A transfer is many clicks; vanilla would play a bundle sound per item and exhaust the
+        // sound pool, so the panel's own clicks stay silent.
+        QuietClicks.run(() -> ((AbstractContainerScreen<?>) screen).slotClicked(slot, id, button, ContainerInput.PICKUP));
     }
 
     @Override

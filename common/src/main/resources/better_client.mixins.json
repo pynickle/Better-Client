@@ -15,6 +15,7 @@
     "ChatComponentMixin",
     "ChatListenerMixin",
     "ChatScreenMixin",
+    "ClientLevelMixin",
     "ClientSuggestionProviderMixin",
     "accessor.ChatComponentStateAccessor",
     "accessor.DelayedMessageDeletionAccessor",

@@ -8,6 +8,7 @@ import com.euphony.better_client.service.BundleUpPlan.BundleUpResult;
 import com.euphony.better_client.service.BundleUpPlan.BundleUpSlot;
 import com.euphony.better_client.service.BundleUpPlan.BundleUpSlotContents;
 import com.euphony.better_client.service.BundleUpPlan.BundleUpWeight;
+import com.euphony.better_client.service.QuietClicks;
 import com.mojang.serialization.DataResult;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
@@ -65,7 +66,7 @@ public class BundleUpEvent {
                 slots));
 
         for (BundleUpInsertion<Slot> insertion : result.insertions()) {
-            insertIntoBundle(containerScreen, hoveredSlot, insertion.identity());
+            QuietClicks.run(() -> insertIntoBundle(containerScreen, hoveredSlot, insertion.identity()));
         }
         if (result.playFailureSound()) {
             minecraft.player.playSound(SoundEvents.BUNDLE_INSERT_FAIL, 1.0F, 1.0F);
