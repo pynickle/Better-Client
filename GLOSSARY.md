@@ -29,6 +29,18 @@ _Avoid_: Inventory, backpack
 The armor slots and the offhand slot.
 _Avoid_: Armor slots
 
+## Bundle panel
+
+**Bundle panel**:
+A companion to the player's inventory that shows the contents of bundles carried in the main inventory, hotbar, or offhand. Nested bundles appear as items without expanding their contents.
+_Avoid_: Extra inventory, extra storage
+
+**Grouped view**:
+A bundle panel view that presents each bundle's contents in a separate group.
+
+**Merged view**:
+A bundle panel view that combines the contents of the included bundles into one list, totaling items that can stack together under vanilla rules. Items with different names, enchantments, durability, or stored contents remain separate.
+
 ## Trading HUD
 
 **Trading HUD anchor**:
